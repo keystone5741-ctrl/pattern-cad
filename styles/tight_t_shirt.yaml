@@ -1,0 +1,23 @@
+# 타이트 티셔츠 (p.61) = 몸판 + 짧은 소매 + 넥 립
+name: 타이트 티셔츠
+id: tight_t_shirt
+source: reference/portfolio.pdf p.61
+
+blocks:
+  body:
+    block: ../blocks/tight_t_shirt_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 약간낮음
+      소매길이: 6.3/8
+      팔꿈치길이: 5
+      소매부리들임: 1/4
+  넥립:
+    block: ../blocks/rib.yaml
+    measurements:
+      몸판둘레: "len(body.앞목선) * 2 + len(body.뒤목선) * 2"
+      줄임: 5/8
+      높이: 5/8

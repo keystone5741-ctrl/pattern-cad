@@ -1,0 +1,34 @@
+# 오버사이즈 블라우스 (p.51) = 무다트 몸판 + 낮은 소매산 소매 + 셔츠 칼라 + 커프스 + 견보루
+name: 오버사이즈 블라우스
+id: oversize_blouse
+source: reference/portfolio.pdf p.51
+
+blocks:
+  body:
+    block: ../blocks/oversize_blouse_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 약간낮음
+      소매산조정: -7/8      # 도면 표기 'AH/3 − 7/8' → 소매산높이 6"
+      앞소매이세: -5/16     # 도면 표기 '앞AH − 5/16'
+      뒤소매이세: -5/16
+      소매길이: 19.1/4
+      팔꿈치길이: 10
+  band:
+    block: ../blocks/shirt_collar_band.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      앞네크: "len(body.앞목선)"
+  collar:
+    block: ../blocks/shirt_collar.yaml
+    measurements:
+      밑변: "len(band.윗선)"
+  cuff:
+    block: ../blocks/cuff.yaml
+    measurements:
+      가로: 9.3/8
+  placket:
+    block: ../blocks/sleeve_placket.yaml

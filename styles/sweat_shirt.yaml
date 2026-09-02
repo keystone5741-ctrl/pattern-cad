@@ -1,0 +1,35 @@
+# 스웻 셔츠 (p.57) = 무다트 몸판 + 낮은 소매산 소매 + 넥 립 + 밑단 시보리 + 소매부리 시보리
+name: 스웻 셔츠
+id: sweat_shirt
+source: reference/portfolio.pdf p.57
+
+blocks:
+  body:
+    block: ../blocks/sweat_shirt_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 낮음        # 다이마루 — 소매산을 낮춘다
+      소매길이: 22.7/8
+      팔꿈치길이: 12
+      소매부리들임: 2.1/4
+  넥립:
+    block: ../blocks/rib.yaml
+    measurements:
+      몸판둘레: "len(body.앞목선) * 2 + len(body.뒤목선) * 2"
+      줄임: 5/8            # 앞 3/16 × 2 + 뒤 1/8 × 2
+      높이: "body.넥립높이"
+  밑단시보리:
+    block: ../blocks/rib.yaml
+    measurements:
+      몸판둘레: "body.패턴엉덩이"
+      줄임: 4              # 10cm — 블루종 핏
+      높이: "body.밑단시보리높이"
+  소매부리시보리:
+    block: ../blocks/rib.yaml
+    measurements:
+      몸판둘레: 11.3/4     # 소매 밑단 둘레 (계산 결과)
+      줄임: 4.1/4          # 완성 소매부리 7.1/2
+      높이: 1.1/4

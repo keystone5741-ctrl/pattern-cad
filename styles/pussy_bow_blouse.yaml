@@ -1,0 +1,25 @@
+# 푸시 보우 블라우스 (p.55) = 몸판 + 소매 + 보우 타이 (타이 목길이는 몸판 목선에서 자동)
+name: 푸시 보우 블라우스
+id: pussy_bow_blouse
+source: reference/portfolio.pdf p.55
+
+blocks:
+  body:
+    block: ../blocks/pussy_bow_blouse_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 약간높음
+      소매길이: 25
+      팔꿈치길이: 13
+  tie:
+    block: ../blocks/bow_tie.yaml
+    measurements:
+      목길이: "len(body.앞목선) * 2 + len(body.뒤목선) * 2"
+      타이길이: 20
+  cuff:
+    block: ../blocks/cuff.yaml
+    measurements:
+      가로: 8.1/4

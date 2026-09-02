@@ -1,0 +1,34 @@
+# 차이나 칼라 블라우스 (p.53) = 몸판 + 턱 소매(높은 소매산) + 차이나 칼라(밴드만) + 커프스
+name: 차이나 칼라 블라우스
+id: china_collar_blouse
+source: reference/portfolio.pdf p.53
+
+blocks:
+  body:
+    block: ../blocks/china_collar_blouse_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_tuck.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 높음
+      소매산조정: 1.7/8     # 도면 표기 'AH/3 + 1.7/8'
+      앞소매이세: 7/8       # 도면 표기 '앞AH + 7/8'
+      뒤소매이세: 7/8
+      소매길이: 8.7/8
+      팔꿈치길이: 6
+      소매부리들임: 0       # 반팔 — 부리를 좁히지 않는다
+  collar:
+    block: ../blocks/shirt_collar_band.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      앞네크: "len(body.앞목선)"
+      뒤높이: 1.1/4
+      앞높이: 1.1/4
+      앞올림: 1
+      앞연장: 1/2
+  cuff:
+    block: ../blocks/cuff.yaml
+    measurements:
+      가로: 10.3/4
+      세로: 1.1/4

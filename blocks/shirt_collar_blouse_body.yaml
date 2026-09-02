@@ -1,128 +1,44 @@
-# 기본 셔츠 칼라 블라우스 몸판 — 포트폴리오 p.48. 시추니 기본 원형을 상속해 바뀐 것만 적는다.
+# 기본 셔츠 칼라 블라우스 몸판 — 포트폴리오 p.48. 상의 몸판 기본틀에서 바뀐 것만 적는다.
 #
 # 도면(점선 = 시추니 원형, 실선 = 블라우스)에서 읽은 변화:
 #   진동깊이 8.1/4 (원형보다 1/4 얕음) · 겨드랑점 옆으로 1/4, 아래로 1/8
 #   앞목: 옆목점 1/8 올림, 앞목점 3/4 내림 · 뒤목: 뒷목점 1/16 올림, 옆목점 1/8 올림, 너비 1/4 넓힘
 #   어깨: 뒤어깨끝 1/4 연장, 뒤어깨다트는 M.P(이세) 처리, 앞어깨 길이 = 뒤어깨길이
-#   가슴다트 3/4 (나머지는 M.P) · 앞뒤 허리다트 1"(1/2+1/2) · 옆선 허리 들임 · 엉덩이 3/4 여유
+#   가슴다트 3/4 (나머지는 M.P) · 앞뒤 허리다트 1"(1/2+1/2) · 옆선 허리 들임 · 엉덩이 여유
 #   뒤중심: 가슴선 3/8 → 허리선 3/4 들어가고 밑단까지 수직 · 기장 24 · 앞내림 1/4 · 밑단 곡선 · 단작 1"
 # p.48 도면은 축척이 12.4~13.5pt/in 로 들쭉날쭉해 실측은 ±5% 오차. 표기 치수를 따르고, 표기 없는 것은
 # "실측" 으로 적었다 → docs/drafting_notes.md 미확인 항목.
-
-extends: sichuni_basic.yaml
+extends: top_body.yaml
 name: 셔츠 칼라 블라우스 몸판
 id: shirt_collar_blouse_body
 source: reference/portfolio.pdf p.48
 
 measurements:
+  # 여유는 원형 그대로 2.1/2 (패턴 가슴 36). 사이즈표 표기는 35.1/2 로 1/2 차이 —
+  # 도면 겹침 검증(verify_block)은 36 에서 맞는다. docs/drafting_notes.md 미확인 항목.
   진동깊이:     {value: 8.1/4}
-  엉덩이길이:   {value: 7.1/2, note: 허리선에서 엉덩이선까지}
-  기장:         {value: 24, note: 기준선(뒷목점 높이)에서 밑단까지}
-  앞처짐:       {value: 0, note: 앞판 위쪽 틀은 원형과 같고 밑단에서 앞내림으로 처리}
-  앞내림:       {value: 1/4, note: 앞중심 밑단을 뒤보다 내림 (블라우스 1/4~1/2)}
-  옆선여유:     {value: 1/4, note: 겨드랑점을 옆으로}
-  뒤품:         {value: 14.1/2, note: 도면에서 읽음 — 뒤암홀이 견갑 높이에서 원형보다 1/4 바깥 (M.P 1/4)}
-  진동내림:     {value: 1/8, note: 겨드랑점을 아래로}
+  기장:         {value: 24}
+  옆선허리들임: {value: 1/2, note: 패턴 허리 30}
+  엉덩이여유:   {value: 7/16, note: 패턴 엉덩이 37.3/4}
+  뒤품:         {value: 14.1/2, note: 뒤암홀이 견갑 높이에서 원형보다 1/4 바깥 (M.P 1/4)}
   앞옆목점내림: {value: 1/8, note: 원형 1/4 에서 1/8 올림}
   앞목내림:     {value: 3/4, note: 앞목점을 원형보다 내림}
-  뒤목점올림:   {value: 1/16}
+  뒤목점올림기준: {value: 1/16}
   뒤목높이:     {value: 1.1/8, note: 옆목점 1/8 올림}
-  뒤목너비:     {value: 3.1/4, note: 1/4 넓힘}
+  뒤목너비기준: {value: 3.1/4, note: 1/4 넓힘}
   뒤어깨끝너비: {value: 7.3/4, note: 뒤어깨끝 1/4 연장}
   뒤어깨다트폭: {value: 1/4, note: 다트로 접지 않고 M.P(이세) — 어깨선은 직선}
   앞어깨길이:   {formula: "뒤어깨길이", note: 도면 표기 '뒤어깨길이'. 뒤 다트가 이세로 가므로 앞도 같은 길이}
   가슴다트폭:   {value: 3/4, note: 원형 1.1/4 중 3/4 만 다트, 나머지 M.P}
-  허리다트폭:   {value: 1, note: 1/2 + 1/2}
-  앞허리다트위치: {value: 5.3/8, note: 앞중심에서 다트 가까운 다리까지}
-  뒤허리다트위치: {value: 4.1/4, note: 뒤중심(허리선에서 들어간 점)에서 다트 가까운 다리까지}
-  앞허리다트아래: {value: 1, note: 다트 아래 끝은 엉덩이선 위 1}
-  뒤허리다트아래: {value: 2, note: 엉덩이선 위 2}
-  옆선허리들임: {value: 3/8, note: 도면에서 읽음}
-  엉덩이여유:   {value: 3/4, note: 엉덩이선에서 옆선을 옆으로}
-  뒤중심가슴들임: {value: 3/8}
-  뒤중심허리들임: {value: 3/4, note: 허리선부터 밑단까지 수직}
-  앞옆밑단올림: {value: 1.1/8, note: 앞 밑단 곡선 — 옆선 쪽 밑단이 앞중심 밑단보다 올라간 양 (도면 표기 1.1/8)}
-  뒤옆밑단올림: {value: 3/8, note: 뒤 옆선 밑단이 뒤중심 밑단보다 올라간 양. 도면 표기 3/8·3/4 가 무엇인지 불확실 — 확인 필요}
   단작폭:       {value: 1, note: 앞중심 좌우 1/2}
 
 points:
-  remove: [BSD1, BSD2, BSD_M, SCAP, SCAP_W, SCAP_W2, WL_SS_B, HEM_SS_F, HEM_CF]
-  # 겨드랑점을 옮긴다 — 암홀 끝과 옆선 시작
-  UP2:      {ko: 겨드랑점(여유 반영), from: UP, dx: 옆선여유, dy: 진동내림}
-  FNP:      {ko: 앞목점(내림),        from: O_F, dy: "앞목깊이 + 앞목내림"}
-  # 허리·엉덩이·밑단 틀
-  WL_CF:    {ko: 앞중심 허리점,       from: O, dy: 등길이}
-  HL_CF:    {ko: 앞중심 엉덩이점,     from: O, dy: "등길이 + 엉덩이길이"}
-  HL_CB0:   {ko: 뒤중심 엉덩이 틀점,  from: TOP_CB, dy: "등길이 + 엉덩이길이"}
-  HEM_CF:   {ko: 앞중심 밑단점,       from: O, dy: "기장 + 앞내림"}
-  HEM_CB0:  {ko: 뒤중심 밑단 틀점,    from: TOP_CB, dy: 기장}
-  # 옆선 (앞·뒤 같은 x)
-  WL_SS0:   {ko: 옆선 허리 틀점,      at: [반폭, 등길이]}
-  WL_SS:    {ko: 옆선 허리점,         at: ["반폭 + 옆선여유 - 옆선허리들임", 등길이]}
-  HL_SS:    {ko: 옆선 엉덩이점,       at: ["반폭 + 엉덩이여유", "등길이 + 엉덩이길이"]}
-  HEM_SS_F: {ko: 앞 옆선 밑단점,      at: ["반폭 + 엉덩이여유", "기장 + 앞내림 - 앞옆밑단올림"]}
-  HEM_SS_B: {ko: 뒤 옆선 밑단점,      at: ["반폭 + 엉덩이여유", "기장 - 뒤옆밑단올림"]}
-  # 뒤중심 (들어감)
-  CB_BL:    {ko: 뒤중심 가슴선점(들임), from: BL_CB, dx: "-뒤중심가슴들임"}
-  CB_WL:    {ko: 뒤중심 허리점(들임),   from: WL_CB, dx: "-뒤중심허리들임"}
-  CB_HEM:   {ko: 뒤중심 밑단점,         from: HEM_CB0, dx: "-뒤중심허리들임"}
-  # 가슴다트 (옆선 위)
-  BD1:      {ko: 가슴다트 위,         at: ["반폭 + 옆선여유", "BP.y"]}
-  BD2:      {ko: 가슴다트 아래,       at: ["반폭 + 옆선여유", "BP.y + 가슴다트폭"]}
-  # 앞 허리다트
-  FWD_C:    {ko: 앞허리다트 중심,     at: ["앞허리다트위치 + 허리다트폭/2", 등길이]}
-  FWD_L:    {ko: 앞허리다트 안쪽다리, from: FWD_C, dx: "-허리다트폭/2"}
-  FWD_R:    {ko: 앞허리다트 바깥다리, from: FWD_C, dx: "허리다트폭/2"}
-  FWD_TOP:  {ko: 앞허리다트 위끝,     at: ["FWD_C.x", "BP.y"], note: 실측 — BP 높이}
-  FWD_BOT:  {ko: 앞허리다트 아래끝,   at: ["FWD_C.x", "등길이 + 엉덩이길이 - 앞허리다트아래"]}
-  # 뒤 허리다트 (들어간 뒤중심에서 잰다)
-  BWD_C:    {ko: 뒤허리다트 중심,     at: ["CB_WL.x - 뒤허리다트위치 - 허리다트폭/2", 등길이]}
-  BWD_L:    {ko: 뒤허리다트 옆선쪽다리, from: BWD_C, dx: "-허리다트폭/2"}
-  BWD_R:    {ko: 뒤허리다트 중심쪽다리, from: BWD_C, dx: "허리다트폭/2"}
-  BWD_TOP:  {ko: 뒤허리다트 위끝,     at: ["BWD_C.x", 진동깊이], note: 실측 — 가슴선 높이}
-  BWD_BOT:  {ko: 뒤허리다트 아래끝,   at: ["BWD_C.x", "등길이 + 엉덩이길이 - 뒤허리다트아래"]}
-  # 단작
-  PL_L_TOP: {ko: 단작 왼쪽 위,        at: ["-단작폭/2", "FNP.y"]}
-  PL_L_BOT: {ko: 단작 왼쪽 아래,      at: ["-단작폭/2", "HEM_CF.y"]}
-  PL_R_TOP: {ko: 단작 오른쪽 위,      at: ["단작폭/2", "FNP.y"]}
-  PL_R_BOT: {ko: 단작 오른쪽 아래,    at: ["단작폭/2", "HEM_CF.y"]}
-  # 뒤어깨 이세 표시 (다트 자리)
-  BSE1:     {ko: 뒤어깨 이세 시작,    along: [SNP_B, SP_B], dist: 뒤어깨다트위치}
-  BSE2:     {ko: 뒤어깨 이세 끝,      along: [SNP_B, SP_B], dist: "뒤어깨다트위치 + 뒤어깨다트폭"}
+  PL_L_TOP: {ko: 단작 왼쪽 위,   at: ["-단작폭/2", "FNP.y"]}
+  PL_L_BOT: {ko: 단작 왼쪽 아래, at: ["-단작폭/2", "HEM_CF.y"]}
+  PL_R_TOP: {ko: 단작 오른쪽 위, at: ["단작폭/2", "FNP.y"]}
+  PL_R_BOT: {ko: 단작 오른쪽 아래, at: ["단작폭/2", "HEM_CF.y"]}
 
 lines:
-  remove: [견갑선, 견갑이세선, 앞옆선위, 가슴다트, 앞옆선아래, 앞밑단, 뒤어깨선목쪽, 뒤어깨다트, 뒤어깨선끝쪽,
-           뒤중심선, 뒤옆선, 뒤밑단, 앞중심선]
-  replace:
-    - {name: 앞암홀, piece: 앞판, role: outline, curve: [SP_F, T_F, G_F, UP2],
-       tangents: {SP_F: {perp: [SNP_F, SP_F]}, T_F: [0, 1], UP2: [1, 0]}, handles: [[0.2, 0.2], [0.31, 0.33], [0.32, 0.35]]}
-    - {name: 뒤암홀, piece: 뒤판, role: outline, curve: [SP_B, T_B, G_B, UP2],
-       tangents: {SP_B: {perp: [SNP_B, SP_B]}, T_B: [0, 1], UP2: [-1, 0]}, handles: [[0.21, 0.22], [0.2, 0.28], [0.4, 0.24]]}
   add:
-    # 앞판
-    - {name: 앞중심선, piece: 앞판, role: outline, pts: [FNP, HEM_CF]}
     - {name: 단작왼쪽, piece: 앞판, role: mark, pts: [PL_L_TOP, PL_L_BOT]}
     - {name: 단작오른쪽, piece: 앞판, role: mark, pts: [PL_R_TOP, PL_R_BOT]}
-    - {name: 앞옆선위, piece: 앞판, role: outline, pts: [UP2, BD1]}
-    - {name: 가슴다트, piece: 앞판, role: dart, pts: [BD1, BP, BD2]}
-    - {name: 앞옆선, piece: 앞판, role: outline, curve: [BD2, WL_SS, HL_SS, HEM_SS_F],
-       tangents: {BD2: {along: [BD2, WL_SS]}, WL_SS: [0, 1], HL_SS: [0, 1], HEM_SS_F: [0, 1]},
-       handles: [[0.33, 0.33], [0.33, 0.33], [0.33, 0.33]]}
-    - {name: 앞허리다트, piece: 앞판, role: dart, pts: [FWD_TOP, FWD_L, FWD_BOT, FWD_R, FWD_TOP]}
-    - {name: 앞밑단, piece: 앞판, role: outline, curve: [HEM_CF, HEM_SS_F],
-       tangents: {HEM_CF: [1, 0], HEM_SS_F: [1, -0.6]}, handles: [[0.5, 0.4]]}
-    - {name: 허리선, role: construction, pts: [WL_CF, WL_CB]}
-    - {name: 엉덩이선, role: construction, pts: [HL_CF, HL_CB0]}
-    - {name: 옆선틀, role: construction, pts: [UP, WL_SS0]}
-    # 뒤판
-    - {name: 뒤중심선, piece: 뒤판, role: outline, curve: [BNP, CB_BL, CB_WL],
-       tangents: {BNP: [0, 1], CB_BL: [0, 1], CB_WL: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
-    - {name: 뒤중심선아래, piece: 뒤판, role: outline, pts: [CB_WL, CB_HEM]}
-    - {name: 뒤어깨선, piece: 뒤판, role: outline, pts: [SNP_B, SP_B]}
-    - {name: 뒤어깨이세, piece: 뒤판, role: mark, pts: [BSE1, BSE2]}
-    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [UP2, WL_SS, HL_SS, HEM_SS_B],
-       tangents: {UP2: {along: [UP2, WL_SS]}, WL_SS: [0, 1], HL_SS: [0, 1], HEM_SS_B: [0, 1]},
-       handles: [[0.33, 0.33], [0.33, 0.33], [0.33, 0.33]]}
-    - {name: 뒤허리다트, piece: 뒤판, role: dart, pts: [BWD_TOP, BWD_L, BWD_BOT, BWD_R, BWD_TOP]}
-    - {name: 뒤밑단, piece: 뒤판, role: outline, curve: [CB_HEM, HEM_SS_B],
-       tangents: {CB_HEM: [1, 0], HEM_SS_B: [1, 0]}, handles: [[0.4, 0.4]]}

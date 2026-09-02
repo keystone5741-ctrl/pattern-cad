@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="270.426mm" height="429.736mm" viewBox="0 0 270.426 429.736"><rect width="100%" height="100%" fill="white"/><title>후드</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M57.15 48.736L25.4 404.336"><title>얼굴선</title></path>
+<path d="M57.15 48.736C95.496 29.564 108.217 32.861 151.088 32.861C193.96 32.861 232.707 7.673 245.026 48.736"><title>후드윗선</title></path>
+<path d="M25.4 404.336C112.878 382.467 164.376 393.862 245.026 353.536"><title>후드밑선</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M200.576 353.536C191.166 217.805 315.72 51.911 179.663 51.911C147.361 51.911 140.221 50.165 107.95 48.736"><title>두장절개선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M245.026 48.736L245.026 353.536"><title>뒤중심선</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="25.4" cy="404.336" r="0.762" fill="#06c"/><text x="26.67" y="403.32">F_B</text>
+<circle cx="245.026" cy="353.536" r="0.762" fill="#06c"/><text x="246.296" y="352.52">CB_B</text>
+<circle cx="245.026" cy="48.736" r="0.762" fill="#06c"/><text x="246.296" y="47.72">CB_T</text>
+<circle cx="57.15" cy="48.736" r="0.762" fill="#06c"/><text x="58.42" y="47.72">F_T</text>
+<circle cx="151.088" cy="32.861" r="0.762" fill="#06c"/><text x="152.358" y="31.845">TOP_M</text>
+<circle cx="200.576" cy="353.536" r="0.762" fill="#06c"/><text x="201.846" y="352.52">SP_B</text>
+<circle cx="179.663" cy="51.911" r="0.762" fill="#06c"/><text x="180.933" y="50.895">SP_M</text>
+<circle cx="107.95" cy="48.736" r="0.762" fill="#06c"/><text x="109.22" y="47.72">SP_F</text>
+</g></svg>

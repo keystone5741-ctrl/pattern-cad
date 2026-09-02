@@ -1,0 +1,51 @@
+# 무다트 상의 몸판틀 — 상의 몸판 기본틀에서 다트를 없앤 것. 니트·오버사이즈 아이템의 공통 부모.
+#
+# 목·어깨·앞올림 값은 **시추니 무다트 원형(p.46)** 과 같다 (가슴다트 1.1/4 를 앞판 길이로 분산한 상태).
+# 오버사이즈 제도 시 적절한 가슴둘레 (p.52):
+#   [신체 가슴둘레] + [오버분량 30~50cm]. 둘레가 늘어난 만큼 **기장도 같이 늘려야** 실루엣이 자연스럽다.
+#   피트시켜 입체를 살리는 옷이 아니므로 **무다트 원형**을 쓴다.
+extends: top_body.yaml
+name: 무다트 상의 몸판틀
+id: box_body
+source: reference/portfolio.pdf p.46 + p.52
+
+measurements:
+  앞처짐:       {value: 0, note: 앞뒤 밑단 같은 높이}
+  앞올림:       {value: 1.1/4, note: 가슴다트 분량이 앞판 길이로 분산된 것}
+  가슴다트폭:   {value: 0, note: 다트 없음}
+  허리다트폭:   {value: 0}
+  앞목너비기준: {value: 3, note: 앞·뒤 네크너비 동일}
+  앞목깊이기준: {value: 2.3/4}
+  앞옆목점내림: {value: 0}
+  앞목가이드:   {value: 1.1/8}
+  뒤목높이:     {value: 1.1/8}
+  뒤목점올림기준: {value: 1/8}
+  뒤어깨끝내림: {value: 3/8}
+  앞암홀가이드: {value: 1.1/8}
+  뒤어깨이세:   {value: 1/4, note: 견갑골 입체분량 — 다트 대신 이세}
+  앞어깨길이:   {formula: "뒤어깨길이 - 뒤어깨이세"}
+  옆선허리들임: {value: 0, note: 상자형이 기본. 아이템에서 덮어쓴다}
+  엉덩이여유:   {value: 0}
+  앞내림:       {value: 0}
+  앞옆밑단올림: {value: 0}
+  뒤옆밑단올림: {value: 0}
+  뒤중심가슴들임: {value: 0, note: 오버사이즈는 뒤중심을 수직으로 두는 경우가 많다}
+  뒤중심허리들임: {value: 0}
+
+points:
+  remove: [BP, BD1, BD2, FWD_C, FWD_L, FWD_R, FWD_TOP, FWD_BOT,
+           BWD_C, BWD_L, BWD_R, BWD_TOP, BWD_BOT]
+
+lines:
+  remove: [유장선, 앞옆선위, 가슴다트, 앞허리다트, 뒤허리다트]
+  replace:
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [UP2, WL_SS_F, HL_SS_F, HEM_SS_F],
+       tangents: {UP2: {along: [UP2, WL_SS_F]}, WL_SS_F: [0, 1], HL_SS_F: [0, 1], HEM_SS_F: [0, 1]},
+       handles: [[0.33, 0.33], [0.33, 0.33], [0.33, 0.33]]}
+    - {name: 앞목선, piece: 앞판, role: outline, curve: [SNP_F, G_NF, FNP],
+       tangents: {SNP_F: {perp: [SNP_F, SP_F]}, FNP: [-1, 0]}, handles: [[0.2, 0.44], [0.2, 0.29]]}
+    - {name: 뒤목선, piece: 뒤판, role: outline, curve: [SNP_B, G_NB, BNP],
+       tangents: {SNP_B: {perp: [SNP_B, SP_B]}, BNP: [1, 0]}, handles: [[0.2, 0.2], [0.2, 0.35]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [HEM_CF, HEM_SS_F]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, HEM_SS_B]}
+    - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [BNP, CB_WL]}

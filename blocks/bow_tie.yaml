@@ -1,0 +1,37 @@
+# 보우 타이 (푸시 보우) — p.55–56.
+#
+# 유의사항 (p.56):
+#   - 보우 타이를 **일자로 제도하면 몸판 셔링에 비해 타이가 작고 연약해 보인다.**
+#     **트임(도매 지점)부터 서서히 커지는 형태**가 푸시 보우 블라우스에 적절하다
+#   - 보우 타이는 **앞목점에서 수평으로 간 지점**에서 도매된다(달리기 시작한다)
+#
+# 좌표계: 목선에 달리는 끝(도매점)이 원점, +x 가 타이가 뻗어나가는 쪽, y 아래.
+name: 보우 타이
+id: bow_tie
+category: part
+units: inch
+source: reference/portfolio.pdf p.55
+
+measurements:
+  목길이:   {value: 8, note: 목에 감기는 부분 (앞네크 + 뒤네크) — 스타일에서 자동}
+  타이길이: {value: 20, note: 매듭을 짓고 늘어뜨릴 길이}
+  시작폭:   {value: 1.1/4, note: 도매 지점의 폭}
+  끝폭:     {value: 3.1/2, note: 끝으로 갈수록 넓어진다 — 일자로 하면 연약해 보인다}
+  전체길이: {formula: "목길이 + 타이길이"}
+
+points:
+  A_T: {ko: 도매점 위, at: [0, 0]}
+  A_B: {ko: 도매점 아래, at: [0, 시작폭]}
+  N_T: {ko: 목선 끝 위, at: [목길이, 0], note: 여기까지가 목에 감기는 부분}
+  N_B: {at: [목길이, 시작폭]}
+  E_T: {ko: 타이 끝 위, at: [전체길이, "(시작폭 - 끝폭) / 2"]}
+  E_B: {ko: 타이 끝 아래, at: [전체길이, "(시작폭 + 끝폭) / 2"]}
+
+lines:
+  - {name: 도매끝, role: outline, pts: [A_T, A_B]}
+  - {name: 윗선, role: outline, curve: [A_T, N_T, E_T],
+     tangents: {A_T: [1, 0], N_T: [1, -0.05]}, handles: [[0.4, 0.4], [0.5, 0.4]]}
+  - {name: 아랫선, role: outline, curve: [A_B, N_B, E_B],
+     tangents: {A_B: [1, 0], N_B: [1, 0.05]}, handles: [[0.4, 0.4], [0.5, 0.4]]}
+  - {name: 타이끝, role: outline, pts: [E_T, E_B]}
+  - {name: 목선끝표시, role: mark, pts: [N_T, N_B], note: 여기부터 매듭}

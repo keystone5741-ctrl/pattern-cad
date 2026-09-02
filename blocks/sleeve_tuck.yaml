@@ -1,0 +1,39 @@
+# 턱(셔링) 소매 — p.53 차이나 칼라 블라우스. 소매 원형에 소매산 턱을 넣는다.
+#
+# 유의사항 (p.54):
+#   - 셔링·턱이 들어가는 소매는 **소매산이 높아지거나 소매통이 넓어지는 것이 불가피**하다.
+#     비율에 맞게 둘을 같이 늘리지 않고 **소매산만 과도하게 높이면 소매중심 분량이 처져 비리**가 생긴다.
+#     그럴 땐 소매산을 낮추고 필요하면 소매통을 같이 늘린다
+#   - **앞·뒤 턱 위치를 다르게** 잡는다: 앞판에서 1" 내려왔다면 **뒤판에선 1.1/4"** 내려와야
+#     착용했을 때 앞·뒤 턱이 같은 선상에 놓인다
+#   - 셔링·턱 소매는 **몸판 어깨 길이를 반드시 줄인다** (턱·셔링 분량에 따라 3/8~3/4).
+#     줄이지 않으면 턱 분량 때문에 소매가 옆으로도 퍼져 어깨가 더 넓어 보인다
+extends: sleeve_basic.yaml
+name: 턱 소매
+id: sleeve_tuck
+source: reference/portfolio.pdf p.53
+
+measurements:
+  앞턱내림: {value: 1,     note: 소매산점에서 앞 사선을 따라 내려온 거리}
+  뒤턱내림: {value: 1.1/4, note: 앞보다 1/4 더 내려와야 착용 시 앞뒤 턱이 같은 선상}
+  턱량:     {value: 3/4,   note: 턱 하나의 접힘 분량}
+  턱개수:   {value: 2}
+  턱간격:   {value: 3/4}
+  턱길이:   {value: 2,     note: 턱을 박는 길이}
+
+points:
+  TKF1_A: {ko: 앞턱1 위, along: [SCP, BIC_F], dist: 앞턱내림}
+  TKF1_B: {ko: 앞턱1 아래, from: TKF1_A, dy: 턱길이}
+  TKF2_A: {ko: 앞턱2 위, along: [SCP, BIC_F], dist: "앞턱내림 + 턱량 + 턱간격"}
+  TKF2_B: {from: TKF2_A, dy: 턱길이}
+  TKB1_A: {ko: 뒤턱1 위, along: [SCP, BIC_B], dist: 뒤턱내림}
+  TKB1_B: {from: TKB1_A, dy: 턱길이}
+  TKB2_A: {ko: 뒤턱2 위, along: [SCP, BIC_B], dist: "뒤턱내림 + 턱량 + 턱간격"}
+  TKB2_B: {from: TKB2_A, dy: 턱길이}
+
+lines:
+  add:
+    - {name: 앞소매턱1, role: fold, pts: [TKF1_A, TKF1_B]}
+    - {name: 앞소매턱2, role: fold, pts: [TKF2_A, TKF2_B]}
+    - {name: 뒤소매턱1, role: fold, pts: [TKB1_A, TKB1_B]}
+    - {name: 뒤소매턱2, role: fold, pts: [TKB2_A, TKB2_B]}
