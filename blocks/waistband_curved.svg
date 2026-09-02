@@ -1,27 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="255.864mm" height="532.384mm" viewBox="0 0 255.864 532.384"><rect width="100%" height="100%" fill="white"/><title>곡선 오비</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M220.304 468.884C188.947 468.884 159.257 465.78 128.578 459.295C97.9 452.809 69.494 443.631 40.82 430.941"><title>윗선</title></path>
-<path d="M220.304 506.984C186.254 506.984 154.013 503.613 120.698 496.571C87.384 489.528 56.537 479.562 25.4 465.781"><title>밑선</title></path>
-<path d="M40.82 430.941L25.4 465.781"><title>뒤끝</title></path>
+<svg xmlns="http://www.w3.org/2000/svg" width="255.864mm" height="126.843mm" viewBox="0 0 255.864 126.843"><rect width="100%" height="100%" fill="white"/><title>곡선 오비</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M220.304 63.343C188.947 63.343 159.257 60.239 128.578 53.754C97.9 47.268 69.494 38.091 40.82 25.4"><title>윗선</title></path>
+<path d="M220.304 101.443C186.254 101.443 154.013 98.072 120.698 91.03C87.384 83.987 56.537 74.021 25.4 60.24"><title>밑선</title></path>
+<path d="M40.82 25.4L25.4 60.24"><title>뒤끝</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M40.82 430.941L25.4 465.781"><title>옆선표시</title></path>
+<path d="M40.82 25.4L25.4 60.24"><title>옆선표시</title></path>
 </g>
 <g id="grain" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M230.464 468.884L230.464 506.984"><title>식서</title></path>
+<path d="M230.464 63.343L230.464 101.443"><title>식서</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M220.304 468.884L220.304 506.984"><title>앞끝</title></path>
+<path d="M220.304 63.343L220.304 101.443"><title>앞끝</title></path>
 </g>
 <g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
-<circle cx="220.304" cy="25.4" r="0.762" fill="#06c"/><text x="221.574" y="24.384">C</text>
-<circle cx="220.304" cy="468.884" r="0.762" fill="#06c"/><text x="221.574" y="467.868">T0</text>
-<circle cx="128.578" cy="459.295" r="0.762" fill="#06c"/><text x="129.848" y="458.279">TM</text>
-<circle cx="40.82" cy="430.941" r="0.762" fill="#06c"/><text x="42.09" y="429.925">T1</text>
-<circle cx="220.304" cy="506.984" r="0.762" fill="#06c"/><text x="221.574" y="505.968">B0</text>
-<circle cx="120.698" cy="496.571" r="0.762" fill="#06c"/><text x="121.968" y="495.555">BM</text>
-<circle cx="25.4" cy="465.781" r="0.762" fill="#06c"/><text x="26.67" y="464.765">B1</text>
-<circle cx="40.82" cy="430.941" r="0.762" fill="#06c"/><text x="42.09" y="429.925">TE</text>
-<circle cx="25.4" cy="465.781" r="0.762" fill="#06c"/><text x="26.67" y="464.765">BE</text>
-<circle cx="230.464" cy="468.884" r="0.762" fill="#06c"/><text x="231.734" y="467.868">GR_T</text>
-<circle cx="230.464" cy="506.984" r="0.762" fill="#06c"/><text x="231.734" y="505.968">GR_B</text>
+<circle cx="220.304" cy="-380.141" r="0.762" fill="#06c"/><text x="221.574" y="-381.157">C</text>
+<circle cx="220.304" cy="63.343" r="0.762" fill="#06c"/><text x="221.574" y="62.327">T0</text>
+<circle cx="128.578" cy="53.754" r="0.762" fill="#06c"/><text x="129.848" y="52.738">TM</text>
+<circle cx="40.82" cy="25.4" r="0.762" fill="#06c"/><text x="42.09" y="24.384">T1</text>
+<circle cx="220.304" cy="101.443" r="0.762" fill="#06c"/><text x="221.574" y="100.427">B0</text>
+<circle cx="120.698" cy="91.03" r="0.762" fill="#06c"/><text x="121.968" y="90.014">BM</text>
+<circle cx="25.4" cy="60.24" r="0.762" fill="#06c"/><text x="26.67" y="59.224">B1</text>
+<circle cx="40.82" cy="25.4" r="0.762" fill="#06c"/><text x="42.09" y="24.384">TE</text>
+<circle cx="25.4" cy="60.24" r="0.762" fill="#06c"/><text x="26.67" y="59.224">BE</text>
+<circle cx="230.464" cy="63.343" r="0.762" fill="#06c"/><text x="231.734" y="62.327">GR_T</text>
+<circle cx="230.464" cy="101.443" r="0.762" fill="#06c"/><text x="231.734" y="100.427">GR_B</text>
 </g></svg>

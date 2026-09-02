@@ -98,12 +98,13 @@ class Style:
 
 
 def bbox(res: Resolved):
+    """선 위의 점만으로 범위를 잡는다 (부채꼴 중심 같은 먼 보조점 제외)."""
     xs, ys = [], []
     for l in res.lines:
         for p in l.polyline(8):
             xs.append(p.x)
             ys.append(p.y)
-    for p in res.points.values():
-        xs.append(p.x)
-        ys.append(p.y)
+    if not xs:
+        xs = [p.x for p in res.points.values()]
+        ys = [p.y for p in res.points.values()]
     return min(xs), min(ys), max(xs), max(ys)

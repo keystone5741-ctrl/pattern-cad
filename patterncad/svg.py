@@ -129,12 +129,15 @@ def render_pieces_svg(res: Resolved, gap_in: float = 1.5, margin_in: float = 1.0
 
 def render_svg(res: Resolved, unit: str = "mm", margin_in: float = 1.0, labels: bool = True) -> str:
     """원형 하나를 실물 크기(mm)의 독립 SVG로."""
-    xs = [p.x for p in res.points.values()]
-    ys = [p.y for p in res.points.values()]
+    # 선 위의 점만으로 범위를 잡는다 — 부채꼴 중심처럼 도면 밖에 있는 보조점 때문에 여백이 커지지 않게
+    xs, ys = [], []
     for l in res.lines:
         for p in l.polyline(8):
             xs.append(p.x)
             ys.append(p.y)
+    if not xs:
+        xs = [p.x for p in res.points.values()]
+        ys = [p.y for p in res.points.values()]
     x0, x1, y0, y1 = min(xs) - margin_in, max(xs) + margin_in, min(ys) - margin_in, max(ys) + margin_in
     S = MM_PER_INCH
     W, H = (x1 - x0) * S, (y1 - y0) * S
