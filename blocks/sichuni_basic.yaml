@@ -16,12 +16,12 @@ measurements:
   # --- 신체·기본 치수 (55 기준)
   B:        {ko: 가슴둘레,   value: 33.1/2}
   여유:     {ko: 가슴 여유(전체), value: 2.1/2, note: 패턴 가슴둘레 36 = B + 여유}
-  진동깊이: {value: 8.1/2}
-  등길이:   {value: 15}
+  진동깊이: {value: 8.1/2, note: 아이템·가슴둘레에 따라 달라짐 (공식은 나중에)}
+  등길이:   {value: 15,    note: 일반적으로 고정}
   앞처짐:   {value: 1.1/4, note: 앞판 밑단이 뒤판보다 내려가는 양}
-  앞품:     {value: 13,  note: 도면 표기 앞품/2 = 6.1/2}
-  뒤품:     {value: 14,  note: 도면 표기 뒤품/2 = 7}
-  유장:     {value: 10,  note: 옆목점에서 BP 까지}
+  앞품:     {value: 13,  note: 도면 표기 앞품/2 = 6.1/2. 가슴둘레 또는 브랜드가 원하는 암홀 형태에 따라}
+  뒤품:     {value: 14,  note: 도면 표기 뒤품/2 = 7. 위와 같음}
+  유장:     {value: 10,  note: 옆목점에서 BP 까지. 타겟 연령대에 따라 달라짐 (나이 들수록 가슴이 커지고 처짐 → 유장 길어짐)}
   유폭:     {value: 6.3/4, note: 도면 표기 유폭/2 = 3.3/8}
   # --- 목
   앞목너비:     {value: 2.3/4}
@@ -34,20 +34,23 @@ measurements:
   # --- 어깨
   뒤어깨끝너비: {value: 7.1/2, note: 뒤중심에서 뒤어깨끝점까지 가로}
   뒤어깨끝내림: {value: 1/2,   note: 기준선에서 아래}
-  앞어깨끝너비: {value: 7,     note: 앞중심에서 앞어깨끝점까지 가로. 도면 글자는 7.1/2 인데 실측 7.0}
+  앞어깨가이드너비: {value: 7.1/2, note: 앞어깨 각도 가이드점 — 앞중심에서 가로}
+  앞어깨가이드내림: {value: 2,     note: 같은 점 — 기준선에서 아래. 앞어깨선은 옆목점에서 이 점을 향하고, 길이는 앞어깨길이}
   뒤어깨다트위치: {value: 1.1/2, note: 옆목점에서 어깨선 따라}
   뒤어깨다트폭:   {value: 1/4}
-  뒤어깨다트길이: {value: 4}
+  뒤어깨다트길이: {value: 4, note: 어깨선에 직각으로}
   견갑이세:       {value: 1/4, note: 견갑선 아래 암홀 쪽 1/4 (다트/이세 처리)}
   # --- 암홀·다트
   앞암홀가이드: {value: 1,     note: 앞품선×가슴선 모서리에서 45°}
   뒤암홀가이드: {value: 1.1/8, note: 뒤품선×가슴선 모서리에서 45°}
+  앞암홀접점비율: {value: 2/3, note: 암홀이 앞품선에 닿는 높이 — 어깨끝에서 가슴선까지의 비율. 원하는 암홀 형태에 따라 조절. 도면 실측은 약 1/2}
+  뒤암홀접점비율: {value: 1/2, note: 뒤는 어깨끝과 가슴선의 중간}
   가슴다트폭:   {value: 1.1/4, note: 옆선에서 벌어지는 양}
   # --- 파생
   반폭:       {formula: "B/4 + 여유/4", note: 앞판(=뒤판) 폭. 55 에서 9}
   전폭:       {formula: "B/2 + 여유/2"}
   뒤어깨길이: {formula: "dist(SNP_B, SP_B)", note: 다트 포함}
-  앞어깨길이: {formula: "뒤어깨길이 - 뒤어깨다트폭", note: 도면 표기 '뒤어깨 - 1/4'}
+  앞어깨길이: {formula: "뒤어깨길이 - 뒤어깨다트폭", note: 뒤어깨에서 견갑골 이세분 1/4 을 뺀 길이}
 
 points:
   # ---------------------------------------------------------------- 기준 틀
@@ -74,8 +77,9 @@ points:
   G_NB:     {ko: 뒤목 곡선 가이드,    from: NK_B_W, dir: [1, -1], dist: 뒤목가이드}
   # ---------------------------------------------------------------- 어깨
   SP_B:     {ko: 뒤 어깨끝점,         from: TOP_CB, dx: "-뒤어깨끝너비", dy: 뒤어깨끝내림}
-  SP_F:     {ko: 앞 어깨끝점,         circle: {center: SNP_F, radius: 앞어깨길이}, x: 앞어깨끝너비, side: down}
-  SP_F_TOP: {ko: 앞 어깨끝 기준선점,  at: ["SP_F.x", 0]}
+  G_SF_TOP: {ko: 앞어깨 가이드 기준선점, from: O, dx: 앞어깨가이드너비}
+  G_SF:     {ko: 앞어깨 가이드점,     from: G_SF_TOP, dy: 앞어깨가이드내림}
+  SP_F:     {ko: 앞 어깨끝점,         along: [SNP_F, G_SF], dist: 앞어깨길이, note: 가이드점 방향으로 앞어깨길이만큼}
   BSD1:     {ko: 뒤어깨다트 목쪽,     along: [SNP_B, SP_B], dist: 뒤어깨다트위치}
   BSD2:     {ko: 뒤어깨다트 어깨쪽,   along: [SNP_B, SP_B], dist: "뒤어깨다트위치 + 뒤어깨다트폭"}
   BSD_M:    {ko: 뒤어깨다트 중심,     midpoint: [BSD1, BSD2]}
@@ -88,9 +92,9 @@ points:
   SCAP_W:   {ko: 견갑선×뒤품선,       at: ["전폭 - 뒤품/2", "SCAP.y"]}
   SCAP_W2:  {ko: 견갑이세점,          from: SCAP_W, dy: 견갑이세}
   # ---------------------------------------------------------------- 암홀
-  T_F:      {ko: 앞암홀 앞품선 접점,  at: ["앞품/2", "(SP_F.y + 진동깊이) / 2"], note: 실측 — 어깨끝과 가슴선의 중간 높이}
+  T_F:      {ko: 앞암홀 앞품선 접점,  at: ["앞품/2", "SP_F.y + (진동깊이 - SP_F.y) * 앞암홀접점비율"]}
   G_F:      {ko: 앞암홀 가이드점,     from: FW_BL, dir: [1, -1], dist: 앞암홀가이드}
-  T_B:      {ko: 뒤암홀 뒤품선 접점,  at: ["전폭 - 뒤품/2", "(SP_B.y + 진동깊이) / 2"], note: 실측 — 도면은 이보다 1/4 쯤 위}
+  T_B:      {ko: 뒤암홀 뒤품선 접점,  at: ["전폭 - 뒤품/2", "SP_B.y + (진동깊이 - SP_B.y) * 뒤암홀접점비율"]}
   G_B:      {ko: 뒤암홀 가이드점,     from: BW_BL, dir: [-1, -1], dist: 뒤암홀가이드}
   # ---------------------------------------------------------------- 가슴다트
   BP:       {ko: 유두점,              circle: {center: SNP_F, radius: 유장}, x: "유폭/2", side: down}
@@ -109,7 +113,7 @@ lines:
   - {name: 앞목가이드,   role: construction, pts: [NK_F_C, G_NF]}
   - {name: 뒤목틀,       role: construction, pts: [NK_B_W, SNP_B]}
   - {name: 뒤목가이드,   role: construction, pts: [NK_B_W, G_NB]}
-  - {name: 앞어깨끝수직, role: construction, pts: [SP_F_TOP, SP_F]}
+  - {name: 앞어깨가이드, role: construction, pts: [G_SF_TOP, G_SF, SNP_F]}
   - {name: 유장선,       role: construction, pts: [SNP_F, BP]}
   - {name: 앞암홀가이드, role: construction, pts: [FW_BL, G_F]}
   - {name: 뒤암홀가이드, role: construction, pts: [BW_BL, G_B]}
@@ -122,7 +126,7 @@ lines:
   - {name: 앞어깨선, piece: 앞판, role: outline, pts: [SNP_F, SP_F]}
   - {name: 앞암홀,   piece: 앞판, role: outline, curve: [SP_F, T_F, G_F, UP],
      tangents: {SP_F: {perp: [SNP_F, SP_F]}, T_F: [0, 1], UP: [1, 0]},
-     handles: [[0.05, 0.47], [0.26, 0.43], [0.39, 0.26]], note: 핸들은 원본 도면에 맞춘 값}
+     handles: [[0.35, 0.16], [0.05, 0.26], [0.47, 0.27]], note: 핸들은 원본 도면에 맞춘 값}
   - {name: 앞옆선위, piece: 앞판, role: outline, pts: [UP, BD1]}
   - {name: 가슴다트, piece: 앞판, role: dart,    pts: [BD1, BP, BD2]}
   - {name: 앞옆선아래, piece: 앞판, role: outline, pts: [BD2, HEM_SS_F]}

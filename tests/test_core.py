@@ -85,6 +85,21 @@ class Sichuni(unittest.TestCase):
         back = r.line("뒤어깨선목쪽").length() + r.line("뒤어깨선끝쪽").length()
         self.assertAlmostEqual(r.line("앞어깨선").length(), back, places=6)
 
+    def test_front_shoulder_points_at_guide(self):
+        p = self.res.points
+        d1 = (p["SP_F"] - p["SNP_F"]).unit()
+        d2 = (p["G_SF"] - p["SNP_F"]).unit()
+        self.assertAlmostEqual(d1.cross(d2), 0, places=9)
+        self.assertAlmostEqual(p["G_SF"].x, 7.5)
+        self.assertAlmostEqual(p["G_SF"].y, 2)
+
+    def test_scapula_dart_perpendicular_to_shoulder(self):
+        p = self.res.points
+        shoulder = (p["SP_B"] - p["SNP_B"]).unit()
+        leg = p["SCAP"] - p["BSD_M"]
+        self.assertAlmostEqual(shoulder.dot(leg), 0, places=9)
+        self.assertAlmostEqual(leg.length(), 4)
+
     def test_dart_width(self):
         p = self.res.points
         self.assertAlmostEqual(p["BSD1"].dist(p["BSD2"]), 0.25)
