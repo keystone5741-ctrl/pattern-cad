@@ -1,0 +1,24 @@
+# 머메이드 원피스 (p.67) = 몸판 + 소매 + 플랫 칼라
+name: 머메이드 원피스
+id: mermaid_dress
+source: reference/portfolio.pdf p.67
+blocks:
+  body:
+    block: ../blocks/mermaid_dress_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 높음
+      소매길이: 11.7/8
+      팔꿈치길이: 8
+      소매부리들임: 1/2
+  collar:
+    block: ../blocks/flat_collar.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      앞네크: "len(body.앞목선)"
+      드러난폭: 3.3/4
+      스탠드분: 1/2
+      칼라줄임: 1/8

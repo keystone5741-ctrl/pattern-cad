@@ -1,60 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="558.8mm" height="508mm" viewBox="0 0 558.8 508"><rect width="100%" height="100%" fill="white"/><title>힙본 스커트 원형</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M241.3 215.9L241.3 482.6"><title>앞옆선아래</title></path>
-<path d="M25.4 482.6L241.3 482.6"><title>앞밑단</title></path>
-<path d="M241.3 215.9L241.3 482.6"><title>뒤옆선아래</title></path>
-<path d="M241.3 482.6L482.6 482.6"><title>뒤밑단</title></path>
-<path d="M482.6 317.5L533.4 368.3L533.4 482.6L482.6 482.6"><title>겹트임덧단</title></path>
-<path d="M25.4 92.075C35.56 92.075 40.132 92.075 50.8 92.075C149.875 92.075 186.839 72.353 222.25 63.5"><title>앞허리선</title></path>
-<path d="M222.25 63.5C231.077 92.922 241.3 166.752 241.3 215.9"><title>앞옆선위</title></path>
-<path d="M482.6 79.375L482.6 482.6"><title>뒤중심선</title></path>
-<path d="M482.6 79.375C476.504 79.375 472.694 79.375 457.2 79.375C393.55 79.375 406.601 73.665 393.951 72.238"><title>뒤허리선1</title></path>
-<path d="M368.551 72.238L257.175 63.5"><title>뒤허리선2</title></path>
-<path d="M257.175 63.5C248.369 92.853 241.3 172.997 241.3 215.9"><title>뒤옆선위</title></path>
-</g>
-<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M393.951 72.238L381.251 180.975L368.551 72.238"><title>뒤다트</title></path>
-</g>
-<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M25.4 25.4L482.6 25.4"><title>허리기준선</title></path>
-<path d="M25.4 215.9L482.6 215.9"><title>엉덩이선</title></path>
-<path d="M241.3 25.4L241.3 215.9"><title>옆선기준</title></path>
-<path d="M25.4 76.2L482.6 76.2"><title>힙본기준선</title></path>
-</g>
-<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M482.6 393.7L533.4 368.3"><title>겹트임표시</title></path>
-</g>
-<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M482.6 215.9L476.25 215.9"><title>지퍼끝</title></path>
+<svg xmlns="http://www.w3.org/2000/svg" width="596.9mm" height="469.9mm" viewBox="0 0 596.9 469.9"><rect width="100%" height="100%" fill="white"/>
+<g id="앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M241.3 177.8L241.3 444.5"><title>앞옆선아래</title></path>
+<path d="M25.4 444.5L241.3 444.5"><title>앞밑단</title></path>
+<path d="M25.4 53.975C35.56 53.975 40.132 53.975 50.8 53.975C149.875 53.975 186.839 34.253 222.25 25.4"><title>앞허리선</title></path>
+<path d="M222.25 25.4C231.077 54.822 241.3 128.652 241.3 177.8"><title>앞옆선위</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M25.4 92.075L25.4 482.6"><title>앞중심선</title></path>
+<path d="M25.4 53.975L25.4 444.5"><title>앞중심선</title></path>
 </g>
-<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
-<circle cx="25.4" cy="25.4" r="0.762" fill="#06c"/><text x="26.67" y="24.384">CF_W</text>
-<circle cx="241.3" cy="25.4" r="0.762" fill="#06c"/><text x="242.57" y="24.384">SS_W0</text>
-<circle cx="482.6" cy="25.4" r="0.762" fill="#06c"/><text x="483.87" y="24.384">CB_W0</text>
-<circle cx="25.4" cy="215.9" r="0.762" fill="#06c"/><text x="26.67" y="214.884">CF_H</text>
-<circle cx="241.3" cy="215.9" r="0.762" fill="#06c"/><text x="242.57" y="214.884">SS_H</text>
-<circle cx="482.6" cy="215.9" r="0.762" fill="#06c"/><text x="483.87" y="214.884">CB_H</text>
-<circle cx="25.4" cy="482.6" r="0.762" fill="#06c"/><text x="26.67" y="481.584">CF_HEM</text>
-<circle cx="241.3" cy="482.6" r="0.762" fill="#06c"/><text x="242.57" y="481.584">SS_HEM</text>
-<circle cx="482.6" cy="482.6" r="0.762" fill="#06c"/><text x="483.87" y="481.584">CB_HEM</text>
-<circle cx="482.6" cy="215.9" r="0.762" fill="#06c"/><text x="483.87" y="214.884">ZIP_END</text>
-<circle cx="476.25" cy="215.9" r="0.762" fill="#06c"/><text x="477.52" y="214.884">ZIP_END_N</text>
-<circle cx="482.6" cy="393.7" r="0.762" fill="#06c"/><text x="483.87" y="392.684">VENT_T</text>
-<circle cx="533.4" cy="368.3" r="0.762" fill="#06c"/><text x="534.67" y="367.284">VENT_O</text>
-<circle cx="482.6" cy="317.5" r="0.762" fill="#06c"/><text x="483.87" y="316.484">VENT_S</text>
-<circle cx="533.4" cy="482.6" r="0.762" fill="#06c"/><text x="534.67" y="481.584">VENT_OH</text>
-<circle cx="25.4" cy="92.075" r="0.762" fill="#06c"/><text x="26.67" y="91.059">HB_CF</text>
-<circle cx="50.8" cy="92.075" r="0.762" fill="#06c"/><text x="52.07" y="91.059">HB_CF1</text>
-<circle cx="222.25" cy="63.5" r="0.762" fill="#06c"/><text x="223.52" y="62.484">HB_SSF</text>
-<circle cx="257.175" cy="63.5" r="0.762" fill="#06c"/><text x="258.445" y="62.484">HB_SSB</text>
-<circle cx="482.6" cy="79.375" r="0.762" fill="#06c"/><text x="483.87" y="78.359">HB_CB</text>
-<circle cx="457.2" cy="79.375" r="0.762" fill="#06c"/><text x="458.47" y="78.359">HB_CB1</text>
-<circle cx="25.4" cy="76.2" r="0.762" fill="#06c"/><text x="26.67" y="75.184">HB_L</text>
-<circle cx="482.6" cy="76.2" r="0.762" fill="#06c"/><text x="483.87" y="75.184">HB_R</text>
-<circle cx="381.251" cy="72.238" r="0.762" fill="#06c"/><text x="382.521" y="71.222">BD_C</text>
-<circle cx="368.551" cy="72.238" r="0.762" fill="#06c"/><text x="369.821" y="71.222">BD_L</text>
-<circle cx="393.951" cy="72.238" r="0.762" fill="#06c"/><text x="395.221" y="71.222">BD_R</text>
-<circle cx="381.251" cy="180.975" r="0.762" fill="#06c"/><text x="382.521" y="179.959">BD_T</text>
-</g></svg>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g>
+<g id="뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M279.4 177.8L279.4 444.5"><title>뒤옆선아래</title></path>
+<path d="M279.4 444.5L520.7 444.5"><title>뒤밑단</title></path>
+<path d="M520.7 279.4L571.5 330.2L571.5 444.5L520.7 444.5"><title>겹트임덧단</title></path>
+<path d="M520.7 41.275L520.7 444.5"><title>뒤중심선</title></path>
+<path d="M520.7 41.275C514.604 41.275 510.794 41.275 495.3 41.275C431.65 41.275 444.701 35.565 432.051 34.138"><title>뒤허리선1</title></path>
+<path d="M406.651 34.138L295.275 25.4"><title>뒤허리선2</title></path>
+<path d="M295.275 25.4C286.469 54.753 279.4 134.897 279.4 177.8"><title>뒤옆선위</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M432.051 34.138L419.351 142.875L406.651 34.138"><title>뒤다트</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M520.7 355.6L571.5 330.2"><title>겹트임표시</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M520.7 177.8L514.35 177.8"><title>지퍼끝</title></path>
+</g>
+<text x="279.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g></svg>

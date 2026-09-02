@@ -49,9 +49,19 @@ patterncad/
 blocks/
   sichuni_basic.yaml        시추니 기본 원형 (치수 → 점 규칙 → 선)
   sichuni_dartless.yaml     시추니 무다트 원형 — 기본 원형을 상속(extends)해 바뀐 값만
+  top_body.yaml             상의 몸판 기본틀 — 원형에 허리·엉덩이·밑단 틀을 붙인 것.
+                            옆선을 앞·뒤 따로 잡아 패턴가슴/허리/엉덩이 를 식으로 확인한다
+  box_body.yaml             무다트 몸판틀 — 니트·오버사이즈 아이템의 부모
   sleeve_basic.yaml         소매 원형 — 앞·뒤 암홀 길이에서 소매산높이(AH/3 + 조정)와 사선을 계산. 소매산 단계 선택
   shirt_collar_blouse_body.yaml  셔츠 칼라 블라우스 몸판 (기본 원형 상속)
   shirt_collar_band.yaml / shirt_collar.yaml / cuff.yaml / sleeve_placket.yaml  부속: 칼라밴드·칼라·커프스·견보루
+  oversize_blouse_body.yaml / china_collar_blouse_body.yaml / pussy_bow_blouse_body.yaml
+  sweat_shirt_body.yaml / oversize_hoodie_body.yaml / tight_t_shirt_body.yaml
+  sleeveless_dress_body.yaml / h_line_dress_body.yaml / mermaid_dress_body.yaml
+  flat_collar_dress_body.yaml / jump_suite_body.yaml / jump_suite_pants.yaml
+  sleeve_tuck.yaml          턱(셔링) 소매 — 앞 1"·뒤 1.1/4" 로 턱 위치를 다르게
+  sleeve_two_piece.yaml     두 장 소매 — 큰소매 + 작은소매 (합이 소매통)
+  hood.yaml / rib.yaml / bow_tie.yaml / flat_collar.yaml / banana_band.yaml  부속
   skirt_basic.yaml          제허리 스커트 원형 — H/4 ∓ 1/4 폭, W/4 + 이세, 다트 분량 자동 배분, 겹트임
   skirt_hipbone.yaml        힙본 스커트 원형 (제허리 원형 상속)
   skirt_aline.yaml          세미A / A라인 스커트 — 힙본 원형을 절개해 밑단으로 벌림 (첫 기하 조작)

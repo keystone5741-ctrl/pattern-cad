@@ -1,0 +1,16 @@
+# 칼라밴드 (바나나밴드) — p.72 점프수트. 스탠 칼라의 밴드.
+#
+# 유의사항 (p.72):
+#   - 칼라밴드(바나나밴드)를 제도할 때 **밴드의 적절한 길이는 목옆점에서 1.1/2~2"** 까지
+#     가는 것이 일반적이다 (앞네크 전체를 두르지 않는다)
+extends: shirt_collar_band.yaml
+name: 칼라밴드(바나나밴드)
+id: banana_band
+source: reference/portfolio.pdf p.72
+
+measurements:
+  밴드앞길이: {value: 1.3/4, note: 목옆점에서 앞쪽으로 (1.1/2~2)}
+  앞네크:     {formula: "밴드앞길이", note: 앞네크 전체가 아니라 목옆점에서 1.1/2~2 만}
+  앞올림:     {value: 1/2}
+  뒤높이:     {value: 1.1/4}
+  앞높이:     {value: 1}

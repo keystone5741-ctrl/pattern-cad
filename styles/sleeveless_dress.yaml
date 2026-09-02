@@ -1,0 +1,7 @@
+# 슬리브리스 원피스 (p.63) = 사이바 절개 몸판 (소매 없음)
+name: 슬리브리스 원피스
+id: sleeveless_dress
+source: reference/portfolio.pdf p.63
+blocks:
+  body:
+    block: ../blocks/sleeveless_dress_body.yaml

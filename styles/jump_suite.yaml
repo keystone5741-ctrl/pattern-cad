@@ -1,0 +1,23 @@
+# 점프수트 (p.71) = 오버사이즈 상의 + 하의 + 소매 + 칼라밴드(바나나밴드)
+name: 점프수트
+id: jump_suite
+source: reference/portfolio.pdf p.71
+blocks:
+  body:
+    block: ../blocks/jump_suite_body.yaml
+  pants:
+    block: ../blocks/jump_suite_pants.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 낮음
+      소매길이: 21
+      팔꿈치길이: 11
+      소매부리들임: 3.1/2
+  band:
+    block: ../blocks/banana_band.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      밴드앞길이: 1.3/4

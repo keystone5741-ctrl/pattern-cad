@@ -1,0 +1,24 @@
+# 플랫 칼라 원피스 (p.69) = 몸판 + 소매 + 플랫 칼라(폭 9cm)
+name: 플랫 칼라 원피스
+id: flat_collar_dress
+source: reference/portfolio.pdf p.69
+blocks:
+  body:
+    block: ../blocks/flat_collar_dress_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 약간높음
+      소매길이: 12.1/4
+      팔꿈치길이: 8
+      소매부리들임: 1/2
+  collar:
+    block: ../blocks/flat_collar.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      앞네크: "len(body.앞목선)"
+      드러난폭: "body.칼라폭"
+      겹침분: "body.칼라겹침분"
+      칼라줄임: 1/8

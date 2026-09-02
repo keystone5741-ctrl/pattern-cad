@@ -1,0 +1,54 @@
+# 플랫 칼라 — p.68(머메이드) · p.70(플랫칼라 원피스).
+#
+# 유의사항:
+#   - **칼라의 폭 = 스탠드 분량 + 겉으로 보이는 칼라 폭.** 스탠드 분량까지 고려해 제도한다
+#   - **플랫칼라의 스탠드분은 앞·뒤 어깨선 끝점의 겹침분량과 칼라 폭에 따라 달라진다.**
+#     네크라인이 파인 정도에 따라 겹침 정도도 달라진다.
+#     겹침을 크게 할수록 목둘레선 곡이 세지고(반지름이 작아지고) 스탠드가 높아진다
+#   - **칼라 길이는 몸판보다 1/16~1/4 짧게** 제도해 늘려 봉제한다. 같은 길이로 하면
+#     소재에 따라 **목옆점 부위가 꺾인다.** 또 칼라는 비바이어스 결이라 늘어지므로 늘림양을 준다.
+#     뒤네크는 곡이 적어 M.P 하지 않는다
+#   - **겉칼라(우아에리)는 식서방향**, 유동적인 **안칼라(지에리)는 바이어스**로 재단한다
+#
+# 좌표계: 목둘레선 호의 중심이 원점. 각도 0 = +x, 시계 방향(y 아래)이 양수.
+name: 플랫 칼라
+id: flat_collar
+category: part
+units: inch
+source: reference/portfolio.pdf p.68
+
+measurements:
+  뒤네크:   {value: 3.1/2, note: 몸판 뒤목선 길이 — 스타일에서 자동}
+  앞네크:   {value: 5,     note: 몸판 앞목선 길이}
+  칼라줄임: {value: 1/8, note: 1/16~1/4. 몸판보다 짧게 해 늘려 봉제 — 목옆점 꺾임 방지}
+  목선길이: {formula: "뒤네크 + 앞네크 - 칼라줄임"}
+  스탠드분: {value: 1/2, note: 목에서 서는 분량}
+  드러난폭: {value: 3.3/4, note: 겉으로 보이는 칼라 폭}
+  전체폭:   {formula: "스탠드분 + 드러난폭"}
+  겹침분:   {value: 1.1/4, note: 앞·뒤 어깨끝점을 겹치는 양. 클수록 곡이 세지고 스탠드가 높아진다}
+  반지름:   {formula: "목선길이 * 2 / (겹침분 + 1)", note: 겹침이 클수록 반지름이 작아진다}
+  각:       {formula: "목선길이 / 반지름 * 57.29578", note: 호의 중심각(도)}
+  외곽둘레: {formula: "목선길이 * (반지름 + 전체폭) / 반지름"}
+
+points:
+  C:   {ko: 호 중심, at: [0, 0]}
+  N_CB: {ko: 목선 뒤중심, polar: {center: C, radius: 반지름, angle: 0}}
+  N_SNP: {ko: 목선 목옆점, polar: {center: C, radius: 반지름, angle: "각 * 뒤네크 / 목선길이"}}
+  N_CF: {ko: 목선 앞중심, polar: {center: C, radius: 반지름, angle: 각}}
+  O_CB: {ko: 외곽 뒤중심, polar: {center: C, radius: "반지름 + 전체폭", angle: 0}}
+  O_SNP: {ko: 외곽 목옆점, polar: {center: C, radius: "반지름 + 전체폭", angle: "각 * 뒤네크 / 목선길이"}}
+  O_CF: {ko: 외곽 앞중심, polar: {center: C, radius: "반지름 + 전체폭", angle: 각}}
+  S_CB: {ko: 스탠드선 뒤중심, polar: {center: C, radius: "반지름 + 스탠드분", angle: 0}}
+  S_CF: {ko: 스탠드선 앞중심, polar: {center: C, radius: "반지름 + 스탠드분", angle: 각}}
+
+lines:
+  - {name: 목둘레선, role: outline, curve: [N_CB, N_SNP, N_CF],
+     tangents: {N_CB: [0, 1], N_CF: {perp: [C, N_CF]}}, handles: [[0.35, 0.35], [0.35, 0.35]]}
+  - {name: 외곽선, role: outline, curve: [O_CB, O_SNP, O_CF],
+     tangents: {O_CB: [0, 1], O_CF: {perp: [C, O_CF]}}, handles: [[0.35, 0.35], [0.35, 0.35]]}
+  - {name: 뒤중심, role: fold, pts: [N_CB, O_CB]}
+  - {name: 앞끝, role: outline, pts: [N_CF, O_CF]}
+  - {name: 스탠드선, role: construction, curve: [S_CB, S_CF],
+     tangents: {S_CB: [0, 1], S_CF: {perp: [C, S_CF]}}, handles: [[0.5, 0.5]],
+     note: 이 선까지가 목에서 서는 분량}
+  - {name: 목옆점, role: notch, pts: [N_SNP, O_SNP]}

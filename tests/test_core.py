@@ -477,6 +477,88 @@ class Pants(unittest.TestCase):
         self.assertTrue(2 <= band["패턴허리"] - band["완성"] <= 3)
 
 
+class Tops(unittest.TestCase):
+    """상의 12종 — 계산된 가슴·허리·엉덩이가 포트폴리오 사이즈표와 맞는가."""
+
+    # 원형 id → (가슴, 허리, 엉덩이)  None = 사이즈표에 없거나 다른 방식으로 잰다
+    SIZES = {
+        "shirt_collar_blouse_body": (36,      30,     37.75),   # 표기 가슴 35.1/2 — 도면은 36
+        "oversize_blouse_body":     (45.5,    45.375, 45.375),
+        "china_collar_blouse_body": (37.25,   36.625, 38.75),
+        "pussy_bow_blouse_body":    (40,      39.25,  39.25),
+        "sweat_shirt_body":         (44,      42,     40),
+        "oversize_hoodie_body":     (47.25,   46,     None),
+        "tight_t_shirt_body":       (32.375,  30,     33.5),
+        "sleeveless_dress_body":    (34.875,  28,     37.875),
+        "h_line_dress_body":        (34.75,   28.625, 37),
+        "mermaid_dress_body":       (35.5,    29.625, 37.375),
+        "flat_collar_dress_body":   (36.875,  29.75,  40),
+        "jump_suite_body":          (44.25,   41.75,  None),
+    }
+
+    def test_size_table(self):
+        for bid, (bust, waist, hip) in self.SIZES.items():
+            with self.subTest(bid):
+                m = Block.load(ROOT / "blocks" / f"{bid}.yaml").evaluate().measurements
+                self.assertAlmostEqual(m["패턴가슴"], bust, delta=0.02)
+                self.assertAlmostEqual(m["패턴허리"], waist, delta=0.2)
+                if hip is not None:
+                    self.assertAlmostEqual(m["패턴엉덩이"], hip, delta=0.2)
+
+    def test_front_and_back_side_seams_are_separate(self):
+        """옆선을 앞·뒤 따로 잡아야 허리를 줄인 만큼 둘레가 줄어든다."""
+        blk = Block.load(ROOT / "blocks" / "top_body.yaml")
+        loose, tight = blk.evaluate({"옆선허리들임": 0}), blk.evaluate({"옆선허리들임": 1})
+        self.assertAlmostEqual(loose.measurements["패턴허리"] - tight.measurements["패턴허리"], 4)
+        # 앞 옆선은 안쪽으로, 뒤 옆선은 바깥쪽으로 (뒤중심에서 보면 역시 안쪽으로)
+        p = tight.points
+        self.assertLess(p["WL_SS_F"].x, p["WL_SS_B"].x)
+
+    def test_neck_rule_p54(self):
+        """앞네크너비 1/8 깎으면 앞중심네크 3/16 내림(2:3), 뒤는 1/16 내림(2:1)."""
+        blk = Block.load(ROOT / "blocks" / "top_body.yaml")
+        base, cut = blk.evaluate(), blk.evaluate({"앞네크깎음": 0.125, "뒤네크깎음": 0.125})
+        self.assertAlmostEqual(base.measurements["앞목너비"] - cut.measurements["앞목너비"], 0.125)
+        self.assertAlmostEqual(cut.measurements["앞목깊이"] - base.measurements["앞목깊이"], 0.1875)
+        self.assertAlmostEqual(base.measurements["뒤목너비"] - cut.measurements["뒤목너비"], 0.125)
+        self.assertAlmostEqual(base.measurements["뒤목점올림"] - cut.measurements["뒤목점올림"], 0.0625)
+
+    def test_hood_bottom_is_shorter_than_the_neckline(self):
+        """후드 밑선은 바이어스라 네크보다 1/8 작게 제도해 늘려 봉제한다 (p.60)."""
+        res = Block.load(ROOT / "blocks" / "hood.yaml").evaluate()
+        m = res.measurements
+        self.assertAlmostEqual(m["후드밑선"], m["네크길이"] - m["밑선줄임"])
+        self.assertAlmostEqual(res.line("후드밑선").length(), m["후드밑선"], delta=0.1)
+
+    def test_two_piece_sleeve_keeps_the_sleeve_width(self):
+        """큰소매 + 작은소매 = 한 장 소매의 소매통."""
+        res = Block.load(ROOT / "blocks" / "sleeve_two_piece.yaml").evaluate()
+        p, m = res.points, res.measurements
+        one = p["BIC_F"].x - p["BIC_B"].x
+        upper = p["FS_T"].x - p["BS_T"].x
+        self.assertAlmostEqual(upper + m["작은소매폭"], one)
+
+    def test_flat_collar_outer_edge_grows_with_width(self):
+        """플랫 칼라: 폭이 넓어질수록 외곽둘레가 커지고, 겹침이 클수록 곡이 세진다 (p.70)."""
+        blk = Block.load(ROOT / "blocks" / "flat_collar.yaml")
+        narrow, wide = blk.evaluate({"드러난폭": 2.75}), blk.evaluate({"드러난폭": 4})
+        self.assertGreater(wide.measurements["외곽둘레"], narrow.measurements["외곽둘레"])
+        flat, curved = blk.evaluate({"겹침분": 0.5}), blk.evaluate({"겹침분": 2.5})
+        self.assertGreater(flat.measurements["반지름"], curved.measurements["반지름"])
+        # 목둘레선은 어떤 경우에도 몸판 목선보다 칼라줄임만큼 짧다
+        for r in (narrow, wide, flat, curved):
+            self.assertAlmostEqual(r.line("목둘레선").length(), r.measurements["목선길이"], delta=0.02)
+
+    def test_rib_is_smaller_than_the_body(self):
+        """시보리는 몸판 둘레보다 작다. 블루종 핏은 10cm(≈4") 이상 (p.58)."""
+        from patterncad.style import Style
+
+        res = Style.load(ROOT / "styles" / "sweat_shirt.yaml").evaluate()
+        rib = res["밑단시보리"].measurements
+        self.assertLess(rib["길이"], res["body"].measurements["패턴엉덩이"])
+        self.assertGreaterEqual(rib["줄임"], 4)
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

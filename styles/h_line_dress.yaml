@@ -1,0 +1,17 @@
+# H라인 원피스 (p.65) = 몸판 + 두 장 소매
+name: H라인 원피스
+id: h_line_dress
+source: reference/portfolio.pdf p.65
+blocks:
+  body:
+    block: ../blocks/h_line_dress_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_two_piece.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 중간
+      소매길이: 24
+      팔꿈치길이: 13
+      소매부리들임: 1.1/2
+      상동선내림: 3/8

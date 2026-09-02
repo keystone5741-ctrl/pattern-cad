@@ -1,0 +1,57 @@
+# 두 장 소매 (큰소매 + 작은소매) — p.65 H라인 원피스, 자켓 공통.
+#
+# 한 장 소매를 앞·뒤 밑선에서 각각 안쪽으로 들여 잘라, 들어낸 두 띠를 이어 붙인 것이 작은소매다.
+#   큰소매 폭 = 소매통 − 앞이동 − 뒤이동,  작은소매 폭 = 앞이동 + 뒤이동
+# 그래서 둘을 합치면 소매통이 그대로다. 봉제선이 팔 안쪽으로 숨는다.
+#
+# 유의사항 (p.66):
+#   - 두 장 소매는 **앞소매 제도 시 1/4~1/2 내린 지점에 상동선(소매통선)을 맞춰** 제도한다
+extends: sleeve_basic.yaml
+name: 두 장 소매
+id: sleeve_two_piece
+source: reference/portfolio.pdf p.65
+
+measurements:
+  앞이동:     {value: 1.1/4, note: 앞 밑선에서 안쪽으로 들이는 양}
+  뒤이동:     {value: 1,     note: 뒤 밑선에서 안쪽으로}
+  상동선내림: {value: 3/8,   note: 1/4~1/2. 앞소매 절개점의 소매통선을 이만큼 내린다}
+  언더깊이:   {value: 1,     note: 작은소매 위선이 소매통선보다 아래로 파이는 깊이}
+  작은소매폭: {formula: "앞이동 + 뒤이동"}
+  큰소매간격: {value: 3, note: 그림에서 작은소매를 옆에 놓는 거리}
+
+points:
+  # --- 큰소매 절개선
+  BS_T: {ko: 큰소매 뒤 절개점(소매통), from: BIC_B, dx: 뒤이동}
+  FS_T: {ko: 큰소매 앞 절개점(소매통), at: ["BIC_F.x - 앞이동", "소매산높이 + 상동선내림"]}
+  BS_H: {ko: 큰소매 뒤 밑단, from: HEM_B, dx: 뒤이동}
+  FS_H: {ko: 큰소매 앞 밑단, from: HEM_F, dx: "-앞이동"}
+  BS_E: {ko: 큰소매 뒤 팔꿈치, intersect: [[BS_T, BS_H], [EL_C, EL_C2]]}
+  FS_E: {ko: 큰소매 앞 팔꿈치, intersect: [[FS_T, FS_H], [EL_C, EL_C2]]}
+  BS_E2: {ko: 뒤 팔꿈치 들임, from: BS_E, dx: 팔꿈치들임}
+  # --- 작은소매 (오른쪽에 따로 놓는다)
+  U_OX: {ko: 작은소매 원점, at: ["BIC_F.x + 큰소매간격", "소매산높이 + 상동선내림"]}
+  U_F_T: {ko: 작은소매 앞 위, at: ["U_OX.x", "U_OX.y"]}
+  U_B_T: {ko: 작은소매 뒤 위, at: ["U_OX.x + 작은소매폭", 소매산높이]}
+  U_MID: {ko: 작은소매 위선 바닥, at: ["U_OX.x + 앞이동", "소매산높이 + 언더깊이"]}
+  U_F_H: {ko: 작은소매 앞 밑단, at: ["U_OX.x", "HEM_F.y"]}
+  U_B_H: {ko: 작은소매 뒤 밑단, at: ["U_OX.x + 작은소매폭", "HEM_B.y"]}
+
+lines:
+  remove: [뒤옆선, 앞옆선, 소매부리]
+  replace:
+    # 소매산 곡선을 절개점까지만 쓴다 — 큰소매 조각으로 옮긴다
+    - {name: 뒤소매산, piece: 큰소매, role: outline, curve: [BS_T, X_B, SCP],
+       tangents: {BS_T: [0, -1], X_B: {along: [SCP, BIC_B]}, SCP: [1, 0]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+    - {name: 앞소매산, piece: 큰소매, role: outline, curve: [SCP, X_F, FS_T],
+       tangents: {SCP: [1, 0], X_F: {along: [SCP, BIC_F]}, FS_T: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+  add:
+    - {name: 큰소매앞절개, piece: 큰소매, role: outline, curve: [FS_T, FS_E, FS_H],
+       tangents: {FS_E: {along: [FS_T, FS_H]}}, handles: [[0.45, 0.45], [0.45, 0.45]]}
+    - {name: 큰소매뒤절개, piece: 큰소매, role: outline, curve: [BS_T, BS_E2, BS_H],
+       tangents: {BS_E2: {along: [BS_T, BS_H]}}, handles: [[0.45, 0.45], [0.45, 0.45]]}
+    - {name: 큰소매밑단, piece: 큰소매, role: outline, pts: [BS_H, FS_H]}
+    - {name: 작은소매위선, piece: 작은소매, role: outline, curve: [U_F_T, U_MID, U_B_T],
+       tangents: {U_MID: [1, 0]}, handles: [[0.5, 0.5], [0.5, 0.5]]}
+    - {name: 작은소매앞, piece: 작은소매, role: outline, pts: [U_F_T, U_F_H]}
+    - {name: 작은소매뒤, piece: 작은소매, role: outline, pts: [U_B_T, U_B_H]}
+    - {name: 작은소매밑단, piece: 작은소매, role: outline, pts: [U_F_H, U_B_H]}
