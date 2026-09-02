@@ -1,0 +1,83 @@
+# A라인 / 세미A 스커트 — 포트폴리오 p.9–10. 힙본 원형을 절개-벌림 해서 만든다.
+#
+# 힙본 원형에서 바뀌는 것 (p.10):
+#   앞 옆솔기 곡을 3/4 → 5/8 로 푼다. 힙본은 앞다트를 없애려고 옆솔기를 최대로 들이지만,
+#   A라인은 전개하면서 허리분량을 M.P 시킬 수 있어 그만큼 옆솔기를 풀 수 있다.
+#   앞판에 작은 다트(1/4)가 생긴다. 다트 길이는 세미A 3.3/8, A라인 2.1/2.
+#
+# 전개(절개-벌림):
+#   벌리는 양을 옆솔기에만 주면 앞이 납작하고 옆으로만 A가 되어 입체적이지 못하다 →
+#   앞·뒤판 중간(절개선)과 옆선으로 나눠 준다.
+#   밑단 벌림: 세미A 3/8~1/2, A라인 최대 2 (2 를 넘어 총둘레 8 이상이면 A라인이 아니라 플레어).
+#   결과 엉덩이둘레 증가: 세미A 최대 1/2, A라인 1~1.1/2.
+#   절개선 위쪽(허리)을 축으로 바깥 부분을 회전시켜 밑단에서 벌어지게 한다.
+#
+# 그 밖에 (p.10): 얇은 원단은 옆솔기 좌우 총 3 심지, 필요하면 밑단에도 1.1/2 심지.
+#   밑단은 각확인(ac) 후 블렌딩하면 기장이 줄므로 gpl 로 각도를 유지한 채 늘린다.
+#   기장을 늘릴 때는 밑단을 1~2 벌린 뒤 그 각도를 유지하며 늘려야 실루엣이 유지된다.
+extends: skirt_hipbone.yaml
+name: A라인 스커트
+id: skirt_aline
+source: reference/portfolio.pdf p.9
+
+measurements:
+  실루엣:   {choice: A라인, options: [세미A, A라인], note: 밑단 벌림량과 앞다트 길이를 함께 정한다}
+  앞벌림:   {table: {세미A: 3/8, A라인: 1}, key: 실루엣, note: 앞판 절개선에서 밑단이 벌어지는 양}
+  옆벌림:   {table: {세미A: 5/8, A라인: 1}, key: 실루엣, note: 옆솔기에서 벌어지는 양 (앞·뒤 합)}
+  뒤벌림:   {table: {세미A: 3/8, A라인: 1}, key: 실루엣}
+  앞다트길이: {table: {세미A: 3.3/8, A라인: 2.1/2}, key: 실루엣}
+  앞옆선들임: {value: 5/8, note: 힙본의 3/4 에서 풀어줌 — 전개로 M.P 되는 만큼}
+  앞다트폭:   {value: 1/4}
+  앞절개위치: {value: 3.15/16, note: 앞중심에서 절개선(= 앞다트 중심)까지}
+  뒤절개위치: {formula: "뒤다트위치 + 뒤다트폭/2", note: 뒤 절개선은 뒤다트 자리를 그대로 쓴다}
+  앞벌림각:   {formula: "atan2(앞벌림, 기장)", note: 절개선 위(허리)를 축으로 회전하는 각}
+  뒤벌림각:   {formula: "atan2(뒤벌림, 기장)"}
+
+points:
+  # 앞판 절개선과 작은 다트
+  SL_F_T:  {ko: 앞 절개선 위(회전축), at: [앞절개위치, "힙본내림 - 옆선올림"]}
+  FD_L:    {ko: 앞다트 왼다리, from: SL_F_T, dx: "-앞다트폭/2"}
+  FD_R:    {ko: 앞다트 오른다리, from: SL_F_T, dx: "앞다트폭/2"}
+  FD_T:    {ko: 앞다트 끝,      from: SL_F_T, dy: 앞다트길이}
+  SL_F_B:  {ko: 앞 절개선 아래, at: [앞절개위치, 기장]}
+  # 앞판 바깥쪽(절개선 ~ 옆선)을 회전
+  HB_SSF2: {ko: 앞 옆선 허리점(전개), rotate: {of: HB_SSF, center: SL_F_T, angle: "-앞벌림각"}}
+  SS_H_F:  {ko: 앞 옆선 엉덩이점(전개), rotate: {of: SS_H, center: SL_F_T, angle: "-앞벌림각"}}
+  SS_HEM_F0: {ko: 앞 옆선 밑단(회전만), rotate: {of: SS_HEM, center: SL_F_T, angle: "-앞벌림각"}}
+  SS_HEM_F: {ko: 앞 옆선 밑단, from: SS_HEM_F0, dx: "옆벌림/2"}
+  # 뒤판 절개선 (뒤다트 자리)
+  SL_B_T:  {ko: 뒤 절개선 위(회전축), at: ["앞폭 + 뒤폭 - 뒤절개위치", "힙본내림 - 옆선올림"]}
+  SL_B_B:  {ko: 뒤 절개선 아래, at: ["앞폭 + 뒤폭 - 뒤절개위치", 기장]}
+  HB_SSB2: {ko: 뒤 옆선 허리점(전개), rotate: {of: HB_SSB, center: SL_B_T, angle: 뒤벌림각}}
+  SS_H_B:  {ko: 뒤 옆선 엉덩이점(전개), rotate: {of: SS_H, center: SL_B_T, angle: 뒤벌림각}}
+  SS_HEM_B0: {ko: 뒤 옆선 밑단(회전만), rotate: {of: SS_HEM, center: SL_B_T, angle: 뒤벌림각}}
+  SS_HEM_B: {ko: 뒤 옆선 밑단, from: SS_HEM_B0, dx: "-옆벌림/2"}
+  # 밑단 벌어진 자리
+  HEM_F_IN:  {ko: 앞 절개 밑단 안쪽, at: ["앞절개위치", 기장], note: 안쪽 조각은 움직이지 않는다}
+  HEM_F_OUT: {ko: 앞 절개 밑단 바깥, rotate: {of: SL_F_B, center: SL_F_T, angle: "-앞벌림각"}}
+  HEM_B_IN:  {ko: 뒤 절개 밑단 안쪽, at: ["앞폭 + 뒤폭 - 뒤절개위치", 기장]}
+  HEM_B_OUT: {ko: 뒤 절개 밑단 바깥, rotate: {of: SL_B_B, center: SL_B_T, angle: 뒤벌림각}}
+
+lines:
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단]
+  add:
+    # 앞판
+    - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, FD_L],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.4, 0.4]]}
+    - {name: 앞다트, piece: 앞판, role: dart, pts: [FD_L, FD_T, FD_R]}
+    - {name: 앞허리선밖, piece: 앞판, role: outline, pts: [FD_R, HB_SSF2]}
+    - {name: 앞절개선, piece: 앞판, role: construction, pts: [SL_F_T, SL_F_B]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF2, SS_H_F, SS_HEM_F],
+       tangents: {HB_SSF2: [0.3, 1], SS_H_F: {along: [SS_H_F, SS_HEM_F]}, SS_HEM_F: {along: [SS_H_F, SS_HEM_F]}},
+       handles: [[0.4, 0.4], [0.34, 0.34]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [CF_HEM, HEM_F_IN]}
+    - {name: 앞밑단밖, piece: 앞판, role: outline, pts: [HEM_F_OUT, SS_HEM_F]}
+    - {name: 앞벌림, piece: 앞판, role: mark, pts: [HEM_F_IN, SL_F_T, HEM_F_OUT]}
+    # 뒤판
+    - {name: 뒤절개선, piece: 뒤판, role: construction, pts: [SL_B_T, SL_B_B]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB2, SS_H_B, SS_HEM_B],
+       tangents: {HB_SSB2: [-0.3, 1], SS_H_B: {along: [SS_H_B, SS_HEM_B]}, SS_HEM_B: {along: [SS_H_B, SS_HEM_B]}},
+       handles: [[0.4, 0.4], [0.34, 0.34]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, HEM_B_IN]}
+    - {name: 뒤밑단밖, piece: 뒤판, role: outline, pts: [HEM_B_OUT, SS_HEM_B]}
+    - {name: 뒤벌림, piece: 뒤판, role: mark, pts: [HEM_B_IN, SL_B_T, HEM_B_OUT]}

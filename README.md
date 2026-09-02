@@ -54,6 +54,7 @@ blocks/
   shirt_collar_band.yaml / shirt_collar.yaml / cuff.yaml / sleeve_placket.yaml  부속: 칼라밴드·칼라·커프스·견보루
   skirt_basic.yaml          제허리 스커트 원형 — H/4 ∓ 1/4 폭, W/4 + 이세, 다트 분량 자동 배분, 겹트임
   skirt_hipbone.yaml        힙본 스커트 원형 (제허리 원형 상속)
+  skirt_aline.yaml          세미A / A라인 스커트 — 힙본 원형을 절개해 밑단으로 벌림 (첫 기하 조작)
   waistband.yaml            오비 (직사각형)
   waistband_curved.yaml     곡선 오비 — 윗선(= 허리둘레)이 밑선보다 짧아 부채꼴로 휨
   *.svg                     실물 크기(mm) 그림

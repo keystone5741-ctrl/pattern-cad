@@ -310,6 +310,52 @@ class Trig(unittest.TestCase):
         self.assertAlmostEqual(evaluate("atan2(1, 1)", env), 45)
 
 
+class ALine(unittest.TestCase):
+    """절개-벌림 (첫 기하 조작)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.b = Block.load(ROOT / "blocks" / "skirt_aline.yaml")
+
+    def hips(self, res):
+        p = res.points
+        return p["SS_H_F"].x + (p["CB_HEM"].x - p["SS_H_B"].x)
+
+    def test_semi_a_adds_half_inch_at_hip(self):
+        """문서: 세미A 는 힙본보다 엉덩이둘레가 최대 1/2 커진다."""
+        r = self.b.evaluate({"실루엣": "세미A"})
+        self.assertAlmostEqual(2 * (self.hips(r) - 18.0), 0.5, delta=0.1)
+
+    def test_a_line_adds_one_to_one_and_half(self):
+        """문서: A라인은 1 ~ 1.1/2 커진다."""
+        r = self.b.evaluate({"실루엣": "A라인"})
+        self.assertGreaterEqual(2 * (self.hips(r) - 18.0), 1.0)
+        self.assertLessEqual(2 * (self.hips(r) - 18.0), 1.5)
+
+    def test_side_seam_released(self):
+        self.assertAlmostEqual(self.b.evaluate().measurements["앞옆선들임"], 0.625)
+
+    def test_spread_opens_at_hem_not_waist(self):
+        r = self.b.evaluate({"실루엣": "A라인"})
+        p = r.points
+        self.assertAlmostEqual(p["HEM_F_OUT"].x - p["HEM_F_IN"].x, 1.0, delta=0.02)
+        self.assertAlmostEqual(p["SL_F_T"].dist(p["HEM_F_OUT"]), p["SL_F_T"].dist(p["SL_F_B"]), places=6)
+
+    def test_rotate_and_mirror_rules(self):
+        from patterncad.geometry import Pt
+
+        env_pts = {"C": Pt(0, 0), "P": Pt(1, 0), "A": Pt(0, 0), "B": Pt(0, 1)}
+        blk = Block({"measurements": {}, "points": {
+            "C": {"at": [0, 0]}, "P": {"at": [1, 0]}, "A": {"at": [0, 0]}, "B": {"at": [0, 1]},
+            "R": {"rotate": {"of": "P", "center": "C", "angle": 90}},
+            "M": {"mirror": {"of": "P", "line": ["A", "B"]}},
+        }, "lines": []})
+        res = blk.evaluate()
+        self.assertAlmostEqual(res.points["R"].x, 0, places=9)
+        self.assertAlmostEqual(res.points["R"].y, 1, places=9)
+        self.assertAlmostEqual(res.points["M"].x, -1, places=9)
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

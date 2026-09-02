@@ -23,6 +23,8 @@
     foot: {of: P, line: [A, B]}                 수선의 발
     perp: {from: P, line: [A, B], dist: L, side: [sx, sy]}   AB 에 수직으로 L 만큼. side 는 방향 힌트
     polar: {center: P, radius: R, angle: A}     P 에서 반지름 R, 각도 A(도, 0 = +x, 양수 = y 아래쪽)
+    rotate: {of: P, center: C, angle: A}        P 를 C 중심으로 A 도 회전 (절개-벌림에 쓴다)
+    mirror: {of: P, line: [A, B]}               직선 AB 에 대칭
     circle: {center: P, radius: R}, x: X, side: down|up      원 위에서 x 가 X 인 점
     circle: {center: P, radius: R}, y: Y, side: right|left   원 위에서 y 가 Y 인 점
 
@@ -296,6 +298,15 @@ class Block:
                     if n.dot(Pt(ev(sx), ev(sy))) < 0:
                         n = -n
                 return P(r["from"]) + n * ev(r["dist"])
+            if "rotate" in rule:
+                r = rule["rotate"]
+                c = P(r["center"])
+                return c + (P(r["of"]) - c).rotate(ev(r["angle"]))
+            if "mirror" in rule:
+                r = rule["mirror"]
+                a, b = r["line"]
+                f = foot_of_perpendicular(P(r["of"]), P(a), P(b))
+                return f + (f - P(r["of"]))
             if "polar" in rule:
                 r = rule["polar"]
                 a = math.radians(ev(r["angle"]))

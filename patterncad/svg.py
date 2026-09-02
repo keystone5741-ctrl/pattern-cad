@@ -94,6 +94,39 @@ def render_style_svg(results: dict, gap_in: float = 2.0, margin_in: float = 1.0,
     return "\n".join(out)
 
 
+def render_pieces_svg(res: Resolved, gap_in: float = 1.5, margin_in: float = 1.0, labels: bool = False) -> str:
+    """조각(piece)별로 떼어 나란히 놓은 실물 크기(mm) SVG. 전개 후 앞·뒤판이 겹쳐 보이는 것을 푼다."""
+    S = MM_PER_INCH
+    names = []
+    for l in res.lines:
+        if l.piece and l.piece not in names:
+            names.append(l.piece)
+    if not names:
+        return render_svg(res, margin_in=margin_in, labels=labels)
+
+    groups = {n: [l for l in res.lines if l.piece == n] for n in names}
+    boxes = {}
+    for n, ls in groups.items():
+        pts = [p for l in ls for p in l.polyline(8)]
+        boxes[n] = (min(p.x for p in pts), min(p.y for p in pts), max(p.x for p in pts), max(p.y for p in pts))
+    total_w = sum(b[2] - b[0] for b in boxes.values()) + gap_in * (len(names) - 1) + 2 * margin_in
+    total_h = max(b[3] - b[1] for b in boxes.values()) + 2 * margin_in
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{_f(total_w * S)}mm" height="{_f(total_h * S)}mm" '
+        f'viewBox="0 0 {_f(total_w * S)} {_f(total_h * S)}"><rect width="100%" height="100%" fill="white"/>',
+    ]
+    x = margin_in
+    for n in names:
+        x0, y0, x1, y1 = boxes[n]
+        sub = Resolved(res.block, res.measurements, res.points, res.point_meta, groups[n])
+        out.append(f'<g id="{n}">')
+        out.append(render_group(sub, S, (x - x0) * S, (margin_in - y0) * S, labels=labels, stroke_w=0.35))
+        out.append(f'<text x="{_f(x * S)}" y="{_f((margin_in - 0.4) * S)}" font-size="{_f(S * 0.3)}" '
+                   f'font-family="sans-serif" fill="#444">{n}</text></g>')
+        x += (x1 - x0) + gap_in
+    return "\n".join(out) + "</svg>"
+
+
 def render_svg(res: Resolved, unit: str = "mm", margin_in: float = 1.0, labels: bool = True) -> str:
     """원형 하나를 실물 크기(mm)의 독립 SVG로."""
     xs = [p.x for p in res.points.values()]
