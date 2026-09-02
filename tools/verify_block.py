@@ -133,6 +133,7 @@ def main(argv=None):
     ap.add_argument("--out", help="출력 SVG 경로 (기본: 원형 파일 옆 verify_<id>.svg)")
     ap.add_argument("--set", nargs="*", default=[], metavar="치수=값",
                     help="치수 임시 덮어쓰기 (도면이 표기와 다를 때 실측값으로 형태만 검증)")
+    ap.add_argument("--piece", help="이 조각(piece)의 선만 겹친다 — 앞·뒤판이 따로 그려진 도면용 (원점을 조각마다 다르게)")
     args = ap.parse_args(argv)
 
     from patterncad.units import parse_inch
@@ -145,6 +146,10 @@ def main(argv=None):
     res = block.evaluate(overrides)
     if overrides:
         print("임시 치수:", overrides)
+    if args.piece:
+        res.lines = [l for l in res.lines if l.piece == args.piece]
+        used = {n for l in res.lines for n in l.point_names}
+        res.points = {k: v for k, v in res.points.items() if k in used}
     doc = pymupdf.open(str(ROOT / "reference" / "portfolio.pdf"))
     page = doc[args.page - 1]
     polys = original_polylines(page, args.scale, tuple(args.origin))
@@ -176,7 +181,8 @@ def main(argv=None):
     svg = src.read_text(encoding="utf-8")
     overlay = render_group(res, args.scale, args.origin[0], args.origin[1], color="#d22", stroke_w=0.6)
     svg = svg.replace("</svg>", f'<g id="rule" opacity="0.85">{overlay}</g></svg>')
-    out = Path(args.out) if args.out else Path(args.block).with_name(f"verify_{block.id}.svg")
+    suffix = f"_{args.piece}" if args.piece else ""
+    out = Path(args.out) if args.out else Path(args.block).with_name(f"verify_{block.id}{suffix}.svg")
     out.write_text(svg, encoding="utf-8")
     png = out.with_suffix(".png")
     d = pymupdf.open(str(out))

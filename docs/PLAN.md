@@ -197,3 +197,4 @@ UI를 8단계에 뒀지만, **곡선을 손으로 만져보는 최소 화면은 
 - 소매 원형 `blocks/sleeve_basic.yaml` (p.48 검증, 소매산 곡선 편차 0.03″), 아이템별 소매 조사 `docs/sleeve_survey.md`
 - 방침: 모든 아이템에서 도면과 함께 유의사항 글·그림을 읽고 `docs/drafting_notes.md` 에 기록
 - 소매산 단계(선택값 → 조정값·이세 표) 도입, 이세는 스타일에서 덮어쓰기. 스타일(`styles/`) 도입: 몸판 암홀 곡선 길이가 소매 앞AH·뒤AH 로 자동 전달 (`patterncad/style.py`)
+- 3단계 착수: 셔츠 칼라 블라우스 몸판을 기본 원형 상속 + 규칙 추가로 재현 (`blocks/shirt_collar_blouse_body.yaml`), 몸판+소매 스타일 (`styles/shirt_collar_blouse.yaml`). 다트 회전 같은 기하 조작은 아직 없음 — 지금까지는 전부 규칙(치수 변경·점 추가)으로 표현됨

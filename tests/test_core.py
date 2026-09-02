@@ -187,6 +187,38 @@ class Sleeve(unittest.TestCase):
                            self.res.points["BIC_F"].x - self.res.points["BIC_B"].x)  # 낮은 소매산 → 소매통 넓어짐
 
 
+class Blouse(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.res = Block.load(ROOT / "blocks" / "shirt_collar_blouse_body.yaml").evaluate()
+
+    def test_overrides_from_block(self):
+        p, m = self.res.points, self.res.measurements
+        self.assertAlmostEqual(m["진동깊이"], 8.25)
+        self.assertAlmostEqual(p["UP2"].x, 9.25)  # 옆선여유 1/4
+        self.assertAlmostEqual(p["UP2"].y, 8.375)  # 진동내림 1/8
+        self.assertAlmostEqual(p["HEM_CF"].y, 24.25)  # 기장 + 앞내림
+        self.assertAlmostEqual(p["CB_WL"].x, 17.25)  # 뒤중심 허리 3/4 들임
+
+    def test_front_shoulder_equals_back(self):
+        r = self.res
+        self.assertAlmostEqual(r.line("앞어깨선").length(), r.line("뒤어깨선").length(), places=6)
+
+    def test_waist_darts(self):
+        p = self.res.points
+        self.assertAlmostEqual(p["FWD_L"].x, 5.375)
+        self.assertAlmostEqual(p["FWD_R"].x - p["FWD_L"].x, 1)
+        self.assertAlmostEqual(p["CB_WL"].x - p["BWD_R"].x, 4.25)
+
+    def test_style_sleeve_follows_blouse_armhole(self):
+        from patterncad.style import Style
+
+        res = Style.load(ROOT / "styles" / "shirt_collar_blouse.yaml").evaluate()
+        s, b = res["sleeve"], res["body"]
+        self.assertAlmostEqual(s.measurements["AH"], b.line("앞암홀").length() + b.line("뒤암홀").length())
+        self.assertAlmostEqual(s.measurements["소매산조정"], -0.5)
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

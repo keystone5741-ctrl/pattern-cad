@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="884.216mm" height="700.277mm" viewBox="0 0 884.216 700.277">
+<rect width="100%" height="100%" fill="white"/>
+<g id="body">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M107.95 57.15C103.887 67.444 103.545 83.218 85.499 107.724C74.666 122.436 50.7 149.225 38.1 149.225"><title>앞목선</title></path>
+<path d="M107.95 57.15L220.986 101.77"><title>앞어깨선</title></path>
+<path d="M220.986 101.77C214.905 117.175 203.2 166.085 203.2 182.647C203.2 202.931 206.745 229.49 221.161 245.564C233.131 258.913 253.44 266.7 273.05 266.7"><title>앞암홀</title></path>
+<path d="M412.75 25.4C414.125 29.207 422.681 38.541 426.22 40.505C438.48 47.305 441.327 52.387 495.3 52.387"><title>뒤목선</title></path>
+<path d="M298.45 66.675C305.6 86.476 317.5 143.045 317.5 165.1C317.5 181.257 308.694 223.781 297.294 243.319C290.505 254.956 281.134 266.7 273.05 266.7"><title>뒤암홀</title></path>
+<path d="M38.1 149.225L38.1 669.925"><title>앞중심선</title></path>
+<path d="M273.05 266.7L273.05 310.653"><title>앞옆선위</title></path>
+<path d="M273.05 329.703C269.907 364.443 263.525 400.093 263.525 434.975C263.525 498.266 285.75 562.184 285.75 625.475C285.75 630.714 285.75 636.111 285.75 641.35"><title>앞옆선</title></path>
+<path d="M38.1 669.925C162.747 669.925 200.243 692.654 285.75 641.35"><title>앞밑단</title></path>
+<path d="M495.3 52.387C495.3 136.928 485.775 178.984 485.775 263.525C485.775 332.211 476.25 366.289 476.25 434.975"><title>뒤중심선</title></path>
+<path d="M476.25 434.975L476.25 663.575"><title>뒤중심선아래</title></path>
+<path d="M412.75 25.4L298.45 66.675"><title>뒤어깨선</title></path>
+<path d="M273.05 266.7C269.907 322.231 263.525 379.355 263.525 434.975C263.525 498.266 285.75 562.184 285.75 625.475C285.75 634.905 285.75 644.62 285.75 654.05"><title>뒤옆선</title></path>
+<path d="M476.25 663.575C399.955 663.575 362.045 654.05 285.75 654.05"><title>뒤밑단</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M273.05 310.653L123.825 310.653L273.05 329.703"><title>가슴다트</title></path>
+<path d="M187.325 310.653L174.625 434.975L187.325 600.075L200.025 434.975L187.325 310.653"><title>앞허리다트</title></path>
+<path d="M355.6 263.525L342.9 434.975L355.6 574.675L368.3 434.975L355.6 263.525"><title>뒤허리다트</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M38.1 53.975L495.3 53.975"><title>기준선</title></path>
+<path d="M38.1 263.525L495.3 263.525"><title>가슴선</title></path>
+<path d="M266.7 53.975L266.7 263.525"><title>옆선기준</title></path>
+<path d="M203.2 53.975L203.2 263.525"><title>앞품선</title></path>
+<path d="M317.5 53.975L317.5 263.525"><title>뒤품선</title></path>
+<path d="M38.1 53.975L38.1 149.225"><title>앞중심위</title></path>
+<path d="M107.95 53.975L107.95 130.175L38.1 149.225"><title>앞목틀</title></path>
+<path d="M107.95 130.175L85.499 107.724"><title>앞목가이드</title></path>
+<path d="M412.75 53.975L412.75 25.4"><title>뒤목틀</title></path>
+<path d="M412.75 53.975L426.22 40.505"><title>뒤목가이드</title></path>
+<path d="M228.6 53.975L228.6 104.775L107.95 57.15"><title>앞어깨가이드</title></path>
+<path d="M107.95 57.15L123.825 310.653"><title>유장선</title></path>
+<path d="M203.2 263.525L221.161 245.564"><title>앞암홀가이드</title></path>
+<path d="M317.5 263.525L297.294 243.319"><title>뒤암홀가이드</title></path>
+<path d="M38.1 434.975L495.3 434.975"><title>허리선</title></path>
+<path d="M38.1 625.475L495.3 625.475"><title>엉덩이선</title></path>
+<path d="M266.7 263.525L266.7 434.975"><title>옆선틀</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M25.4 149.225L25.4 669.925"><title>단작왼쪽</title></path>
+<path d="M50.8 149.225L50.8 669.925"><title>단작오른쪽</title></path>
+<path d="M376.915 38.34L370.942 40.497"><title>뒤어깨이세</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="38.1" cy="53.975" r="0.762" fill="#06c"/><text x="39.37" y="52.959">O</text>
+<circle cx="38.1" cy="53.975" r="0.762" fill="#06c"/><text x="39.37" y="52.959">O_F</text>
+<circle cx="266.7" cy="53.975" r="0.762" fill="#06c"/><text x="267.97" y="52.959">TOP_SS</text>
+<circle cx="495.3" cy="53.975" r="0.762" fill="#06c"/><text x="496.57" y="52.959">TOP_CB</text>
+<circle cx="38.1" cy="263.525" r="0.762" fill="#06c"/><text x="39.37" y="262.509">BL_CF</text>
+<circle cx="266.7" cy="263.525" r="0.762" fill="#06c"/><text x="267.97" y="262.509">UP</text>
+<circle cx="495.3" cy="263.525" r="0.762" fill="#06c"/><text x="496.57" y="262.509">BL_CB</text>
+<circle cx="495.3" cy="434.975" r="0.762" fill="#06c"/><text x="496.57" y="433.959">WL_CB</text>
+<circle cx="107.95" cy="53.975" r="0.762" fill="#06c"/><text x="109.22" y="52.959">NK_F_W</text>
+<circle cx="107.95" cy="57.15" r="0.762" fill="#06c"/><text x="109.22" y="56.134">SNP_F</text>
+<circle cx="38.1" cy="149.225" r="0.762" fill="#06c"/><text x="39.37" y="148.209">FNP</text>
+<circle cx="107.95" cy="130.175" r="0.762" fill="#06c"/><text x="109.22" y="129.159">NK_F_C</text>
+<circle cx="85.499" cy="107.724" r="0.762" fill="#06c"/><text x="86.769" y="106.708">G_NF</text>
+<circle cx="495.3" cy="52.387" r="0.762" fill="#06c"/><text x="496.57" y="51.371">BNP</text>
+<circle cx="412.75" cy="53.975" r="0.762" fill="#06c"/><text x="414.02" y="52.959">NK_B_W</text>
+<circle cx="412.75" cy="25.4" r="0.762" fill="#06c"/><text x="414.02" y="24.384">SNP_B</text>
+<circle cx="426.22" cy="40.505" r="0.762" fill="#06c"/><text x="427.49" y="39.489">G_NB</text>
+<circle cx="298.45" cy="66.675" r="0.762" fill="#06c"/><text x="299.72" y="65.659">SP_B</text>
+<circle cx="228.6" cy="53.975" r="0.762" fill="#06c"/><text x="229.87" y="52.959">G_SF_TOP</text>
+<circle cx="228.6" cy="104.775" r="0.762" fill="#06c"/><text x="229.87" y="103.759">G_SF</text>
+<circle cx="220.986" cy="101.77" r="0.762" fill="#06c"/><text x="222.256" y="100.754">SP_F</text>
+<circle cx="203.2" cy="53.975" r="0.762" fill="#06c"/><text x="204.47" y="52.959">FW_TOP</text>
+<circle cx="203.2" cy="263.525" r="0.762" fill="#06c"/><text x="204.47" y="262.509">FW_BL</text>
+<circle cx="317.5" cy="53.975" r="0.762" fill="#06c"/><text x="318.77" y="52.959">BW_TOP</text>
+<circle cx="317.5" cy="263.525" r="0.762" fill="#06c"/><text x="318.77" y="262.509">BW_BL</text>
+<circle cx="203.2" cy="182.647" r="0.762" fill="#06c"/><text x="204.47" y="181.631">T_F</text>
+<circle cx="221.161" cy="245.564" r="0.762" fill="#06c"/><text x="222.431" y="244.548">G_F</text>
+<circle cx="317.5" cy="165.1" r="0.762" fill="#06c"/><text x="318.77" y="164.084">T_B</text>
+<circle cx="297.294" cy="243.319" r="0.762" fill="#06c"/><text x="298.564" y="242.303">G_B</text>
+<circle cx="123.825" cy="310.653" r="0.762" fill="#06c"/><text x="125.095" y="309.637">BP</text>
+<circle cx="273.05" cy="310.653" r="0.762" fill="#06c"/><text x="274.32" y="309.637">BD1</text>
+<circle cx="273.05" cy="329.703" r="0.762" fill="#06c"/><text x="274.32" y="328.687">BD2</text>
+<circle cx="273.05" cy="266.7" r="0.762" fill="#06c"/><text x="274.32" y="265.684">UP2</text>
+<circle cx="38.1" cy="434.975" r="0.762" fill="#06c"/><text x="39.37" y="433.959">WL_CF</text>
+<circle cx="38.1" cy="625.475" r="0.762" fill="#06c"/><text x="39.37" y="624.459">HL_CF</text>
+<circle cx="495.3" cy="625.475" r="0.762" fill="#06c"/><text x="496.57" y="624.459">HL_CB0</text>
+<circle cx="38.1" cy="669.925" r="0.762" fill="#06c"/><text x="39.37" y="668.909">HEM_CF</text>
+<circle cx="495.3" cy="663.575" r="0.762" fill="#06c"/><text x="496.57" y="662.559">HEM_CB0</text>
+<circle cx="266.7" cy="434.975" r="0.762" fill="#06c"/><text x="267.97" y="433.959">WL_SS0</text>
+<circle cx="263.525" cy="434.975" r="0.762" fill="#06c"/><text x="264.795" y="433.959">WL_SS</text>
+<circle cx="285.75" cy="625.475" r="0.762" fill="#06c"/><text x="287.02" y="624.459">HL_SS</text>
+<circle cx="285.75" cy="641.35" r="0.762" fill="#06c"/><text x="287.02" y="640.334">HEM_SS_F</text>
+<circle cx="285.75" cy="654.05" r="0.762" fill="#06c"/><text x="287.02" y="653.034">HEM_SS_B</text>
+<circle cx="485.775" cy="263.525" r="0.762" fill="#06c"/><text x="487.045" y="262.509">CB_BL</text>
+<circle cx="476.25" cy="434.975" r="0.762" fill="#06c"/><text x="477.52" y="433.959">CB_WL</text>
+<circle cx="476.25" cy="663.575" r="0.762" fill="#06c"/><text x="477.52" y="662.559">CB_HEM</text>
+<circle cx="187.325" cy="434.975" r="0.762" fill="#06c"/><text x="188.595" y="433.959">FWD_C</text>
+<circle cx="174.625" cy="434.975" r="0.762" fill="#06c"/><text x="175.895" y="433.959">FWD_L</text>
+<circle cx="200.025" cy="434.975" r="0.762" fill="#06c"/><text x="201.295" y="433.959">FWD_R</text>
+<circle cx="187.325" cy="310.653" r="0.762" fill="#06c"/><text x="188.595" y="309.637">FWD_TOP</text>
+<circle cx="187.325" cy="600.075" r="0.762" fill="#06c"/><text x="188.595" y="599.059">FWD_BOT</text>
+<circle cx="355.6" cy="434.975" r="0.762" fill="#06c"/><text x="356.87" y="433.959">BWD_C</text>
+<circle cx="342.9" cy="434.975" r="0.762" fill="#06c"/><text x="344.17" y="433.959">BWD_L</text>
+<circle cx="368.3" cy="434.975" r="0.762" fill="#06c"/><text x="369.57" y="433.959">BWD_R</text>
+<circle cx="355.6" cy="263.525" r="0.762" fill="#06c"/><text x="356.87" y="262.509">BWD_TOP</text>
+<circle cx="355.6" cy="574.675" r="0.762" fill="#06c"/><text x="356.87" y="573.659">BWD_BOT</text>
+<circle cx="25.4" cy="149.225" r="0.762" fill="#06c"/><text x="26.67" y="148.209">PL_L_TOP</text>
+<circle cx="25.4" cy="669.925" r="0.762" fill="#06c"/><text x="26.67" y="668.909">PL_L_BOT</text>
+<circle cx="50.8" cy="149.225" r="0.762" fill="#06c"/><text x="52.07" y="148.209">PL_R_TOP</text>
+<circle cx="50.8" cy="669.925" r="0.762" fill="#06c"/><text x="52.07" y="668.909">PL_R_BOT</text>
+<circle cx="376.915" cy="38.34" r="0.762" fill="#06c"/><text x="378.185" y="37.324">BSE1</text>
+<circle cx="370.942" cy="40.497" r="0.762" fill="#06c"/><text x="372.212" y="39.481">BSE2</text>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body — 셔츠 칼라 블라우스 몸판</text>
+</g>
+<g id="sleeve">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M546.1 154.069C583.261 140.628 593.054 116.854 596.051 114.479C601.671 110.025 645.341 25.4 708.442 25.4"><title>뒤소매산</title></path>
+<path d="M708.442 25.4C766.118 25.4 790.073 95.249 794.37 98.925C797.592 101.683 812.279 150.812 858.816 154.069"><title>앞소매산</title></path>
+<path d="M546.1 154.069L577.85 574.675"><title>뒤옆선</title></path>
+<path d="M858.816 154.069L827.066 574.675"><title>앞옆선</title></path>
+<path d="M577.85 574.675C620.945 577.818 665.232 584.2 708.442 584.2C747.714 584.2 787.92 577.818 827.066 574.675"><title>소매부리</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M708.442 25.4L708.442 584.2"><title>소매중심선</title></path>
+<path d="M546.1 154.069L858.816 154.069"><title>소매통선</title></path>
+<path d="M559.395 330.2L845.52 330.2"><title>팔꿈치선</title></path>
+<path d="M651.292 25.4L759.242 25.4"><title>소매산높이선</title></path>
+<path d="M708.442 25.4L546.1 154.069"><title>뒤사선</title></path>
+<path d="M708.442 25.4L858.816 154.069"><title>앞사선</title></path>
+<path d="M651.292 25.4L571.5 154.069"><title>뒤가이드</title></path>
+<path d="M759.242 25.4L820.716 154.069"><title>앞가이드</title></path>
+<path d="M546.1 154.069L546.1 584.2"><title>뒤틀세로</title></path>
+<path d="M858.816 154.069L858.816 584.2"><title>앞틀세로</title></path>
+<path d="M546.1 584.2L858.816 584.2"><title>밑단틀</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M559.395 330.2L565.745 330.2"><title>뒤팔꿈치표시</title></path>
+<path d="M845.52 330.2L839.17 330.2"><title>앞팔꿈치표시</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="708.442" cy="25.4" r="0.762" fill="#06c"/><text x="709.712" y="24.384">SCP</text>
+<circle cx="708.442" cy="154.069" r="0.762" fill="#06c"/><text x="709.712" y="153.053">BIC_C</text>
+<circle cx="546.1" cy="154.069" r="0.762" fill="#06c"/><text x="547.37" y="153.053">BIC_B</text>
+<circle cx="858.816" cy="154.069" r="0.762" fill="#06c"/><text x="860.086" y="153.053">BIC_F</text>
+<circle cx="651.292" cy="25.4" r="0.762" fill="#06c"/><text x="652.562" y="24.384">GT_B</text>
+<circle cx="759.242" cy="25.4" r="0.762" fill="#06c"/><text x="760.512" y="24.384">GT_F</text>
+<circle cx="571.5" cy="154.069" r="0.762" fill="#06c"/><text x="572.77" y="153.053">GB_B</text>
+<circle cx="820.716" cy="154.069" r="0.762" fill="#06c"/><text x="821.986" y="153.053">GB_F</text>
+<circle cx="596.051" cy="114.479" r="0.762" fill="#06c"/><text x="597.321" y="113.463">X_B</text>
+<circle cx="794.37" cy="98.925" r="0.762" fill="#06c"/><text x="795.64" y="97.909">X_F</text>
+<circle cx="708.442" cy="330.2" r="0.762" fill="#06c"/><text x="709.712" y="329.184">EL_C</text>
+<circle cx="708.442" cy="584.2" r="0.762" fill="#06c"/><text x="709.712" y="583.184">HEM_C</text>
+<circle cx="577.85" cy="584.2" r="0.762" fill="#06c"/><text x="579.12" y="583.184">HEM_B0</text>
+<circle cx="827.066" cy="584.2" r="0.762" fill="#06c"/><text x="828.336" y="583.184">HEM_F0</text>
+<circle cx="577.85" cy="574.675" r="0.762" fill="#06c"/><text x="579.12" y="573.659">HEM_B</text>
+<circle cx="827.066" cy="574.675" r="0.762" fill="#06c"/><text x="828.336" y="573.659">HEM_F</text>
+<circle cx="733.842" cy="330.2" r="0.762" fill="#06c"/><text x="735.112" y="329.184">EL_C2</text>
+<circle cx="559.395" cy="330.2" r="0.762" fill="#06c"/><text x="560.665" y="329.184">EL_B</text>
+<circle cx="845.52" cy="330.2" r="0.762" fill="#06c"/><text x="846.79" y="329.184">EL_F</text>
+<circle cx="565.745" cy="330.2" r="0.762" fill="#06c"/><text x="567.015" y="329.184">EL_B_IN</text>
+<circle cx="839.17" cy="330.2" r="0.762" fill="#06c"/><text x="840.44" y="329.184">EL_F_IN</text>
+<circle cx="546.1" cy="584.2" r="0.762" fill="#06c"/><text x="547.37" y="583.184">FR_B</text>
+<circle cx="858.816" cy="584.2" r="0.762" fill="#06c"/><text x="860.086" y="583.184">FR_F</text>
+</g>
+<text x="546.1" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve — 소매 원형</text>
+</g>
+</svg>
