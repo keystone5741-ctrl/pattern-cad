@@ -52,11 +52,14 @@ blocks/
   sleeve_basic.yaml         소매 원형 — 앞·뒤 암홀 길이에서 소매산높이(AH/3 + 조정)와 사선을 계산. 소매산 단계 선택
   shirt_collar_blouse_body.yaml  셔츠 칼라 블라우스 몸판 (기본 원형 상속)
   shirt_collar_band.yaml / shirt_collar.yaml / cuff.yaml / sleeve_placket.yaml  부속: 칼라밴드·칼라·커프스·견보루
+  skirt_basic.yaml          제허리 스커트 원형 — H/4 ∓ 1/4 폭, W/4 + 이세, 다트 분량 자동 배분, 겹트임
+  waistband.yaml            오비
   *.svg                     실물 크기(mm) 그림
   verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
 styles/
   sichuni_with_sleeve.yaml  스타일 = 원형 묶음 + 치수 연결 (몸판 암홀 길이 → 소매 앞AH·뒤AH 자동)
   shirt_collar_blouse.yaml  셔츠 칼라 블라우스 = 몸판 + 소매 + 칼라밴드(목선 길이 자동) + 칼라(밴드 윗선 자동) + 커프스 + 견보루
+  basic_skirt.yaml          제허리 스커트 = 스커트 원형 + 오비 (허리 치수 자동)
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤
@@ -72,7 +75,7 @@ python tools/verify_block.py blocks/sichuni_basic.yaml --page 44 --fit    # 곡�
 
 ## 다음 단계
 
-1. 상의 아이템(셔츠칼라 블라우스 …)을 원형 + 조작으로 재현 → 스커트 원형 → 팬츠 원형 (상의 → 스커트 → 팬츠 → 아우터 순)
+1. 스커트 아이템(힙본·A라인·플레어 …) → 팬츠 원형 → 아우터 (상의 → 스커트 → 팬츠 → 아우터 순)
 2. 조작 엔진(다트 이동 · 절개-벌림 · 여유 변경)으로 포트폴리오 아이템 재현
 3. 사이즈 체계(55/66 · S/M/L · 숫자 등 선택, 기준 사이즈 선택)와 핏 4단계 → 자동 생성
 4. 조각화 · DXF 입출력 · 그레이딩 · 마카 · 데스크톱 UI

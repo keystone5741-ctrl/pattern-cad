@@ -1,0 +1,29 @@
+# 오비(허리밴드) — p.4. 반쪽(앞중심 골): 길이 = W/4 × 2, 높이 1.3/8, 여밈 연장 1.1/4, 옆선 위치 노치.
+# 좌표계: 왼쪽 위(앞중심)가 원점, +x 오른쪽(뒤중심 쪽), y 아래.
+name: 오비
+id: waistband
+category: part
+units: inch
+source: reference/portfolio.pdf p.4
+
+measurements:
+  허리4:  {ko: W/4 + 이세, value: 6.5/8, note: 스커트 원형에서 자동}
+  높이:   {value: 1.3/8}
+  연장:   {value: 1.1/4, note: 단추·훅 여밈}
+  길이:   {formula: "허리4 * 2"}
+
+points:
+  TL: {at: [0, 0]}
+  TR: {at: [길이, 0]}
+  BR: {at: [길이, 높이]}
+  BL: {at: [0, 높이]}
+  ER: {ko: 연장 위, at: ["길이 + 연장", 0]}
+  EB: {ko: 연장 아래, at: ["길이 + 연장", 높이]}
+  SN: {ko: 옆선 노치, at: [허리4, 높이]}
+  SNT: {at: [허리4, "높이 - 0.25"]}
+
+lines:
+  - {name: 외곽, role: outline, pts: [TL, ER, EB, BL], closed: true}
+  - {name: 앞중심, role: fold, pts: [TL, BL]}
+  - {name: 뒤중심, role: mark, pts: [TR, BR]}
+  - {name: 옆선노치, role: notch, pts: [SN, SNT]}

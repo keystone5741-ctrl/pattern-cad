@@ -1,0 +1,12 @@
+# 제허리 스커트 = 스커트 원형 + 오비 (허리 치수 자동)
+name: 제허리 스커트
+id: basic_skirt
+source: reference/portfolio.pdf p.4
+
+blocks:
+  skirt:
+    block: ../blocks/skirt_basic.yaml
+  waistband:
+    block: ../blocks/waistband.yaml
+    measurements:
+      허리4: "skirt.허리4"

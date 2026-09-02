@@ -219,6 +219,38 @@ class Blouse(unittest.TestCase):
         self.assertAlmostEqual(s.measurements["소매산조정"], -0.5)
 
 
+class Skirt(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.res = Block.load(ROOT / "blocks" / "skirt_basic.yaml").evaluate()
+
+    def test_widths_and_darts(self):
+        m = self.res.measurements
+        self.assertAlmostEqual(m["앞폭"], 8.75)
+        self.assertAlmostEqual(m["뒤폭"], 9.25)
+        self.assertAlmostEqual(m["허리4"], 6.625)
+        # 다트 분량 = 폭 − (W/4 + 이세) − 옆선들임, 둘로 나눔
+        self.assertAlmostEqual(m["앞다트폭"], (8.75 - 6.625 - 0.75) / 2)
+        self.assertAlmostEqual(m["뒤다트폭"], (9.25 - 6.625 - 0.75) / 2)
+
+    def test_waist_adds_up(self):
+        """허리선 길이(직선 근사) − 다트 = W/4 + 이세."""
+        p, m = self.res.points, self.res.measurements
+        front = p["CF_W"].dist(p["SS_WF"]) - 2 * m["앞다트폭"]
+        self.assertAlmostEqual(front, m["허리4"], delta=0.01)
+
+    def test_dart_tip_leans_to_side(self):
+        p = self.res.points
+        self.assertAlmostEqual(p["FD1_T"].x - p["FD1_C"].x, 0.125)
+        self.assertAlmostEqual(p["BD1_T"].x - p["BD1_C"].x, -0.125)
+
+    def test_waistband_links(self):
+        from patterncad.style import Style
+
+        res = Style.load(ROOT / "styles" / "basic_skirt.yaml").evaluate()
+        self.assertAlmostEqual(res["waistband"].measurements["길이"], 2 * res["skirt"].measurements["허리4"])
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 
