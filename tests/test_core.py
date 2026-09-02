@@ -144,5 +144,36 @@ class SichuniDartless(unittest.TestCase):
         self.assertAlmostEqual(r.line("앞어깨선").length(), r.line("뒤어깨선").length() - 0.25, places=6)
 
 
+class Sleeve(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.res = Block.load(ROOT / "blocks" / "sleeve_basic.yaml").evaluate()
+
+    def test_cap_height_formula(self):
+        m = self.res.measurements
+        self.assertAlmostEqual(m["소매산높이"], (m["앞AH"] + m["뒤AH"]) / 3 + m["소매산조정"])
+
+    def test_slant_lengths(self):
+        p, m = self.res.points, self.res.measurements
+        self.assertAlmostEqual(p["SCP"].dist(p["BIC_B"]), m["뒤AH"] + m["뒤소매이세"])
+        self.assertAlmostEqual(p["SCP"].dist(p["BIC_F"]), m["앞AH"] + m["앞소매이세"])
+
+    def test_crossing_on_slant(self):
+        p = self.res.points
+        d = (p["BIC_B"] - p["SCP"]).unit()
+        self.assertAlmostEqual((p["X_B"] - p["SCP"]).cross(d), 0, places=9)
+
+    def test_elbow_on_elbow_line(self):
+        p, m = self.res.points, self.res.measurements
+        self.assertAlmostEqual(p["EL_B"].y, m["팔꿈치길이"])
+        self.assertAlmostEqual(p["EL_F"].y, m["팔꿈치길이"])
+
+    def test_lower_cap_lowers_height(self):
+        low = Block.load(ROOT / "blocks" / "sleeve_basic.yaml").evaluate({"소매산조정": -1.625})
+        self.assertLess(low.measurements["소매산높이"], self.res.measurements["소매산높이"])
+        self.assertGreater(low.points["BIC_F"].x - low.points["BIC_B"].x,
+                           self.res.points["BIC_F"].x - self.res.points["BIC_B"].x)  # 낮은 소매산 → 소매통 넓어짐
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,93 @@
+# 소매 원형 (한 장 소매) — 포트폴리오 p.48 셔츠칼라 블라우스 소매를 규칙으로 옮긴 것.
+#
+# 암홀이 먼저고 소매가 따라간다. 입력은 몸판의 앞·뒤 암홀 길이(앞AH, 뒤AH)이고,
+#   소매산높이 = AH/3 + 소매산조정        (AH = 앞AH + 뒤AH)
+#   뒤 사선 길이 = 뒤AH + 뒤소매이세,  앞 사선 길이 = 앞AH + 앞소매이세
+# 로 소매산점에서 소매통선까지 사선을 긋고, 소매통 폭은 그 결과로 나온다.
+# 소매산조정·이세는 아이템/소재에 따라 달라진다 (docs/sleeve_survey.md):
+#   낮은 소매산(−) → 다이마루·캐주얼(티셔츠·스웻·아노락), 높은 소매산(+) → 이세 넣어 일자로 떨어지는 소매(자켓·드레시)
+#
+# 소매산 곡선: 위쪽은 사선 바깥으로 부풀고 아래쪽은 안으로 들어가며, 가이드선(소매산점 옆 2.1/4"·2" 에서
+# 소매통 끝 안쪽 1"·1.1/2" 로 그은 선)과 사선의 교점을 지난다. 곡선 핸들은 p.48 도면에 맞춘 값.
+#
+# 좌표계: 소매산점이 원점, y 아래. 왼쪽(−x)이 뒤, 오른쪽(+x)이 앞. 단위 인치.
+
+name: 소매 원형
+id: sleeve_basic
+category: sleeve
+units: inch
+source: reference/portfolio.pdf p.48 (셔츠칼라 블라우스 소매)
+
+measurements:
+  # --- 몸판에서 오는 값 (기본값은 p.48 몸판 실측)
+  앞AH:  {ko: 앞 암홀 길이, value: 7.5/8, note: 몸판 앞암홀 곡선 길이. 나중에 스타일에서 몸판 원형과 자동 연결}
+  뒤AH:  {ko: 뒤 암홀 길이, value: 8.5/16}
+  AH:    {formula: "앞AH + 뒤AH"}
+  # --- 소매산
+  소매산조정: {value: -1/2, note: 소매산높이 = AH/3 + 이 값. 셔츠 블라우스 −1/2, 스웻 −1.5/8, 차이나칼라 +1.7/8 …}
+  앞소매이세: {value: -3/8, note: 앞 사선 = 앞AH + 이 값. 음수면 소매가 암홀보다 짧아 늘려 봉제(다이마루)}
+  뒤소매이세: {value: -3/8}
+  소매산높이: {formula: "AH/3 + 소매산조정"}
+  # --- 길이
+  소매길이:   {value: 22}
+  팔꿈치길이: {value: 12, note: 소매산점에서}
+  # --- 소매산 곡선 가이드
+  뒤가이드위:   {value: 2.1/4, note: 소매산점에서 뒤쪽으로 (소매산 높이선 위)}
+  앞가이드위:   {value: 2}
+  뒤가이드아래: {value: 1,     note: 뒤 소매통 끝에서 안쪽으로}
+  앞가이드아래: {value: 1.1/2}
+  # --- 밑단
+  소매부리들임: {value: 1.1/4, note: 밑단에서 옆선이 양쪽으로 들어오는 양}
+  옆선올림:     {value: 3/8,   note: 소매 밑단 양 끝을 올려 커프스가 밖으로 휘지 않게 (1/4~1/2)}
+  팔꿈치들임:   {value: 1/4,   note: 팔꿈치선에서 옆선이 들어오는 양 (표시용)}
+
+points:
+  SCP:    {ko: 소매산점,            at: [0, 0]}
+  BIC_C:  {ko: 소매통 중심,         from: SCP, dy: 소매산높이}
+  BIC_B:  {ko: 뒤 소매통 끝,        circle: {center: SCP, radius: "뒤AH + 뒤소매이세"}, y: 소매산높이, side: left}
+  BIC_F:  {ko: 앞 소매통 끝,        circle: {center: SCP, radius: "앞AH + 앞소매이세"}, y: 소매산높이, side: right}
+  GT_B:   {ko: 뒤 가이드 위점,      from: SCP, dx: "-뒤가이드위"}
+  GT_F:   {ko: 앞 가이드 위점,      from: SCP, dx: 앞가이드위}
+  GB_B:   {ko: 뒤 가이드 아래점,    from: BIC_B, dx: 뒤가이드아래}
+  GB_F:   {ko: 앞 가이드 아래점,    from: BIC_F, dx: "-앞가이드아래"}
+  X_B:    {ko: 뒤 소매산 교차점,    intersect: [[SCP, BIC_B], [GT_B, GB_B]], note: 곡선이 사선을 가로지르는 점}
+  X_F:    {ko: 앞 소매산 교차점,    intersect: [[SCP, BIC_F], [GT_F, GB_F]]}
+  EL_C:   {ko: 팔꿈치 중심,         from: SCP, dy: 팔꿈치길이}
+  HEM_C:  {ko: 소매부리 중심,       from: SCP, dy: 소매길이}
+  HEM_B0: {ko: 뒤 밑단 틀점,        at: ["BIC_B.x + 소매부리들임", 소매길이]}
+  HEM_F0: {ko: 앞 밑단 틀점,        at: ["BIC_F.x - 소매부리들임", 소매길이]}
+  HEM_B:  {ko: 뒤 소매부리 끝,      from: HEM_B0, dy: "-옆선올림"}
+  HEM_F:  {ko: 앞 소매부리 끝,      from: HEM_F0, dy: "-옆선올림"}
+  EL_C2:  {ko: 팔꿈치선 방향점,     from: EL_C, dx: 1}
+  EL_B:   {ko: 뒤 팔꿈치점,         intersect: [[BIC_B, HEM_B], [EL_C, EL_C2]], note: 옆선 × 팔꿈치선 (수평)}
+  EL_F:   {ko: 앞 팔꿈치점,         intersect: [[BIC_F, HEM_F], [EL_C, EL_C2]]}
+  EL_B_IN: {ko: 뒤 팔꿈치 들임점,   from: EL_B, dx: 팔꿈치들임}
+  EL_F_IN: {ko: 앞 팔꿈치 들임점,   from: EL_F, dx: "-팔꿈치들임"}
+  FR_B:   {ko: 뒤 틀 아래,          at: ["BIC_B.x", 소매길이]}
+  FR_F:   {ko: 앞 틀 아래,          at: ["BIC_F.x", 소매길이]}
+
+lines:
+  - {name: 소매중심선, role: construction, pts: [SCP, HEM_C]}
+  - {name: 소매통선,   role: construction, pts: [BIC_B, BIC_F]}
+  - {name: 팔꿈치선,   role: construction, pts: [EL_B, EL_F]}
+  - {name: 소매산높이선, role: construction, pts: [GT_B, GT_F]}
+  - {name: 뒤사선,     role: construction, pts: [SCP, BIC_B]}
+  - {name: 앞사선,     role: construction, pts: [SCP, BIC_F]}
+  - {name: 뒤가이드,   role: construction, pts: [GT_B, GB_B]}
+  - {name: 앞가이드,   role: construction, pts: [GT_F, GB_F]}
+  - {name: 뒤틀세로,   role: construction, pts: [BIC_B, FR_B]}
+  - {name: 앞틀세로,   role: construction, pts: [BIC_F, FR_F]}
+  - {name: 밑단틀,     role: construction, pts: [FR_B, FR_F]}
+  - {name: 뒤소매산, piece: 소매, role: outline, curve: [BIC_B, X_B, SCP],
+     tangents: {BIC_B: [0.94, -0.34], X_B: {along: [SCP, BIC_B]}, SCP: [1, 0]},
+     handles: [[0.62, 0.06], [0.05, 0.44]], note: 소매통 끝에서 20° 로 출발}
+  - {name: 앞소매산, piece: 소매, role: outline, curve: [SCP, X_F, BIC_F],
+     tangents: {SCP: [1, 0], X_F: {along: [SCP, BIC_F]}, BIC_F: [1, 0.07]},
+     handles: [[0.51, 0.05], [0.05, 0.55]], note: 소매통 끝에 거의 수평으로 닿음}
+  - {name: 뒤옆선,   piece: 소매, role: outline, pts: [BIC_B, HEM_B]}
+  - {name: 앞옆선,   piece: 소매, role: outline, pts: [BIC_F, HEM_F]}
+  - {name: 소매부리, piece: 소매, role: outline, curve: [HEM_B, HEM_C, HEM_F],
+     tangents: {HEM_B: {along: [HEM_B, HEM_C]}, HEM_C: [1, 0], HEM_F: {along: [HEM_C, HEM_F]}},
+     handles: [[0.33, 0.33], [0.33, 0.33]], note: 양 끝이 3/8 올라간 완만한 곡선}
+  - {name: 뒤팔꿈치표시, role: mark, pts: [EL_B, EL_B_IN]}
+  - {name: 앞팔꿈치표시, role: mark, pts: [EL_F, EL_F_IN]}

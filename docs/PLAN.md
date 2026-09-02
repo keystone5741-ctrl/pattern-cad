@@ -193,4 +193,6 @@ UI를 8단계에 뒀지만, **곡선을 손으로 만져보는 최소 화면은 
 
 - 0단계 완료: `extracted/` (42 아이템)
 - 1단계: 규칙 엔진 `patterncad/` (units · geometry · expr · block · svg), 시추니 기본 원형 규칙화, 원본 겹침 검증 `tools/verify_block.py`
-- 2단계 진행 중: 원형 상속(`extends`), 시추니 무다트 원형 (p.46 형태 검증 완료, 표기 치수 적용). 다음은 소매 원형
+- 2단계 진행 중: 원형 상속(`extends`), 시추니 무다트 원형 (p.46 형태 검증 완료, 표기 치수 적용)
+- 소매 원형 `blocks/sleeve_basic.yaml` (p.48 검증, 소매산 곡선 편차 0.03″), 아이템별 소매 조사 `docs/sleeve_survey.md`
+- 방침: 모든 아이템에서 도면과 함께 유의사항 글·그림을 읽고 `docs/drafting_notes.md` 에 기록
