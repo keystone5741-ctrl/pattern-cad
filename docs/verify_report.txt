@@ -1,0 +1,110 @@
+원형                                 p 조각       평균오차  큰 편차 선
+skirt_flared                      15 뒤판      0.929  겹트임덧단,뒤중심선,뒤허리선,뒤옆선,뒤밑단
+pussy_bow_blouse_body             55 뒤판      0.567  뒤목선,뒤암홀,뒤중심선,뒤중심선아래,뒤어깨선,뒤옆선
+shirt_collar                      48         0.511  밑변,앞변,윗선
+jump_suite_pants                  71 뒤판      0.495  뒤허리선안,뒤다트,뒤허리선밖,뒤중심선,뒤밑위곡선,뒤인심
+dress_gather_skirt                63 뒤판      0.471  뒤허리선,뒤밑단,뒤옆선
+jump_suite_body                   71 앞판      0.453  앞목선,앞어깨선,앞암홀,앞중심선,앞옆선,앞밑단
+skirt_highwaist                   21 뒤판      0.427  겹트임덧단,뒤중심선,뒤절개,뒤윗선밖,뒤옆선,뒤밑단
+box_body                          46 뒤판      0.390  뒤암홀,뒤중심선아래,뒤옆선,뒤밑단
+skirt_basic                        4 뒤판      0.388  뒤중심선,뒤허리선1,뒤다트1,뒤다트2,뒤옆선아래,뒤밑단
+rider_jacket_body                 95 뒤판      0.385  뒤목선,뒤암홀,뒤중심선,뒤어깨선,뒤옆선,뒤밑단
+skirt_trumpet                     17 앞판      0.381  앞허리선안,앞절개선안,앞절개선밖,앞허리선밖,앞옆선,앞밑단1
+sleeveless_dress_body             63 뒤판      0.375  뒤목선,뒤암홀,뒤중심선,뒤어깨선,뒤옆선,뒤허리다트
+box_body                          46 앞판      0.374  앞목선,앞중심선,앞옆선,앞밑단
+bow_tie                           55         0.354  도매끝,윗선,아랫선,타이끝
+skirt_hipbone                      7 뒤판      0.339  뒤옆선아래,뒤밑단,겹트임덧단,뒤중심선,뒤허리선1
+skirt_flared                      15 앞판      0.333  앞허리선,앞옆선,앞밑단
+skirt_highwaist                   21 앞판      0.331  앞윗선안,앞절개,앞윗선밖,앞옆선,앞밑단
+skirt_divided                     23 뒤판      0.330  겹트임덧단,뒤허리선2,뒤옆선,뒤밑단,뒤샅선,뒤인심
+jump_suite_body                   71 뒤판      0.326  뒤목선,뒤암홀,뒤중심선,뒤중심선아래,뒤어깨선,뒤옆선
+sleeveless_dress_body             63 앞판      0.315  앞목선,앞어깨선,앞암홀,앞중심선,가슴다트,앞옆선
+skirt_divided                     23 앞판      0.307  앞허리선안,앞다트,앞허리선밖,앞옆선,앞밑단,앞샅선
+oversize_blouse_body              51 뒤판      0.291  뒤암홀,뒤어깨선,뒤옆선
+oversized_jacket_body             99 뒤판      0.279  뒤목선,뒤암홀,뒤중심선,뒤중심선아래,뒤어깨선,뒤옆선
+skirt_tapered                     11 앞판      0.275  앞턱1산,앞턱1,앞턱2산,앞턱2,앞허리선3,앞옆선
+dress_gather_skirt                63 앞판      0.272  앞허리선,앞밑단
+shirt_collar_band                 48         0.266  목둘레선,윗선
+waistband_curved                   7         0.260  윗선,밑선,뒤끝
+hunting_jacket_body               91 앞판      0.258  앞어깨선,앞암홀,앞옆선위,가슴다트,앞옆선,고지라인
+jump_suite_pants                  71 앞판      0.249  앞다트,앞인심,앞옆선,앞밑단
+pants_tapered                     33 앞판      0.243  앞중심선,앞인심,앞옆선,앞밑단,앞턱1
+sweat_shirt_body                  57 뒤판      0.232  뒤암홀,뒤옆선,뒤밑단
+pants_wide                        37 뒤판      0.230  뒤허리선밖,뒤중심선,뒤밑위곡선,뒤인심,뒤옆선
+skirt_gored                       19 앞판      0.222  앞허리선,앞고어절개1,앞고어절개1밖,앞고어절개2,앞고어절개2밖,앞옆선
+flat_collar                       69         0.222  목둘레선,외곽선
+rider_jacket_body                 95 앞판      0.217  앞어깨선,앞암홀,앞밑단,낸단,낸단밑단,고지라인
+hunting_jacket_body               91 뒤판      0.216  뒤목선,뒤암홀,뒤중심선,뒤중심선아래,뒤어깨선,뒤옆선
+pants_tapered                     33 뒤판      0.214  뒤밑위곡선,뒤인심,뒤옆선,뒤밑단,뒤다트1,뒤허리선중
+oversize_blouse_body              51 앞판      0.213  앞목선,앞어깨선,앞암홀,앞중심선,앞옆선,앞밑단
+skirt_tapered                     11 뒤판      0.213  겹트임덧단,뒤턱1,뒤턱2산,뒤턱2,뒤허리선3,뒤옆선
+skirt_hipbone                      7 앞판      0.212  앞옆선아래,앞밑단,앞허리선,앞옆선위
+oversized_jacket_body             99 앞판      0.210  앞어깨선,앞암홀,앞옆선위,가슴다트,앞옆선,앞밑단
+pants_basic                       28 뒤판      0.210  뒤다트,뒤중심선,뒤밑위곡선,뒤인심,뒤옆선
+oversize_hoodie_body              59 뒤판      0.207  뒤암홀,뒤중심선,뒤중심선아래,뒤옆선,뒤밑단
+sleeve_two_piece                  65         0.206  뒤소매산,앞소매산,앞옆선,큰소매앞절개,큰소매뒤절개,큰소매밑단
+hood                              59         0.206  후드윗선,후드밑선
+mermaid_dress_body                67 앞판      0.205  앞옆선,앞허리다트,앞밑단
+pants_onetuck                     31 뒤판      0.201  뒤중심선,뒤밑위곡선,뒤인심,뒤옆선,뒤밑단,뒤허리선안
+pussy_bow_blouse_body             55 앞판      0.196  앞목선,앞어깨선,앞암홀,앞옆선위,앞밑단
+oversize_hoodie_body              59 앞판      0.195  앞목선,앞어깨선,앞암홀,앞중심선,앞옆선,앞밑단
+mermaid_dress_body                67 뒤판      0.193  뒤암홀,뒤중심선,뒤옆선,뒤허리다트,뒤밑단
+pants_hipbone                     30 뒤판      0.184  뒤중심선,뒤밑위곡선,뒤인심,뒤옆선,뒤밑단
+stand_collar                      89         0.179  목둘레선,윗선
+skirt_gored                       19 뒤판      0.179  겹트임덧단,뒤허리선1,뒤허리선2,뒤고어절개1,뒤고어절개1밖,뒤고어절개2
+shawl_collar                      85         0.178  목둘레선,칼라끝
+pants_skinny                      39 뒤판      0.171  뒤허리선안,뒤다트,뒤중심선,뒤밑위곡선,뒤인심,뒤옆선
+skirt_basic                        4 앞판      0.166  앞다트1,앞다트2,앞옆선위,앞옆선아래
+sleeve_tuck                       53         0.164  뒤소매산,앞소매산,뒤옆선,앞옆선,소매부리
+pants_onetuck                     31 앞판      0.162  앞중심선,앞밑위곡선,앞인심,앞옆선,앞밑단
+flat_collar_dress_body            69 앞판      0.159  앞목선,앞어깨선,앞암홀,앞중심선,앞옆선위,가슴다트
+half_double_jacket_body           81 앞판      0.157  앞어깨선,앞암홀,가슴다트,앞옆선,낸단,고지라인
+half_double_jacket_body           81 뒤판      0.154  뒤암홀,뒤옆선
+shirt_collar_blouse_body          48 뒤판      0.153  뒤목선,뒤옆선,뒤허리다트,뒤밑단
+banana_band                       71         0.152  목둘레선,앞끝,윗선
+skirt_gather                      13 뒤판      0.152  겹트임덧단,뒤허리선1,뒤다트,뒤허리선2,뒤허리선,뒤옆선
+skirt_aline                        9 뒤판      0.149  겹트임덧단,뒤중심선,뒤허리선1,뒤다트,뒤허리선2,뒤옆선
+hourglass_jacket_body             79 앞판      0.146  앞암홀,가슴다트,앞옆선,앞밑단,라펠노치,라펠외곽
+flat_collar_dress_body            69 뒤판      0.145  뒤옆선,뒤허리다트,뒤밑단
+pants_training                    35 뒤판      0.145  뒤밑위곡선,뒤인심,뒤옆선,뒤허리선
+leggings                          41 뒤판      0.144  뒤중심선,뒤밑위곡선,뒤인심,뒤옆선,뒤허리선
+skirt_gather                      13 앞판      0.143  앞허리선,앞옆선,앞밑단
+stand_collar_jacket_body          89 앞판      0.141  앞암홀,가슴다트,앞옆선,앞밑단,낸단,낸단밑단
+skirt_trumpet                     17 뒤판      0.138  겹트임덧단,뒤허리선안,뒤옆선,뒤밑단2
+sweat_shirt_body                  57 앞판      0.136  앞암홀,앞옆선,앞밑단
+one_button_jacket_body            83 앞판      0.136  앞암홀,가슴다트,앞옆선,낸단,낸단밑단,고지라인
+shawl_collar_jacket_body          85 앞판      0.132  가슴다트,앞옆선,앞밑단,고지라인,라펠노치,라펠외곽
+tight_t_shirt_body                61 뒤판      0.126  뒤암홀,뒤옆선
+shawl_collar_jacket_body          85 뒤판      0.126  뒤중심선,뒤옆선
+top_body                          48 뒤판      0.122  뒤중심선,뒤중심선아래,뒤옆선,뒤밑단
+h_line_dress_body                 65 앞판      0.121  앞목선,앞어깨선,앞암홀,가슴다트,앞옆선,앞허리다트
+tailored_collar                   74         0.120  외곽선
+skirt_pleated                     25 뒤판      0.120  겹트임덧단,뒤허리선
+china_collar_blouse_body          53 앞판      0.119  앞암홀,앞옆선위,가슴다트,앞옆선,앞밑단
+pants_hipbone                     30 앞판      0.117  앞인심,앞옆선,앞밑단
+stand_collar_jacket_body          89 뒤판      0.117  뒤중심선,뒤옆선,뒤밑단
+pants_wide                        37 앞판      0.114  앞다트,앞밑위곡선,앞인심,앞옆선
+china_collar_blouse_body          53 뒤판      0.112  뒤암홀,뒤중심선,뒤옆선
+waistband                          4         0.111  외곽
+skirt_pleated                     25 앞판      0.110  앞허리선,앞옆선,앞밑단
+hourglass_jacket_body             79 뒤판      0.108  뒤암홀,뒤어깨선,뒤옆선,뒤밑단
+shirt_collar_blouse_body          48 앞판      0.106  앞목선,앞밑단
+pants_basic                       28 앞판      0.104  앞밑위곡선,앞인심,앞옆선
+jacket_body                       74 앞판      0.103  앞암홀,낸단,낸단밑단
+skirt_aline                        9 앞판      0.101  앞허리선안,앞허리선밖,앞밑단
+pants_skinny                      39 앞판      0.100  앞다트,앞인심,앞옆선
+one_button_jacket_body            83 뒤판      0.098  뒤옆선
+jacket_body                       74 뒤판      0.097  뒤암홀,뒤중심선,뒤옆선
+h_line_dress_body                 65 뒤판      0.092  뒤암홀,뒤중심선,뒤어깨선,뒤옆선,뒤허리다트,뒤밑단
+pants_training                    35 앞판      0.089  앞밑위곡선,앞인심
+top_body                          48 앞판      0.087  앞옆선위,가슴다트,앞옆선,앞밑단
+leggings                          41 앞판      0.087  앞중심선,앞밑위곡선,앞옆선
+tight_t_shirt_body                61 앞판      0.068  앞목선,앞어깨선,앞암홀
+sleeve_basic                      48         0.058  뒤소매산,앞소매산,뒤옆선,앞옆선
+sichuni_dartless                  46 앞판      0.056  앞암홀
+sichuni_dartless                  46 뒤판      0.050  뒤암홀
+elastic_band                      35         0.026  
+sichuni_basic                     44 앞판      0.025  
+sichuni_basic                     44 뒤판      0.021  
+sleeve_placket                    48         0.020  
+cuff                              48         0.011  
