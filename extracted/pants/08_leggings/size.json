@@ -1,0 +1,19 @@
+{
+  "unit": "inch",
+  "measurements": [
+    {
+      "name": "허리둘레",
+      "body": "26”",
+      "body_in": 26.0,
+      "pattern": "24.1/2”",
+      "pattern_in": 24.5
+    },
+    {
+      "name": "엉덩이둘레",
+      "body": "35.1/2”",
+      "body_in": 35.5,
+      "pattern": "31”",
+      "pattern_in": 31.0
+    }
+  ]
+}

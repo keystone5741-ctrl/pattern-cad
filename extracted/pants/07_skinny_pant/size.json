@@ -1,0 +1,47 @@
+{
+  "unit": "inch",
+  "measurements": [
+    {
+      "name": "허리둘레",
+      "body": "26”",
+      "body_in": 26.0,
+      "pattern": "29.1/2”",
+      "pattern_in": 29.5
+    },
+    {
+      "name": "엉덩이둘레",
+      "body": "35.1/2”",
+      "body_in": 35.5,
+      "pattern": "34.1/2”",
+      "pattern_in": 34.5
+    },
+    {
+      "name": "무릎길이",
+      "body": "21”",
+      "body_in": 21.0,
+      "pattern": "21”",
+      "pattern_in": 21.0
+    },
+    {
+      "name": "밑단둘레",
+      "body": null,
+      "body_in": null,
+      "pattern": "5.1/4”",
+      "pattern_in": 5.25
+    },
+    {
+      "name": "밑위길이",
+      "body": null,
+      "body_in": null,
+      "pattern": "9.5/8”",
+      "pattern_in": 9.625
+    },
+    {
+      "name": "총장",
+      "body": null,
+      "body_in": null,
+      "pattern": "37.1/4”",
+      "pattern_in": 37.25
+    }
+  ]
+}

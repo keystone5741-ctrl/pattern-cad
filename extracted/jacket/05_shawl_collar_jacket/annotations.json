@@ -1,0 +1,649 @@
+{
+ "p085": [
+  {
+   "text": "앞마이 제도 시 디자인상 일자로 떨어지더라도 1/4”가량 들여 제도해야",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 124.4,
+   "y_pt": 798.0,
+   "x_mm": 43.9,
+   "y_mm": 281.5
+  },
+  {
+   "text": "실제 봉제되었을 때 앞마이가 쌓이는 모양을 방지할 수 있다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 109.7,
+   "y_pt": 808.0,
+   "x_mm": 38.7,
+   "y_mm": 285.0
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 429.6,
+   "y_pt": 546.6,
+   "x_mm": 151.5,
+   "y_mm": 192.8
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 429.6,
+   "y_pt": 555.0,
+   "x_mm": 151.5,
+   "y_mm": 195.8
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 429.6,
+   "y_pt": 563.4,
+   "x_mm": 151.5,
+   "y_mm": 198.8
+  },
+  {
+   "text": "앞, 뒤판",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 51.0,
+   "y_pt": 303.8,
+   "x_mm": 18.0,
+   "y_mm": 107.2
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 398.3,
+   "y_pt": 368.6,
+   "x_mm": 140.5,
+   "y_mm": 130.0
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 358.3,
+   "y_pt": 436.6,
+   "x_mm": 126.4,
+   "y_mm": 154.0
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 422.3,
+   "y_pt": 600.9,
+   "x_mm": 149.0,
+   "y_mm": 212.0
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 375.5,
+   "y_pt": 596.3,
+   "x_mm": 132.5,
+   "y_mm": 210.4
+  },
+  {
+   "text": "5”",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "pattern",
+   "x_pt": 397.8,
+   "y_pt": 627.0,
+   "x_mm": 140.3,
+   "y_mm": 221.2
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 302.4,
+   "y_pt": 532.5,
+   "x_mm": 106.7,
+   "y_mm": 187.9
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 267.2,
+   "y_pt": 530.9,
+   "x_mm": 94.3,
+   "y_mm": 187.3
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 329.7,
+   "y_pt": 391.0,
+   "x_mm": 116.3,
+   "y_mm": 137.9
+  },
+  {
+   "text": "MP",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 353.5,
+   "y_pt": 450.4,
+   "x_mm": 124.7,
+   "y_mm": 158.9
+  },
+  {
+   "text": "HL",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 309.0,
+   "y_pt": 727.0,
+   "x_mm": 109.0,
+   "y_mm": 256.5
+  },
+  {
+   "text": "겹트임",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 421.8,
+   "y_pt": 678.3,
+   "x_mm": 148.8,
+   "y_mm": 239.3
+  },
+  {
+   "text": "HL",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 254.0,
+   "y_pt": 728.0,
+   "x_mm": 89.6,
+   "y_mm": 256.8
+  },
+  {
+   "text": "MP",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 221.5,
+   "y_pt": 514.5,
+   "x_mm": 78.2,
+   "y_mm": 181.5
+  },
+  {
+   "text": "3.1/8”",
+   "kind": "number",
+   "inch": 3.125,
+   "layer": "pattern",
+   "x_pt": 180.7,
+   "y_pt": 314.9,
+   "x_mm": 63.8,
+   "y_mm": 111.1
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 168.8,
+   "y_pt": 395.8,
+   "x_mm": 59.6,
+   "y_mm": 139.6
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 139.2,
+   "y_pt": 379.8,
+   "x_mm": 49.1,
+   "y_mm": 134.0
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 169.8,
+   "y_pt": 642.0,
+   "x_mm": 59.9,
+   "y_mm": 226.5
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 184.9,
+   "y_pt": 604.0,
+   "x_mm": 65.2,
+   "y_mm": 213.1
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 262.6,
+   "y_pt": 603.9,
+   "x_mm": 92.6,
+   "y_mm": 213.1
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 225.4,
+   "y_pt": 604.9,
+   "x_mm": 79.5,
+   "y_mm": 213.4
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 306.2,
+   "y_pt": 509.3,
+   "x_mm": 108.0,
+   "y_mm": 179.7
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 263.3,
+   "y_pt": 513.1,
+   "x_mm": 92.9,
+   "y_mm": 181.0
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 300.0,
+   "y_pt": 616.7,
+   "x_mm": 105.8,
+   "y_mm": 217.6
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 282.9,
+   "y_pt": 711.1,
+   "x_mm": 99.8,
+   "y_mm": 250.9
+  },
+  {
+   "text": "2.3/4”",
+   "kind": "number",
+   "inch": 2.75,
+   "layer": "pattern",
+   "x_pt": 194.6,
+   "y_pt": 629.2,
+   "x_mm": 68.7,
+   "y_mm": 222.0
+  },
+  {
+   "text": "3.3/4”",
+   "kind": "number",
+   "inch": 3.75,
+   "layer": "pattern",
+   "x_pt": 149.7,
+   "y_pt": 600.9,
+   "x_mm": 52.8,
+   "y_mm": 212.0
+  },
+  {
+   "text": "2.1/2”",
+   "kind": "number",
+   "inch": 2.5,
+   "layer": "pattern",
+   "x_pt": 109.5,
+   "y_pt": 466.3,
+   "x_mm": 38.6,
+   "y_mm": 164.5
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 203.4,
+   "y_pt": 713.7,
+   "x_mm": 71.7,
+   "y_mm": 251.8
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 224.2,
+   "y_pt": 782.7,
+   "x_mm": 79.1,
+   "y_mm": 276.1
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 109.7,
+   "y_pt": 782.4,
+   "x_mm": 38.7,
+   "y_mm": 276.0
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 101.3,
+   "y_pt": 760.9,
+   "x_mm": 35.7,
+   "y_mm": 268.4
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 366.3,
+   "y_pt": 714.5,
+   "x_mm": 129.2,
+   "y_mm": 252.1
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 365.1,
+   "y_pt": 701.8,
+   "x_mm": 128.8,
+   "y_mm": 247.6
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 358.4,
+   "y_pt": 782.7,
+   "x_mm": 126.4,
+   "y_mm": 276.1
+  },
+  {
+   "text": "2”",
+   "kind": "number",
+   "inch": 2.0,
+   "layer": "pattern",
+   "x_pt": 449.3,
+   "y_pt": 783.7,
+   "x_mm": 158.5,
+   "y_mm": 276.5
+  },
+  {
+   "text": "앞",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 125.3,
+   "y_pt": 574.5,
+   "x_mm": 44.2,
+   "y_mm": 202.7
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 125.3,
+   "y_pt": 582.9,
+   "x_mm": 44.2,
+   "y_mm": 205.6
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 125.3,
+   "y_pt": 591.3,
+   "x_mm": 44.2,
+   "y_mm": 208.6
+  },
+  {
+   "text": "진동깊이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 524.5,
+   "y_pt": 452.7,
+   "x_mm": 185.0,
+   "y_mm": 159.7
+  },
+  {
+   "text": "9”",
+   "kind": "number",
+   "inch": 9.0,
+   "layer": "pattern",
+   "x_pt": 524.5,
+   "y_pt": 461.8,
+   "x_mm": 185.0,
+   "y_mm": 162.9
+  },
+  {
+   "text": "엉덩이길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 524.3,
+   "y_pt": 664.9,
+   "x_mm": 185.0,
+   "y_mm": 234.6
+  },
+  {
+   "text": "7.1/2”",
+   "kind": "number",
+   "inch": 7.5,
+   "layer": "pattern",
+   "x_pt": 524.3,
+   "y_pt": 674.9,
+   "x_mm": 185.0,
+   "y_mm": 238.1
+  },
+  {
+   "text": "등길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 524.2,
+   "y_pt": 563.6,
+   "x_mm": 184.9,
+   "y_mm": 198.8
+  },
+  {
+   "text": "15”",
+   "kind": "number",
+   "inch": 15.0,
+   "layer": "pattern",
+   "x_pt": 524.2,
+   "y_pt": 572.7,
+   "x_mm": 184.9,
+   "y_mm": 202.0
+  },
+  {
+   "text": "기장",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 524.5,
+   "y_pt": 737.7,
+   "x_mm": 185.0,
+   "y_mm": 260.2
+  },
+  {
+   "text": "26”",
+   "kind": "number",
+   "inch": 26.0,
+   "layer": "pattern",
+   "x_pt": 524.5,
+   "y_pt": 746.7,
+   "x_mm": 185.0,
+   "y_mm": 263.4
+  },
+  {
+   "text": "뒤네크둘레 / 2",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 197.2,
+   "y_pt": 357.7,
+   "x_mm": 69.6,
+   "y_mm": 126.2
+  },
+  {
+   "text": "뒤어깨길이-1/4”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 218.9,
+   "y_pt": 384.9,
+   "x_mm": 77.2,
+   "y_mm": 135.8
+  },
+  {
+   "text": "1/4~3/8”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 377.8,
+   "y_pt": 536.0,
+   "x_mm": 133.3,
+   "y_mm": 189.1
+  }
+ ],
+ "p086": [
+  {
+   "text": "BP점이 기존 원형보다 1”이상 떨어진 위치에 있기 때문에 시추니 무다트 원형을 사용한다.",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 228.9,
+   "y_pt": 22.8,
+   "x_mm": 80.8,
+   "y_mm": 8.1
+  }
+ ],
+ "p087": [],
+ "p088": [
+  {
+   "text": "- 앞판과 뒤판, 사이바같은 절개라인에 들어가는 허리분량을 비교해 보았을 때 뒷판이 더 많이 들어가 있다면 허리선이 평행하지 않다는 것이다.",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 268.1,
+   "y_pt": 698.2,
+   "x_mm": 94.6,
+   "y_mm": 246.3
+  },
+  {
+   "text": "패턴을 수정하는 방법은 뒤사이바를 가슴선을 통해 MP시켜 주는 방법이 있다. 허리선에서 MP시키지 않는 이유는 옆솔기선이 변형될 수 있기 때문이다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 284.5,
+   "y_pt": 713.2,
+   "x_mm": 100.4,
+   "y_mm": 251.6
+  },
+  {
+   "text": "종이가봉 시 적당한 긴장감이 있어야 원단으로 가봉했을 때 쳐지지 않게 만들어질 수 있다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 178.5,
+   "y_pt": 728.2,
+   "x_mm": 63.0,
+   "y_mm": 256.9
+  },
+  {
+   "text": "- 벨벳의 경우, 손으로 쓸었을때 원단의 결에 의하여 색이 변하는 것을 '사까(결)가 있다'라고 한다. 벨벳, 쿄듀로이 원단 사용 시 원단뱡향(사까)가 바뀌지 않도록",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 294.8,
+   "y_pt": 753.0,
+   "x_mm": 104.0,
+   "y_mm": 265.6
+  },
+  {
+   "text": "일방향 재단(패턴 “사까주의” 표기)을 생각하고 요척 배치를 해야한다.",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 142.5,
+   "y_pt": 767.0,
+   "x_mm": 50.3,
+   "y_mm": 270.6
+  },
+  {
+   "text": "- 사이즈가 커질수록 절개라인(프렌세스, 사이바 등)을 완만하게 제도한다. 가슴둘레를 키울수록 엉덩이둘레도 커지기 때문에 힙라인의 겹침 포인트를 많이 올리지",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 300.0,
+   "y_pt": 795.0,
+   "x_mm": 105.8,
+   "y_mm": 280.5
+  },
+  {
+   "text": "않아도 된다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 43.9,
+   "y_pt": 809.0,
+   "x_mm": 15.5,
+   "y_mm": 285.4
+  },
+  {
+   "text": "이외 제도 유의사항",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 66.8,
+   "y_pt": 672.0,
+   "x_mm": 23.5,
+   "y_mm": 237.1
+  }
+ ]
+}

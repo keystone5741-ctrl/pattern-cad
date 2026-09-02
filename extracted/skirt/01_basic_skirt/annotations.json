@@ -1,0 +1,1127 @@
+{
+ "p004": [
+  {
+   "text": "3.1/2”",
+   "kind": "number",
+   "inch": 3.5,
+   "layer": "pattern",
+   "x_pt": 239.5,
+   "y_pt": 149.3,
+   "x_mm": 84.5,
+   "y_mm": 52.7
+  },
+  {
+   "text": "4”",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "pattern",
+   "x_pt": 283.5,
+   "y_pt": 150.2,
+   "x_mm": 100.0,
+   "y_mm": 53.0
+  },
+  {
+   "text": "4.3/8”",
+   "kind": "number",
+   "inch": 4.375,
+   "layer": "pattern",
+   "x_pt": 388.1,
+   "y_pt": 152.2,
+   "x_mm": 136.9,
+   "y_mm": 53.7
+  },
+  {
+   "text": "4.3/4”",
+   "kind": "number",
+   "inch": 4.75,
+   "layer": "pattern",
+   "x_pt": 433.3,
+   "y_pt": 156.0,
+   "x_mm": 152.8,
+   "y_mm": 55.0
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 252.0,
+   "y_pt": 186.2,
+   "x_mm": 88.9,
+   "y_mm": 65.7
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 294.3,
+   "y_pt": 188.8,
+   "x_mm": 103.8,
+   "y_mm": 66.6
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 403.9,
+   "y_pt": 199.7,
+   "x_mm": 142.5,
+   "y_mm": 70.4
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 448.8,
+   "y_pt": 207.0,
+   "x_mm": 158.3,
+   "y_mm": 73.0
+  },
+  {
+   "text": "W/4 + dart + ease",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 273.7,
+   "y_pt": 95.3,
+   "x_mm": 96.5,
+   "y_mm": 33.6
+  },
+  {
+   "text": "W/4 +  dart + ease",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 426.1,
+   "y_pt": 95.3,
+   "x_mm": 150.3,
+   "y_mm": 33.6
+  },
+  {
+   "text": "7”",
+   "kind": "number",
+   "inch": 7.0,
+   "layer": "pattern",
+   "x_pt": 549.7,
+   "y_pt": 291.2,
+   "x_mm": 193.9,
+   "y_mm": 102.7
+  },
+  {
+   "text": "엉덩이길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 549.0,
+   "y_pt": 168.3,
+   "x_mm": 193.7,
+   "y_mm": 59.4
+  },
+  {
+   "text": "7.1/2”",
+   "kind": "number",
+   "inch": 7.5,
+   "layer": "pattern",
+   "x_pt": 549.0,
+   "y_pt": 176.6,
+   "x_mm": 193.7,
+   "y_mm": 62.3
+  },
+  {
+   "text": "기장",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 548.7,
+   "y_pt": 377.2,
+   "x_mm": 193.6,
+   "y_mm": 133.1
+  },
+  {
+   "text": "18”",
+   "kind": "number",
+   "inch": 18.0,
+   "layer": "pattern",
+   "x_pt": 548.7,
+   "y_pt": 385.6,
+   "x_mm": 193.6,
+   "y_mm": 136.0
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 538.9,
+   "y_pt": 345.5,
+   "x_mm": 190.1,
+   "y_mm": 121.9
+  },
+  {
+   "text": "3”",
+   "kind": "number",
+   "inch": 3.0,
+   "layer": "pattern",
+   "x_pt": 479.6,
+   "y_pt": 331.1,
+   "x_mm": 169.2,
+   "y_mm": 116.8
+  },
+  {
+   "text": "1.3/8”",
+   "kind": "number",
+   "inch": 1.375,
+   "layer": "pattern",
+   "x_pt": 441.3,
+   "y_pt": 432.6,
+   "x_mm": 155.7,
+   "y_mm": 152.6
+  },
+  {
+   "text": "W /4 (6.5/8”)",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 261.1,
+   "y_pt": 460.6,
+   "x_mm": 92.1,
+   "y_mm": 162.5
+  },
+  {
+   "text": "W /4 (6.5/8”)",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 366.9,
+   "y_pt": 460.6,
+   "x_mm": 129.4,
+   "y_mm": 162.5
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 324.8,
+   "y_pt": 126.8,
+   "x_mm": 114.6,
+   "y_mm": 44.7
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 349.1,
+   "y_pt": 108.1,
+   "x_mm": 123.2,
+   "y_mm": 38.1
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 503.0,
+   "y_pt": 135.0,
+   "x_mm": 177.4,
+   "y_mm": 47.6
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 511.9,
+   "y_pt": 117.7,
+   "x_mm": 180.6,
+   "y_mm": 41.5
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 368.2,
+   "y_pt": 126.8,
+   "x_mm": 129.9,
+   "y_mm": 44.7
+  },
+  {
+   "text": "앞",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 219.5,
+   "y_pt": 276.6,
+   "x_mm": 77.4,
+   "y_mm": 97.6
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 219.5,
+   "y_pt": 285.0,
+   "x_mm": 77.4,
+   "y_mm": 100.5
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 219.5,
+   "y_pt": 293.4,
+   "x_mm": 77.4,
+   "y_mm": 103.5
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 489.6,
+   "y_pt": 275.9,
+   "x_mm": 172.7,
+   "y_mm": 97.3
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 489.6,
+   "y_pt": 284.3,
+   "x_mm": 172.7,
+   "y_mm": 100.3
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 489.6,
+   "y_pt": 292.7,
+   "x_mm": 172.7,
+   "y_mm": 103.3
+  },
+  {
+   "text": "겹트임",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 478.1,
+   "y_pt": 347.1,
+   "x_mm": 168.7,
+   "y_mm": 122.4
+  },
+  {
+   "text": "지퍼끝",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 479.9,
+   "y_pt": 231.6,
+   "x_mm": 169.3,
+   "y_mm": 81.7
+  },
+  {
+   "text": "H/4 +  1/4”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 424.0,
+   "y_pt": 249.2,
+   "x_mm": 149.6,
+   "y_mm": 87.9
+  },
+  {
+   "text": "H/4 - 1/4”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 277.2,
+   "y_pt": 249.6,
+   "x_mm": 97.8,
+   "y_mm": 88.1
+  },
+  {
+   "text": "2”",
+   "kind": "number",
+   "inch": 2.0,
+   "layer": "pattern",
+   "x_pt": 512.5,
+   "y_pt": 418.0,
+   "x_mm": 180.8,
+   "y_mm": 147.5
+  }
+ ],
+ "p005": [],
+ "p006": [
+  {
+   "text": "패턴이 전개되며 겹치는 일이 없도록 패턴간에 간격을 둔다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 386.3,
+   "y_pt": 75.3,
+   "x_mm": 136.3,
+   "y_mm": 26.6
+  },
+  {
+   "text": "(dm, mv + u d l r 등)",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 531.6,
+   "y_pt": 75.3,
+   "x_mm": 187.5,
+   "y_mm": 26.6
+  },
+  {
+   "text": "이후",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 294.9,
+   "y_pt": 90.3,
+   "x_mm": 104.0,
+   "y_mm": 31.9
+  },
+  {
+   "text": "외곽확인(",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 320.8,
+   "y_pt": 90.3,
+   "x_mm": 113.2,
+   "y_mm": 31.9
+  },
+  {
+   "text": "z",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 339.8,
+   "y_pt": 90.3,
+   "x_mm": 119.9,
+   "y_mm": 31.9
+  },
+  {
+   "text": ")을 통해 끊어지거나 연결되지 않은 외곽선을 확인하고 수정한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 453.9,
+   "y_pt": 90.3,
+   "x_mm": 160.1,
+   "y_mm": 31.9
+  },
+  {
+   "text": "-",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 281.9,
+   "y_pt": 120.3,
+   "x_mm": 99.5,
+   "y_mm": 42.4
+  },
+  {
+   "text": "gl",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 288.4,
+   "y_pt": 120.3,
+   "x_mm": 101.7,
+   "y_mm": 42.4
+  },
+  {
+   "text": "로 패턴이 그레이딩 전개될 위치에 그레이딩 선을 그린다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 390.5,
+   "y_pt": 120.3,
+   "x_mm": 137.8,
+   "y_mm": 42.4
+  },
+  {
+   "text": "(다트, 턱, 결선, 골표시 등은 최대한 피해서 그려준다.)",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 375.7,
+   "y_pt": 135.3,
+   "x_mm": 132.5,
+   "y_mm": 47.7
+  },
+  {
+   "text": "ㄴ 지퍼 길이는 일반적으로 늘어나지 않기 때문에 지퍼선 밑으로 기장 편차를 분배한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 432.7,
+   "y_pt": 150.3,
+   "x_mm": 152.6,
+   "y_mm": 53.0
+  },
+  {
+   "text": "-",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 281.9,
+   "y_pt": 180.3,
+   "x_mm": 99.5,
+   "y_mm": 63.6
+  },
+  {
+   "text": "gi",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 288.4,
+   "y_pt": 180.3,
+   "x_mm": 101.7,
+   "y_mm": 63.6
+  },
+  {
+   "text": "로 그레이딩 선에 전개될 편차값을 나누어 입력한다. 값이 동일하게 줄거나 늘어나는",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 436.9,
+   "y_pt": 180.3,
+   "x_mm": 154.1,
+   "y_mm": 63.6
+  },
+  {
+   "text": "규칙편차도 있지만 불규칙한 편차값도 있기에 값을 입력할 때 한번 더 확인한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 419.8,
+   "y_pt": 195.3,
+   "x_mm": 148.1,
+   "y_mm": 68.9
+  },
+  {
+   "text": "-",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 281.9,
+   "y_pt": 225.3,
+   "x_mm": 99.5,
+   "y_mm": 79.5
+  },
+  {
+   "text": "gr",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 288.9,
+   "y_pt": 225.3,
+   "x_mm": 101.9,
+   "y_mm": 79.5
+  },
+  {
+   "text": "로 전개할 패턴영역을 설정하고 앞, 뒤중심을 지정 후 그레이딩을 전개한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 422.3,
+   "y_pt": 225.3,
+   "x_mm": 149.0,
+   "y_mm": 79.5
+  },
+  {
+   "text": "- 이후 곡선비율을 수정하고 실제 편차를 확인하며 조정한다.",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 383.6,
+   "y_pt": 255.3,
+   "x_mm": 135.3,
+   "y_mm": 90.1
+  },
+  {
+   "text": "(",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 282.6,
+   "y_pt": 270.3,
+   "x_mm": 99.7,
+   "y_mm": 95.4
+  },
+  {
+   "text": "gep, gxy, gpa",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 311.2,
+   "y_pt": 270.3,
+   "x_mm": 109.8,
+   "y_mm": 95.4
+  },
+  {
+   "text": "등)",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 342.4,
+   "y_pt": 270.3,
+   "x_mm": 120.8,
+   "y_mm": 95.4
+  },
+  {
+   "text": "- 표준사이즈(55)에서 패턴에 필요한만큼 시접을 설정(",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 373.3,
+   "y_pt": 300.3,
+   "x_mm": 131.7,
+   "y_mm": 105.9
+  },
+  {
+   "text": "csa",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 473.8,
+   "y_pt": 300.3,
+   "x_mm": 167.2,
+   "y_mm": 105.9
+  },
+  {
+   "text": ")하여 시접패턴을 만들고,",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 523.6,
+   "y_pt": 300.3,
+   "x_mm": 184.7,
+   "y_mm": 105.9
+  },
+  {
+   "text": "봉제와 처리가 용이하도록 시접을 직각, 반전처리(",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 368.6,
+   "y_pt": 315.3,
+   "x_mm": 130.0,
+   "y_mm": 111.2
+  },
+  {
+   "text": "cas",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 464.4,
+   "y_pt": 315.3,
+   "x_mm": 163.8,
+   "y_mm": 111.2
+  },
+  {
+   "text": ") 해준다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 485.7,
+   "y_pt": 315.3,
+   "x_mm": 171.4,
+   "y_mm": 111.2
+  },
+  {
+   "text": "- 시접이나 절개할 패턴을 보라색선으로 변경 후(",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 363.2,
+   "y_pt": 345.3,
+   "x_mm": 128.1,
+   "y_mm": 121.8
+  },
+  {
+   "text": "aap, cpa, cpur+z",
+   "kind": "formula",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 478.2,
+   "y_pt": 345.3,
+   "x_mm": 168.7,
+   "y_mm": 121.8
+  },
+  {
+   "text": ")",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 511.3,
+   "y_pt": 345.3,
+   "x_mm": 180.4,
+   "y_mm": 121.8
+  },
+  {
+   "text": "영역 설정(",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 300.5,
+   "y_pt": 360.3,
+   "x_mm": 106.0,
+   "y_mm": 127.1
+  },
+  {
+   "text": "ps",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 326.5,
+   "y_pt": 360.3,
+   "x_mm": 115.2,
+   "y_mm": 127.1
+  },
+  {
+   "text": ")에서 소재, 결방향, 패턴 재단매수를 설정하여 마카 요척 작업을 준비한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 459.1,
+   "y_pt": 360.3,
+   "x_mm": 161.9,
+   "y_mm": 127.1
+  },
+  {
+   "text": "1.  요척을 내야 할 패턴을 열어",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 89.1,
+   "y_pt": 721.8,
+   "x_mm": 31.4,
+   "y_mm": 254.6
+  },
+  {
+   "text": "벌수, 소재, 원단폭, 결선",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 184.8,
+   "y_pt": 721.8,
+   "x_mm": 65.2,
+   "y_mm": 254.6
+  },
+  {
+   "text": "등을 확인한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 253.5,
+   "y_pt": 721.8,
+   "x_mm": 89.4,
+   "y_mm": 254.6
+  },
+  {
+   "text": "2.  무늬가 있다면 설정하고 무늬에 맞게 패턴에",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 118.3,
+   "y_pt": 749.8,
+   "x_mm": 41.7,
+   "y_mm": 264.5
+  },
+  {
+   "text": "본체 병점, 부속기준점, 부속배치점 등을 설정한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 127.1,
+   "y_pt": 761.8,
+   "x_mm": 44.8,
+   "y_mm": 268.8
+  },
+  {
+   "text": "3.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 41.1,
+   "y_pt": 785.8,
+   "x_mm": 14.5,
+   "y_mm": 277.2
+  },
+  {
+   "text": "전소재신규",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 66.5,
+   "y_pt": 785.8,
+   "x_mm": 23.5,
+   "y_mm": 277.2
+  },
+  {
+   "text": "로 패턴을 배치한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 121.7,
+   "y_pt": 785.8,
+   "x_mm": 42.9,
+   "y_mm": 277.2
+  },
+  {
+   "text": "(추가 배치가 필요하면 지정패턴추가 선택한다.)",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 123.8,
+   "y_pt": 797.8,
+   "x_mm": 43.7,
+   "y_mm": 281.5
+  },
+  {
+   "text": "엉덩이둘레",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 55.0,
+   "y_pt": 102.2,
+   "x_mm": 19.4,
+   "y_mm": 36.0
+  },
+  {
+   "text": "기장",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 54.7,
+   "y_pt": 118.3,
+   "x_mm": 19.3,
+   "y_mm": 41.7
+  },
+  {
+   "text": "허리둘레",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 54.9,
+   "y_pt": 87.5,
+   "x_mm": 19.4,
+   "y_mm": 30.9
+  },
+  {
+   "text": "55",
+   "kind": "number",
+   "inch": 55.0,
+   "layer": "grading",
+   "x_pt": 106.0,
+   "y_pt": 70.6,
+   "x_mm": 37.4,
+   "y_mm": 24.9
+  },
+  {
+   "text": "66",
+   "kind": "number",
+   "inch": 66.0,
+   "layer": "grading",
+   "x_pt": 158.6,
+   "y_pt": 70.6,
+   "x_mm": 55.9,
+   "y_mm": 24.9
+  },
+  {
+   "text": "77",
+   "kind": "number",
+   "inch": 77.0,
+   "layer": "grading",
+   "x_pt": 210.5,
+   "y_pt": 70.4,
+   "x_mm": 74.3,
+   "y_mm": 24.8
+  },
+  {
+   "text": "0",
+   "kind": "number",
+   "inch": 0.0,
+   "layer": "grading",
+   "x_pt": 105.5,
+   "y_pt": 86.2,
+   "x_mm": 37.2,
+   "y_mm": 30.4
+  },
+  {
+   "text": "0",
+   "kind": "number",
+   "inch": 0.0,
+   "layer": "grading",
+   "x_pt": 105.7,
+   "y_pt": 102.2,
+   "x_mm": 37.3,
+   "y_mm": 36.0
+  },
+  {
+   "text": "0",
+   "kind": "number",
+   "inch": 0.0,
+   "layer": "grading",
+   "x_pt": 105.7,
+   "y_pt": 118.0,
+   "x_mm": 37.3,
+   "y_mm": 41.6
+  },
+  {
+   "text": "4",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "grading",
+   "x_pt": 158.7,
+   "y_pt": 86.0,
+   "x_mm": 56.0,
+   "y_mm": 30.3
+  },
+  {
+   "text": "4",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "grading",
+   "x_pt": 158.9,
+   "y_pt": 102.0,
+   "x_mm": 56.0,
+   "y_mm": 36.0
+  },
+  {
+   "text": "4",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "grading",
+   "x_pt": 158.9,
+   "y_pt": 117.9,
+   "x_mm": 56.0,
+   "y_mm": 41.6
+  },
+  {
+   "text": "4",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "grading",
+   "x_pt": 209.7,
+   "y_pt": 86.5,
+   "x_mm": 74.0,
+   "y_mm": 30.5
+  },
+  {
+   "text": "4",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "grading",
+   "x_pt": 209.9,
+   "y_pt": 102.5,
+   "x_mm": 74.0,
+   "y_mm": 36.1
+  },
+  {
+   "text": "4",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "grading",
+   "x_pt": 209.9,
+   "y_pt": 118.3,
+   "x_mm": 74.0,
+   "y_mm": 41.7
+  },
+  {
+   "text": "각편차",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 54.8,
+   "y_pt": 71.4,
+   "x_mm": 19.3,
+   "y_mm": 25.2
+  },
+  {
+   "text": "4.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 310.2,
+   "y_pt": 721.0,
+   "x_mm": 109.4,
+   "y_mm": 254.3
+  },
+  {
+   "text": "회전 유무를 설정",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 345.8,
+   "y_pt": 721.0,
+   "x_mm": 122.0,
+   "y_mm": 254.3
+  },
+  {
+   "text": "하고 패턴을 소재에 맞게 효율적인 배치를 하고",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 456.4,
+   "y_pt": 721.0,
+   "x_mm": 161.0,
+   "y_mm": 254.3
+  },
+  {
+   "text": "임시저장을 통해 여러 차례 배치를 시도할 수 있다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 396.1,
+   "y_pt": 734.0,
+   "x_mm": 139.7,
+   "y_mm": 258.9
+  },
+  {
+   "text": "(결선, 방향, 무늬, 패턴을 임의로 회전하거나 변경하면 문제가 발생한다.)",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 434.6,
+   "y_pt": 747.0,
+   "x_mm": 153.3,
+   "y_mm": 263.5
+  },
+  {
+   "text": "5.  배치가 완료되면 파일을 저장하고 플로터출력을 통해",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 402.6,
+   "y_pt": 773.0,
+   "x_mm": 142.0,
+   "y_mm": 272.7
+  },
+  {
+   "text": "원단폭과 로스요척(기본3%)",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 362.7,
+   "y_pt": 786.0,
+   "x_mm": 128.0,
+   "y_mm": 277.3
+  },
+  {
+   "text": "을 추가 작성한다",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 441.5,
+   "y_pt": 786.0,
+   "x_mm": 155.7,
+   "y_mm": 277.3
+  },
+  {
+   "text": "마카는 패턴을 원단에 배치하여",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 97.6,
+   "y_pt": 655.3,
+   "x_mm": 34.4,
+   "y_mm": 231.2
+  },
+  {
+   "text": "생산에 필요한 요척",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 197.7,
+   "y_pt": 655.3,
+   "x_mm": 69.7,
+   "y_mm": 231.2
+  },
+  {
+   "text": "을 구함과 동시에",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 269.1,
+   "y_pt": 655.3,
+   "x_mm": 94.9,
+   "y_mm": 231.2
+  },
+  {
+   "text": "효율적인 배치",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 330.6,
+   "y_pt": 655.3,
+   "x_mm": 116.6,
+   "y_mm": 231.2
+  },
+  {
+   "text": "를 찾을 수 있도록 도와주는 프로그램이다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 439.2,
+   "y_pt": 655.3,
+   "x_mm": 154.9,
+   "y_mm": 231.2
+  },
+  {
+   "text": "원하는 패턴을 선택하여 원단의 폭, 무늬, 결선 등을 선택하여 원하는 형태로 자유롭게 배치한 뒤 그에 대한 요척을 낼 수 있다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 275.4,
+   "y_pt": 670.3,
+   "x_mm": 97.2,
+   "y_mm": 236.5
+  },
+  {
+   "text": "또한 무지, 한방향, 체크, 스트라이프 등 무늬 디자인 원단에 대한 설정을 통해 요척을 낼 수 있다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "marker",
+   "x_pt": 219.5,
+   "y_pt": 685.3,
+   "x_mm": 77.4,
+   "y_mm": 241.8
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 243.2,
+   "y_pt": 267.3,
+   "x_mm": 85.8,
+   "y_mm": 94.3
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 48.0,
+   "y_pt": 267.8,
+   "x_mm": 16.9,
+   "y_mm": 94.5
+  }
+ ]
+}

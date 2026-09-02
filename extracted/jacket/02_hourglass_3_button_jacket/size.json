@@ -1,0 +1,75 @@
+{
+  "unit": "inch",
+  "measurements": [
+    {
+      "name": "어깨너비",
+      "body": "14.5/8”",
+      "body_in": 14.625,
+      "pattern": "16.3/8”",
+      "pattern_in": 16.375
+    },
+    {
+      "name": "가슴둘레",
+      "body": "33.1/2”",
+      "body_in": 33.5,
+      "pattern": "36.3/8”",
+      "pattern_in": 36.375
+    },
+    {
+      "name": "허리둘레",
+      "body": "26”",
+      "body_in": 26.0,
+      "pattern": "30.3/4”",
+      "pattern_in": 30.75
+    },
+    {
+      "name": "엉덩이둘레",
+      "body": "35.1/2”",
+      "body_in": 35.5,
+      "pattern": "38.3/8”",
+      "pattern_in": 38.375
+    },
+    {
+      "name": "밑단둘레",
+      "body": null,
+      "body_in": null,
+      "pattern": "45.5/8”",
+      "pattern_in": 45.625
+    },
+    {
+      "name": "기장",
+      "body": null,
+      "body_in": null,
+      "pattern": "26.3/4”",
+      "pattern_in": 26.75
+    },
+    {
+      "name": "진동깊이",
+      "body": "6.1/2”",
+      "body_in": 6.5,
+      "pattern": "9.1/2”",
+      "pattern_in": 9.5
+    },
+    {
+      "name": "소매길이",
+      "body": null,
+      "body_in": null,
+      "pattern": "24”",
+      "pattern_in": 24.0
+    },
+    {
+      "name": "소매통둘레",
+      "body": "10”",
+      "body_in": 10.0,
+      "pattern": "13”",
+      "pattern_in": 13.0
+    },
+    {
+      "name": "소매부리",
+      "body": "5.3/4”",
+      "body_in": 5.75,
+      "pattern": "10.1/2”",
+      "pattern_in": 10.5
+    }
+  ]
+}

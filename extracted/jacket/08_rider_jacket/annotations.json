@@ -1,0 +1,1738 @@
+{
+ "p095": [
+  {
+   "text": "앞, 뒤판",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 47.9,
+   "y_pt": 303.6,
+   "x_mm": 16.9,
+   "y_mm": 107.1
+  },
+  {
+   "text": "진동깊이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 514.3,
+   "y_pt": 452.5,
+   "x_mm": 181.4,
+   "y_mm": 159.6
+  },
+  {
+   "text": "8.1/2”",
+   "kind": "number",
+   "inch": 8.5,
+   "layer": "pattern",
+   "x_pt": 514.3,
+   "y_pt": 461.5,
+   "x_mm": 181.4,
+   "y_mm": 162.8
+  },
+  {
+   "text": "엉덩이길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 515.3,
+   "y_pt": 708.4,
+   "x_mm": 181.8,
+   "y_mm": 249.9
+  },
+  {
+   "text": "7.1/2”",
+   "kind": "number",
+   "inch": 7.5,
+   "layer": "pattern",
+   "x_pt": 515.3,
+   "y_pt": 717.5,
+   "x_mm": 181.8,
+   "y_mm": 253.1
+  },
+  {
+   "text": "등길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 515.8,
+   "y_pt": 583.3,
+   "x_mm": 181.9,
+   "y_mm": 205.8
+  },
+  {
+   "text": "15”",
+   "kind": "number",
+   "inch": 15.0,
+   "layer": "pattern",
+   "x_pt": 515.8,
+   "y_pt": 592.4,
+   "x_mm": 181.9,
+   "y_mm": 209.0
+  },
+  {
+   "text": "기장",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 553.6,
+   "y_pt": 559.2,
+   "x_mm": 195.3,
+   "y_mm": 197.3
+  },
+  {
+   "text": "20”",
+   "kind": "number",
+   "inch": 20.0,
+   "layer": "pattern",
+   "x_pt": 553.6,
+   "y_pt": 568.2,
+   "x_mm": 195.3,
+   "y_mm": 200.5
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 400.6,
+   "y_pt": 359.8,
+   "x_mm": 141.3,
+   "y_mm": 126.9
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 344.0,
+   "y_pt": 448.2,
+   "x_mm": 121.4,
+   "y_mm": 158.1
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 428.0,
+   "y_pt": 350.2,
+   "x_mm": 151.0,
+   "y_mm": 123.6
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 343.6,
+   "y_pt": 406.2,
+   "x_mm": 121.2,
+   "y_mm": 143.3
+  },
+  {
+   "text": "1.1/8”",
+   "kind": "number",
+   "inch": 1.125,
+   "layer": "pattern",
+   "x_pt": 273.2,
+   "y_pt": 376.3,
+   "x_mm": 96.4,
+   "y_mm": 132.7
+  },
+  {
+   "text": "1.1/8”",
+   "kind": "number",
+   "inch": 1.125,
+   "layer": "pattern",
+   "x_pt": 350.9,
+   "y_pt": 369.4,
+   "x_mm": 123.8,
+   "y_mm": 130.3
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 501.8,
+   "y_pt": 373.1,
+   "x_mm": 177.0,
+   "y_mm": 131.6
+  },
+  {
+   "text": "3.1/4”",
+   "kind": "number",
+   "inch": 3.25,
+   "layer": "pattern",
+   "x_pt": 499.2,
+   "y_pt": 410.3,
+   "x_mm": 176.1,
+   "y_mm": 144.7
+  },
+  {
+   "text": "1/4”~3/8”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 400.2,
+   "y_pt": 513.5,
+   "x_mm": 141.2,
+   "y_mm": 181.2
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 485.4,
+   "y_pt": 664.1,
+   "x_mm": 171.2,
+   "y_mm": 234.3
+  },
+  {
+   "text": "3.1/8”",
+   "kind": "number",
+   "inch": 3.125,
+   "layer": "pattern",
+   "x_pt": 485.1,
+   "y_pt": 715.8,
+   "x_mm": 171.1,
+   "y_mm": 252.5
+  },
+  {
+   "text": "5/8”",
+   "kind": "number",
+   "inch": 0.625,
+   "layer": "pattern",
+   "x_pt": 306.9,
+   "y_pt": 763.3,
+   "x_mm": 108.3,
+   "y_mm": 269.3
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 364.8,
+   "y_pt": 681.0,
+   "x_mm": 128.7,
+   "y_mm": 240.2
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 306.0,
+   "y_pt": 701.1,
+   "x_mm": 108.0,
+   "y_mm": 247.3
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 306.9,
+   "y_pt": 727.9,
+   "x_mm": 108.3,
+   "y_mm": 256.8
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 306.7,
+   "y_pt": 715.1,
+   "x_mm": 108.2,
+   "y_mm": 252.3
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 307.0,
+   "y_pt": 740.2,
+   "x_mm": 108.3,
+   "y_mm": 261.1
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 307.9,
+   "y_pt": 640.5,
+   "x_mm": 108.6,
+   "y_mm": 225.9
+  },
+  {
+   "text": "1/16”",
+   "kind": "number",
+   "inch": 0.0625,
+   "layer": "pattern",
+   "x_pt": 316.6,
+   "y_pt": 621.7,
+   "x_mm": 111.7,
+   "y_mm": 219.3
+  },
+  {
+   "text": "1/16”",
+   "kind": "number",
+   "inch": 0.0625,
+   "layer": "pattern",
+   "x_pt": 296.1,
+   "y_pt": 621.7,
+   "x_mm": 104.4,
+   "y_mm": 219.3
+  },
+  {
+   "text": "1/4 ”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 403.6,
+   "y_pt": 752.3,
+   "x_mm": 142.4,
+   "y_mm": 265.4
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 410.0,
+   "y_pt": 613.7,
+   "x_mm": 144.6,
+   "y_mm": 216.5
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 82.8,
+   "y_pt": 745.8,
+   "x_mm": 29.2,
+   "y_mm": 263.1
+  },
+  {
+   "text": "1.5/8”",
+   "kind": "number",
+   "inch": 1.625,
+   "layer": "pattern",
+   "x_pt": 110.6,
+   "y_pt": 759.5,
+   "x_mm": 39.0,
+   "y_mm": 267.9
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 166.4,
+   "y_pt": 759.5,
+   "x_mm": 58.7,
+   "y_mm": 267.9
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 208.6,
+   "y_pt": 681.0,
+   "x_mm": 73.6,
+   "y_mm": 240.2
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 184.2,
+   "y_pt": 618.4,
+   "x_mm": 65.0,
+   "y_mm": 218.1
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 87.9,
+   "y_pt": 489.6,
+   "x_mm": 31.0,
+   "y_mm": 172.7
+  },
+  {
+   "text": "3”",
+   "kind": "number",
+   "inch": 3.0,
+   "layer": "pattern",
+   "x_pt": 106.3,
+   "y_pt": 429.2,
+   "x_mm": 37.5,
+   "y_mm": 151.4
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 184.7,
+   "y_pt": 346.1,
+   "x_mm": 65.2,
+   "y_mm": 122.1
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 59.2,
+   "y_pt": 415.8,
+   "x_mm": 20.9,
+   "y_mm": 146.7
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 111.5,
+   "y_pt": 408.9,
+   "x_mm": 39.3,
+   "y_mm": 144.2
+  },
+  {
+   "text": "2”",
+   "kind": "number",
+   "inch": 2.0,
+   "layer": "pattern",
+   "x_pt": 191.0,
+   "y_pt": 384.6,
+   "x_mm": 67.4,
+   "y_mm": 135.7
+  },
+  {
+   "text": "지퍼반쪽",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 165.0,
+   "y_pt": 476.1,
+   "x_mm": 58.2,
+   "y_mm": 168.0
+  },
+  {
+   "text": "미까시",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 141.7,
+   "y_pt": 623.4,
+   "x_mm": 50.0,
+   "y_mm": 219.9
+  },
+  {
+   "text": "MP",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 271.0,
+   "y_pt": 544.6,
+   "x_mm": 95.6,
+   "y_mm": 192.1
+  },
+  {
+   "text": "MP",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 372.1,
+   "y_pt": 452.4,
+   "x_mm": 131.3,
+   "y_mm": 159.6
+  },
+  {
+   "text": "MP",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 417.0,
+   "y_pt": 379.6,
+   "x_mm": 147.1,
+   "y_mm": 133.9
+  },
+  {
+   "text": "앞",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 131.5,
+   "y_pt": 561.6,
+   "x_mm": 46.4,
+   "y_mm": 198.1
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 131.5,
+   "y_pt": 570.0,
+   "x_mm": 46.4,
+   "y_mm": 201.1
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 131.5,
+   "y_pt": 578.4,
+   "x_mm": 46.4,
+   "y_mm": 204.0
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 473.6,
+   "y_pt": 406.7,
+   "x_mm": 167.1,
+   "y_mm": 143.5
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 473.6,
+   "y_pt": 415.1,
+   "x_mm": 167.1,
+   "y_mm": 146.4
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 473.6,
+   "y_pt": 423.5,
+   "x_mm": 167.1,
+   "y_mm": 149.4
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 471.8,
+   "y_pt": 552.0,
+   "x_mm": 166.5,
+   "y_mm": 194.7
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 471.8,
+   "y_pt": 560.4,
+   "x_mm": 166.5,
+   "y_mm": 197.7
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 471.8,
+   "y_pt": 568.8,
+   "x_mm": 166.5,
+   "y_mm": 200.7
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 460.7,
+   "y_pt": 710.6,
+   "x_mm": 162.5,
+   "y_mm": 250.7
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 460.7,
+   "y_pt": 719.0,
+   "x_mm": 162.5,
+   "y_mm": 253.7
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 460.7,
+   "y_pt": 727.4,
+   "x_mm": 162.5,
+   "y_mm": 256.6
+  },
+  {
+   "text": "WL",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 464.2,
+   "y_pt": 641.3,
+   "x_mm": 163.8,
+   "y_mm": 226.2
+  },
+  {
+   "text": "WL",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 273.8,
+   "y_pt": 640.6,
+   "x_mm": 96.6,
+   "y_mm": 226.0
+  },
+  {
+   "text": "HL",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 274.1,
+   "y_pt": 773.6,
+   "x_mm": 96.7,
+   "y_mm": 272.9
+  },
+  {
+   "text": "HL",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 464.6,
+   "y_pt": 773.6,
+   "x_mm": 163.9,
+   "y_mm": 272.9
+  },
+  {
+   "text": "15mm 돗도",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 96.8,
+   "y_pt": 442.7,
+   "x_mm": 34.1,
+   "y_mm": 156.2
+  },
+  {
+   "text": "4”",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "pattern",
+   "x_pt": 242.1,
+   "y_pt": 501.7,
+   "x_mm": 85.4,
+   "y_mm": 177.0
+  },
+  {
+   "text": "6”",
+   "kind": "number",
+   "inch": 6.0,
+   "layer": "pattern",
+   "x_pt": 260.1,
+   "y_pt": 615.3,
+   "x_mm": 91.7,
+   "y_mm": 217.1
+  },
+  {
+   "text": "지퍼반쪽",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 58.6,
+   "y_pt": 477.4,
+   "x_mm": 20.7,
+   "y_mm": 168.4
+  },
+  {
+   "text": "뒤어깨길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 233.2,
+   "y_pt": 365.4,
+   "x_mm": 82.3,
+   "y_mm": 128.9
+  }
+ ],
+ "p096": [],
+ "p097": [],
+ "p098": [
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 198.5,
+   "y_pt": 518.9,
+   "x_mm": 70.0,
+   "y_mm": 183.1
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 202.2,
+   "y_pt": 518.9,
+   "x_mm": 71.3,
+   "y_mm": 183.1
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 199.4,
+   "y_pt": 521.9,
+   "x_mm": 70.3,
+   "y_mm": 184.1
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 205.9,
+   "y_pt": 521.9,
+   "x_mm": 72.6,
+   "y_mm": 184.1
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 199.8,
+   "y_pt": 524.9,
+   "x_mm": 70.5,
+   "y_mm": 185.2
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 202.3,
+   "y_pt": 524.9,
+   "x_mm": 71.4,
+   "y_mm": 185.2
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 199.6,
+   "y_pt": 568.3,
+   "x_mm": 70.4,
+   "y_mm": 200.5
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 201.5,
+   "y_pt": 527.9,
+   "x_mm": 71.1,
+   "y_mm": 186.2
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 351.7,
+   "y_pt": 516.0,
+   "x_mm": 124.1,
+   "y_mm": 182.0
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 355.2,
+   "y_pt": 516.0,
+   "x_mm": 125.3,
+   "y_mm": 182.0
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 352.6,
+   "y_pt": 518.8,
+   "x_mm": 124.4,
+   "y_mm": 183.0
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 358.6,
+   "y_pt": 518.8,
+   "x_mm": 126.5,
+   "y_mm": 183.0
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 353.0,
+   "y_pt": 521.5,
+   "x_mm": 124.5,
+   "y_mm": 184.0
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 355.3,
+   "y_pt": 521.5,
+   "x_mm": 125.3,
+   "y_mm": 184.0
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 354.5,
+   "y_pt": 524.2,
+   "x_mm": 125.1,
+   "y_mm": 184.9
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 422.6,
+   "y_pt": 486.5,
+   "x_mm": 149.1,
+   "y_mm": 171.6
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 426.5,
+   "y_pt": 486.5,
+   "x_mm": 150.5,
+   "y_mm": 171.6
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 423.6,
+   "y_pt": 489.6,
+   "x_mm": 149.4,
+   "y_mm": 172.7
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 430.4,
+   "y_pt": 489.6,
+   "x_mm": 151.8,
+   "y_mm": 172.7
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 424.0,
+   "y_pt": 492.7,
+   "x_mm": 149.6,
+   "y_mm": 173.8
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 426.6,
+   "y_pt": 492.7,
+   "x_mm": 150.5,
+   "y_mm": 173.8
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 425.8,
+   "y_pt": 495.8,
+   "x_mm": 150.2,
+   "y_mm": 174.9
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 427.0,
+   "y_pt": 596.2,
+   "x_mm": 150.6,
+   "y_mm": 210.3
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 428.6,
+   "y_pt": 596.2,
+   "x_mm": 151.2,
+   "y_mm": 210.3
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 427.5,
+   "y_pt": 597.6,
+   "x_mm": 150.8,
+   "y_mm": 210.8
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 430.4,
+   "y_pt": 597.6,
+   "x_mm": 151.8,
+   "y_mm": 210.8
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 427.7,
+   "y_pt": 598.9,
+   "x_mm": 150.9,
+   "y_mm": 211.3
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 428.8,
+   "y_pt": 598.9,
+   "x_mm": 151.3,
+   "y_mm": 211.3
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 428.4,
+   "y_pt": 600.3,
+   "x_mm": 151.1,
+   "y_mm": 211.8
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 103.0,
+   "y_pt": 523.1,
+   "x_mm": 36.3,
+   "y_mm": 184.5
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 106.8,
+   "y_pt": 523.1,
+   "x_mm": 37.7,
+   "y_mm": 184.5
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 103.9,
+   "y_pt": 526.0,
+   "x_mm": 36.7,
+   "y_mm": 185.6
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 110.5,
+   "y_pt": 526.0,
+   "x_mm": 39.0,
+   "y_mm": 185.6
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 104.4,
+   "y_pt": 529.0,
+   "x_mm": 36.8,
+   "y_mm": 186.6
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 106.9,
+   "y_pt": 529.0,
+   "x_mm": 37.7,
+   "y_mm": 186.6
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 106.0,
+   "y_pt": 532.0,
+   "x_mm": 37.4,
+   "y_mm": 187.7
+  },
+  {
+   "text": "미까시",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 111.2,
+   "y_pt": 511.1,
+   "x_mm": 39.2,
+   "y_mm": 180.3
+  },
+  {
+   "text": "누빔",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 270.4,
+   "y_pt": 445.3,
+   "x_mm": 95.4,
+   "y_mm": 157.1
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 274.7,
+   "y_pt": 530.9,
+   "x_mm": 96.9,
+   "y_mm": 187.3
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 278.6,
+   "y_pt": 530.9,
+   "x_mm": 98.3,
+   "y_mm": 187.3
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 275.7,
+   "y_pt": 533.9,
+   "x_mm": 97.3,
+   "y_mm": 188.4
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 282.5,
+   "y_pt": 533.9,
+   "x_mm": 99.6,
+   "y_mm": 188.4
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 276.1,
+   "y_pt": 537.0,
+   "x_mm": 97.4,
+   "y_mm": 189.4
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 278.7,
+   "y_pt": 537.0,
+   "x_mm": 98.3,
+   "y_mm": 189.4
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 277.9,
+   "y_pt": 540.1,
+   "x_mm": 98.0,
+   "y_mm": 190.5
+  },
+  {
+   "text": "지퍼끝",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 277.9,
+   "y_pt": 491.9,
+   "x_mm": 98.0,
+   "y_mm": 173.5
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 104.8,
+   "y_pt": 573.2,
+   "x_mm": 37.0,
+   "y_mm": 202.2
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 234.7,
+   "y_pt": 693.5,
+   "x_mm": 82.8,
+   "y_mm": 244.6
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 158.4,
+   "y_pt": 677.4,
+   "x_mm": 55.9,
+   "y_mm": 239.0
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 443.2,
+   "y_pt": 501.7,
+   "x_mm": 156.4,
+   "y_mm": 177.0
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 262.7,
+   "y_pt": 525.7,
+   "x_mm": 92.7,
+   "y_mm": 185.5
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 362.2,
+   "y_pt": 503.0,
+   "x_mm": 127.8,
+   "y_mm": 177.4
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 262.6,
+   "y_pt": 348.0,
+   "x_mm": 92.6,
+   "y_mm": 122.8
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 430.1,
+   "y_pt": 390.2,
+   "x_mm": 151.7,
+   "y_mm": 137.6
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 277.3,
+   "y_pt": 448.1,
+   "x_mm": 97.8,
+   "y_mm": 158.1
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 440.4,
+   "y_pt": 605.2,
+   "x_mm": 155.4,
+   "y_mm": 213.5
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 263.6,
+   "y_pt": 395.6,
+   "x_mm": 93.0,
+   "y_mm": 139.5
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 145.4,
+   "y_pt": 702.7,
+   "x_mm": 51.3,
+   "y_mm": 247.9
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 149.3,
+   "y_pt": 702.7,
+   "x_mm": 52.7,
+   "y_mm": 247.9
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 146.4,
+   "y_pt": 705.8,
+   "x_mm": 51.6,
+   "y_mm": 249.0
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 153.1,
+   "y_pt": 705.8,
+   "x_mm": 54.0,
+   "y_mm": 249.0
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 146.8,
+   "y_pt": 708.9,
+   "x_mm": 51.8,
+   "y_mm": 250.1
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 149.4,
+   "y_pt": 708.9,
+   "x_mm": 52.7,
+   "y_mm": 250.1
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 148.6,
+   "y_pt": 712.0,
+   "x_mm": 52.4,
+   "y_mm": 251.2
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 471.0,
+   "y_pt": 738.6,
+   "x_mm": 166.2,
+   "y_mm": 260.6
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 474.9,
+   "y_pt": 738.6,
+   "x_mm": 167.5,
+   "y_mm": 260.6
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 472.0,
+   "y_pt": 741.7,
+   "x_mm": 166.5,
+   "y_mm": 261.6
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 478.8,
+   "y_pt": 741.7,
+   "x_mm": 168.9,
+   "y_mm": 261.6
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 472.4,
+   "y_pt": 744.8,
+   "x_mm": 166.7,
+   "y_mm": 262.7
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 475.0,
+   "y_pt": 744.8,
+   "x_mm": 167.6,
+   "y_mm": 262.7
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 474.2,
+   "y_pt": 747.8,
+   "x_mm": 167.3,
+   "y_mm": 263.8
+  },
+  {
+   "text": "주머니속",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 471.2,
+   "y_pt": 722.1,
+   "x_mm": 166.2,
+   "y_mm": 254.7
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 224.0,
+   "y_pt": 707.1,
+   "x_mm": 79.0,
+   "y_mm": 249.4
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 227.8,
+   "y_pt": 707.1,
+   "x_mm": 80.4,
+   "y_mm": 249.4
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 224.9,
+   "y_pt": 710.1,
+   "x_mm": 79.4,
+   "y_mm": 250.5
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 231.7,
+   "y_pt": 710.1,
+   "x_mm": 81.7,
+   "y_mm": 250.5
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 225.4,
+   "y_pt": 713.2,
+   "x_mm": 79.5,
+   "y_mm": 251.6
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 227.9,
+   "y_pt": 713.2,
+   "x_mm": 80.4,
+   "y_mm": 251.6
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 227.1,
+   "y_pt": 716.3,
+   "x_mm": 80.1,
+   "y_mm": 252.7
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 211.8,
+   "y_pt": 703.5,
+   "x_mm": 74.7,
+   "y_mm": 248.2
+  },
+  {
+   "text": "누빔",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 221.7,
+   "y_pt": 743.2,
+   "x_mm": 78.2,
+   "y_mm": 262.2
+  },
+  {
+   "text": "누빔",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 218.8,
+   "y_pt": 690.9,
+   "x_mm": 77.2,
+   "y_mm": 243.7
+  },
+  {
+   "text": "G",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 361.7,
+   "y_pt": 714.7,
+   "x_mm": 127.6,
+   "y_mm": 252.1
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 443.4,
+   "y_pt": 385.4,
+   "x_mm": 156.4,
+   "y_mm": 136.0
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 447.3,
+   "y_pt": 385.4,
+   "x_mm": 157.8,
+   "y_mm": 136.0
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 444.4,
+   "y_pt": 388.5,
+   "x_mm": 156.8,
+   "y_mm": 137.1
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 451.1,
+   "y_pt": 388.5,
+   "x_mm": 159.1,
+   "y_mm": 137.1
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 444.8,
+   "y_pt": 391.6,
+   "x_mm": 156.9,
+   "y_mm": 138.1
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 447.3,
+   "y_pt": 391.6,
+   "x_mm": 157.8,
+   "y_mm": 138.1
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 446.5,
+   "y_pt": 394.7,
+   "x_mm": 157.5,
+   "y_mm": 139.2
+  },
+  {
+   "text": "누빔",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 464.6,
+   "y_pt": 387.9,
+   "x_mm": 163.9,
+   "y_mm": 136.8
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 297.9,
+   "y_pt": 353.7,
+   "x_mm": 105.1,
+   "y_mm": 124.8
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 301.7,
+   "y_pt": 353.7,
+   "x_mm": 106.4,
+   "y_mm": 124.8
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 298.8,
+   "y_pt": 356.7,
+   "x_mm": 105.4,
+   "y_mm": 125.8
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 305.6,
+   "y_pt": 356.7,
+   "x_mm": 107.8,
+   "y_mm": 125.8
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 299.3,
+   "y_pt": 359.8,
+   "x_mm": 105.6,
+   "y_mm": 126.9
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 301.8,
+   "y_pt": 359.8,
+   "x_mm": 106.5,
+   "y_mm": 126.9
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 301.0,
+   "y_pt": 362.9,
+   "x_mm": 106.2,
+   "y_mm": 128.0
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 272.7,
+   "y_pt": 393.0,
+   "x_mm": 96.2,
+   "y_mm": 138.6
+  },
+  {
+   "text": "m a",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 274.4,
+   "y_pt": 393.0,
+   "x_mm": 96.8,
+   "y_mm": 138.6
+  },
+  {
+   "text": "라이더j",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 273.1,
+   "y_pt": 394.3,
+   "x_mm": 96.3,
+   "y_mm": 139.1
+  },
+  {
+   "text": "k",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 276.0,
+   "y_pt": 394.3,
+   "x_mm": 97.4,
+   "y_mm": 139.1
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 273.3,
+   "y_pt": 395.6,
+   "x_mm": 96.4,
+   "y_mm": 139.6
+  },
+  {
+   "text": "5",
+   "kind": "number",
+   "inch": 5.0,
+   "layer": "grading",
+   "x_pt": 274.4,
+   "y_pt": 395.6,
+   "x_mm": 96.8,
+   "y_mm": 139.6
+  },
+  {
+   "text": "패턴확인후재단",
+   "kind": "label",
+   "inch": null,
+   "layer": "grading",
+   "x_pt": 274.0,
+   "y_pt": 396.9,
+   "x_mm": 96.7,
+   "y_mm": 140.0
+  }
+ ]
+}

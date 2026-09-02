@@ -1,0 +1,926 @@
+{
+ "p031": [
+  {
+   "text": "(원턱 팬츠)",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 242.5,
+   "y_pt": 55.4,
+   "x_mm": 85.6,
+   "y_mm": 19.6
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 434.9,
+   "y_pt": 113.3,
+   "x_mm": 153.4,
+   "y_mm": 40.0
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 434.9,
+   "y_pt": 118.1,
+   "x_mm": 153.4,
+   "y_mm": 41.7
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 434.9,
+   "y_pt": 122.9,
+   "x_mm": 153.4,
+   "y_mm": 43.4
+  },
+  {
+   "text": "1/.1/2”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 411.9,
+   "y_pt": 114.5,
+   "x_mm": 145.3,
+   "y_mm": 40.4
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 496.4,
+   "y_pt": 84.9,
+   "x_mm": 175.1,
+   "y_mm": 29.9
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 478.3,
+   "y_pt": 92.9,
+   "x_mm": 168.7,
+   "y_mm": 32.8
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 522.9,
+   "y_pt": 107.4,
+   "x_mm": 184.5,
+   "y_mm": 37.9
+  },
+  {
+   "text": "2.1/2”",
+   "kind": "number",
+   "inch": 2.5,
+   "layer": "pattern",
+   "x_pt": 496.4,
+   "y_pt": 129.7,
+   "x_mm": 175.1,
+   "y_mm": 45.7
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 519.9,
+   "y_pt": 116.4,
+   "x_mm": 183.4,
+   "y_mm": 41.1
+  },
+  {
+   "text": "엉덩이길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 558.2,
+   "y_pt": 157.1,
+   "x_mm": 196.9,
+   "y_mm": 55.4
+  },
+  {
+   "text": "7.1/2”",
+   "kind": "number",
+   "inch": 7.5,
+   "layer": "pattern",
+   "x_pt": 558.3,
+   "y_pt": 165.4,
+   "x_mm": 196.9,
+   "y_mm": 58.4
+  },
+  {
+   "text": "기장",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 558.2,
+   "y_pt": 408.7,
+   "x_mm": 196.9,
+   "y_mm": 144.2
+  },
+  {
+   "text": "36.1/2”",
+   "kind": "number",
+   "inch": 36.5,
+   "layer": "pattern",
+   "x_pt": 558.2,
+   "y_pt": 417.0,
+   "x_mm": 196.9,
+   "y_mm": 147.1
+  },
+  {
+   "text": "무릎길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 558.7,
+   "y_pt": 268.1,
+   "x_mm": 197.1,
+   "y_mm": 94.6
+  },
+  {
+   "text": "21”",
+   "kind": "number",
+   "inch": 21.0,
+   "layer": "pattern",
+   "x_pt": 558.7,
+   "y_pt": 276.5,
+   "x_mm": 197.1,
+   "y_mm": 97.5
+  },
+  {
+   "text": "밑위길이",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 560.2,
+   "y_pt": 207.6,
+   "x_mm": 197.6,
+   "y_mm": 73.2
+  },
+  {
+   "text": "10.1/2”",
+   "kind": "number",
+   "inch": 10.5,
+   "layer": "pattern",
+   "x_pt": 560.2,
+   "y_pt": 216.0,
+   "x_mm": 197.6,
+   "y_mm": 76.2
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 235.4,
+   "y_pt": 345.4,
+   "x_mm": 83.1,
+   "y_mm": 121.8
+  },
+  {
+   "text": "○",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 262.3,
+   "y_pt": 322.7,
+   "x_mm": 92.5,
+   "y_mm": 113.9
+  },
+  {
+   "text": "○",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 301.3,
+   "y_pt": 322.6,
+   "x_mm": 106.3,
+   "y_mm": 113.8
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 257.0,
+   "y_pt": 143.8,
+   "x_mm": 90.6,
+   "y_mm": 50.7
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 231.5,
+   "y_pt": 164.0,
+   "x_mm": 81.7,
+   "y_mm": 57.9
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 264.4,
+   "y_pt": 176.8,
+   "x_mm": 93.3,
+   "y_mm": 62.4
+  },
+  {
+   "text": "3”",
+   "kind": "number",
+   "inch": 3.0,
+   "layer": "pattern",
+   "x_pt": 234.7,
+   "y_pt": 138.2,
+   "x_mm": 82.8,
+   "y_mm": 48.8
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 281.9,
+   "y_pt": 145.5,
+   "x_mm": 99.5,
+   "y_mm": 51.3
+  },
+  {
+   "text": "ease",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 269.9,
+   "y_pt": 163.8,
+   "x_mm": 95.2,
+   "y_mm": 57.8
+  },
+  {
+   "text": "턱",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 286.9,
+   "y_pt": 166.1,
+   "x_mm": 101.2,
+   "y_mm": 58.6
+  },
+  {
+   "text": "바텍",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 310.8,
+   "y_pt": 161.3,
+   "x_mm": 109.6,
+   "y_mm": 56.9
+  },
+  {
+   "text": "바텍",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 322.6,
+   "y_pt": 217.8,
+   "x_mm": 113.8,
+   "y_mm": 76.8
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 338.6,
+   "y_pt": 144.4,
+   "x_mm": 119.4,
+   "y_mm": 50.9
+  },
+  {
+   "text": "2”",
+   "kind": "number",
+   "inch": 2.0,
+   "layer": "pattern",
+   "x_pt": 320.3,
+   "y_pt": 143.5,
+   "x_mm": 113.0,
+   "y_mm": 50.6
+  },
+  {
+   "text": "△",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 225.8,
+   "y_pt": 249.2,
+   "x_mm": 79.7,
+   "y_mm": 87.9
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 252.1,
+   "y_pt": 281.3,
+   "x_mm": 88.9,
+   "y_mm": 99.2
+  },
+  {
+   "text": "1.3/8”",
+   "kind": "number",
+   "inch": 1.375,
+   "layer": "pattern",
+   "x_pt": 252.4,
+   "y_pt": 231.0,
+   "x_mm": 89.0,
+   "y_mm": 81.5
+  },
+  {
+   "text": "7/8”",
+   "kind": "number",
+   "inch": 0.875,
+   "layer": "pattern",
+   "x_pt": 261.6,
+   "y_pt": 214.7,
+   "x_mm": 92.3,
+   "y_mm": 75.7
+  },
+  {
+   "text": "△",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 230.5,
+   "y_pt": 304.2,
+   "x_mm": 81.3,
+   "y_mm": 107.3
+  },
+  {
+   "text": "6”",
+   "kind": "number",
+   "inch": 6.0,
+   "layer": "pattern",
+   "x_pt": 312.6,
+   "y_pt": 190.2,
+   "x_mm": 110.3,
+   "y_mm": 67.1
+  },
+  {
+   "text": "앞트임",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 301.7,
+   "y_pt": 493.5,
+   "x_mm": 106.4,
+   "y_mm": 174.1
+  },
+  {
+   "text": "H/4    1/2”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 283.7,
+   "y_pt": 204.8,
+   "x_mm": 100.1,
+   "y_mm": 72.3
+  },
+  {
+   "text": "2.5/8”",
+   "kind": "number",
+   "inch": 2.625,
+   "layer": "pattern",
+   "x_pt": 269.9,
+   "y_pt": 518.6,
+   "x_mm": 95.2,
+   "y_mm": 182.9
+  },
+  {
+   "text": "2.5/8”",
+   "kind": "number",
+   "inch": 2.625,
+   "layer": "pattern",
+   "x_pt": 295.3,
+   "y_pt": 518.6,
+   "x_mm": 104.2,
+   "y_mm": 182.9
+  },
+  {
+   "text": "1.1/2”",
+   "kind": "number",
+   "inch": 1.5,
+   "layer": "pattern",
+   "x_pt": 320.0,
+   "y_pt": 501.0,
+   "x_mm": 112.9,
+   "y_mm": 176.7
+  },
+  {
+   "text": "○",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 467.2,
+   "y_pt": 325.5,
+   "x_mm": 164.8,
+   "y_mm": 114.8
+  },
+  {
+   "text": "○",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 430.2,
+   "y_pt": 325.1,
+   "x_mm": 151.7,
+   "y_mm": 114.7
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 421.3,
+   "y_pt": 346.6,
+   "x_mm": 148.6,
+   "y_mm": 122.3
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 476.0,
+   "y_pt": 346.4,
+   "x_mm": 167.9,
+   "y_mm": 122.2
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 468.1,
+   "y_pt": 498.7,
+   "x_mm": 165.1,
+   "y_mm": 175.9
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 431.2,
+   "y_pt": 499.1,
+   "x_mm": 152.1,
+   "y_mm": 176.1
+  },
+  {
+   "text": "앞트임",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 486.5,
+   "y_pt": 493.3,
+   "x_mm": 171.6,
+   "y_mm": 174.0
+  },
+  {
+   "text": "1.1/2”",
+   "kind": "number",
+   "inch": 1.5,
+   "layer": "pattern",
+   "x_pt": 492.4,
+   "y_pt": 502.5,
+   "x_mm": 173.7,
+   "y_mm": 177.3
+  },
+  {
+   "text": "늘림",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 397.2,
+   "y_pt": 265.0,
+   "x_mm": 140.1,
+   "y_mm": 93.5
+  },
+  {
+   "text": "△",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 371.3,
+   "y_pt": 257.9,
+   "x_mm": 131.0,
+   "y_mm": 91.0
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 373.1,
+   "y_pt": 295.7,
+   "x_mm": 131.6,
+   "y_mm": 104.3
+  },
+  {
+   "text": "△",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 389.1,
+   "y_pt": 309.4,
+   "x_mm": 137.3,
+   "y_mm": 109.1
+  },
+  {
+   "text": "3/4”",
+   "kind": "number",
+   "inch": 0.75,
+   "layer": "pattern",
+   "x_pt": 354.4,
+   "y_pt": 226.2,
+   "x_mm": 125.0,
+   "y_mm": 79.8
+  },
+  {
+   "text": "4.1/2”",
+   "kind": "number",
+   "inch": 4.5,
+   "layer": "pattern",
+   "x_pt": 389.7,
+   "y_pt": 216.9,
+   "x_mm": 137.5,
+   "y_mm": 76.5
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 426.4,
+   "y_pt": 229.9,
+   "x_mm": 150.4,
+   "y_mm": 81.1
+  },
+  {
+   "text": "1/8”",
+   "kind": "number",
+   "inch": 0.125,
+   "layer": "pattern",
+   "x_pt": 427.7,
+   "y_pt": 216.9,
+   "x_mm": 150.9,
+   "y_mm": 76.5
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 405.1,
+   "y_pt": 188.4,
+   "x_mm": 142.9,
+   "y_mm": 66.4
+  },
+  {
+   "text": "2”",
+   "kind": "number",
+   "inch": 2.0,
+   "layer": "pattern",
+   "x_pt": 434.2,
+   "y_pt": 176.1,
+   "x_mm": 153.2,
+   "y_mm": 62.1
+  },
+  {
+   "text": "2”",
+   "kind": "number",
+   "inch": 2.0,
+   "layer": "pattern",
+   "x_pt": 440.2,
+   "y_pt": 152.1,
+   "x_mm": 155.3,
+   "y_mm": 53.7
+  },
+  {
+   "text": "1/2”",
+   "kind": "number",
+   "inch": 0.5,
+   "layer": "pattern",
+   "x_pt": 502.5,
+   "y_pt": 185.5,
+   "x_mm": 177.3,
+   "y_mm": 65.4
+  },
+  {
+   "text": "H/4  +  1/2”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 471.7,
+   "y_pt": 204.8,
+   "x_mm": 166.4,
+   "y_mm": 72.2
+  },
+  {
+   "text": "외입술",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 484.5,
+   "y_pt": 173.3,
+   "x_mm": 170.9,
+   "y_mm": 61.1
+  },
+  {
+   "text": "바지주름위치",
+   "kind": "label",
+   "inch": null,
+   "layer": "pattern",
+   "x_pt": 468.4,
+   "y_pt": 187.1,
+   "x_mm": 165.2,
+   "y_mm": 66.0
+  },
+  {
+   "text": "3/8”",
+   "kind": "number",
+   "inch": 0.375,
+   "layer": "pattern",
+   "x_pt": 525.8,
+   "y_pt": 147.3,
+   "x_mm": 185.5,
+   "y_mm": 52.0
+  },
+  {
+   "text": "1”",
+   "kind": "number",
+   "inch": 1.0,
+   "layer": "pattern",
+   "x_pt": 473.7,
+   "y_pt": 138.2,
+   "x_mm": 167.1,
+   "y_mm": 48.7
+  },
+  {
+   "text": "4”",
+   "kind": "number",
+   "inch": 4.0,
+   "layer": "pattern",
+   "x_pt": 450.6,
+   "y_pt": 134.4,
+   "x_mm": 158.9,
+   "y_mm": 47.4
+  },
+  {
+   "text": "2.1/2”",
+   "kind": "number",
+   "inch": 2.5,
+   "layer": "pattern",
+   "x_pt": 505.6,
+   "y_pt": 144.0,
+   "x_mm": 178.3,
+   "y_mm": 50.8
+  },
+  {
+   "text": "1/4”",
+   "kind": "number",
+   "inch": 0.25,
+   "layer": "pattern",
+   "x_pt": 416.2,
+   "y_pt": 140.1,
+   "x_mm": 146.8,
+   "y_mm": 49.4
+  }
+ ],
+ "p032": [
+  {
+   "text": "앞",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 136.1,
+   "y_pt": 656.5,
+   "x_mm": 48.0,
+   "y_mm": 231.6
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 135.9,
+   "y_pt": 661.0,
+   "x_mm": 47.9,
+   "y_mm": 233.2
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 135.7,
+   "y_pt": 665.5,
+   "x_mm": 47.9,
+   "y_mm": 234.8
+  },
+  {
+   "text": "턱 분량은 최소",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 74.8,
+   "y_pt": 762.9,
+   "x_mm": 26.4,
+   "y_mm": 269.1
+  },
+  {
+   "text": "1.1/2”",
+   "kind": "number",
+   "inch": 1.5,
+   "layer": "developed",
+   "x_pt": 115.6,
+   "y_pt": 762.9,
+   "x_mm": 40.8,
+   "y_mm": 269.1
+  },
+  {
+   "text": "이상 주어야 한다. 그 이하를 줄 경우 턱이 짧게 나오게 되고 턱 분량이 적다고 느끼는 경우가 대부분이다. 턱의",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 338.5,
+   "y_pt": 762.9,
+   "x_mm": 119.4,
+   "y_mm": 269.1
+  },
+  {
+   "text": "분량은",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 59.2,
+   "y_pt": 777.9,
+   "x_mm": 20.9,
+   "y_mm": 274.4
+  },
+  {
+   "text": "2”~3”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 84.9,
+   "y_pt": 777.9,
+   "x_mm": 30.0,
+   "y_mm": 274.4
+  },
+  {
+   "text": "가 적절하다. 턱을 벌릴 때에는",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 156.0,
+   "y_pt": 777.9,
+   "x_mm": 55.0,
+   "y_mm": 274.4
+  },
+  {
+   "text": "앞중심쪽 몸판을 식서결",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 261.6,
+   "y_pt": 777.9,
+   "x_mm": 92.3,
+   "y_mm": 274.4
+  },
+  {
+   "text": "로 두고 옆솔기 방향으로 벌려주는데,",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 380.1,
+   "y_pt": 777.9,
+   "x_mm": 134.1,
+   "y_mm": 274.4
+  },
+  {
+   "text": "모든 옷은 앞중심을",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 491.4,
+   "y_pt": 777.9,
+   "x_mm": 173.3,
+   "y_mm": 274.4
+  },
+  {
+   "text": "식서결로 만들었을 때 시각적으로 예쁘기 때문",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 133.7,
+   "y_pt": 792.9,
+   "x_mm": 47.2,
+   "y_mm": 279.7
+  },
+  {
+   "text": "이다. 턱을 벌리면 엉덩이둘레, 허벅지둘레, 무릎둘레도 커지는 것을 알고 있어야 한다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 388.8,
+   "y_pt": 792.9,
+   "x_mm": 137.2,
+   "y_mm": 279.7
+  },
+  {
+   "text": "바지주름선(레직기선)을 잡지 않는 팬츠의 경우 턱을 디자인에 따라 원하는 위치에 턱을 넣어주면 된다.",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 242.4,
+   "y_pt": 807.9,
+   "x_mm": 85.5,
+   "y_mm": 285.0
+  },
+  {
+   "text": "H.L",
+   "kind": "formula",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 390.2,
+   "y_pt": 646.2,
+   "x_mm": 137.7,
+   "y_mm": 228.0
+  },
+  {
+   "text": "H.L",
+   "kind": "formula",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 223.8,
+   "y_pt": 649.8,
+   "x_mm": 78.9,
+   "y_mm": 229.3
+  },
+  {
+   "text": "뒤",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 312.1,
+   "y_pt": 623.2,
+   "x_mm": 110.1,
+   "y_mm": 219.9
+  },
+  {
+   "text": "중",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 311.2,
+   "y_pt": 628.9,
+   "x_mm": 109.8,
+   "y_mm": 221.8
+  },
+  {
+   "text": "심",
+   "kind": "label",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 310.4,
+   "y_pt": 634.5,
+   "x_mm": 109.5,
+   "y_mm": 223.8
+  },
+  {
+   "text": "2”~3”",
+   "kind": "formula",
+   "inch": null,
+   "layer": "developed",
+   "x_pt": 194.5,
+   "y_pt": 604.4,
+   "x_mm": 68.6,
+   "y_mm": 213.2
+  }
+ ]
+}
