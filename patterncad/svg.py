@@ -21,8 +21,9 @@ def _f(v):
     return f"{v:.3f}".rstrip("0").rstrip(".")
 
 
-def line_path(line: ResolvedLine, scale: float, dx: float, dy: float) -> str:
-    T = lambda p: (p.x * scale + dx, p.y * scale + dy)  # noqa: E731
+def line_path(line: ResolvedLine, scale, dx: float, dy: float) -> str:
+    sx, sy = scale if isinstance(scale, (tuple, list)) else (scale, scale)
+    T = lambda p: (p.x * sx + dx, p.y * sy + dy)  # noqa: E731
     if line.kind == "curve":
         x, y = T(line.pts[0])
         d = [f"M{_f(x)} {_f(y)}"]
@@ -34,9 +35,10 @@ def line_path(line: ResolvedLine, scale: float, dx: float, dy: float) -> str:
     return "M" + "L".join(f"{_f(x)} {_f(y)}" for x, y in pts)
 
 
-def render_group(res: Resolved, scale: float, dx: float, dy: float, color: str | None = None,
+def render_group(res: Resolved, scale, dx: float, dy: float, color: str | None = None,
                  labels: bool = True, stroke_w: float = 0.5, roles=None) -> str:
-    """<g> 조각. color 를 주면 역할 무관하게 그 색 (겹침 검증용)."""
+    """<g> 조각. color 를 주면 역할 무관하게 그 색 (겹침 검증용). scale 은 숫자 또는 (가로, 세로)."""
+    sx, sy = scale if isinstance(scale, (tuple, list)) else (scale, scale)
     w, w2 = stroke_w, stroke_w * 0.6
     dash = f"{stroke_w*4},{stroke_w*3}"
     dash2 = f"{stroke_w*8},{stroke_w*4}"
@@ -55,13 +57,13 @@ def render_group(res: Resolved, scale: float, dx: float, dy: float, color: str |
             out.append(f'<path d="{line_path(l, scale, dx, dy)}"><title>{l.name}</title></path>')
         out.append("</g>")
     if labels:
-        fs = _f(scale * 0.11)
-        r = _f(scale * 0.03)
+        fs = _f(sx * 0.11)
+        r = _f(sx * 0.03)
         out.append(f'<g id="points" font-size="{fs}" font-family="sans-serif" fill="{color or "#06c"}">')
         for name, p in res.points.items():
-            x, y = p.x * scale + dx, p.y * scale + dy
+            x, y = p.x * sx + dx, p.y * sy + dy
             out.append(f'<circle cx="{_f(x)}" cy="{_f(y)}" r="{r}" fill="{color or "#06c"}"/>'
-                       f'<text x="{_f(x + scale*0.05)}" y="{_f(y - scale*0.04)}">{name}</text>')
+                       f'<text x="{_f(x + sx*0.05)}" y="{_f(y - sx*0.04)}">{name}</text>')
         out.append("</g>")
     return "\n".join(out)
 

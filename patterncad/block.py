@@ -77,9 +77,16 @@ def merge_block(parent: dict, child: dict) -> dict:
     out["extends_from"] = parent.get("id")
 
     meas = dict(parent.get("measurements", {}))
+    KINDS = ("value", "formula", "table", "choice")
     for k, v in (child.get("measurements") or {}).items():
         base = meas.get(k)
-        meas[k] = {**base, **v} if isinstance(base, dict) and isinstance(v, dict) else v
+        if isinstance(base, dict) and isinstance(v, dict):
+            # 자식이 값의 종류를 바꾸면(예: formula → value) 부모의 다른 종류는 버린다
+            if any(kind in v for kind in KINDS):
+                base = {bk: bv for bk, bv in base.items() if bk not in KINDS + ("key",)}
+            meas[k] = {**base, **v}
+        else:
+            meas[k] = v
     out["measurements"] = meas
 
     pts = dict(parent.get("points", {}))

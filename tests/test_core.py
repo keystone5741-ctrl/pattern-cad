@@ -251,6 +251,37 @@ class Skirt(unittest.TestCase):
         self.assertAlmostEqual(res["waistband"].measurements["길이"], 2 * res["skirt"].measurements["허리4"])
 
 
+class Hipbone(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.res = Block.load(ROOT / "blocks" / "skirt_hipbone.yaml").evaluate()
+
+    def test_child_value_overrides_parent_formula(self):
+        """상속에서 자식의 value 가 부모의 formula 를 이긴다."""
+        m = self.res.measurements
+        self.assertAlmostEqual(m["뒤다트폭"], 1.0)
+        self.assertAlmostEqual(m["앞다트폭"], 0.0)
+
+    def test_front_narrower_than_back(self):
+        m = self.res.measurements
+        self.assertAlmostEqual(m["앞폭"], 8.5)
+        self.assertAlmostEqual(m["뒤폭"], 9.5)
+
+    def test_front_side_seam_takes_more(self):
+        """앞 옆솔기가 뒤보다 더 들어가야 옆솔기가 뒤로 기울지 않는다."""
+        m = self.res.measurements
+        self.assertGreater(m["앞옆선들임"], m["뒤옆선들임"])
+
+    def test_no_front_dart(self):
+        names = {l.name for l in self.res.lines}
+        self.assertNotIn("앞다트1", names)
+        self.assertIn("뒤다트", names)
+
+    def test_dart_tip_above_hip(self):
+        p, m = self.res.points, self.res.measurements
+        self.assertAlmostEqual(m["엉덩이길이"] - p["BD_T"].y, 1.375)
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

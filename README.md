@@ -53,6 +53,7 @@ blocks/
   shirt_collar_blouse_body.yaml  셔츠 칼라 블라우스 몸판 (기본 원형 상속)
   shirt_collar_band.yaml / shirt_collar.yaml / cuff.yaml / sleeve_placket.yaml  부속: 칼라밴드·칼라·커프스·견보루
   skirt_basic.yaml          제허리 스커트 원형 — H/4 ∓ 1/4 폭, W/4 + 이세, 다트 분량 자동 배분, 겹트임
+  skirt_hipbone.yaml        힙본 스커트 원형 (제허리 원형 상속)
   waistband.yaml            오비
   *.svg                     실물 크기(mm) 그림
   verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림

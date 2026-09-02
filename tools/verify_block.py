@@ -29,14 +29,15 @@ from patterncad.geometry import Pt, fit_handles, nearest_on_polyline  # noqa: E4
 from patterncad.svg import render_group  # noqa: E402
 
 
-def original_polylines(page, scale: float, origin: tuple[float, float], curves_only: bool = False) -> list[list[Pt]]:
+def original_polylines(page, scale, origin: tuple[float, float], curves_only: bool = False) -> list[list[Pt]]:
     """패턴 층의 선을 인치 폴리라인 목록으로 (직선은 2점, 베지어는 표본화).
     curves_only=True 면 점선을 빼고, 짧은 조각이 8개 이상 이어진 것(곡선을 잘게 쪼갠 폴리라인)만 돌려준다."""
     spans = ex.page_spans(page)
     lines = ex.page_lines(page)
     reg = ex.detect_regions(page, spans, lines, True)
+    sx, sy = scale if isinstance(scale, (tuple, list)) else (scale, scale)
     ox, oy = origin
-    to_in = lambda p: Pt((p.x - ox) / scale, (p.y - oy) / scale)  # noqa: E731
+    to_in = lambda p: Pt((p.x - ox) / sx, (p.y - oy) / sy)  # noqa: E731
     out = []
     for d in page.get_drawings():
         if ex.classify_drawing(d, reg) != "pattern":
@@ -127,7 +128,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("block")
     ap.add_argument("--page", type=int, required=True)
-    ap.add_argument("--scale", type=float, default=24.35, help="pt per inch")
+    ap.add_argument("--scale", type=float, default=24.35, help="pt per inch (가로)")
+    ap.add_argument("--scale-y", type=float, help="세로 pt per inch. 도면이 가로·세로 배율이 다를 때 (기본: --scale 과 같음)")
     ap.add_argument("--origin", type=float, nargs=2, default=(62.2, 118.0), help="원점의 pt 좌표")
     ap.add_argument("--fit", action="store_true")
     ap.add_argument("--out", help="출력 SVG 경로 (기본: 원형 파일 옆 verify_<id>.svg)")
@@ -152,12 +154,13 @@ def main(argv=None):
         res.points = {k: v for k, v in res.points.items() if k in used}
     doc = pymupdf.open(str(ROOT / "reference" / "portfolio.pdf"))
     page = doc[args.page - 1]
-    polys = original_polylines(page, args.scale, tuple(args.origin))
+    scale = (args.scale, args.scale_y or args.scale)
+    polys = original_polylines(page, scale, tuple(args.origin))
 
     if args.fit:
         import yaml
 
-        fitted = fit_curve_handles(res, original_polylines(page, args.scale, tuple(args.origin), curves_only=True))
+        fitted = fit_curve_handles(res, original_polylines(page, scale, tuple(args.origin), curves_only=True))
         print(yaml.safe_dump({"handles": fitted}, allow_unicode=True, sort_keys=False))
         return
 
@@ -179,7 +182,7 @@ def main(argv=None):
             idx = item
     src = ROOT / idx["dir"] / f"p{args.page:03d}_pattern.svg"
     svg = src.read_text(encoding="utf-8")
-    overlay = render_group(res, args.scale, args.origin[0], args.origin[1], color="#d22", stroke_w=0.6)
+    overlay = render_group(res, scale, args.origin[0], args.origin[1], color="#d22", stroke_w=0.6)
     svg = svg.replace("</svg>", f'<g id="rule" opacity="0.85">{overlay}</g></svg>')
     suffix = f"_{args.piece}" if args.piece else ""
     out = Path(args.out) if args.out else Path(args.block).with_name(f"verify_{block.id}{suffix}.svg")

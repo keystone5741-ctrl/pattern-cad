@@ -1,0 +1,62 @@
+# 힙본 스커트 원형 (Hipbone Skirt) — 포트폴리오 p.7–8. 제허리 스커트 원형을 상속.
+#
+# 허리선이 앞중심은 내려가고 뒤중심으로 갈수록 올라간 형태. 제허리 틀(허리선·엉덩이선·밑단)은 그대로 두고
+#   힙본선 = 허리선 아래 2" 를 기준으로 앞중심 5/8 더 내림, 뒤중심 1/8 더 내림, 옆선은 1/2 올림
+#   앞 옆솔기 3/4, 뒤 옆솔기 5/8 들임 — 같은 값이면 옆솔기가 뒤로 기울므로 앞이 더 들어간다 (p.7). 최대 3/4 (더 들어가면 우글거림)
+#   앞다트 없음 (허리선이 충분히 내려와 다트 분량이 사라짐) → 앞 엉덩이둘레를 작게: 앞폭 = H/4 − 1/2, 뒤폭 = H/4 + 1/2
+#   뒤다트 1" (뒤중심에서 3.1/2), 끝은 엉덩이선 1.3/8 위 (보통 1~1.1/2 위. 짧으면 보조개, 길면 선호하지 않음 — 소통)
+#   오비(1.1/2)는 허리 곡을 따라 몸판 위에서 제도한 뒤 떼어낸다. 앞중심·뒤중심에서 1" 직각으로 나간 뒤 곡을 그린다 (p.8: 펼쳤을 때 갈매기 방지)
+#   허리와 엉덩이 차이가 10" 를 넘으면 다트 없는 힙본으로 제도 불가 → 다트·턱 필요 (디자이너와 소통)
+# 지퍼끝은 엉덩이선, 겹트임은 제허리와 같다.
+extends: skirt_basic.yaml
+name: 힙본 스커트 원형
+id: skirt_hipbone
+source: reference/portfolio.pdf p.7
+
+measurements:
+  앞뒤차:       {value: 1/2, note: 앞판에 다트가 없어 앞 엉덩이를 작게}
+  힙본내림:     {value: 2, note: 허리선에서 내려오는 기준. 내려오는 정도에 따라 앞다트 유무가 정해진다}
+  앞중심추가내림: {value: 5/8}
+  뒤중심추가내림: {value: 1/8}
+  옆선올림:     {value: 1/2, note: 힙본선 기준}
+  앞옆선들임:   {value: 3/4}
+  뒤옆선들임:   {value: 5/8}
+  뒤다트폭:     {value: 1}
+  뒤다트위치:   {value: 3.1/2, note: 뒤중심 허리점에서 다트의 뒤중심쪽 다리까지 (도면 표기)}
+  뒤다트끝올림: {value: 1.3/8, note: 엉덩이선 위}
+  지퍼끝올림:   {value: 0, note: 지퍼끝 = 엉덩이선}
+  앞다트폭:     {value: 0}
+
+points:
+  remove: [SS_WF, SS_WB, CB_W, FD1_C, FD1_L, FD1_R, FD1_T, FD2_C, FD2_L, FD2_R, FD2_T,
+           BD1_C, BD1_L, BD1_R, BD1_T, BD2_C, BD2_L, BD2_R, BD2_T]
+  HB_CF:   {ko: 앞중심 힙본점,     at: [0, "힙본내림 + 앞중심추가내림"]}
+  HB_CF1:  {ko: 앞중심 직각 1",    from: HB_CF, dx: 1}
+  HB_SSF:  {ko: 앞 옆선 힙본점,    at: ["앞폭 - 앞옆선들임", "힙본내림 - 옆선올림"]}
+  HB_SSB:  {ko: 뒤 옆선 힙본점,    at: ["앞폭 + 뒤옆선들임", "힙본내림 - 옆선올림"]}
+  HB_CB:   {ko: 뒤중심 힙본점,     at: ["앞폭 + 뒤폭", "힙본내림 + 뒤중심추가내림"]}
+  HB_CB1:  {ko: 뒤중심 직각 1",    from: HB_CB, dx: -1}
+  HB_L:    {ko: 힙본 기준선 앞,    at: [0, 힙본내림]}
+  HB_R:    {ko: 힙본 기준선 뒤,    at: ["앞폭 + 뒤폭", 힙본내림]}
+  BD_C:    {ko: 뒤다트 중심,       along: [HB_CB, HB_SSB], dist: "뒤다트위치 + 뒤다트폭/2"}
+  BD_L:    {from: BD_C, dx: "-뒤다트폭/2"}
+  BD_R:    {from: BD_C, dx: "뒤다트폭/2"}
+  BD_T:    {ko: 뒤다트 끝,         at: ["BD_C.x", "엉덩이길이 - 뒤다트끝올림"]}
+
+lines:
+  remove: [앞허리선1, 앞허리선2, 앞허리선3, 앞다트1, 앞다트2, 앞옆선위, 뒤허리선1, 뒤허리선2, 뒤허리선3,
+           뒤다트1, 뒤다트2, 뒤옆선위, 뒤중심선, 앞중심선]
+  add:
+    - {name: 힙본기준선, role: construction, pts: [HB_L, HB_R]}
+    - {name: 앞중심선, piece: 앞판, role: fold, pts: [HB_CF, CF_HEM]}
+    - {name: 앞허리선, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, HB_SSF],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], HB_SSF: [1, -0.25]}, handles: [[0.40, 0.42], [0.57, 0.21]], note: 앞중심에서 1" 직각으로 나간 뒤 곡}
+    - {name: 앞옆선위, piece: 앞판, role: outline, curve: [HB_SSF, SS_H],
+       tangents: {HB_SSF: [0.3, 1], SS_H: [0, 1]}, handles: [[0.20, 0.32]]}
+    - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [HB_CB, CB_HEM]}
+    - {name: 뒤허리선1, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, BD_R],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.24, 0.61], [1.00, 0.20]]}
+    - {name: 뒤다트, piece: 뒤판, role: dart, pts: [BD_R, BD_T, BD_L]}
+    - {name: 뒤허리선2, piece: 뒤판, role: outline, pts: [BD_L, HB_SSB]}
+    - {name: 뒤옆선위, piece: 뒤판, role: outline, curve: [HB_SSB, SS_H],
+       tangents: {HB_SSB: [-0.3, 1], SS_H: [0, 1]}, handles: [[0.20, 0.28]]}
