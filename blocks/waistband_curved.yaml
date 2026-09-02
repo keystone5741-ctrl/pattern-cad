@@ -6,7 +6,8 @@
 #   뒤 오비 밑선 − 윗선 = 5/8 ~ 3/4   (기본 3/4. 뒤허리가 꺼져 뒤 오비 휘어짐이 3/8 정도 크다)
 #   윗선이 뜨는 디자인이면 3/8 정도만 차이를 준다
 # 휘어진 정도(부채꼴): 벌어진 각 θ = (밑선 − 윗선)/높이, 윗선 반지름 = 윗선/θ, 밑선 반지름 = 윗선반지름 + 높이.
-# 좌표계: 부채꼴 중심이 원점, 오비는 아래쪽(+y)에 놓인다. 앞중심이 왼쪽, 옆선이 오른쪽.
+# 좌표계: 부채꼴 중심이 원점, 오비는 아래쪽(+y)에 놓인다. **앞중심(골) 변이 수직으로 서도록**
+# 부채꼴을 90°에서 시작시킨다 — 중심선·식서에 맞춰 놓기 위해서다.
 name: 곡선 오비
 id: waistband_curved
 category: part
@@ -26,14 +27,16 @@ measurements:
 
 points:
   C:      {ko: 부채꼴 중심,   at: [0, 0]}
-  T0:     {ko: 윗선 앞중심,   polar: {center: C, radius: 윗반지름, angle: "90 - 각도/2"}}
-  TM:     {ko: 윗선 중간,     polar: {center: C, radius: 윗반지름, angle: 90}}
-  T1:     {ko: 윗선 옆선,     polar: {center: C, radius: 윗반지름, angle: "90 + 각도/2"}}
-  B0:     {ko: 밑선 앞중심,   polar: {center: C, radius: 밑반지름, angle: "90 - 각도/2"}}
-  BM:     {ko: 밑선 중간,     polar: {center: C, radius: 밑반지름, angle: 90}}
-  B1:     {ko: 밑선 옆선,     polar: {center: C, radius: 밑반지름, angle: "90 + 각도/2"}}
-  TE:     {ko: 윗선 연장 끝,  polar: {center: C, radius: 윗반지름, angle: "90 + 각도/2 + 연장각"}}
-  BE:     {ko: 밑선 연장 끝,  polar: {center: C, radius: 밑반지름, angle: "90 + 각도/2 + 연장각"}}
+  T0:     {ko: 윗선 앞중심,   polar: {center: C, radius: 윗반지름, angle: 90}, note: 이 변이 수직(중심·식서)}
+  TM:     {ko: 윗선 중간,     polar: {center: C, radius: 윗반지름, angle: "90 + 각도/2"}}
+  T1:     {ko: 윗선 옆선,     polar: {center: C, radius: 윗반지름, angle: "90 + 각도"}}
+  B0:     {ko: 밑선 앞중심,   polar: {center: C, radius: 밑반지름, angle: 90}}
+  BM:     {ko: 밑선 중간,     polar: {center: C, radius: 밑반지름, angle: "90 + 각도/2"}}
+  B1:     {ko: 밑선 옆선,     polar: {center: C, radius: 밑반지름, angle: "90 + 각도"}}
+  TE:     {ko: 윗선 연장 끝,  polar: {center: C, radius: 윗반지름, angle: "90 + 각도 + 연장각"}}
+  BE:     {ko: 밑선 연장 끝,  polar: {center: C, radius: 밑반지름, angle: "90 + 각도 + 연장각"}}
+  GR_T:   {ko: 식서 위,       from: T0, dx: 0.4}
+  GR_B:   {ko: 식서 아래,     from: B0, dx: 0.4}
 
 lines:
   - {name: 윗선, role: outline, curve: [T0, TM, TE],
@@ -45,3 +48,4 @@ lines:
   - {name: 앞끝, role: fold, pts: [T0, B0]}
   - {name: 뒤끝, role: outline, pts: [TE, BE]}
   - {name: 옆선표시, role: notch, pts: [T1, B1]}
+  - {name: 식서, role: grain, pts: [GR_T, GR_B], note: 앞중심 변과 나란한 수직선}
