@@ -38,20 +38,22 @@ measurements:
   뒤벌림각:   {formula: "atan2(뒤벌림, 절개길이)"}
 
 points:
-  # 앞판 절개선과 작은 다트
-  SL_F_T:  {ko: 앞 절개선 위(회전축), at: [앞절개위치, "힙본내림 - 옆선올림"]}
-  FD_L:    {ko: 앞다트 왼다리, from: SL_F_T, dx: "-앞다트폭/2"}
-  FD_R:    {ko: 앞다트 오른다리, from: SL_F_T, dx: "앞다트폭/2"}
-  FD_T:    {ko: 앞다트 끝,      from: SL_F_T, dy: 앞다트길이}
+  # 앞판 절개선과 작은 다트 — 절개선 위끝은 허리선 위에 있어야 허리가 꺾이지 않는다
+  SL_F_TOP: {ko: 앞 절개선 세로 기준, at: [앞절개위치, 0]}
   SL_F_B:  {ko: 앞 절개선 아래, at: [앞절개위치, 기장]}
+  SL_F_T:  {ko: 앞 절개선 위(회전축), intersect: [[HB_CF1, HB_SSF], [SL_F_TOP, SL_F_B]]}
+  FD_L:    {ko: 앞다트 왼다리,   along: [SL_F_T, HB_CF1], dist: "앞다트폭/2"}
+  FD_R:    {ko: 앞다트 오른다리, along: [SL_F_T, HB_SSF], dist: "앞다트폭/2"}
+  FD_T:    {ko: 앞다트 끝,      from: SL_F_T, dy: 앞다트길이}
   # 앞판 바깥쪽(절개선 ~ 옆선)을 회전
   HB_SSF2: {ko: 앞 옆선 허리점(전개), rotate: {of: HB_SSF, center: SL_F_T, angle: "-앞벌림각"}}
   SS_H_F:  {ko: 앞 옆선 엉덩이점(전개), rotate: {of: SS_H, center: SL_F_T, angle: "-앞벌림각"}}
   SS_HEM_F0: {ko: 앞 옆선 밑단(회전만), rotate: {of: SS_HEM, center: SL_F_T, angle: "-앞벌림각"}}
   SS_HEM_F: {ko: 앞 옆선 밑단, from: SS_HEM_F0, dx: "옆벌림/2"}
   # 뒤판 절개선 (뒤다트 자리)
-  SL_B_T:  {ko: 뒤 절개선 위(회전축), at: ["앞폭 + 뒤폭 - 뒤절개위치", "힙본내림 - 옆선올림"]}
+  SL_B_TOP: {ko: 뒤 절개선 세로 기준, at: ["앞폭 + 뒤폭 - 뒤절개위치", 0]}
   SL_B_B:  {ko: 뒤 절개선 아래, at: ["앞폭 + 뒤폭 - 뒤절개위치", 기장]}
+  SL_B_T:  {ko: 뒤 절개선 위(회전축), intersect: [[HB_CB1, HB_SSB], [SL_B_TOP, SL_B_B]]}
   HB_SSB2: {ko: 뒤 옆선 허리점(전개), rotate: {of: HB_SSB, center: SL_B_T, angle: 뒤벌림각}}
   SS_H_B:  {ko: 뒤 옆선 엉덩이점(전개), rotate: {of: SS_H, center: SL_B_T, angle: 뒤벌림각}}
   SS_HEM_B0: {ko: 뒤 옆선 밑단(회전만), rotate: {of: SS_HEM, center: SL_B_T, angle: 뒤벌림각}}
@@ -67,10 +69,12 @@ lines:
   remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단]
   add:
     # 앞판
+    # 허리선은 앞중심 1" 직각 뒤 옆선까지 한 흐름 — 다트 자리에서만 끊긴다 (접선을 같은 방향으로 맞춰 꺾이지 않게)
     - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, FD_L],
-       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.4, 0.4]]}
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], FD_L: {along: [HB_CF1, HB_SSF]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
     - {name: 앞다트, piece: 앞판, role: dart, pts: [FD_L, FD_T, FD_R]}
-    - {name: 앞허리선밖, piece: 앞판, role: outline, pts: [FD_R, HB_SSF2]}
+    - {name: 앞허리선밖, piece: 앞판, role: outline, curve: [FD_R, HB_SSF2],
+       tangents: {FD_R: {along: [HB_CF1, HB_SSF]}, HB_SSF2: [1, -0.06]}, handles: [[0.4, 0.4]]}
     - {name: 앞절개선, piece: 앞판, role: construction, pts: [SL_F_T, SL_F_B]}
     - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF2, SS_H_F, SS_HEM_F],
        tangents: {HB_SSF2: [0.3, 1], SS_H_F: {along: [SS_H_F, SS_HEM_F]}, SS_HEM_F: {along: [SS_H_F, SS_HEM_F]}},

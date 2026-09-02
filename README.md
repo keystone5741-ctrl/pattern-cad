@@ -64,6 +64,7 @@ styles/
   shirt_collar_blouse.yaml  셔츠 칼라 블라우스 = 몸판 + 소매 + 칼라밴드(목선 길이 자동) + 칼라(밴드 윗선 자동) + 커프스 + 견보루
   basic_skirt.yaml          제허리 스커트 = 스커트 원형 + 오비 (허리 치수 자동)
   hipbone_skirt.yaml        힙본 스커트 = 힙본 원형 + 앞·뒤 곡선 오비 (밑선 길이 자동)
+  aline_skirt.yaml          A라인 스커트 = A라인 원형 + 앞·뒤 곡선 오비
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤
