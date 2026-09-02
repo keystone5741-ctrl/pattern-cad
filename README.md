@@ -54,13 +54,15 @@ blocks/
   shirt_collar_band.yaml / shirt_collar.yaml / cuff.yaml / sleeve_placket.yaml  부속: 칼라밴드·칼라·커프스·견보루
   skirt_basic.yaml          제허리 스커트 원형 — H/4 ∓ 1/4 폭, W/4 + 이세, 다트 분량 자동 배분, 겹트임
   skirt_hipbone.yaml        힙본 스커트 원형 (제허리 원형 상속)
-  waistband.yaml            오비
+  waistband.yaml            오비 (직사각형)
+  waistband_curved.yaml     곡선 오비 — 윗선(= 허리둘레)이 밑선보다 짧아 부채꼴로 휨
   *.svg                     실물 크기(mm) 그림
   verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
 styles/
   sichuni_with_sleeve.yaml  스타일 = 원형 묶음 + 치수 연결 (몸판 암홀 길이 → 소매 앞AH·뒤AH 자동)
   shirt_collar_blouse.yaml  셔츠 칼라 블라우스 = 몸판 + 소매 + 칼라밴드(목선 길이 자동) + 칼라(밴드 윗선 자동) + 커프스 + 견보루
   basic_skirt.yaml          제허리 스커트 = 스커트 원형 + 오비 (허리 치수 자동)
+  hipbone_skirt.yaml        힙본 스커트 = 힙본 원형 + 앞·뒤 곡선 오비 (밑선 길이 자동)
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤

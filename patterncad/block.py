@@ -22,6 +22,7 @@
     intersect: [[A, B], [C, D]]                 두 직선의 교점
     foot: {of: P, line: [A, B]}                 수선의 발
     perp: {from: P, line: [A, B], dist: L, side: [sx, sy]}   AB 에 수직으로 L 만큼. side 는 방향 힌트
+    polar: {center: P, radius: R, angle: A}     P 에서 반지름 R, 각도 A(도, 0 = +x, 양수 = y 아래쪽)
     circle: {center: P, radius: R}, x: X, side: down|up      원 위에서 x 가 X 인 점
     circle: {center: P, radius: R}, y: Y, side: right|left   원 위에서 y 가 Y 인 점
 
@@ -36,6 +37,8 @@
 """
 
 from __future__ import annotations
+
+import math
 
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -293,6 +296,11 @@ class Block:
                     if n.dot(Pt(ev(sx), ev(sy))) < 0:
                         n = -n
                 return P(r["from"]) + n * ev(r["dist"])
+            if "polar" in rule:
+                r = rule["polar"]
+                a = math.radians(ev(r["angle"]))
+                R = ev(r["radius"])
+                return P(r["center"]) + Pt(R * math.cos(a), R * math.sin(a))
             if "circle" in rule:
                 c = rule["circle"]
                 center, radius = P(c["center"]), ev(c["radius"])

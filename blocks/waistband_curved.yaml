@@ -1,0 +1,47 @@
+# 곡선 오비 — 허리 아래(힙본·로우라이즈)에 달리는 오비. p.8 규칙.
+#
+# 오비 윗선이 곧 허리둘레다. 허리에서 얼마나 내려온 위치냐에 따라 이 값이 크게 달라진다.
+# 몸판에 달리는 밑선은 윗선보다 길고, 그 차이만큼 오비가 휜다:
+#   앞 오비 밑선 − 윗선 = 1/2 ~ 5/8   (기본 5/8)
+#   뒤 오비 밑선 − 윗선 = 5/8 ~ 3/4   (기본 3/4. 뒤허리가 꺼져 뒤 오비 휘어짐이 3/8 정도 크다)
+#   윗선이 뜨는 디자인이면 3/8 정도만 차이를 준다
+# 휘어진 정도(부채꼴): 벌어진 각 θ = (밑선 − 윗선)/높이, 윗선 반지름 = 윗선/θ, 밑선 반지름 = 윗선반지름 + 높이.
+# 좌표계: 부채꼴 중심이 원점, 오비는 아래쪽(+y)에 놓인다. 앞중심이 왼쪽, 옆선이 오른쪽.
+name: 곡선 오비
+id: waistband_curved
+category: part
+units: inch
+source: reference/portfolio.pdf p.8
+
+measurements:
+  밑선:   {ko: 몸판에 달리는 길이, value: 7.9, note: 스타일에서 몸판 허리선 길이를 자동으로 받는다}
+  차이:   {ko: 밑선 − 윗선, value: 5/8, note: 앞 1/2~5/8, 뒤 5/8~3/4, 윗선이 뜨는 디자인 3/8}
+  높이:   {value: 1.1/2}
+  연장:   {value: 0, note: 여밈 연장 (뒤 오비 끝 등)}
+  윗선:   {formula: "밑선 - 차이"}
+  각도:   {formula: "차이 / 높이 * 180 / 3.14159265358979", note: 부채꼴이 벌어진 각(도)}
+  윗반지름: {formula: "윗선 / (차이 / 높이)"}
+  밑반지름: {formula: "윗반지름 + 높이"}
+  연장각:   {formula: "연장 / 밑반지름 * 180 / 3.14159265358979"}
+
+points:
+  C:      {ko: 부채꼴 중심,   at: [0, 0]}
+  T0:     {ko: 윗선 앞중심,   polar: {center: C, radius: 윗반지름, angle: "90 - 각도/2"}}
+  TM:     {ko: 윗선 중간,     polar: {center: C, radius: 윗반지름, angle: 90}}
+  T1:     {ko: 윗선 옆선,     polar: {center: C, radius: 윗반지름, angle: "90 + 각도/2"}}
+  B0:     {ko: 밑선 앞중심,   polar: {center: C, radius: 밑반지름, angle: "90 - 각도/2"}}
+  BM:     {ko: 밑선 중간,     polar: {center: C, radius: 밑반지름, angle: 90}}
+  B1:     {ko: 밑선 옆선,     polar: {center: C, radius: 밑반지름, angle: "90 + 각도/2"}}
+  TE:     {ko: 윗선 연장 끝,  polar: {center: C, radius: 윗반지름, angle: "90 + 각도/2 + 연장각"}}
+  BE:     {ko: 밑선 연장 끝,  polar: {center: C, radius: 밑반지름, angle: "90 + 각도/2 + 연장각"}}
+
+lines:
+  - {name: 윗선, role: outline, curve: [T0, TM, TE],
+     tangents: {T0: {perp: [C, T0]}, TM: {perp: [C, TM]}, TE: {perp: [C, TE]}}, handles: [[0.34, 0.34], [0.34, 0.34]],
+     note: 이 선의 길이가 허리둘레(의 일부)다}
+  - {name: 밑선, role: outline, curve: [B0, BM, BE],
+     tangents: {B0: {perp: [C, B0]}, BM: {perp: [C, BM]}, BE: {perp: [C, BE]}}, handles: [[0.34, 0.34], [0.34, 0.34]],
+     note: 몸판 허리선에 달린다}
+  - {name: 앞끝, role: fold, pts: [T0, B0]}
+  - {name: 뒤끝, role: outline, pts: [TE, BE]}
+  - {name: 옆선표시, role: notch, pts: [T1, B1]}

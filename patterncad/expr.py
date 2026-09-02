@@ -37,7 +37,22 @@ def _funcs(env: Env):
     def dist(a, b):
         return a.dist(b)
 
-    return {"dist": dist, "sqrt": math.sqrt, "min": min, "max": max, "abs": abs}
+    return {
+        "dist": dist,
+        "sqrt": math.sqrt,
+        "min": min,
+        "max": max,
+        "abs": abs,
+        # 각도는 도(degree) 단위로 쓴다
+        "sin": lambda d: math.sin(math.radians(d)),
+        "cos": lambda d: math.cos(math.radians(d)),
+        "tan": lambda d: math.tan(math.radians(d)),
+        "asin": lambda v: math.degrees(math.asin(v)),
+        "acos": lambda v: math.degrees(math.acos(v)),
+        "atan2": lambda y, x: math.degrees(math.atan2(y, x)),
+        "angle": lambda a, b: math.degrees(math.atan2(b.y - a.y, b.x - a.x)),
+        "pi": lambda: math.pi,
+    }
 
 
 def evaluate(expr, env: Env):

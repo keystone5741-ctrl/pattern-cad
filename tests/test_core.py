@@ -282,6 +282,34 @@ class Hipbone(unittest.TestCase):
         self.assertAlmostEqual(m["엉덩이길이"] - p["BD_T"].y, 1.375)
 
 
+class CurvedWaistband(unittest.TestCase):
+    def test_arc_lengths_match_measurements(self):
+        r = Block.load(ROOT / "blocks" / "waistband_curved.yaml").evaluate({"밑선": 8.0, "차이": 0.75, "높이": 1.5})
+        self.assertAlmostEqual(r.line("밑선").length(), 8.0, places=3)
+        self.assertAlmostEqual(r.line("윗선").length(), 7.25, places=3)
+
+    def test_bigger_difference_curves_more(self):
+        b = Block.load(ROOT / "blocks" / "waistband_curved.yaml")
+        small = b.evaluate({"차이": 0.5}).measurements["각도"]
+        big = b.evaluate({"차이": 0.75}).measurements["각도"]
+        self.assertGreater(big, small)
+
+    def test_top_is_waist_circumference(self):
+        from patterncad.style import Style
+
+        res = Style.load(ROOT / "styles" / "hipbone_skirt.yaml").evaluate()
+        top = 2 * (res["waistband_front"].measurements["윗선"] + res["waistband_back"].measurements["윗선"])
+        self.assertAlmostEqual(top, 28.9, delta=0.6)  # 사이즈표 28.1/8
+
+
+class Trig(unittest.TestCase):
+    def test_degrees_and_polar(self):
+        env = Env({}, {"C": Pt(0, 0)})
+        self.assertAlmostEqual(evaluate("sin(30)", env), 0.5)
+        self.assertAlmostEqual(evaluate("cos(60)", env), 0.5)
+        self.assertAlmostEqual(evaluate("atan2(1, 1)", env), 45)
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 
