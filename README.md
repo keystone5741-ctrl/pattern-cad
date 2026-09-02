@@ -90,11 +90,18 @@ styles/
   hipbone_skirt.yaml        힙본 스커트 = 힙본 원형 + 앞·뒤 곡선 오비 (밑선 길이 자동)
   aline_skirt.yaml          A라인 스커트 = A라인 원형 + 앞·뒤 곡선 오비
   tapered_skirt.yaml        테이퍼드 스커트 = 테이퍼드 원형 + 앞·뒤 곡선 오비
+  basic_pants / hipbone_pants / onetuck_pants / tapered_pants / wide_pants / skinny_pants
+  training_pants / leggings                       팬츠 = 몸판 + 오비(또는 고무줄 밴드)
+  oversize_blouse / china_collar_blouse / pussy_bow_blouse / sweat_shirt / oversize_hoodie
+  tight_t_shirt / sleeveless_dress / h_line_dress / mermaid_dress / flat_collar_dress / jump_suite
+  tailored_jacket / hourglass_jacket / half_double_jacket / one_button_jacket
+  shawl_collar_jacket / stand_collar_jacket / hunting_jacket / rider_jacket / oversized_jacket
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤
 tools/measure.py            원형을 계산해 치수·점·선 길이를 찍어 본다 (--svg 로 다시 그림)
 tools/dump_item.py          아이템 한 개의 도면 선 · 주석 · 유의사항을 한 번에 훑어본다
+tools/render_all.py         모든 원형·스타일을 실물 크기 SVG 로 다시 그린다 (--png 로 미리보기)
 tests/                      python -m unittest discover -s tests
 ```
 

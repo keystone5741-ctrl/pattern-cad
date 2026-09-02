@@ -1,0 +1,13 @@
+# 제허리 팬츠 (p.28) = 팬츠 원형 + 오비 (허리 치수 자동)
+name: 제허리 팬츠
+id: basic_pants
+source: reference/portfolio.pdf p.28
+
+blocks:
+  pants:
+    block: ../blocks/pants_basic.yaml
+  waistband:
+    block: ../blocks/waistband.yaml
+    measurements:
+      허리4: "(len(pants.앞허리선안) + len(pants.앞허리선밖) + len(pants.뒤허리선안) + len(pants.뒤허리선밖)) / 2"
+      높이: 1.1/2

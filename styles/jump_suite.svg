@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2143.069mm" height="1114.425mm" viewBox="0 0 2143.069 1114.425">
+<rect width="100%" height="100%" fill="white"/>
+<g id="body · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M101.6 25.4C97.246 35.196 98.402 58.707 81.394 75.044C72.808 83.292 42.663 95.25 25.4 95.25"><title>앞목선</title></path>
+<path d="M101.6 25.4L236.535 85.371"><title>앞어깨선</title></path>
+<path d="M236.535 85.371C227.1 106.601 241.3 178.203 241.3 201.436C241.3 231.805 244.606 269.735 261.506 297.294C267.738 307.458 277.473 320.675 290.512 320.675"><title>앞암홀</title></path>
+<path d="M25.4 95.25L25.4 438.15"><title>앞중심선</title></path>
+<path d="M290.512 320.675C285.274 359.442 274.637 399.031 274.637 438.15C274.637 501.233 290.512 565.567 290.512 628.65C290.512 691.515 290.512 501.015 290.512 438.15"><title>앞옆선</title></path>
+<path d="M25.4 438.15L290.512 438.15"><title>앞밑단</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body · 앞판 — 점프수트 상의</text>
+</g>
+<g id="body · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M561.975 25.4C562.976 29.322 571.898 38.555 575.445 40.505C586.587 46.629 615.926 50.8 638.175 50.8"><title>뒤목선</title></path>
+<path d="M412.75 63.5C419.284 89.092 403.225 161.242 403.225 188.912C403.225 210.338 400.565 269.79 383.019 294.119C371.832 309.632 352.788 317.5 341.312 317.5"><title>뒤암홀</title></path>
+<path d="M638.175 50.8L638.175 434.975"><title>뒤중심선</title></path>
+<path d="M638.175 434.975L638.175 434.975"><title>뒤중심선아래</title></path>
+<path d="M561.975 25.4L412.75 63.5"><title>뒤어깨선</title></path>
+<path d="M341.312 317.5C346.551 356.267 357.188 395.856 357.188 434.975C357.188 498.058 341.312 562.392 341.312 625.475C341.312 688.34 341.312 497.84 341.312 434.975"><title>뒤옆선</title></path>
+<path d="M638.175 434.975L341.312 434.975"><title>뒤밑단</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M525.059 34.825L518.907 36.396"><title>뒤어깨이세</title></path>
+</g>
+<text x="341.312" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body · 뒤판 — 점프수트 상의</text>
+</g>
+<g id="pants · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M717.55 31.75L849.709 31.75"><title>앞허리선안</title></path>
+<path d="M849.709 31.75L981.869 25.4"><title>앞허리선밖</title></path>
+<path d="M717.55 31.75C717.55 107.95 717.55 146.05 717.55 222.25C717.55 262.89 717.55 283.21 717.55 323.85"><title>앞중심선</title></path>
+<path d="M717.55 323.85C717.55 339.566 704.691 323.85 688.975 323.85"><title>앞밑위곡선</title></path>
+<path d="M688.975 323.85C720.223 428.009 697.057 456.521 702.072 565.15C711.743 774.665 715.407 879.475 724.297 1089.025"><title>앞인심</title></path>
+<path d="M981.869 25.4C997.343 102.771 994.569 143.346 994.569 222.25C994.569 359.51 987 428.001 981.472 565.15C973.024 774.718 968.137 879.475 959.247 1089.025"><title>앞옆선</title></path>
+<path d="M724.297 1089.025L959.247 1089.025"><title>앞밑단</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M849.709 31.75L849.709 120.65L849.709 31.75"><title>앞다트</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M841.772 323.85L841.772 1089.025"><title>앞주름선</title></path>
+</g>
+<text x="688.975" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">pants · 앞판 — 점프수트 하의</text>
+</g>
+<g id="pants · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1156.452 25.4L1289.803 25.4"><title>뒤허리선안</title></path>
+<path d="M1289.803 25.4L1423.154 25.4"><title>뒤허리선밖</title></path>
+<path d="M1156.452 25.4L1146.135 222.25L1140.81 323.85"><title>뒤중심선</title></path>
+<path d="M1140.81 323.85C1140.81 382.132 1103.197 334.254 1045.56 342.9"><title>뒤밑위곡선</title></path>
+<path d="M1045.56 342.9C1074.762 440.24 1078.044 463.809 1085.645 565.15C1101.324 774.209 1095.17 879.475 1101.52 1089.025"><title>뒤인심</title></path>
+<path d="M1423.154 25.4C1438.628 102.771 1435.854 143.346 1435.854 222.25C1435.854 360.607 1401.636 427.246 1390.445 565.15C1373.487 774.109 1380.92 879.475 1374.57 1089.025"><title>뒤옆선</title></path>
+<path d="M1101.52 1089.025L1374.57 1089.025"><title>뒤밑단</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1289.803 25.4L1289.803 171.45L1289.803 25.4"><title>뒤다트</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1238.045 323.85L1238.045 1089.025"><title>뒤주름선</title></path>
+</g>
+<text x="1045.56" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">pants · 뒤판 — 점프수트 하의</text>
+</g>
+<g id="sleeve">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1486.846 163.71C1535.495 146.113 1554.313 123.707 1558.62 121.153C1566.694 116.366 1637.504 25.4 1720.111 25.4"><title>뒤소매산</title></path>
+<path d="M1720.111 25.4C1790.686 25.4 1828.023 100.483 1833.703 104.434C1837.963 107.398 1861.954 159.724 1918.897 163.71"><title>앞소매산</title></path>
+<path d="M1486.846 163.71L1575.746 549.275"><title>뒤옆선</title></path>
+<path d="M1918.897 163.71L1829.997 549.275"><title>앞옆선</title></path>
+<path d="M1575.746 549.275C1623.386 552.418 1672.367 558.8 1720.111 558.8C1756.51 558.8 1793.735 552.418 1829.997 549.275"><title>소매부리</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M1720.111 25.4L1720.111 558.8"><title>소매중심선</title></path>
+<path d="M1486.846 163.71L1918.897 163.71"><title>소매통선</title></path>
+<path d="M1519.377 304.8L1886.366 304.8"><title>팔꿈치선</title></path>
+<path d="M1662.961 25.4L1770.911 25.4"><title>소매산높이선</title></path>
+<path d="M1720.111 25.4L1486.846 163.71"><title>뒤사선</title></path>
+<path d="M1720.111 25.4L1918.897 163.71"><title>앞사선</title></path>
+<path d="M1662.961 25.4L1512.246 163.71"><title>뒤가이드</title></path>
+<path d="M1770.911 25.4L1880.797 163.71"><title>앞가이드</title></path>
+<path d="M1486.846 163.71L1486.846 558.8"><title>뒤틀세로</title></path>
+<path d="M1918.897 163.71L1918.897 558.8"><title>앞틀세로</title></path>
+<path d="M1486.846 558.8L1918.897 558.8"><title>밑단틀</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M1519.377 304.8L1525.727 304.8"><title>뒤팔꿈치표시</title></path>
+<path d="M1886.366 304.8L1880.016 304.8"><title>앞팔꿈치표시</title></path>
+</g>
+<text x="1486.846" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve — 소매 원형</text>
+</g>
+<g id="band">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1969.697 63.5C1997.573 63.5 2026.293 63.5 2054.169 63.5C2080.072 63.5 2099.953 58.772 2117.669 50.8"><title>목둘레선</title></path>
+<path d="M2117.669 50.8C2117.669 46.609 2117.669 42.291 2117.669 38.1C2117.669 28.222 2114.848 25.4 2104.969 25.4"><title>앞끝</title></path>
+<path d="M2104.969 25.4C2058.492 34.695 2017.094 31.75 1969.697 31.75"><title>윗선</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M1969.697 63.5L2098.619 63.5"><title>밑변기준</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M2098.619 63.5L2098.619 28.575"><title>앞중심표시</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1969.697 63.5L1969.697 31.75"><title>뒤중심</title></path>
+</g>
+<text x="1969.697" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">band — 칼라밴드(바나나밴드)</text>
+</g>
+</svg>

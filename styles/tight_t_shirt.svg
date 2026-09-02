@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1083.217mm" height="654.257mm" viewBox="0 0 1083.217 654.257">
+<rect width="100%" height="100%" fill="white"/>
+<g id="body · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M101.6 25.4C97.246 35.196 98.402 58.707 81.394 75.044C72.808 83.292 42.663 95.25 25.4 95.25"><title>앞목선</title></path>
+<path d="M101.6 25.4L194.954 66.891"><title>앞어깨선</title></path>
+<path d="M194.954 66.891C188.711 80.937 184.15 127.612 184.15 142.983C184.15 161.405 192.48 183.263 204.356 198.869C212.189 209.163 223.183 222.25 237.331 222.25"><title>앞암홀</title></path>
+<path d="M25.4 95.25L25.4 625.475"><title>앞중심선</title></path>
+<path d="M237.331 222.25C232.354 293.497 222.25 366.729 222.25 438.15C222.25 501.441 244.475 565.359 244.475 628.65C244.475 629.698 244.475 626.523 244.475 625.475"><title>앞옆선</title></path>
+<path d="M25.4 625.475L244.475 625.475"><title>앞밑단</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body · 앞판 — 타이트 티셔츠 몸판</text>
+</g>
+<g id="body · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M425.45 25.4C426.871 29.19 435.373 38.555 438.92 40.505C450.062 46.629 479.401 50.8 501.65 50.8"><title>뒤목선</title></path>
+<path d="M323.85 63.5C329.546 78.69 336.55 122.705 336.55 139.7C336.55 151.606 323.47 180.626 316.344 195.694C311.691 205.535 308.95 219.075 302.419 219.075"><title>뒤암홀</title></path>
+<path d="M501.65 50.8L501.65 434.975"><title>뒤중심선</title></path>
+<path d="M501.65 434.975L501.65 622.3"><title>뒤중심선아래</title></path>
+<path d="M425.45 25.4L323.85 63.5"><title>뒤어깨선</title></path>
+<path d="M302.419 219.075C307.396 290.322 317.5 363.554 317.5 434.975C317.5 498.266 295.275 562.184 295.275 625.475C295.275 626.523 295.275 623.348 295.275 622.3"><title>뒤옆선</title></path>
+<path d="M501.65 622.3L295.275 622.3"><title>뒤밑단</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M389.776 38.778L383.83 41.007"><title>뒤어깨이세</title></path>
+</g>
+<text x="295.275" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body · 뒤판 — 타이트 티셔츠 몸판</text>
+</g>
+<g id="sleeve">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M552.45 121.328C580.44 111.204 588.039 93.583 590.311 91.812C594.57 88.491 627.971 25.4 675.498 25.4"><title>뒤소매산</title></path>
+<path d="M675.498 25.4C725 25.4 751.596 77.475 755.601 80.216C758.605 82.272 775.738 118.532 815.679 121.328"><title>앞소매산</title></path>
+<path d="M552.45 121.328L558.8 177.8"><title>뒤옆선</title></path>
+<path d="M815.679 121.328L809.329 177.8"><title>앞옆선</title></path>
+<path d="M558.8 177.8C597.31 180.943 636.86 187.325 675.498 187.325C719.774 187.325 765.165 180.943 809.329 177.8"><title>소매부리</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M675.498 25.4L675.498 187.325"><title>소매중심선</title></path>
+<path d="M552.45 121.328L815.679 121.328"><title>소매통선</title></path>
+<path d="M555.944 152.4L812.185 152.4"><title>팔꿈치선</title></path>
+<path d="M618.348 25.4L726.298 25.4"><title>소매산높이선</title></path>
+<path d="M675.498 25.4L552.45 121.328"><title>뒤사선</title></path>
+<path d="M675.498 25.4L815.679 121.328"><title>앞사선</title></path>
+<path d="M618.348 25.4L577.85 121.328"><title>뒤가이드</title></path>
+<path d="M726.298 25.4L777.579 121.328"><title>앞가이드</title></path>
+<path d="M552.45 121.328L552.45 187.325"><title>뒤틀세로</title></path>
+<path d="M815.679 121.328L815.679 187.325"><title>앞틀세로</title></path>
+<path d="M552.45 187.325L815.679 187.325"><title>밑단틀</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M555.944 152.4L562.294 152.4"><title>뒤팔꿈치표시</title></path>
+<path d="M812.185 152.4L805.835 152.4"><title>앞팔꿈치표시</title></path>
+</g>
+<text x="552.45" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve — 소매 원형</text>
+</g>
+<g id="넥립">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M866.479 25.4L1057.817 25.4L1057.817 57.15L866.479 57.15L866.479 25.4"><title>외곽</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M866.479 41.275L1057.817 41.275"><title>접는선</title></path>
+</g>
+<text x="866.479" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">넥립 — 시보리 · 립</text>
+</g>
+</svg>

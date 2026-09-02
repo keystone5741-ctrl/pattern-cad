@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1004.315mm" height="1003.3mm" viewBox="0 0 1004.315 1003.3">
+<rect width="100%" height="100%" fill="white"/>
+<g id="pants · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M47.625 25.4C47.625 101.6 47.625 139.7 47.625 215.9C47.625 250.19 47.625 267.335 47.625 301.625"><title>앞중심선</title></path>
+<path d="M47.625 301.625C47.625 313.849 37.624 301.625 25.4 301.625"><title>앞밑위곡선</title></path>
+<path d="M25.4 301.625C59.017 413.683 54.192 442.179 63.5 558.8C76.847 726.028 73.025 810.26 79.375 977.9"><title>앞인심</title></path>
+<path d="M219.075 25.4C234.12 100.627 241.3 139.183 241.3 215.9C241.3 353.904 213.439 421.176 203.2 558.8C190.754 726.098 193.675 810.26 187.325 977.9"><title>앞옆선</title></path>
+<path d="M79.375 977.9L187.325 977.9"><title>앞밑단</title></path>
+<path d="M47.625 25.4L219.075 25.4"><title>앞허리선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M133.35 301.625L133.35 977.9"><title>앞주름선</title></path>
+<path d="M79.375 965.2L187.325 965.2"><title>앞밑단접음</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">pants · 앞판 — 레깅스</text>
+</g>
+<g id="pants · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M409.847 25.4L365.866 215.9L346.075 301.625"><title>뒤중심선</title></path>
+<path d="M346.075 301.625C346.075 334.894 325.001 309.39 292.1 314.325"><title>뒤밑위곡선</title></path>
+<path d="M292.1 314.325C324.23 421.427 326.427 447.442 336.55 558.8C351.738 725.871 346.075 810.26 352.425 977.9"><title>뒤인심</title></path>
+<path d="M581.297 25.4C596.289 100.364 565.891 139.451 565.891 215.9C565.891 355.446 517.181 420.121 501.65 558.8C482.978 725.518 492.125 810.26 485.775 977.9"><title>뒤옆선</title></path>
+<path d="M352.425 977.9L485.775 977.9"><title>뒤밑단</title></path>
+<path d="M409.847 25.4L581.297 25.4"><title>뒤허리선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M419.1 301.625L419.1 977.9"><title>뒤주름선</title></path>
+<path d="M352.425 965.2L485.775 965.2"><title>뒤밑단접음</title></path>
+</g>
+<text x="292.1" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">pants · 뒤판 — 레깅스</text>
+</g>
+<g id="band">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M636.015 25.4L978.915 25.4L978.915 57.15L636.015 57.15L636.015 25.4"><title>외곽</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M807.465 25.4L807.465 31.75"><title>옆선노치</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M636.015 25.4L636.015 57.15"><title>앞중심</title></path>
+<path d="M978.915 25.4L978.915 57.15"><title>뒤중심</title></path>
+</g>
+<text x="636.015" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">band — 고무줄 밴드</text>
+</g>
+</svg>

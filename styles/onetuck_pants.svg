@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1244.897mm" height="869.95mm" viewBox="0 0 1244.897 869.95">
+<rect width="100%" height="100%" fill="white"/>
+<g id="pants · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M60.325 31.75C57.785 77.47 53.975 100.259 53.975 146.05C53.975 176.53 53.975 191.77 53.975 222.25"><title>앞중심선</title></path>
+<path d="M53.975 222.25C53.975 237.966 41.116 222.25 25.4 222.25"><title>앞밑위곡선</title></path>
+<path d="M25.4 222.25C59.944 337.397 28.146 369.409 40.878 488.95C56.095 631.826 71.358 702.31 91.678 844.55"><title>앞인심</title></path>
+<path d="M284.956 25.4C294.434 72.788 291.306 97.723 291.306 146.05C291.306 283.35 288.647 352.25 275.828 488.95C262.413 632.006 245.348 702.31 225.028 844.55"><title>앞옆선</title></path>
+<path d="M91.678 844.55L225.028 844.55"><title>앞밑단</title></path>
+<path d="M60.325 31.75L134.541 31.75"><title>앞허리선안</title></path>
+<path d="M166.291 31.75L284.956 25.4"><title>앞허리선밖</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M134.541 31.75L150.416 120.65L166.291 31.75"><title>앞턱</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M184.507 31.75L184.507 79.375"><title>벨트고리</title></path>
+<path d="M172.641 38.735L128.191 38.735"><title>앞턱방향</title></path>
+<path d="M137.716 33.973L128.191 38.735L137.716 43.497"><title>앞턱화살촉</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M158.353 222.25L158.353 844.55"><title>앞주름선</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">pants · 앞판 — 원턱 팬츠</text>
+</g>
+<g id="pants · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M462.316 25.4L457.048 146.05L453.721 222.25"><title>뒤중심선</title></path>
+<path d="M453.721 222.25C453.721 289.898 409.495 231.265 342.596 241.3"><title>뒤밑위곡선</title></path>
+<path d="M342.596 241.3C375.275 350.231 374.183 376.79 392.999 488.95C416.772 630.654 423.479 702.31 443.799 844.55"><title>뒤인심</title></path>
+<path d="M700.729 25.4C710.207 72.788 707.079 97.723 707.079 146.05C707.079 284.884 673.913 351.648 653.349 488.95C632.067 631.049 622.869 702.31 602.549 844.55"><title>뒤옆선</title></path>
+<path d="M443.799 844.55L602.549 844.55"><title>뒤밑단</title></path>
+<path d="M462.316 25.4L529.089 25.4"><title>뒤허리선안</title></path>
+<path d="M557.664 25.4L610.943 25.4"><title>뒤허리선중</title></path>
+<path d="M637.931 25.4L700.729 25.4"><title>뒤허리선밖</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M529.089 25.4L543.376 171.45L557.664 25.4"><title>뒤다트1</title></path>
+<path d="M610.943 25.4L624.437 146.05L637.931 25.4"><title>뒤다트2</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M523.174 222.25L523.174 844.55"><title>뒤주름선</title></path>
+</g>
+<text x="342.596" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">pants · 뒤판 — 원턱 팬츠</text>
+</g>
+<g id="waistband_front">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M945.882 61.781C915.817 61.781 887.349 58.805 857.934 52.586C828.518 46.368 801.282 37.568 773.789 25.4"><title>윗선</title></path>
+<path d="M945.882 99.881C913.123 99.881 882.105 96.638 850.054 89.862C818.003 83.087 788.326 73.498 758.369 60.24"><title>밑선</title></path>
+<path d="M773.789 25.4L758.369 60.24"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M773.789 25.4L758.369 60.24"><title>옆선표시</title></path>
+</g>
+<g id="grain" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M956.042 61.781L956.042 99.881"><title>식서</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M945.882 61.781L945.882 99.881"><title>앞끝</title></path>
+</g>
+<text x="758.369" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_front — 곡선 오비</text>
+</g>
+<g id="waistband_back">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1209.337 80.206C1181.564 80.206 1155.198 76.893 1128.287 70.021C1092.109 60.784 1059.032 46.075 1027.939 25.4"><title>윗선</title></path>
+<path d="M1209.337 118.306C1178.333 118.306 1148.901 114.608 1118.861 106.937C1078.475 96.625 1041.551 80.206 1006.842 57.126"><title>밑선</title></path>
+<path d="M1027.939 25.4L1006.842 57.126"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1052.276 40.102L1034.01 73.538"><title>옆선표시</title></path>
+</g>
+<g id="grain" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1219.497 80.206L1219.497 118.306"><title>식서</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1209.337 80.206L1209.337 118.306"><title>앞끝</title></path>
+</g>
+<text x="1006.842" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_back — 곡선 오비</text>
+</g>
+</svg>

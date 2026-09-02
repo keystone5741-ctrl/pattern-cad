@@ -1,0 +1,21 @@
+# 스키니 팬츠 (p.39) = 팬츠 + 앞·뒤 곡선 오비 (밑선 길이는 몸판 허리선에서 자동)
+name: 스키니 팬츠
+id: skinny_pants
+source: reference/portfolio.pdf p.39
+
+blocks:
+  pants:
+    block: ../blocks/pants_skinny.yaml
+  waistband_front:
+    block: ../blocks/waistband_curved.yaml
+    measurements:
+      밑선: "len(pants.앞허리선안) + len(pants.앞허리선밖)"
+      차이: 5/8
+      높이: 1.1/4
+  waistband_back:
+    block: ../blocks/waistband_curved.yaml
+    measurements:
+      밑선: "len(pants.뒤허리선안) + len(pants.뒤허리선밖)"
+      차이: 3/4
+      높이: 1.1/4
+      연장: 1.1/4
