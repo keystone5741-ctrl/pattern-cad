@@ -73,6 +73,21 @@ def render_style_svg(results: dict, gap_in: float = 2.0, margin_in: float = 1.0,
     from .style import bbox
 
     S = MM_PER_INCH
+    # 조각(piece)이 있는 원형은 조각별로 떼어 놓는다 — 전개하면 앞·뒤판이 겹쳐 보이므로
+    expanded = {}
+    for name, res in results.items():
+        pieces = []
+        for l in res.lines:
+            if l.piece and l.piece not in pieces:
+                pieces.append(l.piece)
+        if len(pieces) > 1:
+            for pc in pieces:
+                sub = Resolved(res.block, res.measurements, res.points,
+                               res.point_meta, [l for l in res.lines if l.piece == pc])
+                expanded[f"{name} · {pc}"] = sub
+        else:
+            expanded[name] = res
+    results = expanded
     boxes = {n: bbox(r) for n, r in results.items()}
     total_w = sum(b[2] - b[0] for b in boxes.values()) + gap_in * (len(boxes) - 1) + 2 * margin_in
     total_h = max(b[3] - b[1] for b in boxes.values()) + 2 * margin_in
