@@ -15,11 +15,12 @@ measurements:
   앞돌출:   {value: 3/4, note: 칼라끝이 아래 모서리보다 앞으로 나가는 양}
   앞높이:   {value: 2.1/4, note: 칼라끝이 아래 모서리보다 올라가는 양}
   늘림표시: {value: 2, note: 밑변 늘림 구간 길이 (목옆점 부근)}
+  앞올림:   {value: 0.3, note: 밑변 앞끝이 뒤중심보다 올라가는 양 (도면 판단) — 밑변이 처지지 않게}
 
 points:
   CB_BOT:  {ko: 뒤중심 아래, at: [0, 0]}
   CB_TOP:  {ko: 뒤중심 위,   at: [0, "-뒤높이"]}
-  FR_BOT:  {ko: 앞 아래 모서리, at: ["밑변 - 앞들임", 0]}
+  FR_BOT:  {ko: 앞 아래 모서리, at: ["밑변 - 앞들임", "-앞올림"]}
   TIP:     {ko: 칼라끝,      from: FR_BOT, dx: 앞돌출, dy: "-앞높이"}
   ST1:     {ko: 늘림 시작,   at: ["밑변 * 0.45", 0]}
   ST1T:    {from: ST1, dy: -0.25}
@@ -29,7 +30,7 @@ points:
 lines:
   - {name: 뒤중심, role: fold, pts: [CB_BOT, CB_TOP]}
   - {name: 밑변, role: outline, curve: [CB_BOT, FR_BOT],
-     tangents: {CB_BOT: [1, 0], FR_BOT: [1, -0.15]}, handles: [[0.4, 0.4]], note: 칼라밴드 윗선에 달림}
+     tangents: {CB_BOT: [1, 0], FR_BOT: [1, -0.12]}, handles: [[0.5, 0.3]], note: 칼라밴드 윗선에 달림}
   - {name: 앞변, role: outline, pts: [FR_BOT, TIP]}
   - {name: 윗선, role: outline, curve: [TIP, CB_TOP],
      tangents: {TIP: [-1, -0.05], CB_TOP: [-1, 0]}, handles: [[0.4, 0.4]]}

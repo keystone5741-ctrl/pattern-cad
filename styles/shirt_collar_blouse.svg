@@ -193,9 +193,9 @@
 </g>
 <g id="collar">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1148.991 101.6C1235.295 101.6 1279.402 114.402 1364.752 101.6"><title>밑변</title></path>
-<path d="M1364.752 101.6L1383.802 44.45"><title>앞변</title></path>
-<path d="M1383.802 44.45C1289.686 39.744 1243.224 25.4 1148.991 25.4"><title>윗선</title></path>
+<path d="M1148.991 101.6C1256.938 101.6 1300.444 101.697 1364.752 93.98"><title>밑변</title></path>
+<path d="M1364.752 93.98L1383.802 36.83"><title>앞변</title></path>
+<path d="M1383.802 36.83C1289.883 32.134 1243.026 25.4 1148.991 25.4"><title>윗선</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M1247.512 101.6L1247.512 95.25"><title>늘림표시1</title></path>
@@ -207,8 +207,8 @@
 <g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
 <circle cx="1148.991" cy="101.6" r="0.762" fill="#06c"/><text x="1150.261" y="100.584">CB_BOT</text>
 <circle cx="1148.991" cy="25.4" r="0.762" fill="#06c"/><text x="1150.261" y="24.384">CB_TOP</text>
-<circle cx="1364.752" cy="101.6" r="0.762" fill="#06c"/><text x="1366.022" y="100.584">FR_BOT</text>
-<circle cx="1383.802" cy="44.45" r="0.762" fill="#06c"/><text x="1385.072" y="43.434">TIP</text>
+<circle cx="1364.752" cy="93.98" r="0.762" fill="#06c"/><text x="1366.022" y="92.964">FR_BOT</text>
+<circle cx="1383.802" cy="36.83" r="0.762" fill="#06c"/><text x="1385.072" y="35.814">TIP</text>
 <circle cx="1247.512" cy="101.6" r="0.762" fill="#06c"/><text x="1248.782" y="100.584">ST1</text>
 <circle cx="1247.512" cy="95.25" r="0.762" fill="#06c"/><text x="1248.782" y="94.234">ST1T</text>
 <circle cx="1298.312" cy="101.6" r="0.762" fill="#06c"/><text x="1299.582" y="100.584">ST2</text>
