@@ -335,11 +335,21 @@ class ALine(unittest.TestCase):
     def test_side_seam_released(self):
         self.assertAlmostEqual(self.b.evaluate().measurements["앞옆선들임"], 0.625)
 
-    def test_spread_opens_at_hem_not_waist(self):
+    def test_spread_goes_to_hem_and_outline_is_closed(self):
+        """다트 분량이 밑단으로 가고, 외곽선은 쐐기를 메운 채 이어진다."""
         r = self.b.evaluate({"실루엣": "A라인"})
         p = r.points
         self.assertAlmostEqual(p["HEM_F_OUT"].x - p["HEM_F_IN"].x, 1.0, delta=0.02)
-        self.assertAlmostEqual(p["SL_F_T"].dist(p["HEM_F_OUT"]), p["SL_F_T"].dist(p["SL_F_B"]), places=6)
+        # 앞밑단이 앞중심에서 옆선까지 한 줄로 이어진다 (벌어진 자리가 열려 있지 않다)
+        hem = r.line("앞밑단")
+        self.assertEqual(hem.pts[0], p["CF_HEM"])
+        self.assertEqual(hem.pts[-1], p["SS_HEM_F"])
+
+    def test_hem_grows_but_stays_a_line(self):
+        r = self.b.evaluate({"실루엣": "A라인"})
+        grow = 2 * (r.line("앞밑단").length() + r.line("뒤밑단").length()) - 36.0
+        self.assertGreater(grow, 1.0)
+        self.assertLess(grow, 8.0)  # 8 이상이면 A라인이 아니라 플레어
 
     def test_rotate_and_mirror_rules(self):
         from patterncad.geometry import Pt
