@@ -1,0 +1,23 @@
+# 라이더 자켓 (p.95) = 몸판 + 두 장 소매 + 칼라
+name: 라이더 자켓
+id: rider_jacket
+source: reference/portfolio.pdf p.95
+
+blocks:
+  body:
+    block: ../blocks/rider_jacket_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_two_piece.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 중간
+      소매길이: 24
+      팔꿈치길이: 13
+      소매부리들임: 1.5
+      상동선내림: 3/8
+  collar:
+    block: ../blocks/stand_collar.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      앞네크: "len(body.앞목선)"

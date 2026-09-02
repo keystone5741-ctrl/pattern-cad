@@ -11,7 +11,6 @@
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M285.75 278.903L111.125 278.903L285.75 278.903"><title>가슴다트</title></path>
-<path d="M161.925 278.903L161.925 400.05L161.925 565.15L161.925 400.05L161.925 278.903"><title>앞허리다트</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g>
 <g id="뒤판">
@@ -23,9 +22,6 @@
 <path d="M495.3 25.4L393.7 63.5"><title>뒤어깨선</title></path>
 <path d="M323.85 273.05C325.422 325.438 328.613 379.389 328.613 431.8C328.613 494.665 328.613 559.435 328.613 622.3C328.613 646.398 328.613 671.227 328.613 695.325"><title>뒤옆선</title></path>
 <path d="M558.8 704.85C466.646 704.85 420.766 695.325 328.613 695.325"><title>뒤밑단</title></path>
-</g>
-<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M450.85 269.875L450.85 431.8L450.85 571.5L450.85 431.8L450.85 269.875"><title>뒤허리다트</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
 <path d="M459.626 38.778L453.68 41.007"><title>뒤어깨이세</title></path>

@@ -1,0 +1,17 @@
+# 스탠 칼라 (세워지는 칼라) — p.89–90 · p.97 라이더.
+#
+# 유의사항:
+#   - **세워지는 칼라의 뒤중심 너비는 1~1.1/2 (기본 1.1/4)** 가 일반적이다 (p.90)
+#   - 라이더 자켓의 스탠칼라 **윗선은 S자가 아닌 C자**로 제도하는 디자인이 많다 (p.97)
+extends: shirt_collar_band.yaml
+name: 스탠 칼라
+id: stand_collar
+source: reference/portfolio.pdf p.89
+
+measurements:
+  뒤높이:   {value: 1.1/4, note: 1~1.1/2 (기본 1.1/4)}
+  앞높이:   {value: 1.1/8}
+  앞올림:   {value: 3/4}
+  앞연장:   {value: 1/2}
+  앞둥글기: {value: 1/4}
+  윗선형태: {choice: C자, options: [C자, S자], note: 라이더는 C자가 많다}

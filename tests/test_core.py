@@ -559,6 +559,74 @@ class Tops(unittest.TestCase):
         self.assertGreaterEqual(rib["줄임"], 4)
 
 
+class Jackets(unittest.TestCase):
+    """자켓 9종 — 계산된 가슴·허리·엉덩이·밑단이 포트폴리오 사이즈표와 맞는가."""
+
+    # 원형 id → (가슴, 허리, 엉덩이, 밑단)
+    SIZES = {
+        "jacket_body":               (35.25,  30.375, 38.375, 38),      # 테일러드
+        "hourglass_jacket_body":     (36.375, 30.75,  38.375, 45.625),
+        "half_double_jacket_body":   (34.125, 29,     37.375, 35.375),
+        "one_button_jacket_body":    (35.875, 29,     37.375, 36.25),
+        "shawl_collar_jacket_body":  (34.375, 32.25,  38,     40.375),
+        "stand_collar_jacket_body":  (34.375, 29.5,   37.375, 41.125),
+        "hunting_jacket_body":       (46.375, 46.625, 47.625, None),
+        "rider_jacket_body":         (35.875, 34.25,  None,   35.625),
+        "oversized_jacket_body":     (43.125, 41.25,  44,     44.25),
+    }
+
+    def test_size_table(self):
+        for bid, (bust, waist, hip, hem) in self.SIZES.items():
+            with self.subTest(bid):
+                m = Block.load(ROOT / "blocks" / f"{bid}.yaml").evaluate().measurements
+                self.assertAlmostEqual(m["패턴가슴"], bust, delta=0.02)
+                self.assertAlmostEqual(m["패턴허리"], waist, delta=0.2)
+                if hip is not None:
+                    self.assertAlmostEqual(m["패턴엉덩이"], hip, delta=0.2)
+                if hem is not None:
+                    self.assertAlmostEqual(m["패턴밑단"], hem, delta=0.2)
+
+    def test_front_back_width_difference_is_a_jacket_value(self):
+        """자켓의 앞뒤 품 차이는 5/8~3/4 (원형은 1/2) — p.76."""
+        for bid in self.SIZES:
+            with self.subTest(bid):
+                m = Block.load(ROOT / "blocks" / f"{bid}.yaml").evaluate().measurements
+                self.assertGreaterEqual(m["뒤품"] - m["앞품"], 0.625 - 1e-9)
+
+    def test_waist_dart_is_within_the_princess_limit(self):
+        """사이바 라인의 허리 다트는 1~1.3/8, 1.1/2 이상이면 무리한 다트량 — p.75."""
+        m = Block.load(ROOT / "blocks" / "jacket_body.yaml").evaluate().measurements
+        self.assertTrue(1 <= m["허리다트폭"] <= 1.375)
+
+    def test_shoulder_pad_raises_the_shoulder_by_80_percent(self):
+        """패드가 들어가면 패드 두께의 80% 만큼 어깨끝점을 올린다 — p.80."""
+        blk = Block.load(ROOT / "blocks" / "jacket_body.yaml")
+        flat, padded = blk.evaluate(), blk.evaluate({"패드두께": 0.375})
+        raised = flat.points["SP_B"].y - padded.points["SP_B"].y
+        self.assertAlmostEqual(raised, 0.375 * 0.8 * 0.625)
+
+    def test_hip_point_raise_widens_the_hem(self):
+        """엉덩이 포인트를 올릴수록 밑단이 커진다 — p.80 아워글라스."""
+        blk = Block.load(ROOT / "blocks" / "jacket_body.yaml")
+        low, high = blk.evaluate({"힙포인트올림": 0}), blk.evaluate({"힙포인트올림": 2})
+        self.assertLess(low.points["HL_SS_F"].y, high.points["HL_SS_F"].y + 2.001)
+        self.assertGreater(low.points["HL_SS_F"].y, high.points["HL_SS_F"].y)
+
+    def test_collar_back_length_is_at_least_three_inches(self):
+        """칼라 뒤중심 길이는 3 이상이어야 칼라밴드를 덮는다 — p.75."""
+        for bid in ("tailored_collar", "shawl_collar"):
+            with self.subTest(bid):
+                m = Block.load(ROOT / "blocks" / f"{bid}.yaml").evaluate().measurements
+                self.assertGreaterEqual(m["뒤중심길이"], 3)
+
+    def test_collar_outer_edge_grows_with_collar_width(self):
+        """칼라 폭이 넓을수록 외곽길이가 길어야 칼라가 눌리지 않는다 — p.76."""
+        blk = Block.load(ROOT / "blocks" / "tailored_collar.yaml")
+        narrow, wide = blk.evaluate({"칼라폭": 1.5}), blk.evaluate({"칼라폭": 2.5})
+        self.assertGreater(wide.measurements["외곽늘림"], narrow.measurements["외곽늘림"])
+        self.assertGreater(wide.measurements["외곽둘레"], narrow.measurements["외곽둘레"])
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

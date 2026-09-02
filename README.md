@@ -59,6 +59,11 @@ blocks/
   sweat_shirt_body.yaml / oversize_hoodie_body.yaml / tight_t_shirt_body.yaml
   sleeveless_dress_body.yaml / h_line_dress_body.yaml / mermaid_dress_body.yaml
   flat_collar_dress_body.yaml / jump_suite_body.yaml / jump_suite_pants.yaml
+  jacket_body.yaml          자켓 몸판 기본틀 — 낸단·라펠·고지·사이바·후다·미까시
+  hourglass_jacket_body.yaml / half_double_jacket_body.yaml / one_button_jacket_body.yaml
+  shawl_collar_jacket_body.yaml / stand_collar_jacket_body.yaml / hunting_jacket_body.yaml
+  rider_jacket_body.yaml / oversized_jacket_body.yaml
+  tailored_collar.yaml / shawl_collar.yaml / stand_collar.yaml   자켓 칼라
   sleeve_tuck.yaml          턱(셔링) 소매 — 앞 1"·뒤 1.1/4" 로 턱 위치를 다르게
   sleeve_two_piece.yaml     두 장 소매 — 큰소매 + 작은소매 (합이 소매통)
   hood.yaml / rib.yaml / bow_tie.yaml / flat_collar.yaml / banana_band.yaml  부속
@@ -100,10 +105,16 @@ python tools/verify_block.py blocks/sichuni_basic.yaml --page 44          # 편�
 python tools/verify_block.py blocks/sichuni_basic.yaml --page 44 --fit    # 곡선 핸들을 원본에 맞춤
 ```
 
+## 진행 상황
+
+포트폴리오 **42 아이템(스커트 11 · 팬츠 8 · 상의 12 + 원형 2 · 자켓 9)을 모두 규칙으로 옮겼다.**
+각 원형 파일 머리말에 해당 페이지의 유의사항을 그대로 적어 두었고,
+계산된 가슴·허리·엉덩이·밑단이 사이즈표와 맞는지 테스트로 확인한다.
+
 ## 다음 단계
 
-1. 스커트 아이템(힙본·A라인·플레어 …) → 팬츠 원형 → 아우터 (상의 → 스커트 → 팬츠 → 아우터 순)
-2. 조작 엔진(다트 이동 · 절개-벌림 · 여유 변경)으로 포트폴리오 아이템 재현
+1. 아이템별 순차 검토 — `docs/drafting_notes.md` 의 "확인이 필요한 것" 목록부터
+2. 조작 엔진(다트 이동 · 절개-벌림 · 여유 변경)을 명시적인 조작으로
 3. 사이즈 체계(55/66 · S/M/L · 숫자 등 선택, 기준 사이즈 선택)와 핏 4단계 → 자동 생성
 4. 조각화 · DXF 입출력 · 그레이딩 · 마카 · 데스크톱 UI
 

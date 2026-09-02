@@ -1,0 +1,24 @@
+# 테일러드 자켓 (p.74) = 몸판 + 두 장 소매 + 칼라
+name: 테일러드 자켓
+id: tailored_jacket
+source: reference/portfolio.pdf p.74
+
+blocks:
+  body:
+    block: ../blocks/jacket_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_two_piece.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 중간
+      소매길이: 24
+      팔꿈치길이: 13
+      소매부리들임: 1.5
+      상동선내림: 3/8
+  collar:
+    block: ../blocks/tailored_collar.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      고지네크: "body.고지길이"
+      칼라줄임: 1/8

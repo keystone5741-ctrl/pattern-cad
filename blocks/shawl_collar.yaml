@@ -1,0 +1,21 @@
+# 숄 칼라 — p.85–88. 라펠과 칼라가 이어져 절개(고지)가 없다.
+#
+# 유의사항 (p.88):
+#   - 숄칼라는 **칼라 뒤중심이 절개되지 않은 디자인이 대다수**다. 뒤중심에 절개가 있으면
+#     숄칼라 특유의 미감이 떨어진다. 그래서 **겉으로 드러나는 안단(미까시)을 골로 재단**한다
+extends: tailored_collar.yaml
+name: 숄 칼라
+id: shawl_collar
+source: reference/portfolio.pdf p.85
+
+measurements:
+  고지네크: {value: 3.1/2, note: 숄칼라는 고지 절개가 없어 앞네크를 더 길게 감싼다}
+  칼라폭:   {value: 2, note: 자켓 칼라 폭은 최소 2.3/4 이상 (밴드 포함)}
+  뒤중심재단: {choice: 골, options: [골, 절개], note: 숄칼라는 골 — 뒤중심 절개선이 보이면 미감이 떨어진다}
+
+lines:
+  remove: [칼라끝]
+  add:
+    - {name: 칼라끝, role: outline, curve: [N_END, O_END],
+       tangents: {N_END: {perp: [C, N_END]}}, handles: [[0.35, 0.35]],
+       note: 고지 절개 없이 라펠로 이어진다}

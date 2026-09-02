@@ -1,0 +1,26 @@
+# 오버사이즈 자켓 (p.99) = 몸판 + 두 장 소매 + 칼라
+name: 오버사이즈 자켓
+id: oversized_jacket
+source: reference/portfolio.pdf p.99
+
+blocks:
+  body:
+    block: ../blocks/oversized_jacket_body.yaml
+  sleeve:
+    block: ../blocks/sleeve_two_piece.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 약간낮음
+      소매길이: 24
+      팔꿈치길이: 13
+      소매부리들임: 2.5
+      상동선내림: 3/8
+      앞이동: 0            # 오버사이즈는 두 장 소매 겹침분을 안 주기도 한다 (p.100)
+      뒤이동: 2.1/4
+  collar:
+    block: ../blocks/tailored_collar.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      고지네크: "body.고지길이"
+      칼라줄임: 1/8

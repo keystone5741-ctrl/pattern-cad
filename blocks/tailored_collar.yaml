@@ -1,0 +1,52 @@
+# 테일러드 칼라 — p.74–76. 몸판의 라펠과 짝을 이루는 윗칼라.
+#
+# 유의사항 (p.75–76):
+#   - **칼라의 뒤중심 길이는 3 이상**. 뒤 칼라가 꺾이는 지점은 **밴드에서 1/2 가량 올라간 위치**인데,
+#     3 이하면 꺾임분량과 칼라밴드를 덮지 못해 절개선이 보인다
+#   - **칼라 폭이 넓을수록 외곽길이가 길어야(곡을 더 크게)** 칼라가 눌리지 않는다.
+#     늘려주지 않으면 꺾이는 위치가 올라가고 칼라가 눌린다 → 외곽늘림을 폭에 비례해 준다
+#
+# 좌표계: 목둘레선 호의 중심이 원점 (플랫 칼라와 같은 방식). 각도 0 = +x, y 아래가 양수.
+name: 테일러드 칼라
+id: tailored_collar
+category: part
+units: inch
+source: reference/portfolio.pdf p.74
+
+measurements:
+  뒤네크:   {value: 3.1/2, note: 몸판 뒤목선 길이 — 스타일에서 자동}
+  고지네크: {value: 1.3/4, note: 몸판 고지라인 길이 (앞쪽에서 칼라가 붙는 길이)}
+  칼라줄임: {value: 1/8, note: 1/16~1/4. 몸판보다 짧게 제도해 늘려 봉제}
+  목선길이: {formula: "뒤네크 + 고지네크 - 칼라줄임"}
+  밴드폭:   {value: 1.1/4, note: 목에서 서는 부분(스탠드)}
+  칼라폭:   {value: 1.7/8, note: 꺾여 넘어가는 부분}
+  뒤중심길이: {formula: "밴드폭 + 칼라폭", note: 3 이상이어야 칼라밴드를 덮는다}
+  꺾임올림: {value: 1/2, note: 뒤 칼라가 꺾이는 지점은 밴드에서 1/2 올라간 위치}
+  외곽늘림비: {value: 0.62, note: 칼라 폭이 넓을수록 외곽을 더 늘린다 (폭 1" 당 늘리는 길이)}
+  외곽늘림: {formula: "칼라폭 * 외곽늘림비"}
+  반지름:   {formula: "목선길이 * 뒤중심길이 / 외곽늘림"}
+  각:       {formula: "목선길이 / 반지름 * 57.29578"}
+  외곽둘레: {formula: "목선길이 * (반지름 + 뒤중심길이) / 반지름"}
+
+points:
+  C:     {ko: 호 중심, at: [0, 0]}
+  N_CB:  {ko: 목둘레선 뒤중심, polar: {center: C, radius: 반지름, angle: 0}}
+  N_SNP: {ko: 목둘레선 목옆점, polar: {center: C, radius: 반지름, angle: "각 * 뒤네크 / 목선길이"}}
+  N_END: {ko: 목둘레선 고지 끝, polar: {center: C, radius: 반지름, angle: 각}}
+  R_CB:  {ko: 꺾임선 뒤중심, polar: {center: C, radius: "반지름 + 밴드폭 - 꺾임올림", angle: 0}}
+  R_END: {ko: 꺾임선 끝, polar: {center: C, radius: "반지름 + 밴드폭 - 꺾임올림", angle: 각}}
+  O_CB:  {ko: 외곽 뒤중심, polar: {center: C, radius: "반지름 + 뒤중심길이", angle: 0}}
+  O_SNP: {ko: 외곽 목옆점, polar: {center: C, radius: "반지름 + 뒤중심길이", angle: "각 * 뒤네크 / 목선길이"}}
+  O_END: {ko: 외곽 끝, polar: {center: C, radius: "반지름 + 뒤중심길이", angle: 각}}
+
+lines:
+  - {name: 목둘레선, role: outline, curve: [N_CB, N_SNP, N_END],
+     tangents: {N_CB: [0, 1], N_END: {perp: [C, N_END]}}, handles: [[0.35, 0.35], [0.35, 0.35]]}
+  - {name: 외곽선, role: outline, curve: [O_CB, O_SNP, O_END],
+     tangents: {O_CB: [0, 1], O_END: {perp: [C, O_END]}}, handles: [[0.35, 0.35], [0.35, 0.35]]}
+  - {name: 뒤중심, role: fold, pts: [N_CB, O_CB]}
+  - {name: 칼라끝, role: outline, pts: [N_END, O_END]}
+  - {name: 꺾임선, role: fold, curve: [R_CB, R_END],
+     tangents: {R_CB: [0, 1], R_END: {perp: [C, R_END]}}, handles: [[0.5, 0.5]],
+     note: 밴드에서 1/2 올라간 자리에서 꺾인다}
+  - {name: 목옆점, role: notch, pts: [N_SNP, O_SNP]}
