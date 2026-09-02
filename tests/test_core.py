@@ -388,6 +388,27 @@ class Tapered(unittest.TestCase):
         self.assertLess(hem, hip)  # 테이퍼드 — 아래로 모인다
         self.assertLess(2 * hem, 36.0)  # 힙본 밑단보다 좁다
 
+    def test_folding_a_tuck_lands_on_the_other_leg(self):
+        """턱을 접으면 바깥 다리가 안쪽 다리에 딱 맞아야 허리선이 오비선과 이어진다."""
+        p, m = self.res.points, self.res.measurements
+        for outer, pivot, ang, inner, sign in [("FT1_R", "P1_B", "앞턱1각", "FT1_L", -1),
+                                               ("FT2_R", "P2_B", "앞턱2각", "FT2_L", -1),
+                                               ("BT2_L", "Q2_B", "뒤턱2각", "BT2_R", 1)]:
+            c = p[pivot]
+            self.assertAlmostEqual((c + (p[outer] - c).rotate(sign * m[ang])).dist(p[inner]), 0, places=6)
+
+    def test_back_first_tuck_absorbs_the_dart(self):
+        """뒤턱1 은 힙본의 뒤다트 1" 도 함께 접는다."""
+        p, m = self.res.points, self.res.measurements
+        c = p["Q1_B"]
+        folded = c + (p["BT1_L"] - c).rotate(m["뒤턱1각"])
+        self.assertAlmostEqual(folded.dist(p["BT1_R"]), m["뒤다트흡수"], places=3)
+
+    def test_tuck_waist_arc_is_at_leg_radius(self):
+        """턱 위 허리선은 다리와 같은 반지름의 호 — 접으면 서로 겹친다."""
+        p = self.res.points
+        self.assertAlmostEqual(p["P1_B"].dist(p["FT1_P"]), p["P1_B"].dist(p["FT1_L"]), places=6)
+
     def test_tuck_length_scales_with_amount(self):
         p, m = self.res.points, self.res.measurements
         self.assertAlmostEqual(p["FT1_M"].dist(p["FT1_TIP"]), m["앞턱1량"] * m["턱길이비"], places=6)
