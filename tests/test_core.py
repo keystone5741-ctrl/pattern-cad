@@ -86,12 +86,25 @@ class Sichuni(unittest.TestCase):
         self.assertAlmostEqual(r.line("앞어깨선").length(), back, places=6)
 
     def test_front_shoulder_points_at_guide(self):
+        """앞어깨는 옆목점에서 가이드 방향으로 앞어깨길이만큼.
+        기울기는 뒤어깨에서 따라가되, p.44 값에서는 도면 표기 가이드점(7.1/2, 2)과 같아야 한다."""
         p = self.res.points
         d1 = (p["SP_F"] - p["SNP_F"]).unit()
         d2 = (p["G_SF"] - p["SNP_F"]).unit()
         self.assertAlmostEqual(d1.cross(d2), 0, places=9)
-        self.assertAlmostEqual(p["G_SF"].x, 7.5)
-        self.assertAlmostEqual(p["G_SF"].y, 2)
+        self.assertAlmostEqual(p["G_SF0"].x, 7.5)
+        self.assertAlmostEqual(p["G_SF0"].y, 2)
+        d0 = (p["G_SF0"] - p["SNP_F"]).unit()
+        self.assertAlmostEqual(d0.cross(d2), 0, places=3)  # 가이드점과 사실상 같은 방향
+
+    def test_front_shoulder_slope_follows_the_back(self):
+        """어깨너비를 넓히면(드롭 숄더) 앞어깨 기울기도 뒤를 따라 완만해진다."""
+        blk = Block.load(ROOT / "blocks" / "sichuni_basic.yaml")
+        base, wide = blk.evaluate(), blk.evaluate({"뒤어깨끝너비": 9.5})
+        self.assertLess(wide.measurements["앞어깨기울기"], base.measurements["앞어깨기울기"])
+        for r in (base, wide):
+            m = r.measurements
+            self.assertAlmostEqual(m["앞어깨기울기"] - m["뒤어깨기울기"], m["앞어깨추가기울기"])
 
     def test_scapula_dart_perpendicular_to_shoulder(self):
         p = self.res.points

@@ -36,15 +36,26 @@ measurements:
   # --- 어깨
   뒤어깨끝너비: {value: 7.1/2, note: 뒤중심에서 뒤어깨끝점까지 가로}
   뒤어깨끝내림: {value: 1/2,   note: 기준선에서 아래}
-  앞어깨가이드너비: {value: 7.1/2, note: 앞어깨 각도 가이드점 — 앞중심에서 가로}
+  앞어깨가이드너비: {value: 7.1/2, note: 앞어깨 각도 가이드점 — 앞중심에서 가로 (p.44 표기)}
   앞어깨가이드내림: {value: 2,     note: 같은 점 — 기준선에서 아래. 앞어깨선은 옆목점에서 이 점을 향하고, 길이는 앞어깨길이}
+  # 앞어깨 기울기는 위 가이드점에서 나온 값(0.368)이지만, 어깨너비가 달라지면 가이드점을 그대로 쓸 수 없다.
+  # 그래서 **뒤어깨 기울기에서 따라간다**. p.44 값에서는 뒤 0.333 + 0.035 = 0.368 로 가이드점과 똑같다.
+  뒤어깨기울기:     {formula: "(SP_B.y - SNP_B.y) / (SNP_B.x - SP_B.x)"}
+  앞어깨추가기울기: {value: 0.035, note: 앞어깨는 뒤보다 조금 더 기운다 (p.44 도면에서 읽은 차이)}
+  앞어깨기울기:     {formula: "뒤어깨기울기 + 앞어깨추가기울기"}
   뒤어깨다트위치: {value: 1.1/2, note: 옆목점에서 어깨선 따라}
   뒤어깨다트폭:   {value: 1/4}
   뒤어깨다트길이: {value: 4, note: 어깨선에 직각으로}
   견갑이세:       {value: 1/4, note: 견갑선 아래 암홀 쪽 1/4 (다트/이세 처리)}
   # --- 암홀·다트
-  앞암홀가이드: {value: 1,     note: 앞품선×가슴선 모서리에서 45°}
-  뒤암홀가이드: {value: 1.1/8, note: 뒤품선×가슴선 모서리에서 45°}
+  # 암홀 가이드점: 품선×가슴선 모서리에서 45° 안쪽. 품선과 옆선 사이가 넓어질수록(오버사이즈)
+  # 가이드도 같은 비율로 커져야 겨드랑이 곡이 얕아지지 않는다 → 그 간격에 비례시킨다.
+  앞암홀간격:   {formula: "반폭 - 앞품/2"}
+  뒤암홀간격:   {formula: "반폭 - 뒤품/2"}
+  앞암홀가이드비: {value: 0.40,   note: p.44 에서 1" / 2.1/2"}
+  뒤암홀가이드비: {value: 0.5625, note: p.44 에서 1.1/8" / 2"}
+  앞암홀가이드: {formula: "앞암홀간격 * 앞암홀가이드비", note: 앞품선×가슴선 모서리에서 45°}
+  뒤암홀가이드: {formula: "뒤암홀간격 * 뒤암홀가이드비", note: 뒤품선×가슴선 모서리에서 45°}
   앞암홀접점비율: {value: 1/2, note: 암홀이 앞품선에 닿는 높이 — 어깨끝에서 가슴선까지의 비율. 도면 실측 기준. 오버사이즈로 갈수록 겨드랑점이 각져 형태가 달라짐 → 핏 단계에서 조절}
   뒤암홀접점비율: {value: 1/2, note: 뒤는 어깨끝과 가슴선의 중간}
   가슴다트폭:   {value: 1.1/4, note: 옆선에서 벌어지는 양}
@@ -81,8 +92,9 @@ points:
   # ---------------------------------------------------------------- 어깨
   SP_B:     {ko: 뒤 어깨끝점,         from: TOP_CB, dx: "-뒤어깨끝너비", dy: 뒤어깨끝내림}
   G_SF_TOP: {ko: 앞어깨 가이드 기준선점, from: O_F, dx: 앞어깨가이드너비}
-  G_SF:     {ko: 앞어깨 가이드점,     from: G_SF_TOP, dy: 앞어깨가이드내림}
-  SP_F:     {ko: 앞 어깨끝점,         along: [SNP_F, G_SF], dist: 앞어깨길이, note: 가이드점 방향으로 앞어깨길이만큼}
+  G_SF0:    {ko: 앞어깨 가이드점(p.44 표기), from: G_SF_TOP, dy: 앞어깨가이드내림}
+  G_SF:     {ko: 앞어깨 방향점,       from: SNP_F, dx: 1, dy: 앞어깨기울기, note: 뒤어깨 기울기를 따라간다}
+  SP_F:     {ko: 앞 어깨끝점,         along: [SNP_F, G_SF], dist: 앞어깨길이, note: 이 방향으로 앞어깨길이만큼}
   BSD1:     {ko: 뒤어깨다트 목쪽,     along: [SNP_B, SP_B], dist: 뒤어깨다트위치}
   BSD2:     {ko: 뒤어깨다트 어깨쪽,   along: [SNP_B, SP_B], dist: "뒤어깨다트위치 + 뒤어깨다트폭"}
   BSD_M:    {ko: 뒤어깨다트 중심,     midpoint: [BSD1, BSD2]}
@@ -116,7 +128,7 @@ lines:
   - {name: 앞목가이드,   role: construction, pts: [NK_F_C, G_NF]}
   - {name: 뒤목틀,       role: construction, pts: [NK_B_W, SNP_B]}
   - {name: 뒤목가이드,   role: construction, pts: [NK_B_W, G_NB]}
-  - {name: 앞어깨가이드, role: construction, pts: [G_SF_TOP, G_SF, SNP_F]}
+  - {name: 앞어깨가이드, role: construction, pts: [G_SF_TOP, G_SF0, SNP_F]}
   - {name: 유장선,       role: construction, pts: [SNP_F, BP]}
   - {name: 앞암홀가이드, role: construction, pts: [FW_BL, G_F]}
   - {name: 뒤암홀가이드, role: construction, pts: [BW_BL, G_B]}

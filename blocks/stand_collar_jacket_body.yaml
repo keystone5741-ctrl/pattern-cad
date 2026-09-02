@@ -25,12 +25,16 @@ measurements:
   엉덩이여유:   {value: 3/4, note: 패턴 엉덩이 37.3/8}
   밑단벌림:     {value: 15/16, note: 패턴 밑단 41.1/8}
   힙포인트올림: {value: 1, note: 뒤를 앞보다 높게 잡기도 하지만 대부분 같게}
+  라펠끝높이:   {value: 2.1/2, note: 라펠이 없으므로 낸단 위끝 높이로만 쓴다}
   # --- 확인용 (피트한 실루엣)
   완성뒤가슴반: {formula: "뒤반폭", note: 8.1/4~8.1/2}
   완성뒤허리반: {formula: "뒤반폭 - 옆선허리들임 - 뒤허리다트폭", note: 6.1/2~6.3/4}
   완성뒤엉덩이반: {formula: "뒤엉덩이반", note: 9~9.1/4}
 
 lines:
-  remove: [라펠꺾임선, 고지라인, 라펠끝선, 라펠외곽]
+  remove: [라펠꺾임선, 고지라인, 라펠노치, 라펠외곽]
   add:
-    - {name: 앞목선연장, piece: 앞판, role: outline, pts: [FNP, EXT_T], note: 라펠 없이 칼라가 목선에 선다}
+    # 라펠이 없다. 앞목선을 되살리고 낸단 위끝까지 이어 준다
+    - {name: 앞목선, piece: 앞판, role: outline, curve: [SNP_F, G_NF, FNP],
+       tangents: {SNP_F: {perp: [SNP_F, SP_F]}, FNP: [-1, 0]}, handles: [[0.2, 0.55], [0.29, 0.2]]}
+    - {name: 앞목선연장, piece: 앞판, role: outline, pts: [FNP, LP_BREAK], note: 라펠 없이 칼라가 목선에 선다}

@@ -36,6 +36,14 @@
                        handles 로 구간별 핸들 길이(현 대비 비율, [나가는, 들어오는])를 준다
     role: outline | construction | dart | mark | notch | grain | fold | dimension
     piece: 앞판 | 뒤판 …  (조각 분류용)
+
+원형 파일 맨 위(선과 나란히)에 handles 를 둘 수 있다. 상속받은 선의 **곡선 모양만**
+원본 도면에 맞춰 고칠 때 쓴다 — 선 정의를 통째로 다시 쓰지 않아도 된다:
+
+    handles:
+      앞암홀: [[0.20, 0.20], [0.31, 0.33], [0.32, 0.35]]
+
+tools/align_block.py --fit 이 이 형식으로 뽑아 준다.
 """
 
 from __future__ import annotations
@@ -115,6 +123,11 @@ def merge_block(parent: dict, child: dict) -> dict:
         lines[idx] = rep
     lines.extend(cl.get("add") or [])
     out["lines"] = lines
+
+    handles = dict(parent.get("handles") or {})
+    handles.update(child.get("handles") or {})
+    if handles:
+        out["handles"] = handles
     return out
 
 
@@ -181,6 +194,13 @@ class Block:
         self.measurements: dict = data.get("measurements", {})
         self.points: dict = data.get("points", {})
         self.lines: list[LineDef] = [self._line_def(d) for d in data.get("lines", [])]
+        # handles: 선 이름 → 구간별 핸들 [[나가는, 들어오는], ...]
+        # 상속받은 선의 곡선 모양만 원본 도면에 맞춰 고칠 때 쓴다 (선 정의를 통째로 다시 쓰지 않아도 된다).
+        # tools/align_block.py --fit 이 이 형식으로 뽑아 준다.
+        self.handles: dict = data.get("handles", {}) or {}
+        for ld in self.lines:
+            if ld.name in self.handles:
+                ld.handles = self.handles[ld.name]
 
     @classmethod
     def load(cls, path) -> "Block":

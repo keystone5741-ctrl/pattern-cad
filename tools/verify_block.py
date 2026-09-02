@@ -86,7 +86,7 @@ def deviation(line_pts: list[Pt], polys: list[list[Pt]]) -> tuple[float, float]:
     return max(ds), sum(ds) / len(ds)
 
 
-def fit_curve_handles(res, polys, tol=0.3, lo=0.2, min_len=1.5):
+def fit_curve_handles(res, polys, tol=0.35, lo=0.22, min_len=1.5):
     """곡선 선마다 구간별 핸들 길이를 원본 폴리라인에 맞춘다. {선이름: [[h0,h3], ...]}"""
     from patterncad.geometry import polyline_length
 
@@ -105,21 +105,29 @@ def fit_curve_handles(res, polys, tol=0.3, lo=0.2, min_len=1.5):
             L = chord.length()
             cur = bz
             h = (1 / 3, 1 / 3)
-            for _ in range(3):  # 표본 선택 ↔ 맞춤 반복
+            for step in range(4):  # 표본 선택 ↔ 맞춤 반복
                 curve_pts = cur.sample(48)
+                # 곡선이 아직 원본에서 멀 수 있으므로, 못 잡으면 허용 반경을 넓혀 다시 고른다
                 samples = []
-                for p in pts_all:
-                    u = (p - p0).dot(chord) / (L * L)
-                    if -0.02 <= u <= 1.02 and nearest_on_polyline(p, curve_pts)[0] < tol:
-                        samples.append((u, p))
+                for widen in (1.0, 2.2, 3.5):
+                    samples = []
+                    for p in pts_all:
+                        u = (p - p0).dot(chord) / (L * L)
+                        if not (-0.02 <= u <= 1.02):
+                            continue
+                        if nearest_on_polyline(p, curve_pts)[0] < tol * widen:
+                            samples.append((u, p))
+                    if len(samples) >= 6:
+                        break
                 samples.sort(key=lambda s: s[0])
-                if len(samples) < 4:
+                if len(samples) < 6:
+                    h = None
                     break
                 h = fit_handles(p0, t0, p3, t3, [p0] + [s[1] for s in samples] + [p3], lo=lo)
                 from patterncad.geometry import bezier_from_tangents
 
                 cur = bezier_from_tangents(p0, t0, p3, t3, h[0], h[1])
-            handles.append([round(h[0], 3), round(h[1], 3)])
+            handles.append(None if h is None else [round(h[0], 3), round(h[1], 3)])
         result[line.name] = handles
     return result
 
