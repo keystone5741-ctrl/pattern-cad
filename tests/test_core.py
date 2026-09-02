@@ -116,5 +116,33 @@ class Sichuni(unittest.TestCase):
         self.assertAlmostEqual(big.points["TOP_CB"].x, 20)
 
 
+class SichuniDartless(unittest.TestCase):
+    """기본 원형을 상속한 무다트 원형."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.res = Block.load(ROOT / "blocks" / "sichuni_dartless.yaml").evaluate()
+
+    def test_inherits_and_overrides(self):
+        r = self.res
+        self.assertEqual(r.block.data["extends_from"], "sichuni_basic")
+        self.assertAlmostEqual(r.points["UP"].x, 9.25)  # 여유 3.1/2
+        self.assertAlmostEqual(r.points["UP"].y, 8.625)
+        self.assertAlmostEqual(r.points["HEM_CF"].y, r.points["WL_CB"].y)  # 앞처짐 0 → 밑단 같은 높이
+        self.assertAlmostEqual(r.points["SNP_F"].y, -1.25)  # 앞올림
+
+    def test_no_darts(self):
+        names = {l.name for l in self.res.lines}
+        self.assertNotIn("가슴다트", names)
+        self.assertNotIn("뒤어깨다트", names)
+        self.assertIn("앞옆선", names)
+        self.assertIn("뒤어깨선", names)
+        self.assertNotIn("BP", self.res.points)
+
+    def test_front_shoulder_is_back_minus_ease(self):
+        r = self.res
+        self.assertAlmostEqual(r.line("앞어깨선").length(), r.line("뒤어깨선").length() - 0.25, places=6)
+
+
 if __name__ == "__main__":
     unittest.main()

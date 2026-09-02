@@ -58,6 +58,53 @@ from .geometry import (
 ROLES = ("outline", "construction", "dart", "mark", "notch", "grain", "fold", "dimension")
 
 
+def merge_block(parent: dict, child: dict) -> dict:
+    """상속: 자식이 부모 원형 위에 바뀐 것만 적는다.
+
+        extends: sichuni_basic.yaml
+        measurements:  {여유: {value: 3.1/2}}          # 덮어쓰기 / 추가
+        points:
+          remove: [BP, BD1, BD2]                        # 지우기
+          BNP: {from: TOP_CB, dy: "-뒤목점올림"}         # 같은 이름이면 그 자리에서 교체, 없으면 끝에 추가
+        lines:
+          remove: [가슴다트, 앞옆선위]
+          replace: [{name: 앞암홀, ...}]                 # 같은 이름 자리에서 교체
+          add: [{name: 앞옆선, ...}]                     # 끝에 추가
+    """
+    out = {k: v for k, v in parent.items() if k != "extends"}
+    out.update({k: v for k, v in child.items() if k not in ("measurements", "points", "lines", "extends")})
+    out["extends_from"] = parent.get("id")
+
+    meas = dict(parent.get("measurements", {}))
+    for k, v in (child.get("measurements") or {}).items():
+        base = meas.get(k)
+        meas[k] = {**base, **v} if isinstance(base, dict) and isinstance(v, dict) else v
+    out["measurements"] = meas
+
+    pts = dict(parent.get("points", {}))
+    cp = dict(child.get("points") or {})
+    for name in cp.pop("remove", None) or []:
+        pts.pop(name, None)
+    for name, rule in cp.items():
+        pts[name] = rule  # dict 는 삽입 순서를 지키므로 기존 이름은 제자리, 새 이름은 끝
+    out["points"] = pts
+
+    lines = list(parent.get("lines", []))
+    cl = child.get("lines") or {}
+    if isinstance(cl, list):
+        cl = {"add": cl}
+    removed = set(cl.get("remove") or [])
+    lines = [l for l in lines if l["name"] not in removed]
+    for rep in cl.get("replace") or []:
+        idx = next((i for i, l in enumerate(lines) if l["name"] == rep["name"]), None)
+        if idx is None:
+            raise ValueError(f"교체할 선이 없다: {rep['name']}")
+        lines[idx] = rep
+    lines.extend(cl.get("add") or [])
+    out["lines"] = lines
+    return out
+
+
 @dataclass
 class LineDef:
     name: str
@@ -126,7 +173,11 @@ class Block:
     def load(cls, path) -> "Block":
         path = Path(path)
         with open(path, encoding="utf-8") as f:
-            return cls(yaml.safe_load(f), path)
+            data = yaml.safe_load(f)
+        if data.get("extends"):
+            parent = cls.load(path.parent / data["extends"])
+            data = merge_block(parent.data, data)
+        return cls(data, path)
 
     @staticmethod
     def _line_def(d: dict) -> LineDef:

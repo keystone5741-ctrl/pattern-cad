@@ -128,10 +128,20 @@ def main(argv=None):
     ap.add_argument("--origin", type=float, nargs=2, default=(62.2, 118.0), help="원점의 pt 좌표")
     ap.add_argument("--fit", action="store_true")
     ap.add_argument("--out", help="출력 SVG 경로 (기본: 원형 파일 옆 verify_<id>.svg)")
+    ap.add_argument("--set", nargs="*", default=[], metavar="치수=값",
+                    help="치수 임시 덮어쓰기 (도면이 표기와 다를 때 실측값으로 형태만 검증)")
     args = ap.parse_args(argv)
 
+    from patterncad.units import parse_inch
+
+    overrides = {}
+    for kv in args.set:
+        k, v = kv.split("=", 1)
+        overrides[k] = parse_inch(v)
     block = Block.load(args.block)
-    res = block.evaluate()
+    res = block.evaluate(overrides)
+    if overrides:
+        print("임시 치수:", overrides)
     doc = pymupdf.open(str(ROOT / "reference" / "portfolio.pdf"))
     page = doc[args.page - 1]
     polys = original_polylines(page, args.scale, tuple(args.origin))

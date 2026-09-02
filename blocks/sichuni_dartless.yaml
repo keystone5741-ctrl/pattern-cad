@@ -1,0 +1,52 @@
+# 시추니 무다트 원형 — 포트폴리오 p.46. 시추니 기본 원형에서 바뀐 것만 적는다 (extends).
+#
+# 만들어지는 과정 (p.47):
+#   뒤판  ① 뒤중심 허리선에서 3/8" 들어간 점과 뒷목점을 잇고 ② 허리선을 다시 직각으로 잡으면
+#         ③ 뒷목점·옆목점이 1/8" 올라간다 ④ 어깨선도 1/8" 올린다 (앞판 어깨 1/8" 을 뒤로 옮긴 셈)
+#         ⑤ 견갑골 1/4" 다트는 이세로 ⑥ 암홀 쪽 1/4" 은 그대로 (절개가 있으면 처리)
+#   앞판  가슴다트 1.1/4" 를 분산: ① 네크 1/4" ② 암홀 1/4"~3/8" ③ 허리 ④ 앞중심 ⑤ 옆선(MP)
+#         → 결과적으로 앞판 위쪽이 1.1/4" 올라가고(앞올림) 앞처짐이 없어져 앞뒤 밑단이 같은 높이가 된다.
+#
+# 도면 p.46 의 선은 글자와 어긋난다 (폭 실측 8.9 / 표기 9.1/4, 진동깊이 실측 8.43 / 표기 8.5/8).
+# 여기서는 글자(표기 치수)를 따른다.
+
+extends: sichuni_basic.yaml
+name: 시추니 무다트 원형
+id: sichuni_dartless
+source: reference/portfolio.pdf p.46
+
+measurements:
+  여유:       {value: 3.1/2, note: 패턴 가슴둘레 37. 기본 원형보다 앞뒤 각 1/4 넓다}
+  진동깊이:   {value: 8.5/8, note: 기본보다 1/8 깊다}
+  앞처짐:     {value: 0, note: 앞뒤 밑단 같은 높이}
+  앞올림:     {value: 1.1/4, note: 가슴다트 분량이 앞판 길이로 분산된 것}
+  가슴다트폭: {value: 0, note: 다트 없음}
+  뒤품:       {value: 14.1/4, note: 도면 표기 뒤품/2 = 7.1/8}
+  앞목너비:   {value: 3, note: 앞·뒤 네크너비 동일 → 앞네크가 들뜨는 단점 (디자인에 따라 조절)}
+  앞목깊이:   {value: 2.3/4}
+  앞옆목점내림: {value: 0}
+  앞목가이드: {value: 1.1/8}
+  뒤목높이:   {value: 1.1/8, note: 기본 1 + 과정 ③ 의 1/8}
+  뒤목점올림: {value: 1/8, note: 과정 ③}
+  뒤어깨끝내림: {value: 3/8, note: 기본 1/2 − 과정 ④ 의 1/8}
+  앞암홀가이드: {value: 1.1/8}
+  뒤어깨이세:   {value: 1/4, note: 견갑골 입체분량. 다트 대신 이세로 (과정 ⑤)}
+  앞어깨길이:   {formula: "뒤어깨길이 - 뒤어깨이세"}
+
+points:
+  remove: [BSD1, BSD2, BSD_M, SCAP, SCAP_W, SCAP_W2, BP, BD1, BD2]
+
+lines:
+  replace:   # 곡선 핸들을 p.46 도면에 맞춘 값
+    - {name: 앞목선, piece: 앞판, role: outline, curve: [SNP_F, G_NF, FNP], tangents: {SNP_F: [0, 1], FNP: [-1, 0]},
+       handles: [[0.38, 0.06], [0.06, 0.41]]}
+    - {name: 앞암홀, piece: 앞판, role: outline, curve: [SP_F, T_F, G_F, UP], tangents: {SP_F: {perp: [SNP_F, SP_F]}, T_F: [0, 1], UP: [1, 0]},
+       handles: [[0.05, 0.21], [0.43, 0.25], [0.05, 0.52]]}
+    - {name: 뒤목선, piece: 뒤판, role: outline, curve: [SNP_B, G_NB, BNP], tangents: {SNP_B: {perp: [SNP_B, SP_B]}, BNP: [1, 0]},
+       handles: [[0.05, 0.05], [0.05, 0.54]]}
+    - {name: 뒤암홀, piece: 뒤판, role: outline, curve: [SP_B, T_B, G_B, UP], tangents: {SP_B: {perp: [SNP_B, SP_B]}, T_B: [0, 1], UP: [-1, 0]},
+       handles: [[0.09, 0.24], [0.38, 0.34], [0.39, 0.06]]}
+  remove: [유장선, 견갑선, 견갑이세선, 앞옆선위, 가슴다트, 앞옆선아래, 뒤어깨선목쪽, 뒤어깨다트, 뒤어깨선끝쪽]
+  add:
+    - {name: 앞옆선,   piece: 앞판, role: outline, pts: [UP, HEM_SS_F]}
+    - {name: 뒤어깨선, piece: 뒤판, role: outline, pts: [SNP_B, SP_B], note: 견갑골 1/4 이세}

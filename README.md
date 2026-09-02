@@ -48,8 +48,10 @@ patterncad/
   svg.py        계산 결과를 SVG로
 blocks/
   sichuni_basic.yaml        시추니 기본 원형 (치수 → 점 규칙 → 선)
-  sichuni_basic.svg         실물 크기(mm) 그림
-  verify_sichuni_basic.png  원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
+  sichuni_dartless.yaml     시추니 무다트 원형 — 기본 원형을 상속(extends)해 바뀐 값만
+  *.svg                     실물 크기(mm) 그림
+  verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
+docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤
 tests/                      python -m unittest discover -s tests
 ```
@@ -63,7 +65,7 @@ python tools/verify_block.py blocks/sichuni_basic.yaml --page 44 --fit    # 곡�
 
 ## 다음 단계
 
-1. 시추니 무다트 원형, 소매 원형 → 스커트 원형 → 팬츠 원형 (상의 → 스커트 → 팬츠 → 아우터 순)
+1. 소매 원형 → 스커트 원형 → 팬츠 원형 (상의 → 스커트 → 팬츠 → 아우터 순)
 2. 조작 엔진(다트 이동 · 절개-벌림 · 여유 변경)으로 포트폴리오 아이템 재현
 3. 사이즈 체계(55/66 · S/M/L · 숫자 등 선택, 기준 사이즈 선택)와 핏 4단계 → 자동 생성
 4. 조각화 · DXF 입출력 · 그레이딩 · 마카 · 데스크톱 UI
