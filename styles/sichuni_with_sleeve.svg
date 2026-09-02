@@ -1,19 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="877.931mm" height="609.6mm" viewBox="0 0 877.931 609.6">
+<svg xmlns="http://www.w3.org/2000/svg" width="877.49mm" height="609.6mm" viewBox="0 0 877.49 609.6">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M25.4 127L25.4 463.55"><title>앞중심선</title></path>
-<path d="M95.25 57.15C95.25 59.772 89.859 87.49 72.799 104.549C56.852 120.496 28.022 127 25.4 127"><title>앞목선</title></path>
+<path d="M95.25 57.15C91.624 66.993 93.197 84.152 72.799 104.549C62.044 115.304 35.889 127 25.4 127"><title>앞목선</title></path>
 <path d="M95.25 57.15L202.346 96.606"><title>앞어깨선</title></path>
-<path d="M202.346 96.606C200.861 100.635 190.5 139.578 190.5 181.653C190.5 202.488 189.045 226.972 208.461 248.739C221.169 262.987 241.272 266.7 254 266.7"><title>앞암홀</title></path>
+<path d="M202.346 96.606C196.409 112.721 190.5 164.48 190.5 181.653C190.5 203.182 193.205 231.636 208.461 248.739C218.888 260.43 236.866 266.7 254 266.7"><title>앞암홀</title></path>
 <path d="M254 266.7L254 310.653"><title>앞옆선위</title></path>
 <path d="M254 342.403L254 463.55"><title>앞옆선아래</title></path>
 <path d="M25.4 463.55L254 463.55"><title>앞밑단</title></path>
 <path d="M482.6 50.8L482.6 431.8"><title>뒤중심선</title></path>
-<path d="M406.4 25.4C406.685 26.254 415.374 35.056 419.87 37.33C459.377 57.307 392.135 50.8 482.6 50.8"><title>뒤목선</title></path>
+<path d="M406.4 25.4C407.538 28.814 416.659 35.706 419.87 37.33C431.322 43.12 433.197 50.8 482.6 50.8"><title>뒤목선</title></path>
 <path d="M406.4 25.4L370.255 37.448"><title>뒤어깨선목쪽</title></path>
 <path d="M364.231 39.456L292.1 63.5"><title>뒤어깨선끝쪽</title></path>
-<path d="M292.1 63.5C299.547 85.841 304.8 146.67 304.8 165.1C304.8 170.971 301.051 223.209 284.594 246.494C276.765 257.573 263.533 266.7 254 266.7"><title>뒤암홀</title></path>
+<path d="M292.1 63.5C298.9 83.899 304.8 142.574 304.8 165.1C304.8 181.873 298.147 227.318 284.594 246.494C276.13 258.471 262.799 266.7 254 266.7"><title>뒤암홀</title></path>
 <path d="M254 266.7L254 431.8"><title>뒤옆선</title></path>
 <path d="M254 431.8L482.6 431.8"><title>뒤밑단</title></path>
 </g>
@@ -86,53 +86,53 @@
 </g>
 <g id="sleeve">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M533.4 157.035C572.079 143.045 582.789 118.962 585.942 116.532C591.853 111.976 638.483 25.4 704.161 25.4"><title>뒤소매산</title></path>
-<path d="M704.161 25.4C761.965 25.4 784.705 96.859 788.944 100.62C792.123 103.441 805.892 153.771 852.531 157.035"><title>앞소매산</title></path>
-<path d="M533.4 157.035L565.15 574.675"><title>뒤옆선</title></path>
-<path d="M852.531 157.035L820.781 574.675"><title>앞옆선</title></path>
-<path d="M565.15 574.675C611.024 577.818 658.18 584.2 704.161 584.2C742.774 584.2 782.297 577.818 820.781 574.675"><title>소매부리</title></path>
+<path d="M533.4 156.848C572.077 142.858 582.827 118.829 585.981 116.402C591.897 111.852 638.616 25.4 704.29 25.4"><title>뒤소매산</title></path>
+<path d="M704.29 25.4C761.933 25.4 784.524 96.757 788.747 100.513C791.914 103.33 805.581 153.592 852.09 156.848"><title>앞소매산</title></path>
+<path d="M533.4 156.848L565.15 574.675"><title>뒤옆선</title></path>
+<path d="M852.09 156.848L820.34 574.675"><title>앞옆선</title></path>
+<path d="M565.15 574.675C611.066 577.818 658.266 584.2 704.29 584.2C742.715 584.2 782.044 577.818 820.34 574.675"><title>소매부리</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M704.161 25.4L704.161 584.2"><title>소매중심선</title></path>
-<path d="M533.4 157.035L852.531 157.035"><title>소매통선</title></path>
-<path d="M546.564 330.2L839.367 330.2"><title>팔꿈치선</title></path>
-<path d="M647.011 25.4L754.961 25.4"><title>소매산높이선</title></path>
-<path d="M704.161 25.4L533.4 157.035"><title>뒤사선</title></path>
-<path d="M704.161 25.4L852.531 157.035"><title>앞사선</title></path>
-<path d="M647.011 25.4L558.8 157.035"><title>뒤가이드</title></path>
-<path d="M754.961 25.4L814.431 157.035"><title>앞가이드</title></path>
-<path d="M533.4 157.035L533.4 584.2"><title>뒤틀세로</title></path>
-<path d="M852.531 157.035L852.531 584.2"><title>앞틀세로</title></path>
-<path d="M533.4 584.2L852.531 584.2"><title>밑단틀</title></path>
+<path d="M704.29 25.4L704.29 584.2"><title>소매중심선</title></path>
+<path d="M533.4 156.848L852.09 156.848"><title>소매통선</title></path>
+<path d="M546.573 330.2L838.918 330.2"><title>팔꿈치선</title></path>
+<path d="M647.14 25.4L755.09 25.4"><title>소매산높이선</title></path>
+<path d="M704.29 25.4L533.4 156.848"><title>뒤사선</title></path>
+<path d="M704.29 25.4L852.09 156.848"><title>앞사선</title></path>
+<path d="M647.14 25.4L558.8 156.848"><title>뒤가이드</title></path>
+<path d="M755.09 25.4L813.99 156.848"><title>앞가이드</title></path>
+<path d="M533.4 156.848L533.4 584.2"><title>뒤틀세로</title></path>
+<path d="M852.09 156.848L852.09 584.2"><title>앞틀세로</title></path>
+<path d="M533.4 584.2L852.09 584.2"><title>밑단틀</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M546.564 330.2L552.914 330.2"><title>뒤팔꿈치표시</title></path>
-<path d="M839.367 330.2L833.017 330.2"><title>앞팔꿈치표시</title></path>
+<path d="M546.573 330.2L552.923 330.2"><title>뒤팔꿈치표시</title></path>
+<path d="M838.918 330.2L832.568 330.2"><title>앞팔꿈치표시</title></path>
 </g>
 <g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
-<circle cx="704.161" cy="25.4" r="0.762" fill="#06c"/><text x="705.431" y="24.384">SCP</text>
-<circle cx="704.161" cy="157.035" r="0.762" fill="#06c"/><text x="705.431" y="156.019">BIC_C</text>
-<circle cx="533.4" cy="157.035" r="0.762" fill="#06c"/><text x="534.67" y="156.019">BIC_B</text>
-<circle cx="852.531" cy="157.035" r="0.762" fill="#06c"/><text x="853.801" y="156.019">BIC_F</text>
-<circle cx="647.011" cy="25.4" r="0.762" fill="#06c"/><text x="648.281" y="24.384">GT_B</text>
-<circle cx="754.961" cy="25.4" r="0.762" fill="#06c"/><text x="756.231" y="24.384">GT_F</text>
-<circle cx="558.8" cy="157.035" r="0.762" fill="#06c"/><text x="560.07" y="156.019">GB_B</text>
-<circle cx="814.431" cy="157.035" r="0.762" fill="#06c"/><text x="815.701" y="156.019">GB_F</text>
-<circle cx="585.942" cy="116.532" r="0.762" fill="#06c"/><text x="587.212" y="115.516">X_B</text>
-<circle cx="788.944" cy="100.62" r="0.762" fill="#06c"/><text x="790.214" y="99.604">X_F</text>
-<circle cx="704.161" cy="330.2" r="0.762" fill="#06c"/><text x="705.431" y="329.184">EL_C</text>
-<circle cx="704.161" cy="584.2" r="0.762" fill="#06c"/><text x="705.431" y="583.184">HEM_C</text>
+<circle cx="704.29" cy="25.4" r="0.762" fill="#06c"/><text x="705.56" y="24.384">SCP</text>
+<circle cx="704.29" cy="156.848" r="0.762" fill="#06c"/><text x="705.56" y="155.832">BIC_C</text>
+<circle cx="533.4" cy="156.848" r="0.762" fill="#06c"/><text x="534.67" y="155.832">BIC_B</text>
+<circle cx="852.09" cy="156.848" r="0.762" fill="#06c"/><text x="853.36" y="155.832">BIC_F</text>
+<circle cx="647.14" cy="25.4" r="0.762" fill="#06c"/><text x="648.41" y="24.384">GT_B</text>
+<circle cx="755.09" cy="25.4" r="0.762" fill="#06c"/><text x="756.36" y="24.384">GT_F</text>
+<circle cx="558.8" cy="156.848" r="0.762" fill="#06c"/><text x="560.07" y="155.832">GB_B</text>
+<circle cx="813.99" cy="156.848" r="0.762" fill="#06c"/><text x="815.26" y="155.832">GB_F</text>
+<circle cx="585.981" cy="116.402" r="0.762" fill="#06c"/><text x="587.251" y="115.386">X_B</text>
+<circle cx="788.747" cy="100.513" r="0.762" fill="#06c"/><text x="790.017" y="99.497">X_F</text>
+<circle cx="704.29" cy="330.2" r="0.762" fill="#06c"/><text x="705.56" y="329.184">EL_C</text>
+<circle cx="704.29" cy="584.2" r="0.762" fill="#06c"/><text x="705.56" y="583.184">HEM_C</text>
 <circle cx="565.15" cy="584.2" r="0.762" fill="#06c"/><text x="566.42" y="583.184">HEM_B0</text>
-<circle cx="820.781" cy="584.2" r="0.762" fill="#06c"/><text x="822.051" y="583.184">HEM_F0</text>
+<circle cx="820.34" cy="584.2" r="0.762" fill="#06c"/><text x="821.61" y="583.184">HEM_F0</text>
 <circle cx="565.15" cy="574.675" r="0.762" fill="#06c"/><text x="566.42" y="573.659">HEM_B</text>
-<circle cx="820.781" cy="574.675" r="0.762" fill="#06c"/><text x="822.051" y="573.659">HEM_F</text>
-<circle cx="729.561" cy="330.2" r="0.762" fill="#06c"/><text x="730.831" y="329.184">EL_C2</text>
-<circle cx="546.564" cy="330.2" r="0.762" fill="#06c"/><text x="547.834" y="329.184">EL_B</text>
-<circle cx="839.367" cy="330.2" r="0.762" fill="#06c"/><text x="840.637" y="329.184">EL_F</text>
-<circle cx="552.914" cy="330.2" r="0.762" fill="#06c"/><text x="554.184" y="329.184">EL_B_IN</text>
-<circle cx="833.017" cy="330.2" r="0.762" fill="#06c"/><text x="834.287" y="329.184">EL_F_IN</text>
+<circle cx="820.34" cy="574.675" r="0.762" fill="#06c"/><text x="821.61" y="573.659">HEM_F</text>
+<circle cx="729.69" cy="330.2" r="0.762" fill="#06c"/><text x="730.96" y="329.184">EL_C2</text>
+<circle cx="546.573" cy="330.2" r="0.762" fill="#06c"/><text x="547.843" y="329.184">EL_B</text>
+<circle cx="838.918" cy="330.2" r="0.762" fill="#06c"/><text x="840.188" y="329.184">EL_F</text>
+<circle cx="552.923" cy="330.2" r="0.762" fill="#06c"/><text x="554.193" y="329.184">EL_B_IN</text>
+<circle cx="832.568" cy="330.2" r="0.762" fill="#06c"/><text x="833.838" y="329.184">EL_F_IN</text>
 <circle cx="533.4" cy="584.2" r="0.762" fill="#06c"/><text x="534.67" y="583.184">FR_B</text>
-<circle cx="852.531" cy="584.2" r="0.762" fill="#06c"/><text x="853.801" y="583.184">FR_F</text>
+<circle cx="852.09" cy="584.2" r="0.762" fill="#06c"/><text x="853.36" y="583.184">FR_F</text>
 </g>
 <text x="533.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve — 소매 원형</text>
 </g>

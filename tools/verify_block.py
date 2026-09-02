@@ -85,8 +85,11 @@ def deviation(line_pts: list[Pt], polys: list[list[Pt]]) -> tuple[float, float]:
     return max(ds), sum(ds) / len(ds)
 
 
-def fit_curve_handles(res, polys, tol=0.3):
+def fit_curve_handles(res, polys, tol=0.3, lo=0.2, min_len=1.5):
     """곡선 선마다 구간별 핸들 길이를 원본 폴리라인에 맞춘다. {선이름: [[h0,h3], ...]}"""
+    from patterncad.geometry import polyline_length
+
+    polys = [pl for pl in polys if polyline_length(pl) >= min_len]  # 짧은 표시(이세 호 등)는 뺀다
     pts_all = all_points(polys)
     result = {}
     for line in res.lines:
@@ -111,7 +114,7 @@ def fit_curve_handles(res, polys, tol=0.3):
                 samples.sort(key=lambda s: s[0])
                 if len(samples) < 4:
                     break
-                h = fit_handles(p0, t0, p3, t3, [p0] + [s[1] for s in samples] + [p3])
+                h = fit_handles(p0, t0, p3, t3, [p0] + [s[1] for s in samples] + [p3], lo=lo)
                 from patterncad.geometry import bezier_from_tangents
 
                 cur = bezier_from_tangents(p0, t0, p3, t3, h[0], h[1])

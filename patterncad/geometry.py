@@ -168,7 +168,7 @@ def bezier_from_tangents(p0: Pt, t0: Pt, p3: Pt, t3: Pt, h0: float, h3: float) -
     return Bezier(p0, p0 + t0.unit() * (h0 * chord), p3 - t3.unit() * (h3 * chord), p3)
 
 
-def fit_handles(p0: Pt, t0: Pt, p3: Pt, t3: Pt, samples: list[Pt], iterations: int = 5) -> tuple[float, float]:
+def fit_handles(p0: Pt, t0: Pt, p3: Pt, t3: Pt, samples: list[Pt], iterations: int = 5, lo: float = 0.05) -> tuple[float, float]:
     """끝점과 접선 방향을 고정하고, 표본점들에 가장 가까운 핸들 길이 비율(h0, h3)을 최소제곱으로 구한다.
     표본은 p0 → p3 순서로 놓인 폴리라인이라고 본다. 매개변수 u 는 처음엔 누적 현 길이로 잡고,
     맞춘 곡선 위의 최근접점으로 다시 잡기를 반복한다."""
@@ -217,7 +217,7 @@ def fit_handles(p0: Pt, t0: Pt, p3: Pt, t3: Pt, samples: list[Pt], iterations: i
         grid = bezier_from_tangents(p0, t0, p3, t3, h0, h3).sample(160)
         return sum(min(g.dist(s) for g in grid) ** 2 for s in samples)
 
-    lo = 0.05  # 핸들이 음수가 되면 끝점에서 꺾여 나가므로 하한을 둔다
+    # lo: 핸들 하한. 음수가 되면 끝점에서 꺾여 나가고, 너무 짧아도 꺾여 보이므로 하한을 둔다
     h0, h3 = max(lo, h[0]), max(lo, h[1])
     best = objective(h0, h3)
     step = 0.1
