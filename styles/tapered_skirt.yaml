@@ -1,0 +1,21 @@
+# 테이퍼드 스커트 = 테이퍼드 원형 + 앞·뒤 곡선 오비 (벨트고리 2" 간격, 오비 높이 1.1/2)
+name: 테이퍼드 스커트
+id: tapered_skirt
+source: reference/portfolio.pdf p.11
+
+blocks:
+  skirt:
+    block: ../blocks/skirt_tapered.yaml
+  waistband_front:
+    block: ../blocks/waistband_curved.yaml
+    measurements:
+      밑선: "len(skirt.앞허리선1) + len(skirt.앞허리선2) + len(skirt.앞허리선3)"
+      차이: 5/8
+      높이: 1.1/2
+  waistband_back:
+    block: ../blocks/waistband_curved.yaml
+    measurements:
+      밑선: "len(skirt.뒤허리선1) + len(skirt.뒤허리선2) + len(skirt.뒤허리선3)"
+      차이: 3/4
+      높이: 1.1/2
+      연장: 1.1/4

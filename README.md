@@ -55,6 +55,7 @@ blocks/
   skirt_basic.yaml          제허리 스커트 원형 — H/4 ∓ 1/4 폭, W/4 + 이세, 다트 분량 자동 배분, 겹트임
   skirt_hipbone.yaml        힙본 스커트 원형 (제허리 원형 상속)
   skirt_aline.yaml          세미A / A라인 스커트 — 힙본 원형을 절개해 밑단으로 벌림 (첫 기하 조작)
+  skirt_tapered.yaml        테이퍼드 스커트 — 반대로 밑단을 축으로 벌려 허리에 턱, 밑단은 좁힘
   waistband.yaml            오비 (직사각형)
   waistband_curved.yaml     곡선 오비 — 윗선(= 허리둘레)이 밑선보다 짧아 부채꼴로 휨
   *.svg                     실물 크기(mm) 그림
@@ -65,6 +66,7 @@ styles/
   basic_skirt.yaml          제허리 스커트 = 스커트 원형 + 오비 (허리 치수 자동)
   hipbone_skirt.yaml        힙본 스커트 = 힙본 원형 + 앞·뒤 곡선 오비 (밑선 길이 자동)
   aline_skirt.yaml          A라인 스커트 = A라인 원형 + 앞·뒤 곡선 오비
+  tapered_skirt.yaml        테이퍼드 스커트 = 테이퍼드 원형 + 앞·뒤 곡선 오비
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤

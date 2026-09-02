@@ -366,6 +366,34 @@ class ALine(unittest.TestCase):
         self.assertAlmostEqual(res.points["M"].x, -1, places=9)
 
 
+class Tapered(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.res = Block.load(ROOT / "blocks" / "skirt_tapered.yaml").evaluate()
+        cls.hb = Block.load(ROOT / "blocks" / "skirt_hipbone.yaml").evaluate()
+
+    def waist(self, res, names):
+        return sum(res.line(n).length() for n in names)
+
+    def test_folded_waist_matches_block(self):
+        """턱을 접으면 허리가 힙본 원형과 (뒤다트를 흡수해) 맞는다."""
+        fin = self.waist(self.res, ["앞허리선1", "앞허리선2", "앞허리선3", "뒤허리선1", "뒤허리선2", "뒤허리선3"])
+        hb = self.waist(self.hb, ["앞허리선", "뒤허리선1", "뒤허리선2"])
+        self.assertAlmostEqual(fin, hb, delta=0.5)
+
+    def test_hem_narrower_than_hip(self):
+        p = self.res.points
+        hem = p["SS_HEM_FT"].x + (p["CB_HEM"].x - p["SS_HEM_BT"].x)
+        hip = p["SS_H_FT"].x + (p["CB_HEM"].x - p["SS_H_BT"].x)
+        self.assertLess(hem, hip)  # 테이퍼드 — 아래로 모인다
+        self.assertLess(2 * hem, 36.0)  # 힙본 밑단보다 좁다
+
+    def test_tuck_length_scales_with_amount(self):
+        p, m = self.res.points, self.res.measurements
+        self.assertAlmostEqual(p["FT1_M"].dist(p["FT1_TIP"]), m["앞턱1량"] * m["턱길이비"], places=6)
+        self.assertGreater(p["FT1_M"].dist(p["FT1_TIP"]), p["BT2_M"].dist(p["BT2_TIP"]))
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

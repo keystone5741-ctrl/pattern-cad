@@ -1,0 +1,122 @@
+# 테이퍼드 스커트 — 포트폴리오 p.11–12. 힙본 스커트 원형을 이용한다.
+#
+# 위는 넓고 아래로 모이는 실루엣. 허리에 턱을 넣어 분량을 주고 밑단은 좁힌다.
+#   절개선을 밑단에서 허리까지 긋고 **밑단을 축으로** 벌린다 (A라인과 반대 — A라인은 허리를 축으로 밑단을 벌린다).
+#   앞 턱 2개, 뒤 턱 2개. 턱량과 턱 길이는 비례한다 — 턱량이 클수록 만들어지는 턱이 길어진다.
+#   밑단 옆솔기를 1/8~3/8 들이면 밑으로 모이는 테이퍼드 특유의 실루엣이 강조된다.
+#   기장이 길수록 테이퍼드 실루엣이 잘 드러난다.
+#
+# 유의사항 (p.11):
+#   턱·셔링이 있으면 **옆솔기 곡을 최대한 풀어(일자에 가깝게)** 준다. 곡이 지면 남는 분량이 생겨
+#   우글거리거나 튀어나오고, 분량이 옆으로 퍼져 옆솔기가 튀어나온다.
+#   턱 쪽에 이세 1/8 을 넣으면 턱이 벌어지는 것을 줄일 수 있다. 턱이 접히는 산은 허리선과 맞춘다.
+extends: skirt_hipbone.yaml
+name: 테이퍼드 스커트
+id: skirt_tapered
+source: reference/portfolio.pdf p.11
+
+measurements:
+  기장:         {value: 18.1/2}
+  밑단들임:     {value: 1/8, note: 밑단 옆솔기를 들이는 양 (1/8~3/8). 클수록 밑으로 모이는 느낌이 강해진다}
+  앞옆선들임:   {value: 5/8, note: 턱이 있으므로 옆솔기 곡을 최대한 풀어준다}
+  뒤옆선들임:   {value: 1/2}
+  앞턱1위치:    {value: 3,     note: 앞중심에서}
+  앞턱1량:      {value: 2.1/2}
+  앞턱2간격:    {value: 1,     note: 앞턱1 에서 앞턱2 까지}
+  앞턱2량:      {value: 2.1/8}
+  뒤턱1위치:    {value: 2.3/4, note: 뒤중심에서}
+  뒤턱1량:      {value: 2.1/4}
+  뒤턱2간격:    {value: 1}
+  뒤턱2량:      {value: 1.1/2}
+  턱이세:       {value: 1/8, note: 턱이 벌어지는 것을 줄인다}
+  턱길이비:     {value: 1, note: 턱 길이 = 턱량 × 이 값. 턱량과 턱 길이는 비례한다 (p.11)}
+  # 벌림각 — 밑단이 축이므로 반지름은 밑단에서 허리까지
+  앞턱1각:  {formula: "atan2(앞턱1량, 기장 - (힙본내림 - 옆선올림))"}
+  앞턱2각:  {formula: "atan2(앞턱2량, 기장 - (힙본내림 - 옆선올림))"}
+  뒤턱1각:  {formula: "atan2(뒤턱1량, 기장 - (힙본내림 - 옆선올림))"}
+  뒤턱2각:  {formula: "atan2(뒤턱2량, 기장 - (힙본내림 - 옆선올림))"}
+  뒤다트흡수: {value: 1, note: 힙본의 뒤다트 1" 은 별도 다트로 두지 않고 뒤턱1 이 함께 접어 없앤다}
+  뒤다트폭: {value: 0, note: 뒤다트 자리를 턱이 대신한다}
+
+points:
+  remove: [BD_C, BD_L, BD_R, BD_T]
+  # ---------------- 앞판: 절개선 두 개, 밑단이 축
+  P1_B:   {ko: 앞턱1 밑단 축,   at: [앞턱1위치, 기장]}
+  P1_V:   {ko: 앞턱1 세로 기준,  at: [앞턱1위치, 0]}
+  P1_T:   {ko: 앞턱1 허리점,    intersect: [[HB_CF1, HB_SSF], [P1_V, P1_B]], note: 허리선 위}
+  P2_B0:  {ko: 앞턱2 밑단 축(전),at: ["앞턱1위치 + 앞턱2간격", 기장]}
+  P2_V:   {ko: 앞턱2 세로 기준,  at: ["앞턱1위치 + 앞턱2간격", 0]}
+  P2_B:   {ko: 앞턱2 밑단 축,   rotate: {of: P2_B0, center: P1_B, angle: 앞턱1각}}
+  # 허리선 위 점들을 차례로 회전 (안쪽 → 바깥쪽)
+  FT1_L:  {ko: 앞턱1 안쪽 다리, at: ["P1_T.x", "P1_T.y"]}
+  FT1_R0: {ko: 앞턱1 바깥 다리(전), at: ["앞턱1위치", "P1_T.y"]}
+  FT1_R:  {ko: 앞턱1 바깥 다리, rotate: {of: FT1_R0, center: P1_B, angle: 앞턱1각}}
+  FT2_L0: {ko: 앞턱2 안쪽 다리(전), intersect: [[HB_CF1, HB_SSF], [P2_V, P2_B0]]}
+  FT2_L:  {ko: 앞턱2 안쪽 다리, rotate: {of: FT2_L0, center: P1_B, angle: 앞턱1각}}
+  FT2_R:  {ko: 앞턱2 바깥 다리, rotate: {of: FT2_L, center: P2_B, angle: 앞턱2각}}
+  HB_SSF_1: {rotate: {of: HB_SSF, center: P1_B, angle: 앞턱1각}}
+  HB_SSF_T: {ko: 앞 옆선 허리점(전개), rotate: {of: HB_SSF_1, center: P2_B, angle: 앞턱2각}}
+  SS_H_F1:  {rotate: {of: SS_H, center: P1_B, angle: 앞턱1각}}
+  SS_H_FT:  {ko: 앞 옆선 엉덩이점(전개), rotate: {of: SS_H_F1, center: P2_B, angle: 앞턱2각}}
+  SS_HEM_F1: {rotate: {of: SS_HEM, center: P1_B, angle: 앞턱1각}}
+  SS_HEM_F2: {rotate: {of: SS_HEM_F1, center: P2_B, angle: 앞턱2각}}
+  SS_HEM_FT: {ko: 앞 옆선 밑단, from: SS_HEM_F2, dx: "-밑단들임"}
+  FT1_M:  {midpoint: [FT1_L, FT1_R]}
+  FT1_TIP: {ko: 앞턱1 끝, along: [FT1_M, P1_B], dist: "앞턱1량 * 턱길이비"}
+  FT2_M:  {midpoint: [FT2_L, FT2_R]}
+  FT2_TIP: {ko: 앞턱2 끝, along: [FT2_M, P2_B], dist: "앞턱2량 * 턱길이비"}
+  # ---------------- 뒤판
+  Q1_B:   {ko: 뒤턱1 밑단 축,   at: ["앞폭 + 뒤폭 - 뒤턱1위치", 기장]}
+  Q1_V:   {ko: 뒤턱1 세로 기준,  at: ["앞폭 + 뒤폭 - 뒤턱1위치", 0]}
+  Q1_T:   {ko: 뒤턱1 허리점,    intersect: [[HB_CB1, HB_SSB], [Q1_V, Q1_B]]}
+  Q2_B0:  {ko: 뒤턱2 밑단 축(전),at: ["앞폭 + 뒤폭 - 뒤턱1위치 - 뒤턱2간격", 기장]}
+  Q2_V:   {ko: 뒤턱2 세로 기준,  at: ["앞폭 + 뒤폭 - 뒤턱1위치 - 뒤턱2간격", 0]}
+  Q2_B:   {ko: 뒤턱2 밑단 축,   rotate: {of: Q2_B0, center: Q1_B, angle: "-뒤턱1각"}}
+  BT1_R:  {ko: 뒤턱1 안쪽 다리, at: ["Q1_T.x", "Q1_T.y"]}
+  BT1_L0: {ko: 뒤턱1 바깥 다리(전), along: [Q1_T, HB_SSB], dist: 뒤다트흡수,
+           note: 다트 분량만큼 바깥에서 시작해야 턱을 접었을 때 허리가 원형과 같아진다}
+  BT1_L:  {ko: 뒤턱1 바깥 다리, rotate: {of: BT1_L0, center: Q1_B, angle: "-뒤턱1각"}}
+  BT2_R0: {ko: 뒤턱2 안쪽 다리(전), intersect: [[HB_CB1, HB_SSB], [Q2_V, Q2_B0]]}
+  BT2_R:  {ko: 뒤턱2 안쪽 다리, rotate: {of: BT2_R0, center: Q1_B, angle: "-뒤턱1각"}}
+  BT2_L:  {ko: 뒤턱2 바깥 다리, rotate: {of: BT2_R, center: Q2_B, angle: "-뒤턱2각"}}
+  HB_SSB_1: {rotate: {of: HB_SSB, center: Q1_B, angle: "-뒤턱1각"}}
+  HB_SSB_T: {ko: 뒤 옆선 허리점(전개), rotate: {of: HB_SSB_1, center: Q2_B, angle: "-뒤턱2각"}}
+  SS_H_B1:  {rotate: {of: SS_H, center: Q1_B, angle: "-뒤턱1각"}}
+  SS_H_BT:  {ko: 뒤 옆선 엉덩이점(전개), rotate: {of: SS_H_B1, center: Q2_B, angle: "-뒤턱2각"}}
+  SS_HEM_B1: {rotate: {of: SS_HEM, center: Q1_B, angle: "-뒤턱1각"}}
+  SS_HEM_B2: {rotate: {of: SS_HEM_B1, center: Q2_B, angle: "-뒤턱2각"}}
+  SS_HEM_BT: {ko: 뒤 옆선 밑단, from: SS_HEM_B2, dx: 밑단들임}
+  BT1_M:  {midpoint: [BT1_R, BT1_L]}
+  BT1_TIP: {ko: 뒤턱1 끝, along: [BT1_M, Q1_B], dist: "뒤턱1량 * 턱길이비"}
+  BT2_M:  {midpoint: [BT2_R, BT2_L]}
+  BT2_TIP: {ko: 뒤턱2 끝, along: [BT2_M, Q2_B], dist: "뒤턱2량 * 턱길이비"}
+
+lines:
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단]
+  add:
+    # 앞판 — 허리선은 앞중심 1" 직각 뒤 턱 두 개를 지나 옆선까지
+    - {name: 앞허리선1, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, FT1_L],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], FT1_L: {along: [HB_CF1, HB_SSF]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 앞턱1, piece: 앞판, role: dart, pts: [FT1_L, FT1_TIP, FT1_R], note: 턱 — 접히는 산을 허리선과 맞춘다. 길이는 턱량에 비례}
+    - {name: 앞허리선2, piece: 앞판, role: outline, pts: [FT1_R, FT2_L]}
+    - {name: 앞턱2, piece: 앞판, role: dart, pts: [FT2_L, FT2_TIP, FT2_R]}
+    - {name: 앞허리선3, piece: 앞판, role: outline, pts: [FT2_R, HB_SSF_T]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF_T, SS_H_FT, SS_HEM_FT],
+       tangents: {HB_SSF_T: {along: [HB_SSF_T, SS_H_FT]}, SS_H_FT: {along: [HB_SSF_T, SS_HEM_FT]}, SS_HEM_FT: {along: [SS_H_FT, SS_HEM_FT]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]], note: 턱이 있으므로 곡을 최대한 풀어 일자에 가깝게}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [CF_HEM, SS_HEM_FT]}
+    - {name: 앞절개1, piece: 앞판, role: construction, pts: [FT1_M, P1_B]}
+    - {name: 앞절개2, piece: 앞판, role: construction, pts: [FT2_M, P2_B]}
+    # 뒤판
+    - {name: 뒤허리선1, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, BT1_R],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0], BT1_R: {along: [HB_CB1, HB_SSB]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 뒤턱1, piece: 뒤판, role: dart, pts: [BT1_R, BT1_TIP, BT1_L]}
+    - {name: 뒤허리선2, piece: 뒤판, role: outline, pts: [BT1_L, BT2_R]}
+    - {name: 뒤턱2, piece: 뒤판, role: dart, pts: [BT2_R, BT2_TIP, BT2_L]}
+    - {name: 뒤허리선3, piece: 뒤판, role: outline, pts: [BT2_L, HB_SSB_T]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB_T, SS_H_BT, SS_HEM_BT],
+       tangents: {HB_SSB_T: {along: [HB_SSB_T, SS_H_BT]}, SS_H_BT: {along: [HB_SSB_T, SS_HEM_BT]}, SS_HEM_BT: {along: [SS_H_BT, SS_HEM_BT]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, SS_HEM_BT]}
+    - {name: 뒤절개1, piece: 뒤판, role: construction, pts: [BT1_M, Q1_B]}
+    - {name: 뒤절개2, piece: 뒤판, role: construction, pts: [BT2_M, Q2_B]}
