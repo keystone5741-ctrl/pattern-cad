@@ -1,0 +1,76 @@
+# 고어드 스커트 — p.19–20. 힙본 원형을 이용한다.
+#
+# 플레어 디자인의 일종으로 **고어(삼각형·사다리꼴 천)를 여러 장 이어 붙여** 만든다.
+#
+# 트렌드 (p.19): 예전에는 힙 아래에서 퍼지는 디자인을 썼지만, 최근에는 반대로
+# **엉덩이선에서 1.1/2 이상 올린 지점부터** 절개선과 옆솔기선을 그린다. 그러면 엉덩이둘레가
+# 힙본 원형보다 **5/8 가량 자연스럽게 커지면서** 엉덩이가 맞는 듯한 A라인 실루엣이 된다.
+# (사이즈표 패턴 엉덩이 36.5/8 = 힙본 36 + 5/8 과 일치)
+#
+# 기장 (p.20): 고어드는 기장이 짧을수록 실루엣이 잘 안 나온다. **기장이 길수록 밑단 플레어를 더 넓혀야**
+# 같은 비율이 된다 → 벌린 선을 그대로 연장해서 늘린다.
+# (긴 기장에서 2" 늘린 고어드 ≠ 짧은 기장에서 2" 늘린 고어드)
+extends: skirt_hipbone.yaml
+name: 고어드 스커트
+id: skirt_gored
+source: reference/portfolio.pdf p.19
+
+measurements:
+  퍼짐시작올림: {value: 1.1/2, note: 엉덩이선에서 이만큼 올린 지점부터 퍼진다 (1.1/2 이상)}
+  퍼짐시작:     {formula: "엉덩이길이 - 퍼짐시작올림"}
+  엉덩이가산:   {value: 5/8, note: 퍼짐 시작을 올린 결과 엉덩이둘레가 힙본보다 이만큼 커진다}
+  고어수:       {value: 6, note: 한 바퀴 고어 장수 (앞뒤 각 3)}
+  고어플레어:   {value: 2.1/2, note: 고어 한 장이 밑단에서 벌어지는 양}
+  앞고어1:      {formula: "앞폭 / 3"}
+  앞고어2:      {formula: "앞폭 * 2 / 3"}
+  뒤고어1:      {formula: "앞폭 + 뒤폭 - 뒤폭 / 3"}
+  뒤고어2:      {formula: "앞폭 + 뒤폭 - 뒤폭 * 2 / 3"}
+
+points:
+  # 퍼짐 시작선
+  GD_PF: {ko: 앞 퍼짐 시작(앞중심), at: [0, 퍼짐시작]}
+  GD_PB: {ko: 뒤 퍼짐 시작(뒤중심), at: ["앞폭 + 뒤폭", 퍼짐시작]}
+  # 앞 고어 절개선 2개
+  GF1_P: {at: [앞고어1, 퍼짐시작]}
+  GF1_L: {at: ["앞고어1 - 고어플레어/2", 기장]}
+  GF1_R: {at: ["앞고어1 + 고어플레어/2", 기장]}
+  GF1_T: {ko: 앞고어1 허리점, intersect: [[HB_CF1, HB_SSF], [GF1_P, GF1_L]]}
+  GF2_P: {at: [앞고어2, 퍼짐시작]}
+  GF2_L: {at: ["앞고어2 - 고어플레어/2", 기장]}
+  GF2_R: {at: ["앞고어2 + 고어플레어/2", 기장]}
+  GF2_T: {ko: 앞고어2 허리점, intersect: [[HB_CF1, HB_SSF], [GF2_P, GF2_L]]}
+  # 뒤 고어 절개선 2개
+  GB1_P: {at: [뒤고어1, 퍼짐시작]}
+  GB1_L: {at: ["뒤고어1 - 고어플레어/2", 기장]}
+  GB1_R: {at: ["뒤고어1 + 고어플레어/2", 기장]}
+  GB2_P: {at: [뒤고어2, 퍼짐시작]}
+  GB2_L: {at: ["뒤고어2 - 고어플레어/2", 기장]}
+  GB2_R: {at: ["뒤고어2 + 고어플레어/2", 기장]}
+  # 옆선 — 퍼짐 시작에서 엉덩이 가산만큼 넓히고 밑단으로 퍼진다
+  GD_SSF_P: {ko: 앞 옆선 퍼짐점, at: ["앞폭 + 엉덩이가산/2", 퍼짐시작]}
+  GD_SSF_H: {ko: 앞 옆선 밑단,   at: ["앞폭 + 엉덩이가산/2 + 고어플레어/2", 기장]}
+  GD_SSB_P: {ko: 뒤 옆선 퍼짐점, at: ["앞폭 - 엉덩이가산/2", 퍼짐시작]}
+  GD_SSB_H: {ko: 뒤 옆선 밑단,   at: ["앞폭 - 엉덩이가산/2 - 고어플레어/2", 기장]}
+
+lines:
+  remove: [앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 뒤다트]
+  add:
+    - {name: 퍼짐시작선, role: construction, pts: [GD_PF, GD_PB]}
+    - {name: 앞고어절개1, piece: 앞판, role: outline, pts: [GF1_T, GF1_P, GF1_L]}
+    - {name: 앞고어절개1밖, piece: 앞판, role: outline, pts: [GF1_P, GF1_R]}
+    - {name: 앞고어절개2, piece: 앞판, role: outline, pts: [GF2_T, GF2_P, GF2_L]}
+    - {name: 앞고어절개2밖, piece: 앞판, role: outline, pts: [GF2_P, GF2_R]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF, SS_H, GD_SSF_P, GD_SSF_H],
+       tangents: {HB_SSF: [0.3, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [CF_HEM, GF1_L]}
+    - {name: 앞밑단2, piece: 앞판, role: outline, pts: [GF1_R, GF2_L]}
+    - {name: 앞밑단3, piece: 앞판, role: outline, pts: [GF2_R, GD_SSF_H]}
+    - {name: 뒤고어절개1, piece: 뒤판, role: outline, pts: [GB1_P, GB1_R]}
+    - {name: 뒤고어절개1밖, piece: 뒤판, role: outline, pts: [GB1_P, GB1_L]}
+    - {name: 뒤고어절개2, piece: 뒤판, role: outline, pts: [GB2_P, GB2_R]}
+    - {name: 뒤고어절개2밖, piece: 뒤판, role: outline, pts: [GB2_P, GB2_L]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB, SS_H, GD_SSB_P, GD_SSB_H],
+       tangents: {HB_SSB: [-0.3, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, GB1_R]}
+    - {name: 뒤밑단2, piece: 뒤판, role: outline, pts: [GB1_L, GB2_R]}
+    - {name: 뒤밑단3, piece: 뒤판, role: outline, pts: [GB2_L, GD_SSB_H]}

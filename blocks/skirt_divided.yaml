@@ -1,0 +1,54 @@
+# 디바이디드 스커트(치마바지) — p.23–24. A라인 원형을 이용한다.
+#
+# 엉덩이를 여유있게 디자인하므로 A라인 원형을 쓴다. 스커트 형태에 밑위와 샅이 붙는다.
+#
+# 유의사항:
+#   - **밑위길이는 엉덩이선에서 3~4" 내려간 위치**가 적절 (디바이디드에서는 가장 적게 내려간 값)
+#   - **앞샅 = 앞 밑위선의 1/3**, **뒤샅 = 뒤 밑위선의 1/3 + 1~2"**.
+#     앞샅 + 뒤샅 = 7.1/2~8" 가 적당하다. 엉덩이가 인심쪽으로 빨려 들어가듯 당기면 샅을 늘린다
+#   - 밑단 중심(인심쪽 밑단)은 **샅 길이에 따라 같이 움직인다.** 많이 나가면 안쪽에 울렁임,
+#     적게 나가거나 반대로 들어가면 중심이 벌어진다 → 적절한 수치를 찾는다
+#   - 쉬폰처럼 밀도가 낮고 얇은 원단은 샅이 커지면 인심이 처지므로 중심 밑단을 올린다.
+#     지퍼·부자재 무게로 처지는 것도 고려해 샘플로 수정
+#   - 외입술 주머니: **뒤중심에서 2" 들어오고 허리선에서 2" 내려온 지점**. 일직선이 아니라 허리선에 맞게 곡선으로
+extends: skirt_aline.yaml
+name: 디바이디드 스커트
+id: skirt_divided
+source: reference/portfolio.pdf p.23
+
+measurements:
+  실루엣:     {choice: 세미A, options: [세미A, A라인]}
+  밑위내림:   {value: 3.1/2, note: 엉덩이선에서 밑위선까지 (3~4)}
+  밑위길이:   {formula: "엉덩이길이 + 밑위내림"}
+  앞샅:       {formula: "앞폭 / 3", note: 앞 밑위선의 1/3}
+  뒤샅가산:   {value: 1.1/2, note: 1~2}
+  뒤샅:       {formula: "뒤폭 / 3 + 뒤샅가산"}
+  샅합:       {formula: "앞샅 + 뒤샅", note: 7.1/2~8 이 적당}
+  인심밑단올림: {value: 1/2, note: 얇은 원단은 더 올린다}
+  주머니들임: {value: 2, note: 뒤중심에서}
+  주머니내림: {value: 2, note: 허리선에서}
+  주머니길이: {value: 5}
+
+points:
+  # 밑위선과 샅
+  DV_CL_F:  {ko: 앞 밑위선(앞중심), at: [0, 밑위길이]}
+  DV_CL_B:  {ko: 뒤 밑위선(뒤중심), at: ["앞폭 + 뒤폭", 밑위길이]}
+  DV_CP_F:  {ko: 앞 샅점, at: ["-앞샅", 밑위길이]}
+  DV_CP_B:  {ko: 뒤 샅점, at: ["앞폭 + 뒤폭 + 뒤샅", 밑위길이]}
+  DV_IN_F:  {ko: 앞 인심 밑단, at: ["-앞샅 * 0.55", "기장 - 인심밑단올림"]}
+  DV_IN_B:  {ko: 뒤 인심 밑단, at: ["앞폭 + 뒤폭 + 뒤샅 * 0.55", "기장 - 인심밑단올림"]}
+  # 외입술 주머니 (뒤판)
+  DV_PK1: {ko: 주머니 시작, at: ["앞폭 + 뒤폭 - 주머니들임", 주머니내림]}
+  DV_PK2: {ko: 주머니 끝,   at: ["앞폭 + 뒤폭 - 주머니들임 - 주머니길이", "주머니내림 + 3/8"]}
+
+lines:
+  add:
+    - {name: 밑위선, role: construction, pts: [DV_CP_F, DV_CP_B]}
+    - {name: 앞샅선, piece: 앞판, role: outline, curve: [CF_HEM, DV_CL_F, DV_CP_F],
+       tangents: {DV_CL_F: [0, -1]}, handles: [[0.4, 0.4], [0.4, 0.4]], note: 앞중심 아래가 샅으로 이어진다}
+    - {name: 앞인심, piece: 앞판, role: outline, pts: [DV_CP_F, DV_IN_F]}
+    - {name: 뒤샅선, piece: 뒤판, role: outline, curve: [CB_HEM, DV_CL_B, DV_CP_B],
+       tangents: {DV_CL_B: [0, -1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤인심, piece: 뒤판, role: outline, pts: [DV_CP_B, DV_IN_B]}
+    - {name: 외입술주머니, piece: 뒤판, role: mark, curve: [DV_PK1, DV_PK2],
+       tangents: {DV_PK1: [-1, 0.1]}, handles: [[0.4, 0.4]], note: 허리선에 맞게 곡선으로}

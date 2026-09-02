@@ -1,0 +1,60 @@
+# 플리츠 스커트 — p.25–26. 힙본 원형을 이용한다.
+#
+# 주름(플리츠)을 둘러 잡은 스커트. 주름 분량만큼 패턴을 평행 전개한다.
+#
+# 유의사항 (p.26):
+#   - **주름 분량은 1.1/2~2"** 를 줘야 벌어짐 현상이 없다
+#   - A라인에서 실루엣을 위해 2" 를 벌렸다면, **플리츠로 같은 실루엣을 내려면 2.1/2" 가량 더** 벌려야 한다
+#     (주름이 이어지지 않고 떨어져 있어 같은 양이면 가라앉는 느낌)
+#   - 두꺼운 소재는 주름이 겹칠수록 엉덩이가 작아지므로 **엉덩이둘레를 여유있게** 제도
+#   - 주름 분량이 클수록 **엉덩이선 1" 위 지점에서 막음처리** — 안 하면 허리부터 주름이 펼쳐져 어색하다
+#   - 활동 시 주름이 벌어지지 않게 **주름속끝스티치** 처리
+#   - 체크·스트라이프는 무늬를 맞추려고 **허리와 밑단의 벌림량을 다르게** 준다 (무늬 없는 원단은 같은 값).
+#     주름을 전개하면서 힙라인을 일자로 맞춰 결을 맞춘다
+#   - 무늬 있는 하의의 오비는 곡이라 무늬를 맞출 수 없다 → 몸판이 가로결이면 오비는 세로결,
+#     가로세로결이 같으면 오비를 바이어스로 해 시각적으로 구분한다
+extends: skirt_hipbone.yaml
+name: 플리츠 스커트
+id: skirt_pleated
+source: reference/portfolio.pdf p.25
+
+measurements:
+  주름수:     {value: 8, note: 한 바퀴 주름 개수 (앞뒤 각 4)}
+  주름분량:   {value: 1.3/4, note: 주름 하나의 분량 (1.1/2~2)}
+  막음올림:   {value: 1, note: 엉덩이선 이만큼 위에서 막음처리}
+  무늬:       {choice: 없음, options: [없음, 체크]}
+  밑단벌림:   {table: {없음: 1.3/4, 체크: 2.1/4}, key: 무늬,
+              note: 무늬가 없으면 허리와 밑단이 같은 값, 체크는 무늬를 맞추려고 밑단을 더 벌린다}
+  앞주름수:   {formula: "주름수 / 2"}
+  앞전개:     {formula: "앞주름수 * 주름분량", note: 앞판이 넓어지는 양}
+  뒤전개:     {formula: "앞주름수 * 주름분량"}
+  앞밑단전개: {formula: "앞주름수 * 밑단벌림"}
+  뒤밑단전개: {formula: "앞주름수 * 밑단벌림"}
+
+points:
+  # 평행 전개 — 주름 분량만큼 옆으로 넓힌다
+  PL_WF:  {ko: 앞 허리 옆선점,   from: HB_SSF, dx: 앞전개}
+  PL_HF:  {ko: 앞 엉덩이 옆선점, from: SS_H, dx: 앞전개}
+  PL_MF:  {ko: 앞 밑단 옆선점,   from: SS_HEM, dx: 앞밑단전개}
+  PL_WB:  {ko: 뒤 허리 옆선점,   from: HB_SSB, dx: "-뒤전개"}
+  PL_HB:  {ko: 뒤 엉덩이 옆선점, from: SS_H, dx: "-뒤전개"}
+  PL_MB:  {ko: 뒤 밑단 옆선점,   from: SS_HEM, dx: "-뒤밑단전개"}
+  PL_ST_F: {ko: 앞 막음선(앞중심), at: [0, "엉덩이길이 - 막음올림"]}
+  PL_ST_B: {ko: 뒤 막음선(뒤중심), at: ["앞폭 + 뒤폭", "엉덩이길이 - 막음올림"]}
+
+lines:
+  remove: [앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 앞허리선, 뒤허리선1, 뒤다트, 뒤허리선2]
+  add:
+    - {name: 앞허리선, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, PL_WF],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [PL_WF, PL_HF, PL_MF],
+       tangents: {PL_WF: {along: [PL_WF, PL_HF]}, PL_HF: {along: [PL_WF, PL_MF]}, PL_MF: {along: [PL_HF, PL_MF]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [CF_HEM, PL_MF]}
+    - {name: 뒤허리선, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, PL_WB],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [PL_WB, PL_HB, PL_MB],
+       tangents: {PL_WB: {along: [PL_WB, PL_HB]}, PL_HB: {along: [PL_WB, PL_MB]}, PL_MB: {along: [PL_HB, PL_MB]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, PL_MB]}
+    - {name: 막음선, role: mark, pts: [PL_ST_F, PL_ST_B], note: 이 위는 주름을 막아 고정한다}

@@ -1,0 +1,74 @@
+# 하이웨이스트 스커트 — p.21–22. 기본(제허리) 스커트 원형을 이용한다.
+#
+# 허리선(W.L) 위로 올라가 갈비뼈 쪽까지 오는 스커트. 오비가 따로 없다.
+#
+# 유의사항:
+#   - **완성 윗선 둘레는 허리선보다 1/4 크게** 제도한다 — 복부에서 갈비뼈로 이어지는 인체 굴곡 때문.
+#     (허리둘레가 상대적으로 얇거나 크면 값이 달라진다)
+#   - 오비가 없지만 허리에 안착되므로 **허리선에 식서테이프**를 붙여 늘어남을 막는다
+#   - 엉덩이·허리 차이가 10" 를 넘으면 절개선이나 다트를 추가해 차이를 줄인다
+#   - 절개선 다트량이 **1" 를 넘으면 보조개 현상** → 옆솔기 곡을 1" 까지 들이고 절개선을 벌려 맞춘다.
+#     다트 길이는 튀어나오지 않는 선에서 **엉덩이선 1" 위까지** 깊게
+#   - 절개선 옆 가로 우글거림: 봉제 시 이세가 들어가 길이가 줄어서 생긴다 → 다림질로 잡는다
+#   - 몸판 옆솔기 윗선은 1/8 나가지 않아도 되고, 절개선을 붙여 몸판 윗선을 각확인 후 블렌딩한다
+#   - 더 오마진 실루엣: 앞뒤 절개선 밑단과 옆솔기 밑단을 들여 밑단 둘레를 줄인다
+extends: skirt_basic.yaml
+name: 하이웨이스트 스커트
+id: skirt_highwaist
+source: reference/portfolio.pdf p.21
+
+measurements:
+  하이높이:   {value: 2.3/4, note: 허리선 위로 올라가는 높이}
+  윗선가산:   {value: 1/4, note: 완성 윗선 둘레는 허리선보다 이만큼 크다}
+  절개다트량: {value: 1, note: 1 을 넘으면 보조개 현상}
+  다트끝올림: {value: 1, note: 다트 끝은 엉덩이선 이만큼 위까지}
+  밑단들임:   {value: 1/2, note: 오마진 실루엣을 위해 절개선·옆솔기 밑단을 들인다}
+  앞절개위치: {formula: "앞폭 / 2"}
+  뒤절개위치: {formula: "앞폭 + 뒤폭 - 뒤폭 / 2"}
+
+points:
+  # 하이 윗선 — 허리선보다 1/4 크게 (앞뒤 각 1/8 씩 밖으로)
+  HW_CF:  {ko: 앞중심 윗점,   at: [0, "-하이높이"]}
+  HW_SSF: {ko: 앞 옆선 윗점,  at: ["SS_WF.x + 윗선가산/4", "SS_WF.y - 하이높이"]}
+  HW_CB:  {ko: 뒤중심 윗점,   at: ["앞폭 + 뒤폭", "CB_W.y - 하이높이"]}
+  HW_SSB: {ko: 뒤 옆선 윗점,  at: ["SS_WB.x - 윗선가산/4", "SS_WB.y - 하이높이"]}
+  # 절개선 (다트 대신) — 윗선에서 엉덩이선 1" 위까지
+  HWF_V:  {at: [앞절개위치, "-하이높이"]}
+  HWF_B:  {at: [앞절개위치, 엉덩이길이]}
+  HWF_T:  {ko: 앞 절개 윗점, intersect: [[HW_CF, HW_SSF], [HWF_V, HWF_B]]}
+  HWF_L:  {along: [HWF_T, HW_CF], dist: "절개다트량/2"}
+  HWF_R:  {along: [HWF_T, HW_SSF], dist: "절개다트량/2"}
+  HWF_E:  {ko: 앞 절개 끝, at: [앞절개위치, "엉덩이길이 - 다트끝올림"]}
+  HWF_H:  {ko: 앞 절개 밑단, at: [앞절개위치, 기장]}
+  HWB_V:  {at: [뒤절개위치, "-하이높이"]}
+  HWB_B:  {at: [뒤절개위치, 엉덩이길이]}
+  HWB_T:  {ko: 뒤 절개 윗점, intersect: [[HW_CB, HW_SSB], [HWB_V, HWB_B]]}
+  HWB_L:  {along: [HWB_T, HW_SSB], dist: "절개다트량/2"}
+  HWB_R:  {along: [HWB_T, HW_CB], dist: "절개다트량/2"}
+  HWB_E:  {ko: 뒤 절개 끝, at: [뒤절개위치, "엉덩이길이 - 다트끝올림"]}
+  HWB_H:  {ko: 뒤 절개 밑단, at: [뒤절개위치, 기장]}
+  # 밑단 들임
+  HW_HEM_F: {ko: 앞 옆선 밑단, at: ["앞폭 - 밑단들임", 기장]}
+  HW_HEM_B: {ko: 뒤 옆선 밑단, at: ["앞폭 + 밑단들임", 기장]}
+
+lines:
+  remove: [앞허리선1, 앞허리선2, 앞허리선3, 앞다트1, 앞다트2, 앞옆선위, 앞옆선아래, 앞밑단,
+           뒤허리선1, 뒤허리선2, 뒤허리선3, 뒤다트1, 뒤다트2, 뒤옆선위, 뒤옆선아래, 뒤밑단, 앞중심선, 뒤중심선]
+  add:
+    - {name: 앞중심선, piece: 앞판, role: fold, pts: [HW_CF, CF_HEM]}
+    - {name: 앞윗선안, piece: 앞판, role: outline, pts: [HW_CF, HWF_L]}
+    - {name: 앞절개, piece: 앞판, role: dart, pts: [HWF_L, HWF_E, HWF_R], note: 절개선 — 다트량 1 이하}
+    - {name: 앞절개아래, piece: 앞판, role: construction, pts: [HWF_E, HWF_H]}
+    - {name: 앞윗선밖, piece: 앞판, role: outline, pts: [HWF_R, HW_SSF]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [HW_SSF, SS_WF, SS_H, HW_HEM_F],
+       tangents: {HW_SSF: [0.2, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [CF_HEM, HW_HEM_F]}
+    - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [HW_CB, CB_HEM]}
+    - {name: 뒤윗선안, piece: 뒤판, role: outline, pts: [HW_CB, HWB_R]}
+    - {name: 뒤절개, piece: 뒤판, role: dart, pts: [HWB_R, HWB_E, HWB_L]}
+    - {name: 뒤절개아래, piece: 뒤판, role: construction, pts: [HWB_E, HWB_H]}
+    - {name: 뒤윗선밖, piece: 뒤판, role: outline, pts: [HWB_L, HW_SSB]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HW_SSB, SS_WB, SS_H, HW_HEM_B],
+       tangents: {HW_SSB: [-0.2, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, HW_HEM_B]}
+    - {name: 허리선표시, role: construction, pts: [CF_W, CB_W0], note: 여기에 식서테이프}

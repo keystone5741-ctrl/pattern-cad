@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="733.767mm" height="469.9mm" viewBox="0 0 733.767 469.9"><rect width="100%" height="100%" fill="white"/>
+<g id="뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M335.133 279.4L385.933 330.2L385.933 444.5L335.133 444.5"><title>겹트임덧단</title></path>
+<path d="M335.133 41.275L335.133 444.5"><title>뒤중심선</title></path>
+<path d="M335.133 41.275C329.037 41.275 325.227 41.275 309.733 41.275C246.083 41.275 259.134 35.565 246.484 34.138"><title>뒤허리선1</title></path>
+<path d="M221.084 34.138L109.708 25.4"><title>뒤허리선2</title></path>
+<path d="M254.7 139.7L286.45 444.5"><title>뒤고어절개1</title></path>
+<path d="M254.7 139.7L222.95 444.5"><title>뒤고어절개1밖</title></path>
+<path d="M174.267 139.7L206.017 444.5"><title>뒤고어절개2</title></path>
+<path d="M174.267 139.7L142.517 444.5"><title>뒤고어절개2밖</title></path>
+<path d="M109.708 25.4C92.097 84.105 93.833 116.51 93.833 177.8C93.833 193.367 101.443 138.91 85.896 139.7C-36.526 145.925 66.846 322.58 54.146 444.5"><title>뒤옆선</title></path>
+<path d="M335.133 444.5L286.45 444.5"><title>뒤밑단</title></path>
+<path d="M222.95 444.5L206.017 444.5"><title>뒤밑단2</title></path>
+<path d="M142.517 444.5L54.146 444.5"><title>뒤밑단3</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M335.133 355.6L385.933 330.2"><title>겹트임표시</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M335.133 177.8L328.783 177.8"><title>지퍼끝</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g>
+<g id="앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M424.033 53.975C434.193 53.975 438.765 53.975 449.433 53.975C548.508 53.975 585.472 34.253 620.883 25.4"><title>앞허리선</title></path>
+<path d="M505.91 44.562L496 139.7L464.25 444.5"><title>앞고어절개1</title></path>
+<path d="M496 139.7L527.75 444.5"><title>앞고어절개1밖</title></path>
+<path d="M579.148 32.356L567.967 139.7L536.217 444.5"><title>앞고어절개2</title></path>
+<path d="M567.967 139.7L599.717 444.5"><title>앞고어절개2밖</title></path>
+<path d="M620.883 25.4C638.536 84.243 639.933 116.366 639.933 177.8C639.933 193.367 632.324 138.91 647.871 139.7C770.292 145.925 666.921 322.58 679.621 444.5"><title>앞옆선</title></path>
+<path d="M424.033 444.5L464.25 444.5"><title>앞밑단</title></path>
+<path d="M527.75 444.5L536.217 444.5"><title>앞밑단2</title></path>
+<path d="M599.717 444.5L679.621 444.5"><title>앞밑단3</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M424.033 53.975L424.033 444.5"><title>앞중심선</title></path>
+</g>
+<text x="424.033" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g></svg>

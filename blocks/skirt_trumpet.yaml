@@ -1,0 +1,73 @@
+# 트럼펫 스커트 — p.17–18. 힙본 원형을 이용한다.
+#
+# 무릎 위쯤(플레어시작선)까지는 몸에 붙고 그 아래가 트럼펫처럼 퍼지는 실루엣.
+# 다트를 **절개선**으로 바꾸고, 절개선과 옆솔기를 따라 플레어시작선 아래로 벌린다.
+#
+# 유의사항 (p.18):
+#   - 제허리 스커트에서는 다트를 1/2 이상 주지 않는 게 좋지만, 트럼펫은 다트가 아닌 **절개선**이라
+#     더 줄 수 있다. 다만 **1" 이상이면 절개선이 볼록 튀어나오는 보조개 현상**이 생긴다.
+#   - 겉장의 턱은 한 방향이 아닌 **불규칙한 턱**이므로 턱 방향을 정확히 표기해야 한다.
+#   - 밑단 시접: 얇은 원단은 끝말아박기(미쓰마끼), 두꺼운 원단은 1/4~3/8 꺾어 봉제.
+#   - **속장**은 겉장과 달리 턱분량을 밑단에만 주고 플레어 형식으로 전개한다 (둘 다 턱을 잡으면
+#     겉감이 여러 장 겹쳐 처리가 어렵고, 속장 턱은 육안으로 확인도 어렵다). 속장 턱분량 1~1.1/4.
+extends: skirt_hipbone.yaml
+name: 트럼펫 스커트
+id: skirt_trumpet
+source: reference/portfolio.pdf p.17
+
+measurements:
+  플레어시작: {value: 11.1/2, note: 허리선에서 이 아래부터 퍼진다 (무릎 위)}
+  플레어량:   {value: 3, note: 절개선 한 곳에서 밑단이 벌어지는 양}
+  절개다트량: {value: 1, note: 절개선에 넣는 다트 분량. 1 이상이면 보조개 현상}
+  속장턱량:   {value: 1.1/8, note: 속장은 밑단에만 (1~1.1/4)}
+  앞절개위치: {value: 3.15/16, note: 앞중심에서}
+  뒤절개위치: {formula: "뒤다트위치 + 뒤다트폭/2"}
+  플레어각:   {formula: "atan2(플레어량, 기장 - 플레어시작)"}
+
+points:
+  # 앞판 절개선 (다트 대신)
+  TF_V:   {at: [앞절개위치, 0]}
+  TF_B:   {at: [앞절개위치, 기장]}
+  TF_T:   {ko: 앞 절개선 위, intersect: [[HB_CF1, HB_SSF], [TF_V, TF_B]]}
+  TF_P:   {ko: 앞 플레어 시작점, at: [앞절개위치, 플레어시작]}
+  TF_L:   {ko: 앞 절개 왼다리, along: [TF_T, HB_CF1], dist: "절개다트량/2"}
+  TF_R:   {ko: 앞 절개 오른다리, along: [TF_T, HB_SSF], dist: "절개다트량/2"}
+  TF_HL:  {ko: 앞 절개 밑단 안, at: ["앞절개위치 - 플레어량/2", 기장]}
+  TF_HR:  {ko: 앞 절개 밑단 밖, at: ["앞절개위치 + 플레어량/2", 기장]}
+  # 뒤판 절개선
+  TB_V:   {at: ["앞폭 + 뒤폭 - 뒤절개위치", 0]}
+  TB_B:   {at: ["앞폭 + 뒤폭 - 뒤절개위치", 기장]}
+  TB_T:   {ko: 뒤 절개선 위, intersect: [[HB_CB1, HB_SSB], [TB_V, TB_B]]}
+  TB_P:   {ko: 뒤 플레어 시작점, at: ["앞폭 + 뒤폭 - 뒤절개위치", 플레어시작]}
+  TB_L:   {ko: 뒤 절개 왼다리, along: [TB_T, HB_SSB], dist: "절개다트량/2"}
+  TB_R:   {ko: 뒤 절개 오른다리, along: [TB_T, HB_CB1], dist: "절개다트량/2"}
+  TB_HL:  {ko: 뒤 절개 밑단 밖, at: ["앞폭 + 뒤폭 - 뒤절개위치 - 플레어량/2", 기장]}
+  TB_HR:  {ko: 뒤 절개 밑단 안, at: ["앞폭 + 뒤폭 - 뒤절개위치 + 플레어량/2", 기장]}
+  # 옆선도 플레어시작선 아래에서 퍼진다
+  TF_SS_P: {ko: 앞 옆선 플레어 시작, at: [앞폭, 플레어시작]}
+  TF_SS_H: {ko: 앞 옆선 밑단, at: ["앞폭 + 플레어량/2", 기장]}
+  TB_SS_P: {ko: 뒤 옆선 플레어 시작, at: [앞폭, 플레어시작]}
+  TB_SS_H: {ko: 뒤 옆선 밑단, at: ["앞폭 - 플레어량/2", 기장]}
+
+lines:
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단]
+  add:
+    - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, TF_L],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], TF_L: {along: [HB_CF1, HB_SSF]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 앞절개선안, piece: 앞판, role: outline, pts: [TF_L, TF_P, TF_HL], note: 절개선 — 다트 분량을 여기 넣는다}
+    - {name: 앞절개선밖, piece: 앞판, role: outline, pts: [TF_R, TF_P, TF_HR]}
+    - {name: 앞허리선밖, piece: 앞판, role: outline, curve: [TF_R, HB_SSF],
+       tangents: {TF_R: {along: [HB_CF1, HB_SSF]}}, handles: [[0.4, 0.4]]}
+    - {name: 앞옆선, piece: 앞판, role: outline, pts: [HB_SSF, SS_H, TF_SS_P, TF_SS_H]}
+    - {name: 앞밑단1, piece: 앞판, role: outline, pts: [CF_HEM, TF_HL]}
+    - {name: 앞밑단2, piece: 앞판, role: outline, pts: [TF_HR, TF_SS_H]}
+    - {name: 뒤허리선안, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, TB_R],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0], TB_R: {along: [HB_CB1, HB_SSB]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 뒤절개선안, piece: 뒤판, role: outline, pts: [TB_R, TB_P, TB_HR]}
+    - {name: 뒤절개선밖, piece: 뒤판, role: outline, pts: [TB_L, TB_P, TB_HL]}
+    - {name: 뒤허리선밖, piece: 뒤판, role: outline, curve: [TB_L, HB_SSB],
+       tangents: {TB_L: {along: [HB_CB1, HB_SSB]}}, handles: [[0.4, 0.4]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, pts: [HB_SSB, SS_H, TB_SS_P, TB_SS_H]}
+    - {name: 뒤밑단1, piece: 뒤판, role: outline, pts: [CB_HEM, TB_HR]}
+    - {name: 뒤밑단2, piece: 뒤판, role: outline, pts: [TB_HL, TB_SS_H]}
+    - {name: 플레어시작선, role: construction, pts: [TF_SS_P, TB_SS_P]}
