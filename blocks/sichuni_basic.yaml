@@ -1,0 +1,141 @@
+# 시추니 기본 원형 — 포트폴리오 p.44 를 규칙으로 옮긴 것.
+#
+# 좌표계: 앞중심 × 기준선(위)이 원점. x 는 뒤중심 쪽(오른쪽), y 는 아래. 단위 인치.
+# 앞판과 뒤판이 한 직사각형(폭 전폭 = B/2 + 여유/2) 안에 있고, 옆선(x = 반폭)에서 만난다.
+#
+# 값 표기: 3.1/2 = 3½". 식에는 치수 이름, 점 좌표(SP_F.y), dist(A,B) 를 쓸 수 있다.
+# "실측" 이라고 적은 값은 도면 글자가 아니라 도면을 재서 얻은 값이다 → 확인 필요.
+
+name: 시추니 기본 원형
+id: sichuni_basic
+category: top
+units: inch
+source: reference/portfolio.pdf p.44
+
+measurements:
+  # --- 신체·기본 치수 (55 기준)
+  B:        {ko: 가슴둘레,   value: 33.1/2}
+  여유:     {ko: 가슴 여유(전체), value: 2.1/2, note: 패턴 가슴둘레 36 = B + 여유}
+  진동깊이: {value: 8.1/2}
+  등길이:   {value: 15}
+  앞처짐:   {value: 1.1/4, note: 앞판 밑단이 뒤판보다 내려가는 양}
+  앞품:     {value: 13,  note: 도면 표기 앞품/2 = 6.1/2}
+  뒤품:     {value: 14,  note: 도면 표기 뒤품/2 = 7}
+  유장:     {value: 10,  note: 옆목점에서 BP 까지}
+  유폭:     {value: 6.3/4, note: 도면 표기 유폭/2 = 3.3/8}
+  # --- 목
+  앞목너비:     {value: 2.3/4}
+  앞목깊이:     {value: 3}
+  앞옆목점내림: {value: 1/4, note: 앞 옆목점은 기준선에서 1/4 아래}
+  앞목가이드:   {value: 1.1/4, note: 앞목 모서리에서 45° 안쪽으로. 목선이 이 점을 지난다}
+  뒤목너비:     {value: 3}
+  뒤목높이:     {value: 1, note: 뒤 옆목점은 기준선에서 1 위 (실측 0.99)}
+  뒤목가이드:   {value: 3/4, note: 뒤목 모서리에서 45° 위쪽으로}
+  # --- 어깨
+  뒤어깨끝너비: {value: 7.1/2, note: 뒤중심에서 뒤어깨끝점까지 가로}
+  뒤어깨끝내림: {value: 1/2,   note: 기준선에서 아래}
+  앞어깨끝너비: {value: 7,     note: 앞중심에서 앞어깨끝점까지 가로. 도면 글자는 7.1/2 인데 실측 7.0}
+  뒤어깨다트위치: {value: 1.1/2, note: 옆목점에서 어깨선 따라}
+  뒤어깨다트폭:   {value: 1/4}
+  뒤어깨다트길이: {value: 4}
+  견갑이세:       {value: 1/4, note: 견갑선 아래 암홀 쪽 1/4 (다트/이세 처리)}
+  # --- 암홀·다트
+  앞암홀가이드: {value: 1,     note: 앞품선×가슴선 모서리에서 45°}
+  뒤암홀가이드: {value: 1.1/8, note: 뒤품선×가슴선 모서리에서 45°}
+  가슴다트폭:   {value: 1.1/4, note: 옆선에서 벌어지는 양}
+  # --- 파생
+  반폭:       {formula: "B/4 + 여유/4", note: 앞판(=뒤판) 폭. 55 에서 9}
+  전폭:       {formula: "B/2 + 여유/2"}
+  뒤어깨길이: {formula: "dist(SNP_B, SP_B)", note: 다트 포함}
+  앞어깨길이: {formula: "뒤어깨길이 - 뒤어깨다트폭", note: 도면 표기 '뒤어깨 - 1/4'}
+
+points:
+  # ---------------------------------------------------------------- 기준 틀
+  O:        {ko: 원점(앞중심×기준선), at: [0, 0]}
+  TOP_SS:   {ko: 옆선 기준선점,       from: O, dx: 반폭}
+  TOP_CB:   {ko: 뒤중심 기준선점,     from: O, dx: 전폭}
+  BL_CF:    {ko: 앞중심 가슴선점,     from: O, dy: 진동깊이}
+  UP:       {ko: 겨드랑점(옆선×가슴선), from: O, dx: 반폭, dy: 진동깊이}
+  BL_CB:    {ko: 뒤중심 가슴선점,     from: TOP_CB, dy: 진동깊이}
+  WL_CB:    {ko: 뒤중심 허리선점,     from: TOP_CB, dy: 등길이}
+  WL_SS_B:  {ko: 옆선 뒤 허리점,      from: TOP_SS, dy: 등길이}
+  HEM_CF:   {ko: 앞중심 밑단점,       from: O, dy: "등길이 + 앞처짐"}
+  HEM_SS_F: {ko: 옆선 앞 밑단점,      from: TOP_SS, dy: "등길이 + 앞처짐"}
+  # ---------------------------------------------------------------- 앞목
+  NK_F_W:   {ko: 앞목너비점,          from: O, dx: 앞목너비}
+  SNP_F:    {ko: 앞 옆목점,           from: NK_F_W, dy: 앞옆목점내림}
+  FNP:      {ko: 앞목점,              from: O, dy: 앞목깊이}
+  NK_F_C:   {ko: 앞목 모서리,         from: O, dx: 앞목너비, dy: 앞목깊이}
+  G_NF:     {ko: 앞목 곡선 가이드,    from: NK_F_C, dir: [-1, -1], dist: 앞목가이드}
+  # ---------------------------------------------------------------- 뒤목
+  BNP:      {ko: 뒤목점,              from: TOP_CB}
+  NK_B_W:   {ko: 뒤목너비점,          from: TOP_CB, dx: "-뒤목너비"}
+  SNP_B:    {ko: 뒤 옆목점,           from: NK_B_W, dy: "-뒤목높이"}
+  G_NB:     {ko: 뒤목 곡선 가이드,    from: NK_B_W, dir: [1, -1], dist: 뒤목가이드}
+  # ---------------------------------------------------------------- 어깨
+  SP_B:     {ko: 뒤 어깨끝점,         from: TOP_CB, dx: "-뒤어깨끝너비", dy: 뒤어깨끝내림}
+  SP_F:     {ko: 앞 어깨끝점,         circle: {center: SNP_F, radius: 앞어깨길이}, x: 앞어깨끝너비, side: down}
+  SP_F_TOP: {ko: 앞 어깨끝 기준선점,  at: ["SP_F.x", 0]}
+  BSD1:     {ko: 뒤어깨다트 목쪽,     along: [SNP_B, SP_B], dist: 뒤어깨다트위치}
+  BSD2:     {ko: 뒤어깨다트 어깨쪽,   along: [SNP_B, SP_B], dist: "뒤어깨다트위치 + 뒤어깨다트폭"}
+  BSD_M:    {ko: 뒤어깨다트 중심,     midpoint: [BSD1, BSD2]}
+  SCAP:     {ko: 견갑점(다트끝),      perp: {from: BSD_M, line: [SNP_B, SP_B], dist: 뒤어깨다트길이, side: [0, 1]}}
+  # ---------------------------------------------------------------- 품선·견갑선
+  FW_TOP:   {ko: 앞품선 위,           from: O, dx: "앞품/2"}
+  FW_BL:    {ko: 앞품선×가슴선,       from: O, dx: "앞품/2", dy: 진동깊이}
+  BW_TOP:   {ko: 뒤품선 위,           from: TOP_CB, dx: "-뒤품/2"}
+  BW_BL:    {ko: 뒤품선×가슴선,       from: TOP_CB, dx: "-뒤품/2", dy: 진동깊이}
+  SCAP_W:   {ko: 견갑선×뒤품선,       at: ["전폭 - 뒤품/2", "SCAP.y"]}
+  SCAP_W2:  {ko: 견갑이세점,          from: SCAP_W, dy: 견갑이세}
+  # ---------------------------------------------------------------- 암홀
+  T_F:      {ko: 앞암홀 앞품선 접점,  at: ["앞품/2", "(SP_F.y + 진동깊이) / 2"], note: 실측 — 어깨끝과 가슴선의 중간 높이}
+  G_F:      {ko: 앞암홀 가이드점,     from: FW_BL, dir: [1, -1], dist: 앞암홀가이드}
+  T_B:      {ko: 뒤암홀 뒤품선 접점,  at: ["전폭 - 뒤품/2", "(SP_B.y + 진동깊이) / 2"], note: 실측 — 도면은 이보다 1/4 쯤 위}
+  G_B:      {ko: 뒤암홀 가이드점,     from: BW_BL, dir: [-1, -1], dist: 뒤암홀가이드}
+  # ---------------------------------------------------------------- 가슴다트
+  BP:       {ko: 유두점,              circle: {center: SNP_F, radius: 유장}, x: "유폭/2", side: down}
+  BD1:      {ko: 가슴다트 위,         at: [반폭, "BP.y"]}
+  BD2:      {ko: 가슴다트 아래,       at: [반폭, "BP.y + 가슴다트폭"]}
+
+lines:
+  # ---------------------------------------------------------------- 안내선
+  - {name: 기준선,       role: construction, pts: [O, TOP_CB]}
+  - {name: 가슴선,       role: construction, pts: [BL_CF, BL_CB]}
+  - {name: 옆선기준,     role: construction, pts: [TOP_SS, UP]}
+  - {name: 앞품선,       role: construction, pts: [FW_TOP, FW_BL]}
+  - {name: 뒤품선,       role: construction, pts: [BW_TOP, BW_BL]}
+  - {name: 앞중심위,     role: construction, pts: [O, FNP]}
+  - {name: 앞목틀,       role: construction, pts: [NK_F_W, NK_F_C, FNP]}
+  - {name: 앞목가이드,   role: construction, pts: [NK_F_C, G_NF]}
+  - {name: 뒤목틀,       role: construction, pts: [NK_B_W, SNP_B]}
+  - {name: 뒤목가이드,   role: construction, pts: [NK_B_W, G_NB]}
+  - {name: 앞어깨끝수직, role: construction, pts: [SP_F_TOP, SP_F]}
+  - {name: 유장선,       role: construction, pts: [SNP_F, BP]}
+  - {name: 앞암홀가이드, role: construction, pts: [FW_BL, G_F]}
+  - {name: 뒤암홀가이드, role: construction, pts: [BW_BL, G_B]}
+  - {name: 견갑선,       role: construction, pts: [SCAP, SCAP_W]}
+  - {name: 견갑이세선,   role: construction, pts: [SCAP, SCAP_W2]}
+  # ---------------------------------------------------------------- 앞판
+  - {name: 앞중심선, piece: 앞판, role: outline, pts: [FNP, HEM_CF]}
+  - {name: 앞목선,   piece: 앞판, role: outline, curve: [SNP_F, G_NF, FNP],
+     tangents: {SNP_F: [0, 1], FNP: [-1, 0]}, handles: [[0.05, 0.46], [0.43, 0.05]]}
+  - {name: 앞어깨선, piece: 앞판, role: outline, pts: [SNP_F, SP_F]}
+  - {name: 앞암홀,   piece: 앞판, role: outline, curve: [SP_F, T_F, G_F, UP],
+     tangents: {SP_F: {perp: [SNP_F, SP_F]}, T_F: [0, 1], UP: [1, 0]},
+     handles: [[0.05, 0.47], [0.26, 0.43], [0.39, 0.26]], note: 핸들은 원본 도면에 맞춘 값}
+  - {name: 앞옆선위, piece: 앞판, role: outline, pts: [UP, BD1]}
+  - {name: 가슴다트, piece: 앞판, role: dart,    pts: [BD1, BP, BD2]}
+  - {name: 앞옆선아래, piece: 앞판, role: outline, pts: [BD2, HEM_SS_F]}
+  - {name: 앞밑단,   piece: 앞판, role: outline, pts: [HEM_CF, HEM_SS_F]}
+  # ---------------------------------------------------------------- 뒤판
+  - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [BNP, WL_CB]}
+  - {name: 뒤목선,   piece: 뒤판, role: outline, curve: [SNP_B, G_NB, BNP],
+     tangents: {SNP_B: {perp: [SNP_B, SP_B]}, BNP: [1, 0]}, handles: [[0.05, 0.28], [0.69, 1.41]]}
+  - {name: 뒤어깨선목쪽,  piece: 뒤판, role: outline, pts: [SNP_B, BSD1]}
+  - {name: 뒤어깨다트,    piece: 뒤판, role: dart,    pts: [BSD1, SCAP, BSD2]}
+  - {name: 뒤어깨선끝쪽,  piece: 뒤판, role: outline, pts: [BSD2, SP_B]}
+  - {name: 뒤암홀,   piece: 뒤판, role: outline, curve: [SP_B, T_B, G_B, UP],
+     tangents: {SP_B: {perp: [SNP_B, SP_B]}, T_B: [0, 1], UP: [-1, 0]},
+     handles: [[0.23, 0.18], [0.07, 0.34], [0.37, 0.26]]}
+  - {name: 뒤옆선,   piece: 뒤판, role: outline, pts: [UP, WL_SS_B]}
+  - {name: 뒤밑단,   piece: 뒤판, role: outline, pts: [WL_SS_B, WL_CB]}

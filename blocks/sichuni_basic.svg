@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="508mm" height="488.95mm" viewBox="0 0 508 488.95"><rect width="100%" height="100%" fill="white"/><title>시추니 기본 원형</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M25.4 127L25.4 463.55"><title>앞중심선</title></path>
+<path d="M95.25 57.15C95.25 59.772 89.859 87.49 72.799 104.549C56.852 120.496 28.022 127 25.4 127"><title>앞목선</title></path>
+<path d="M95.25 57.15L203.2 94.205"><title>앞어깨선</title></path>
+<path d="M203.2 94.205C201.785 98.328 190.5 139.479 190.5 180.453C190.5 198.811 188.3 226.037 208.461 248.739C221.138 263.015 241.272 266.7 254 266.7"><title>앞암홀</title></path>
+<path d="M254 266.7L254 310.653"><title>앞옆선위</title></path>
+<path d="M254 342.403L254 463.55"><title>앞옆선아래</title></path>
+<path d="M25.4 463.55L254 463.55"><title>앞밑단</title></path>
+<path d="M482.6 50.8L482.6 431.8"><title>뒤중심선</title></path>
+<path d="M406.4 25.4C406.685 26.254 415.374 35.056 419.87 37.33C459.377 57.307 392.135 50.8 482.6 50.8"><title>뒤목선</title></path>
+<path d="M406.4 25.4L370.255 37.448"><title>뒤어깨선목쪽</title></path>
+<path d="M364.231 39.456L292.1 63.5"><title>뒤어깨선끝쪽</title></path>
+<path d="M292.1 63.5C299.547 85.841 304.8 146.67 304.8 165.1C304.8 170.971 301.051 223.209 284.594 246.494C276.765 257.573 263.533 266.7 254 266.7"><title>뒤암홀</title></path>
+<path d="M254 266.7L254 431.8"><title>뒤옆선</title></path>
+<path d="M254 431.8L482.6 431.8"><title>뒤밑단</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M254 310.653L111.125 310.653L254 342.403"><title>가슴다트</title></path>
+<path d="M370.255 37.448L399.372 134.839L364.231 39.456"><title>뒤어깨다트</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M25.4 50.8L482.6 50.8"><title>기준선</title></path>
+<path d="M25.4 266.7L482.6 266.7"><title>가슴선</title></path>
+<path d="M254 50.8L254 266.7"><title>옆선기준</title></path>
+<path d="M190.5 50.8L190.5 266.7"><title>앞품선</title></path>
+<path d="M304.8 50.8L304.8 266.7"><title>뒤품선</title></path>
+<path d="M25.4 50.8L25.4 127"><title>앞중심위</title></path>
+<path d="M95.25 50.8L95.25 127L25.4 127"><title>앞목틀</title></path>
+<path d="M95.25 127L72.799 104.549"><title>앞목가이드</title></path>
+<path d="M406.4 50.8L406.4 25.4"><title>뒤목틀</title></path>
+<path d="M406.4 50.8L419.87 37.33"><title>뒤목가이드</title></path>
+<path d="M203.2 50.8L203.2 94.205"><title>앞어깨끝수직</title></path>
+<path d="M95.25 57.15L111.125 310.653"><title>유장선</title></path>
+<path d="M190.5 266.7L208.461 248.739"><title>앞암홀가이드</title></path>
+<path d="M304.8 266.7L284.594 246.494"><title>뒤암홀가이드</title></path>
+<path d="M399.372 134.839L304.8 134.839"><title>견갑선</title></path>
+<path d="M399.372 134.839L304.8 141.189"><title>견갑이세선</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="25.4" cy="50.8" r="0.762" fill="#06c"/><text x="26.67" y="49.784">O</text>
+<circle cx="254" cy="50.8" r="0.762" fill="#06c"/><text x="255.27" y="49.784">TOP_SS</text>
+<circle cx="482.6" cy="50.8" r="0.762" fill="#06c"/><text x="483.87" y="49.784">TOP_CB</text>
+<circle cx="25.4" cy="266.7" r="0.762" fill="#06c"/><text x="26.67" y="265.684">BL_CF</text>
+<circle cx="254" cy="266.7" r="0.762" fill="#06c"/><text x="255.27" y="265.684">UP</text>
+<circle cx="482.6" cy="266.7" r="0.762" fill="#06c"/><text x="483.87" y="265.684">BL_CB</text>
+<circle cx="482.6" cy="431.8" r="0.762" fill="#06c"/><text x="483.87" y="430.784">WL_CB</text>
+<circle cx="254" cy="431.8" r="0.762" fill="#06c"/><text x="255.27" y="430.784">WL_SS_B</text>
+<circle cx="25.4" cy="463.55" r="0.762" fill="#06c"/><text x="26.67" y="462.534">HEM_CF</text>
+<circle cx="254" cy="463.55" r="0.762" fill="#06c"/><text x="255.27" y="462.534">HEM_SS_F</text>
+<circle cx="95.25" cy="50.8" r="0.762" fill="#06c"/><text x="96.52" y="49.784">NK_F_W</text>
+<circle cx="95.25" cy="57.15" r="0.762" fill="#06c"/><text x="96.52" y="56.134">SNP_F</text>
+<circle cx="25.4" cy="127" r="0.762" fill="#06c"/><text x="26.67" y="125.984">FNP</text>
+<circle cx="95.25" cy="127" r="0.762" fill="#06c"/><text x="96.52" y="125.984">NK_F_C</text>
+<circle cx="72.799" cy="104.549" r="0.762" fill="#06c"/><text x="74.069" y="103.533">G_NF</text>
+<circle cx="482.6" cy="50.8" r="0.762" fill="#06c"/><text x="483.87" y="49.784">BNP</text>
+<circle cx="406.4" cy="50.8" r="0.762" fill="#06c"/><text x="407.67" y="49.784">NK_B_W</text>
+<circle cx="406.4" cy="25.4" r="0.762" fill="#06c"/><text x="407.67" y="24.384">SNP_B</text>
+<circle cx="419.87" cy="37.33" r="0.762" fill="#06c"/><text x="421.14" y="36.314">G_NB</text>
+<circle cx="292.1" cy="63.5" r="0.762" fill="#06c"/><text x="293.37" y="62.484">SP_B</text>
+<circle cx="203.2" cy="94.205" r="0.762" fill="#06c"/><text x="204.47" y="93.189">SP_F</text>
+<circle cx="203.2" cy="50.8" r="0.762" fill="#06c"/><text x="204.47" y="49.784">SP_F_TOP</text>
+<circle cx="370.255" cy="37.448" r="0.762" fill="#06c"/><text x="371.525" y="36.432">BSD1</text>
+<circle cx="364.231" cy="39.456" r="0.762" fill="#06c"/><text x="365.501" y="38.44">BSD2</text>
+<circle cx="367.243" cy="38.452" r="0.762" fill="#06c"/><text x="368.513" y="37.436">BSD_M</text>
+<circle cx="399.372" cy="134.839" r="0.762" fill="#06c"/><text x="400.642" y="133.823">SCAP</text>
+<circle cx="190.5" cy="50.8" r="0.762" fill="#06c"/><text x="191.77" y="49.784">FW_TOP</text>
+<circle cx="190.5" cy="266.7" r="0.762" fill="#06c"/><text x="191.77" y="265.684">FW_BL</text>
+<circle cx="304.8" cy="50.8" r="0.762" fill="#06c"/><text x="306.07" y="49.784">BW_TOP</text>
+<circle cx="304.8" cy="266.7" r="0.762" fill="#06c"/><text x="306.07" y="265.684">BW_BL</text>
+<circle cx="304.8" cy="134.839" r="0.762" fill="#06c"/><text x="306.07" y="133.823">SCAP_W</text>
+<circle cx="304.8" cy="141.189" r="0.762" fill="#06c"/><text x="306.07" y="140.173">SCAP_W2</text>
+<circle cx="190.5" cy="180.453" r="0.762" fill="#06c"/><text x="191.77" y="179.437">T_F</text>
+<circle cx="208.461" cy="248.739" r="0.762" fill="#06c"/><text x="209.731" y="247.723">G_F</text>
+<circle cx="304.8" cy="165.1" r="0.762" fill="#06c"/><text x="306.07" y="164.084">T_B</text>
+<circle cx="284.594" cy="246.494" r="0.762" fill="#06c"/><text x="285.864" y="245.478">G_B</text>
+<circle cx="111.125" cy="310.653" r="0.762" fill="#06c"/><text x="112.395" y="309.637">BP</text>
+<circle cx="254" cy="310.653" r="0.762" fill="#06c"/><text x="255.27" y="309.637">BD1</text>
+<circle cx="254" cy="342.403" r="0.762" fill="#06c"/><text x="255.27" y="341.387">BD2</text>
+</g></svg>

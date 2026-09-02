@@ -35,11 +35,38 @@ python tools/extract_portfolio.py              # 전부
 python tools/extract_portfolio.py --pages 4 44 # 일부만
 ```
 
+## 규칙 엔진과 원형 (1단계)
+
+점과 선에 이름과 규칙을 붙여 저장한다. 좌표는 치수에서 계산된다.
+
+```
+patterncad/
+  units.py      인치 분수 표기 (3.1/2 = 3½)
+  geometry.py   점 · 직선 · 3차 베지어, 교점 · 수선 · 곡선 맞춤
+  expr.py       치수 식 ("B/4 + 여유/4", "dist(SNP_B, SP_B)", "SP_F.y")
+  block.py      원형 YAML 읽기 → 점·선 계산
+  svg.py        계산 결과를 SVG로
+blocks/
+  sichuni_basic.yaml        시추니 기본 원형 (치수 → 점 규칙 → 선)
+  sichuni_basic.svg         실물 크기(mm) 그림
+  verify_sichuni_basic.png  원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
+tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤
+tests/                      python -m unittest discover -s tests
+```
+
+원형 파일 형식과 점 규칙 종류는 `patterncad/block.py` 머리말에, 설계 원칙과 로드맵은 `docs/PLAN.md` 에 있다.
+
+```
+python tools/verify_block.py blocks/sichuni_basic.yaml --page 44          # 편차 보고 + 겹침 그림
+python tools/verify_block.py blocks/sichuni_basic.yaml --page 44 --fit    # 곡선 핸들을 원본에 맞춤
+```
+
 ## 다음 단계
 
-1. `extracted/` 의 치수 주석을 **점·선 구성 규칙**(좌표가 아니라 "A에서 아래로 B/4 + 여유")으로 옮겨 원형 정의 파일을 만든다. 시추니 기본 원형부터.
-2. 그 규칙으로 원형을 다시 그려 원본 도면과 겹쳐 검증한다.
-3. `core/`(기하 · 치수 · 원형 · 그레이딩 · 마카, 화면 없음) → `io/`(DXF/HPGL/SVG) → `ui/`(데스크톱) 순으로 올린다.
+1. 시추니 무다트 원형, 소매 원형 → 스커트 원형 → 팬츠 원형 (상의 → 스커트 → 팬츠 → 아우터 순)
+2. 조작 엔진(다트 이동 · 절개-벌림 · 여유 변경)으로 포트폴리오 아이템 재현
+3. 사이즈 체계(55/66 · S/M/L · 숫자 등 선택, 기준 사이즈 선택)와 핏 4단계 → 자동 생성
+4. 조각화 · DXF 입출력 · 그레이딩 · 마카 · 데스크톱 UI
 
 ## 관련 저장소
 
