@@ -1,0 +1,14 @@
+# 레깅스 = 레깅스 몸판 + 고무줄 밴드 (밴드 길이는 허리에서 자동)
+name: 레깅스
+id: leggings_style
+source: reference/portfolio.pdf p.41
+
+blocks:
+  pants:
+    block: ../blocks/leggings.yaml
+  band:
+    block: ../blocks/elastic_band.yaml
+    measurements:
+      패턴허리: "pants.패턴허리"
+      완성: "pants.밴드완성"
+      높이: "pants.밴드폭"

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="751.041mm" height="990.6mm" viewBox="0 0 751.041 990.6"><rect width="100%" height="100%" fill="white"/>
+<g id="앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M57.15 25.4C57.15 101.6 57.15 139.7 57.15 215.9C57.15 246.38 57.15 261.62 57.15 292.1"><title>앞중심선</title></path>
+<path d="M57.15 292.1C57.15 309.562 42.862 292.1 25.4 292.1"><title>앞밑위곡선</title></path>
+<path d="M25.4 292.1C59.925 407.184 34.135 438.714 38.1 558.8C43.466 721.316 43.815 802.64 47.625 965.2"><title>앞인심</title></path>
+<path d="M282.575 25.4C297.521 100.131 285.75 139.689 285.75 215.9C285.75 353.154 277.198 421.609 273.05 558.8C268.136 721.33 267.335 802.64 263.525 965.2"><title>앞옆선</title></path>
+<path d="M47.625 965.2L263.525 965.2"><title>앞밑단</title></path>
+<path d="M57.15 25.4L282.575 25.4"><title>앞허리선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M155.575 292.1L155.575 965.2"><title>앞주름선</title></path>
+<path d="M47.625 952.5L263.525 952.5"><title>앞밑단접음</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g>
+<g id="뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M468.134 25.4L443.055 215.9L433.023 292.1"><title>뒤중심선</title></path>
+<path d="M433.023 292.1C433.023 355.682 391.127 298.543 328.248 307.975"><title>뒤밑위곡선</title></path>
+<path d="M328.248 307.975C361.381 418.419 369.821 444.001 380.635 558.8C395.886 720.688 386.35 802.64 390.16 965.2"><title>뒤인심</title></path>
+<path d="M722.134 25.4C737.151 100.481 703.405 139.333 703.405 215.9C703.405 355.314 655.146 420.107 640.985 558.8C624.469 720.564 635.27 802.64 631.46 965.2"><title>뒤옆선</title></path>
+<path d="M390.16 965.2L631.46 965.2"><title>뒤밑단</title></path>
+<path d="M468.134 25.4L722.134 25.4"><title>뒤허리선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M510.81 292.1L510.81 965.2"><title>뒤주름선</title></path>
+<path d="M390.16 952.5L631.46 952.5"><title>뒤밑단접음</title></path>
+</g>
+<text x="328.248" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g></svg>

@@ -1,0 +1,14 @@
+# 트레이닝 팬츠 = 팬츠 + 고무줄 밴드 (밴드 길이는 팬츠 허리에서 자동)
+name: 트레이닝 팬츠
+id: training_pants
+source: reference/portfolio.pdf p.35
+
+blocks:
+  pants:
+    block: ../blocks/pants_training.yaml
+  band:
+    block: ../blocks/elastic_band.yaml
+    measurements:
+      패턴허리: "pants.패턴허리"
+      완성: "pants.밴드완성"
+      높이: "pants.밴드폭"

@@ -1,0 +1,66 @@
+# 원턱 팬츠 — p.31–32. 힙본 팬츠 원형을 이용한다.
+#
+# 유의사항:
+#   - 턱이 있는 팬츠는 **턱 분량·비율에 맞춰 밑위길이도 같이 내려** 여유있게 제도한다.
+#     턱이 내려온 길이에 비해 밑위가 짧으면 비율이 나빠진다
+#   - **레지끼선(바지주름선)은 앞중심에서 3.1/8~3.3/4 에 항상 위치한다** — 다리의 중심선이기 때문
+#   - **턱 시작점은 레지끼선에서 중심 쪽으로 1/4~3/8 들어간 지점.** 레지끼선에서 바로 시작하면
+#     턱과 레지끼선이 점점 오마지는 실루엣으로 보인다
+#   - 셔링·다트·턱이 있으면 **옆솔기 곡을 최대한 완만하게(1/8~1/4)** 한다. 풀지 않으면 턱 분량이
+#     옆으로 넘어가 옆솔기가 볼록 튀어나온다
+#   - 레지끼선을 좌우로 옮기려면 중심선을 세운다 (허리가 커지면 그만큼 옆솔기를 들인다).
+#     더 옮기려면 무릎선을 절개해 옮기고, 안솔기·옆솔기를 무릎선에 맞춰 다시 자연스럽게 그린다
+extends: pants_hipbone.yaml
+name: 원턱 팬츠
+id: pants_onetuck
+source: reference/portfolio.pdf p.31
+
+measurements:
+  엉덩이여유: {value: 2.7/8, note: 패턴 엉덩이 38.3/8}
+  밑위길이:   {value: 10.1/2, note: 턱 분량에 맞춰 내린다}
+  기장:       {value: 35, note: 총장 36.1/2 − 오비}
+  밑단둘레:   {value: 5.3/4}
+  옆선들임:   {value: 1/4, note: 턱이 있으므로 옆솔기 곡을 완만하게 (1/8~1/4)}
+  턱량:       {value: 1.1/4}
+  턱들임:     {value: 5/16, note: 레지끼선에서 중심 쪽으로 (1/4~3/8)}
+  턱길이:     {value: 3.1/2}
+
+  뒤다트1폭:   {value: 1.1/8}
+  뒤다트1길이: {value: 5.3/4}
+  뒤다트2폭:   {value: 1.1/16}
+  뒤다트2길이: {value: 4.3/4}
+  뒤다트폭:    {value: 0, note: 두 개로 나눠 잡는다 — 아래 뒤다트1·2}
+
+points:
+  TK_C:  {ko: 턱 중심, at: ["앞주름선 - 턱들임", 힙본내림]}
+  TK_L:  {from: TK_C, dx: "-턱량/2"}
+  TK_R:  {from: TK_C, dx: "턱량/2"}
+  TK_T:  {ko: 턱 끝, from: TK_C, dy: 턱길이}
+  TK_A1: {ko: 턱 화살표 머리, at: ["TK_L.x - 1/4", "힙본내림 + 1.1/4"]}
+  TK_A0: {ko: 턱 화살표 꼬리, at: ["TK_R.x + 1/4", "힙본내림 + 1.1/4"]}
+  TK_A2: {from: TK_A1, dx: 3/8, dy: -3/16}
+  TK_A3: {from: TK_A1, dx: 3/8, dy: 3/16}
+
+  B_D1_C: {ko: 뒤다트1 중심(중심 쪽), along: [B_W_CB, B_W_SS], ratio: 0.34}
+  B_D1_L: {from: B_D1_C, dx: "-뒤다트1폭/2"}
+  B_D1_R: {from: B_D1_C, dx: "뒤다트1폭/2"}
+  B_D1_T: {ko: 뒤다트1 끝, from: B_D1_C, dy: 뒤다트1길이}
+  B_D2_C: {ko: 뒤다트2 중심(옆솔기 쪽), along: [B_W_CB, B_W_SS], ratio: 0.68}
+  B_D2_L: {from: B_D2_C, dx: "-뒤다트2폭/2"}
+  B_D2_R: {from: B_D2_C, dx: "뒤다트2폭/2"}
+  B_D2_T: {ko: 뒤다트2 끝, from: B_D2_C, dy: 뒤다트2길이}
+  remove: [B_D_C, B_D_L, B_D_R, B_D_T]
+
+lines:
+  remove: [앞허리선안, 앞다트, 앞허리선밖, 뒤허리선안, 뒤다트, 뒤허리선밖]
+  add:
+    - {name: 앞허리선안, piece: 앞판, role: outline, pts: [F_W_CF, TK_L]}
+    - {name: 앞턱, piece: 앞판, role: dart, pts: [TK_L, TK_T, TK_R], note: 레지끼선에서 1/4~3/8 들어간 자리}
+    - {name: 앞턱방향, piece: 앞판, role: mark, pts: [TK_A0, TK_A1]}
+    - {name: 앞턱화살촉, piece: 앞판, role: mark, pts: [TK_A2, TK_A1, TK_A3]}
+    - {name: 앞허리선밖, piece: 앞판, role: outline, pts: [TK_R, F_W_SS]}
+    - {name: 뒤허리선안, piece: 뒤판, role: outline, pts: [B_W_CB, B_D1_L]}
+    - {name: 뒤다트1, piece: 뒤판, role: dart, pts: [B_D1_L, B_D1_T, B_D1_R]}
+    - {name: 뒤허리선중, piece: 뒤판, role: outline, pts: [B_D1_R, B_D2_L]}
+    - {name: 뒤다트2, piece: 뒤판, role: dart, pts: [B_D2_L, B_D2_T, B_D2_R]}
+    - {name: 뒤허리선밖, piece: 뒤판, role: outline, pts: [B_D2_R, B_W_SS]}

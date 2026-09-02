@@ -56,8 +56,16 @@ blocks/
   skirt_hipbone.yaml        힙본 스커트 원형 (제허리 원형 상속)
   skirt_aline.yaml          세미A / A라인 스커트 — 힙본 원형을 절개해 밑단으로 벌림 (첫 기하 조작)
   skirt_tapered.yaml        테이퍼드 스커트 — 반대로 밑단을 축으로 벌려 허리에 턱, 밑단은 좁힘
+  skirt_flared.yaml / skirt_trumpet.yaml / skirt_gored.yaml
+  skirt_gather.yaml / skirt_highwaist.yaml / skirt_divided.yaml / skirt_pleated.yaml
+  pants_basic.yaml          제허리 팬츠 원형 — 뒤중심 각도가 바지의 성격을 정한다
+  pants_hipbone.yaml        힙본 팬츠 (허리선 3" 내림)
+  pants_onetuck.yaml / pants_tapered.yaml     원턱 · 투턱(테이퍼드)
+  pants_training.yaml / leggings.yaml         고무줄 허리 — 다트 없이 셔링
+  pants_wide.yaml / pants_skinny.yaml         와이드 · 스키니
   waistband.yaml            오비 (직사각형)
   waistband_curved.yaml     곡선 오비 — 윗선(= 허리둘레)이 밑선보다 짧아 부채꼴로 휨
+  elastic_band.yaml         고무줄 밴드 — 제도 길이와 완성 길이가 다르다
   *.svg                     실물 크기(mm) 그림
   verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
 styles/
@@ -70,6 +78,8 @@ styles/
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤
+tools/measure.py            원형을 계산해 치수·점·선 길이를 찍어 본다 (--svg 로 다시 그림)
+tools/dump_item.py          아이템 한 개의 도면 선 · 주석 · 유의사항을 한 번에 훑어본다
 tests/                      python -m unittest discover -s tests
 ```
 

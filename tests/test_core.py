@@ -415,6 +415,68 @@ class Tapered(unittest.TestCase):
         self.assertGreater(p["FT1_M"].dist(p["FT1_TIP"]), p["BT2_M"].dist(p["BT2_TIP"]))
 
 
+class Pants(unittest.TestCase):
+    """팬츠 8종 — 계산된 허리·엉덩이·밑단이 포트폴리오 사이즈표와 맞는가."""
+
+    # 원형 id → (허리둘레, 엉덩이둘레, 밑단둘레)
+    SIZES = {
+        "pants_basic":    (26.5,   36,     8),
+        "pants_hipbone":  (29.625, 36,     7.5),
+        "pants_onetuck":  (29.625, 38.375, 5.75),
+        "pants_tapered":  (29.625, 42,     6),
+        "pants_training": (37.75,  38.5,   9),
+        "pants_wide":     (28,     36.5,   12),
+        "pants_skinny":   (29.5,   34.5,   5.25),
+        "leggings":       (27,     31,     4.75),
+    }
+
+    def test_size_table(self):
+        for bid, (waist, hip, hem) in self.SIZES.items():
+            with self.subTest(bid):
+                res = Block.load(ROOT / "blocks" / f"{bid}.yaml").evaluate()
+                m = res.measurements
+                # 허리 = 다트·턱을 뺀 허리선들의 합 × 2 (앞·뒤 반쪽씩 제도한다)
+                w = 2 * sum(l.length() for l in res.lines
+                            if l.name.startswith(("앞허리선", "뒤허리선")))
+                self.assertAlmostEqual(w, waist, delta=0.15)
+                self.assertAlmostEqual(2 * (m["앞폭"] + m["뒤폭"]), hip, delta=0.02)
+                self.assertAlmostEqual((m["앞밑단폭"] + m["뒤밑단폭"]) / 2, hem, delta=0.02)
+
+    def test_back_crotch_extension_is_larger_than_front(self):
+        """뒤샅은 언제나 앞샅보다 크다 — 엉덩이가 뒤에 있기 때문."""
+        for bid in self.SIZES:
+            with self.subTest(bid):
+                m = Block.load(ROOT / "blocks" / f"{bid}.yaml").evaluate().measurements
+                self.assertGreater(m["뒤샅"], m["앞샅"])
+
+    def test_back_rise_angle_lays_the_center_back(self):
+        """뒤중심을 눕힐수록 뒤밑위 길이가 길어진다(캐주얼), 세울수록 짧아진다(정장) — p.28."""
+        blk = Block.load(ROOT / "blocks" / "pants_basic.yaml")
+
+        def rise(angle):
+            r = blk.evaluate({"뒤중심각": angle})
+            return r.points["B_W_CB"].dist(r.points["B_CL_CB"]) + r.line("뒤밑위곡선").length()
+
+        self.assertGreater(rise(8), rise(2.5))
+        self.assertGreater(rise(2.5), rise(0))
+
+    def test_back_rise_angle_widens_the_back_waist(self):
+        """눕히면 뒤중심 허리점이 옆으로 나가 뒤허리가 넓어진다 (A자 형태)."""
+        blk = Block.load(ROOT / "blocks" / "pants_basic.yaml")
+        wide, narrow = blk.evaluate({"뒤중심각": 8}), blk.evaluate({"뒤중심각": 0})
+        self.assertGreater(wide.points["B_W_CB"].x, narrow.points["B_W_CB"].x)
+        self.assertAlmostEqual(wide.points["B_W_CB"].y, narrow.points["B_W_CB"].y)
+
+    def test_elastic_band_is_smaller_than_the_drafted_waist(self):
+        """고무줄 밴드는 제도된 허리보다 작다 — 레깅스는 2~3."""
+        from patterncad.style import Style
+
+        res = Style.load(ROOT / "styles" / "leggings.yaml").evaluate()
+        band = res["band"].measurements
+        self.assertAlmostEqual(band["패턴허리"], res["pants"].measurements["패턴허리"])
+        self.assertTrue(2 <= band["패턴허리"] - band["완성"] <= 3)
+
+
 class StyleLink(unittest.TestCase):
     """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
 

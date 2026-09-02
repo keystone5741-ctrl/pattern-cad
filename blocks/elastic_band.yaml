@@ -1,0 +1,28 @@
+# 고무줄 밴드 (E-밴드) — p.35. 직사각형. 제도 길이와 **완성 길이**가 다르다.
+# 스티치 줄 수·원단에 따라 완성 길이가 늘어나므로 작업지시서에 완성 치수를 꼭 적는다.
+name: 고무줄 밴드
+id: elastic_band
+category: part
+units: inch
+source: reference/portfolio.pdf p.35
+
+measurements:
+  패턴허리: {ko: 고무줄 달기 전 허리, value: 37.3/4, note: 팬츠에서 자동}
+  완성:     {value: 27, note: 고무줄을 넣어 조인 완성 허리}
+  높이:     {value: 1.3/4}
+  시접:     {value: 1/2}
+  반길이:   {formula: "패턴허리 / 2", note: 앞·뒤 각 반쪽. 앞중심·뒤중심 골}
+
+points:
+  TL: {at: [0, 0]}
+  TR: {at: [반길이, 0]}
+  BR: {at: [반길이, 높이]}
+  BL: {at: [0, 높이]}
+  SN:  {ko: 옆선 노치, at: ["반길이 / 2", 0]}
+  SNT: {at: ["반길이 / 2", 0.25]}
+
+lines:
+  - {name: 외곽, role: outline, pts: [TL, TR, BR, BL], closed: true}
+  - {name: 앞중심, role: fold, pts: [TL, BL]}
+  - {name: 뒤중심, role: fold, pts: [TR, BR]}
+  - {name: 옆선노치, role: notch, pts: [SN, SNT]}

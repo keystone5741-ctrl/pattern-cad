@@ -1,0 +1,144 @@
+# 제허리 팬츠 원형 (Basic Pants) — 포트폴리오 p.28–29.
+#
+# 좌표계: 앞·뒤판 각각 **주름선(크리스)** 을 기준으로 잡는다. y 는 허리선에서 아래.
+#   앞판: x=0 이 앞중심, 왼쪽(−x)으로 앞샅이 나간다. 뒤판도 같은 방식.
+#
+# 핵심 (p.28):
+#   **바지에서 가장 중요한 것은 뒤중심의 각도다.** 뒤중심 각도와 위치가 바지의 특징을 정한다.
+#     - 세울수록: 뒤밑위둘레가 짧아져 착용감은 불편하지만 쳐지는 분량이 없어 깔끔·단정 (정장 브랜드)
+#     - 눕힐수록: 뒤밑위둘레가 길어져 앉거나 움직일 때 편하지만 엉덩이에 쳐지는 분량이 생기고
+#       A자 형태가 되어 비리가 많이 생긴다 (캐주얼 브랜드)
+#   **앞샅 1~1.1/4 (최대 2), 뒤샅 4~4.3/4 (최대 5).**
+#   샅 길이가 늘거나 주는 것은 **허벅지둘레가 늘거나 주는 것과 같다.**
+#   밑위 곡선이 완만할수록 여유가 생겨 편하지만 남는 분량이 처지고, 경사질수록 힙에 피트되나 불편하다.
+#
+# 유의사항 (p.29):
+#   - 뒤중심 허리선은 **최대 1/4 까지** 올리거나 내린다
+#   - 밑위가 짧아 딱 맞으면 **엉덩이선을 절개해 밑위를 늘린다** (허벅지둘레는 유지) — 뒤중심을 눕힌 것과 같은 결과.
+#     반대로 뒤판이 처지면 뒤중심을 허벅지 쪽으로 절개해 M.P 하면 뒤중심이 세워진다.
+#     이렇게 절개하면 엉덩이선에서 하는 것보다 옆솔기 곡선을 자연스럽게 유지할 수 있다
+#   - **뒤샅은 내려서** 제도한다 — 인심 봉제 시 앞뒤 길이를 맞추고 뒤판 인심을 늘려주기 위해.
+#     뒤판 인심은 대부분 바이어스이므로 **앞판보다 1/4 짧게** 제도해 늘려박아 처짐을 막는다
+#     (원단 처짐·바이어스 늘어남에 따라 수치는 바뀐다)
+#   - 뒤 밑위선은 앞 밑위선과 **각확인(ac)** 해 자연스럽게 잇는다. 스판은 뒤샅폭이 길면 밑위 중심이 솟아오른다
+#   - **고양이 주름**은 two-way 스판처럼 상하좌우 당기는 힘이 같을 때만 완전히 없앨 수 있다.
+#     앞중심 허리선을 조금 파거나 앞샅 시접을 노바시해 약화시킬 수는 있다
+name: 제허리 팬츠 원형
+id: pants_basic
+category: pants
+units: inch
+source: reference/portfolio.pdf p.28
+
+measurements:
+  W:          {ko: 허리둘레(신체), value: 26}
+  H:          {ko: 엉덩이둘레(신체), value: 35.1/2}
+  허리여유:   {value: 1/2, note: 패턴 허리 26.1/2}
+  엉덩이여유: {value: 1/2, note: 패턴 엉덩이 36}
+  엉덩이길이: {value: 7.1/2}
+  밑위길이:   {value: 10}
+  무릎길이:   {value: 21}
+  기장:       {value: 39.3/8, note: 허리선에서 밑단. 총장 40.7/8 은 오비 포함}
+  앞뒤차:     {value: 1/4, note: 앞폭 = H/4 − 이 값, 뒤폭 = H/4 + 이 값}
+  앞샅:       {value: 1.1/8, note: 1~1.1/4 (최대 2)}
+  뒤샅:       {value: 4.3/8, note: 4~4.3/4 (최대 5)}
+  뒤샅내림:   {value: 3/4, note: 뒤샅을 앞샅보다 내려 제도 — 인심 길이를 맞추기 위해}
+  뒤중심각:   {value: 2.1/2, note: 뒤중심을 눕히는 각도(도). 세울수록 정장, 눕힐수록 캐주얼}
+  뒤중심올림: {value: 1/4, note: 뒤중심 허리선을 올리는 양 (최대 1/4)}
+  앞중심들임: {value: 1/4, note: 앞중심 허리선을 들이는 양}
+  옆선들임:   {value: 3/4}
+  옆선올림:   {value: 1/4}
+  앞다트폭:   {value: 1.1/4, note: 앞 다트 (도면 표기)}
+  앞다트길이: {value: 3.1/2}
+  뒤다트폭:   {value: 1.3/8}
+  뒤다트길이: {value: 5.3/4}
+  앞무릎폭:   {value: 9.1/4, note: 주름선 좌우 4.5/8 씩}
+  뒤무릎폭:   {value: 10.1/4}
+  밑단둘레:   {value: 8, note: 앞뒤 평균. 사이즈표의 밑단둘레}
+  앞뒤밑단차: {value: 1/2, note: 앞밑단이 뒤보다 이만큼 좁다. 바지통이 커질수록 1 까지 준다 (와이드)}
+  앞밑단폭:   {formula: "밑단둘레 - 앞뒤밑단차", note: 주름선 좌우 절반씩}
+  뒤밑단폭:   {formula: "밑단둘레 + 앞뒤밑단차"}
+  인심차:     {value: 1/4, note: 뒤판 인심을 앞판보다 이만큼 짧게}
+  # 파생
+  패턴H:      {formula: "H + 엉덩이여유"}
+  앞폭:       {formula: "패턴H/4 - 앞뒤차"}
+  뒤폭:       {formula: "패턴H/4 + 앞뒤차"}
+  허리4:      {formula: "(W + 허리여유)/4", note: W/4 = 6.5/8}
+  앞주름선:   {formula: "(앞폭 - 앞샅) / 2", note: 앞 밑위선의 가운데}
+  뒤주름선:   {formula: "(뒤폭 - 뒤샅) / 2"}
+
+points:
+  # ---------------- 앞판 (x=0 앞중심, −x 로 샅이 나간다)
+  F_W_CF:  {ko: 앞중심 허리점, at: ["앞중심들임", 0]}
+  F_W_SS:  {ko: 앞 옆선 허리점, at: ["앞폭 - 옆선들임", "-옆선올림"]}
+  F_H_CF:  {ko: 앞중심 엉덩이점, at: [0, 엉덩이길이]}
+  F_H_SS:  {ko: 앞 옆선 엉덩이점, at: [앞폭, 엉덩이길이]}
+  F_CL_CF: {ko: 앞중심 밑위점, at: [0, 밑위길이]}
+  F_CP:    {ko: 앞 샅점, at: ["-앞샅", 밑위길이]}
+  F_CL_SS: {ko: 앞 옆선 밑위점, at: [앞폭, 밑위길이]}
+  F_CR_T:  {ko: 앞 주름선 위, at: [앞주름선, 밑위길이]}
+  F_CR_B:  {ko: 앞 주름선 아래, at: [앞주름선, 기장]}
+  F_K_IN:  {ko: 앞 무릎 인심쪽, at: ["앞주름선 - 앞무릎폭/2", 무릎길이]}
+  F_K_OUT: {ko: 앞 무릎 옆솔기쪽, at: ["앞주름선 + 앞무릎폭/2", 무릎길이]}
+  F_HEM_IN:  {ko: 앞 밑단 인심쪽, at: ["앞주름선 - 앞밑단폭/2", 기장]}
+  F_HEM_OUT: {ko: 앞 밑단 옆솔기쪽, at: ["앞주름선 + 앞밑단폭/2", 기장]}
+  F_D_C:   {ko: 앞다트 중심, at: ["(앞중심들임 + 앞폭 - 옆선들임)/2", 0]}
+  F_D_L:   {from: F_D_C, dx: "-앞다트폭/2"}
+  F_D_R:   {from: F_D_C, dx: "앞다트폭/2"}
+  F_D_T:   {from: F_D_C, dy: 앞다트길이}
+  # ---------------- 뒤판 (앞판 오른쪽에 나란히 놓는다)
+  B_OX:    {ko: 뒤판 원점 이동, at: ["앞폭 + 3", 0], note: 그림에서 겹치지 않게}
+  B_CL_CB: {ko: 뒤중심 밑위점, at: ["B_OX.x", 밑위길이]}
+  B_W_CB0: {ko: 뒤중심 허리 기준(세운 상태), at: ["B_OX.x", "-뒤중심올림"]}
+  B_W_CB:  {ko: 뒤중심 허리점,
+            at: ["B_CL_CB.x + (밑위길이 + 뒤중심올림) * tan(뒤중심각)", "-뒤중심올림"],
+            note: "뒤중심을 눕히는 각도 — 바지에서 가장 중요한 값.
+                   허리 높이는 그대로 두고 옆으로만 눕히므로 눕힐수록 뒤밑위 길이가 길어진다"}
+  B_CP:    {ko: 뒤 샅점, at: ["B_OX.x - 뒤샅", "밑위길이 + 뒤샅내림"]}
+  B_H_CB:  {ko: 뒤중심 엉덩이점, intersect: [[B_W_CB, B_CL_CB], [F_H_CF, F_H_SS]]}
+  B_H_SS:  {ko: 뒤 옆선 엉덩이점, from: B_H_CB, dx: 뒤폭,
+            note: 엉덩이 폭은 기울어진 뒤중심선에서 잰다 — 도면 표기와 같게}
+  B_W_SS:  {ko: 뒤 옆선 허리점, at: ["B_H_SS.x - 옆선들임", "-옆선올림"]}
+  B_CR_T:  {ko: 뒤 주름선 위, at: ["B_OX.x + 뒤주름선", 밑위길이]}
+  B_CR_B:  {ko: 뒤 주름선 아래, at: ["B_OX.x + 뒤주름선", 기장]}
+  B_K_IN:  {ko: 뒤 무릎 인심쪽, at: ["B_OX.x + 뒤주름선 - 뒤무릎폭/2", 무릎길이]}
+  B_K_OUT: {ko: 뒤 무릎 옆솔기쪽, at: ["B_OX.x + 뒤주름선 + 뒤무릎폭/2", 무릎길이]}
+  B_HEM_IN:  {ko: 뒤 밑단 인심쪽, at: ["B_OX.x + 뒤주름선 - 뒤밑단폭/2", 기장]}
+  B_HEM_OUT: {ko: 뒤 밑단 옆솔기쪽, at: ["B_OX.x + 뒤주름선 + 뒤밑단폭/2", 기장]}
+  B_D_C:   {ko: 뒤다트 중심, midpoint: [B_W_CB, B_W_SS]}
+  B_D_L:   {from: B_D_C, dx: "-뒤다트폭/2"}
+  B_D_R:   {from: B_D_C, dx: "뒤다트폭/2"}
+  B_D_T:   {from: B_D_C, dy: 뒤다트길이}
+
+lines:
+  - {name: 엉덩이선, role: construction, pts: [F_H_CF, F_H_SS]}
+  - {name: 밑위선,   role: construction, pts: [F_CP, F_CL_SS]}
+  - {name: 앞주름선, piece: 앞판, role: fold, pts: [F_CR_T, F_CR_B], note: 크리스}
+  - {name: 뒤주름선, piece: 뒤판, role: fold, pts: [B_CR_T, B_CR_B]}
+  # 앞판
+  - {name: 앞허리선안, piece: 앞판, role: outline, pts: [F_W_CF, F_D_L]}
+  - {name: 앞다트, piece: 앞판, role: dart, pts: [F_D_L, F_D_T, F_D_R]}
+  - {name: 앞허리선밖, piece: 앞판, role: outline, pts: [F_D_R, F_W_SS]}
+  - {name: 앞중심선, piece: 앞판, role: outline, curve: [F_W_CF, F_H_CF, F_CL_CF],
+     tangents: {F_H_CF: [0, 1], F_CL_CF: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+  - {name: 앞밑위곡선, piece: 앞판, role: outline, curve: [F_CL_CF, F_CP],
+     tangents: {F_CL_CF: [0, 1], F_CP: [-1, 0]}, handles: [[0.55, 0.55]],
+     note: 완만할수록 편하지만 처지고, 경사질수록 피트되나 불편하다}
+  - {name: 앞인심, piece: 앞판, role: outline, curve: [F_CP, F_K_IN, F_HEM_IN],
+     tangents: {F_CP: [0.3, 1], F_K_IN: {along: [F_CP, F_HEM_IN]}}, handles: [[0.45, 0.45], [0.4, 0.4]]}
+  - {name: 앞옆선, piece: 앞판, role: outline, curve: [F_W_SS, F_H_SS, F_K_OUT, F_HEM_OUT],
+     tangents: {F_W_SS: [0.2, 1], F_H_SS: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+  - {name: 앞밑단, piece: 앞판, role: outline, pts: [F_HEM_IN, F_HEM_OUT]}
+  # 뒤판
+  - {name: 뒤허리선안, piece: 뒤판, role: outline, pts: [B_W_CB, B_D_L]}
+  - {name: 뒤다트, piece: 뒤판, role: dart, pts: [B_D_L, B_D_T, B_D_R]}
+  - {name: 뒤허리선밖, piece: 뒤판, role: outline, pts: [B_D_R, B_W_SS]}
+  - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [B_W_CB, B_H_CB, B_CL_CB],
+     note: 각도가 바지의 성격을 결정한다}
+  - {name: 뒤밑위곡선, piece: 뒤판, role: outline, curve: [B_CL_CB, B_CP],
+     tangents: {B_CL_CB: [0, 1], B_CP: [-1, 0.15]}, handles: [[0.6, 0.6]], note: 앞 밑위선과 각확인}
+  - {name: 뒤인심, piece: 뒤판, role: outline, curve: [B_CP, B_K_IN, B_HEM_IN],
+     tangents: {B_CP: [0.3, 1], B_K_IN: {along: [B_CP, B_HEM_IN]}}, handles: [[0.45, 0.45], [0.4, 0.4]],
+     note: 바이어스라 앞판보다 1/4 짧게 제도해 늘려박는다}
+  - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [B_W_SS, B_H_SS, B_K_OUT, B_HEM_OUT],
+     tangents: {B_W_SS: [0.2, 1], B_H_SS: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+  - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [B_HEM_IN, B_HEM_OUT]}

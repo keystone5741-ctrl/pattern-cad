@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="530.225mm" height="95.25mm" viewBox="0 0 530.225 95.25"><rect width="100%" height="100%" fill="white"/><title>고무줄 밴드</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M25.4 25.4L504.825 25.4L504.825 69.85L25.4 69.85L25.4 25.4"><title>외곽</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M265.112 25.4L265.112 31.75"><title>옆선노치</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M25.4 25.4L25.4 69.85"><title>앞중심</title></path>
+<path d="M504.825 25.4L504.825 69.85"><title>뒤중심</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="25.4" cy="25.4" r="0.762" fill="#06c"/><text x="26.67" y="24.384">TL</text>
+<circle cx="504.825" cy="25.4" r="0.762" fill="#06c"/><text x="506.095" y="24.384">TR</text>
+<circle cx="504.825" cy="69.85" r="0.762" fill="#06c"/><text x="506.095" y="68.834">BR</text>
+<circle cx="25.4" cy="69.85" r="0.762" fill="#06c"/><text x="26.67" y="68.834">BL</text>
+<circle cx="265.112" cy="25.4" r="0.762" fill="#06c"/><text x="266.382" y="24.384">SN</text>
+<circle cx="265.112" cy="31.75" r="0.762" fill="#06c"/><text x="266.382" y="30.734">SNT</text>
+</g></svg>

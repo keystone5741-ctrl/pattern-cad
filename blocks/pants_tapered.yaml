@@ -1,0 +1,64 @@
+# 테이퍼드 팬츠 (투턱) — p.33–34. 힙본 팬츠 원형을 이용한다.
+#
+# 유의사항:
+#   - 턱 위치: **원턱(바지주름선을 잡는 팬츠)은 레지끼선에 턱**을 잡고, 주름선을 잡지 않는 팬츠는
+#     주름선에서 옆선 쪽으로 조금 이동한 위치가 자연스럽다. **투턱(테이퍼드)은 바지중심선에 턱**이 들어가는 것이 자연스럽다
+#   - **턱 두 개는 중심에서 옆솔기 쪽으로 기울어진 A자 형태**가 되도록 제도한다. 일자로 제도하면 어색하다
+#   - 봉제 후 보이는 턱 각도는 원단이 흐르는 특성 때문에 **패턴보다 완만하게** 나온다.
+#     일자에 가깝게 제도하면 완성 시 오마진 형태가 되어 좋지 않다
+extends: pants_hipbone.yaml
+name: 테이퍼드 팬츠
+id: pants_tapered
+source: reference/portfolio.pdf p.33
+
+measurements:
+  엉덩이여유: {value: 6.1/2, note: 패턴 엉덩이 42}
+  밑위길이:   {value: 10.1/2}
+  기장:       {value: 34, note: 총장 35.1/2 − 오비}
+  밑단둘레:   {value: 6}
+  옆선들임:   {value: 5/8, note: 엉덩이 42 → 허리 29.5/8, 차이가 커서 옆솔기에서도 들인다}
+  턱1량:      {value: 1.1/4, note: 중심 쪽 턱}
+  턱2량:      {value: 1, note: 옆솔기 쪽 턱}
+  턱간격:     {value: 1.1/4}
+  턱길이:     {value: 3.1/2}
+  턱기울기:   {value: 3/8, note: 턱 끝을 옆솔기 쪽으로 — A자 형태}
+
+  뒤다트1폭:   {value: 1.1/4}
+  뒤다트1길이: {value: 5.1/2}
+  뒤다트2폭:   {value: 1}
+  뒤다트2길이: {value: 4.1/2}
+  뒤다트폭:    {value: 0, note: 두 개로 나눠 잡는다 — 아래 뒤다트1·2}
+
+points:
+  TK1_C: {ko: 턱1 중심, at: [앞주름선, 힙본내림]}
+  TK1_L: {from: TK1_C, dx: "-턱1량/2"}
+  TK1_R: {from: TK1_C, dx: "턱1량/2"}
+  TK1_T: {ko: 턱1 끝, from: TK1_C, dx: 턱기울기, dy: 턱길이}
+  TK2_C: {ko: 턱2 중심, at: ["앞주름선 + 턱간격 + 턱1량/2 + 턱2량/2", 힙본내림]}
+  TK2_L: {from: TK2_C, dx: "-턱2량/2"}
+  TK2_R: {from: TK2_C, dx: "턱2량/2"}
+  TK2_T: {ko: 턱2 끝, from: TK2_C, dx: 턱기울기, dy: 턱길이}
+
+  B_D1_C: {ko: 뒤다트1 중심(중심 쪽), along: [B_W_CB, B_W_SS], ratio: 0.34}
+  B_D1_L: {from: B_D1_C, dx: "-뒤다트1폭/2"}
+  B_D1_R: {from: B_D1_C, dx: "뒤다트1폭/2"}
+  B_D1_T: {ko: 뒤다트1 끝, from: B_D1_C, dy: 뒤다트1길이}
+  B_D2_C: {ko: 뒤다트2 중심(옆솔기 쪽), along: [B_W_CB, B_W_SS], ratio: 0.68}
+  B_D2_L: {from: B_D2_C, dx: "-뒤다트2폭/2"}
+  B_D2_R: {from: B_D2_C, dx: "뒤다트2폭/2"}
+  B_D2_T: {ko: 뒤다트2 끝, from: B_D2_C, dy: 뒤다트2길이}
+  remove: [B_D_C, B_D_L, B_D_R, B_D_T]
+
+lines:
+  remove: [앞허리선안, 앞다트, 앞허리선밖, 뒤허리선안, 뒤다트, 뒤허리선밖]
+  add:
+    - {name: 앞허리선안, piece: 앞판, role: outline, pts: [F_W_CF, TK1_L]}
+    - {name: 앞턱1, piece: 앞판, role: dart, pts: [TK1_L, TK1_T, TK1_R], note: 바지중심선(레지끼)에}
+    - {name: 앞허리선중, piece: 앞판, role: outline, pts: [TK1_R, TK2_L]}
+    - {name: 앞턱2, piece: 앞판, role: dart, pts: [TK2_L, TK2_T, TK2_R]}
+    - {name: 앞허리선밖, piece: 앞판, role: outline, pts: [TK2_R, F_W_SS]}
+    - {name: 뒤허리선안, piece: 뒤판, role: outline, pts: [B_W_CB, B_D1_L]}
+    - {name: 뒤다트1, piece: 뒤판, role: dart, pts: [B_D1_L, B_D1_T, B_D1_R]}
+    - {name: 뒤허리선중, piece: 뒤판, role: outline, pts: [B_D1_R, B_D2_L]}
+    - {name: 뒤다트2, piece: 뒤판, role: dart, pts: [B_D2_L, B_D2_T, B_D2_R]}
+    - {name: 뒤허리선밖, piece: 뒤판, role: outline, pts: [B_D2_R, B_W_SS]}
