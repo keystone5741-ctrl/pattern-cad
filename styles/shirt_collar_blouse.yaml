@@ -1,5 +1,5 @@
 # 기본 셔츠 칼라 블라우스 (p.48) = 블라우스 몸판(시추니 원형 상속) + 소매 원형.
-# 몸판 암홀 곡선 길이가 소매로 자동 전달된다. 칼라·칼라밴드·커프스·견보루는 부속 단계에서.
+# 몸판 암홀 곡선 길이가 소매로, 목선 길이가 칼라밴드로, 칼라밴드 윗선 길이가 칼라로 자동 전달된다.
 name: 셔츠 칼라 블라우스
 id: shirt_collar_blouse
 source: reference/portfolio.pdf p.48
@@ -17,3 +17,16 @@ blocks:
       뒤소매이세: -3/8
       소매길이: 22
       팔꿈치길이: 12
+  band:
+    block: ../blocks/shirt_collar_band.yaml
+    measurements:
+      뒤네크: "len(body.뒤목선)"
+      앞네크: "len(body.앞목선)"
+  collar:
+    block: ../blocks/shirt_collar.yaml
+    measurements:
+      밑변: "len(band.윗선)"
+  cuff:
+    block: ../blocks/cuff.yaml
+  placket:
+    block: ../blocks/sleeve_placket.yaml

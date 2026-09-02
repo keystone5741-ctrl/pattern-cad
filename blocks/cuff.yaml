@@ -1,0 +1,30 @@
+# 커프스 — p.48. 9" × 2" 직사각형. 단추구멍 중심 ~ 단추 중심 8" (= 손목둘레 6 + 2, p.49).
+# 좌표계: 왼쪽 위가 원점, +x 오른쪽, y 아래.
+name: 커프스
+id: cuff
+category: part
+units: inch
+source: reference/portfolio.pdf p.48
+
+measurements:
+  손목둘레: {value: 6}
+  여유:     {value: 2, note: 맞춤복 = 손목둘레 + 2, 오버사이즈는 더}
+  단추간격: {formula: "손목둘레 + 여유", note: 단추구멍 중심 ~ 단추 중심}
+  구멍끝여유: {value: 1/4, note: 단추구멍 쪽 끝에서}
+  가로:     {value: 9, note: 도면 표기. 단추는 단추구멍에서 단추간격만큼 (도면의 단추 쪽 3/8 표기와는 1/8 차이 — 도면 판단)}
+  세로:     {value: 2}
+
+points:
+  TL: {at: [0, 0]}
+  TR: {at: [가로, 0]}
+  BR: {at: [가로, 세로]}
+  BL: {at: [0, 세로]}
+  BH: {ko: 단추구멍, at: [구멍끝여유, "세로/2"]}
+  BT: {ko: 단추,     at: ["구멍끝여유 + 단추간격", "세로/2"]}
+  MID: {ko: 중심 노치, at: ["가로/2", 세로]}
+  MIDT: {at: ["가로/2", "세로 - 0.25"]}
+
+lines:
+  - {name: 외곽, role: outline, pts: [TL, TR, BR, BL], closed: true}
+  - {name: 단추선, role: construction, pts: [BH, BT]}
+  - {name: 중심노치, role: notch, pts: [MID, MIDT]}

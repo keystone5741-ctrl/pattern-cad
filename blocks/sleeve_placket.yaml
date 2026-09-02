@@ -1,0 +1,27 @@
+# 견보루 (소매 트임 덧단) — p.48. 폭 1", 길이 4", 위 끝은 3/8" 뾰족, 아래 3/4" 겹침 표시.
+# 좌표계: 왼쪽 위(뾰족한 끝 높이 기준선)가 원점, +x 오른쪽, y 아래.
+name: 견보루
+id: sleeve_placket
+category: part
+units: inch
+source: reference/portfolio.pdf p.48
+
+measurements:
+  폭:     {value: 1}
+  길이:   {value: 4, note: 뾰족한 끝 아래 몸통 길이}
+  끝높이: {value: 3/8, note: 위 뾰족한 부분}
+  절개폭: {value: 3/16, note: 가위 표시 폭}
+  아래겹침: {value: 3/4}
+
+points:
+  TIP: {ko: 끝점,   at: ["폭/2", 0]}
+  TL:  {at: [0, 끝높이]}
+  TR:  {at: [폭, 끝높이]}
+  BL:  {at: [0, "끝높이 + 길이"]}
+  BR:  {at: [폭, "끝높이 + 길이"]}
+  C1:  {ko: 절개 위, at: ["폭/2", "끝높이 + 절개폭"]}
+  C2:  {ko: 절개 아래, at: ["폭/2", "끝높이 + 길이 - 아래겹침"]}
+
+lines:
+  - {name: 외곽, role: outline, pts: [TL, TIP, TR, BR, BL], closed: true}
+  - {name: 절개, role: mark, pts: [C1, C2]}

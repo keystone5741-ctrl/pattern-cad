@@ -49,11 +49,14 @@ patterncad/
 blocks/
   sichuni_basic.yaml        시추니 기본 원형 (치수 → 점 규칙 → 선)
   sichuni_dartless.yaml     시추니 무다트 원형 — 기본 원형을 상속(extends)해 바뀐 값만
-  sleeve_basic.yaml         소매 원형 — 앞·뒤 암홀 길이에서 소매산높이(AH/3 + 조정)와 사선을 계산
+  sleeve_basic.yaml         소매 원형 — 앞·뒤 암홀 길이에서 소매산높이(AH/3 + 조정)와 사선을 계산. 소매산 단계 선택
+  shirt_collar_blouse_body.yaml  셔츠 칼라 블라우스 몸판 (기본 원형 상속)
+  shirt_collar_band.yaml / shirt_collar.yaml / cuff.yaml / sleeve_placket.yaml  부속: 칼라밴드·칼라·커프스·견보루
   *.svg                     실물 크기(mm) 그림
   verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
 styles/
   sichuni_with_sleeve.yaml  스타일 = 원형 묶음 + 치수 연결 (몸판 암홀 길이 → 소매 앞AH·뒤AH 자동)
+  shirt_collar_blouse.yaml  셔츠 칼라 블라우스 = 몸판 + 소매 + 칼라밴드(목선 길이 자동) + 칼라(밴드 윗선 자동) + 커프스 + 견보루
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤

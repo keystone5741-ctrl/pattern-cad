@@ -1,0 +1,39 @@
+# 셔츠 칼라밴드 (반쪽, 뒤중심 골) — p.48 '칼라 및 칼라밴드'.
+# 밑변(목둘레선) = 뒤네크둘레/2 + 앞네크둘레/2, 앞끝은 1" 올라가며 곡을 만든다 (p.49: 1~1.3/4 까지 올릴수록 곡이 세져 목에 피트).
+# 좌표계: 뒤중심 아래 모서리가 원점, +x 가 앞쪽, y 아래. 밴드는 위(−y)로 선다.
+name: 셔츠 칼라밴드
+id: shirt_collar_band
+category: part
+units: inch
+source: reference/portfolio.pdf p.48
+
+measurements:
+  뒤네크:   {ko: 뒤네크둘레/2, value: 3.1/2, note: 몸판 뒤목선 길이 — 스타일에서 자동}
+  앞네크:   {ko: 앞네크둘레/2, value: 5,     note: 몸판 앞목선 길이 — 스타일에서 자동}
+  앞연장:   {value: 3/4, note: 앞중심을 지나 단추 여밈만큼 더 나감 (도면 판단)}
+  앞올림:   {value: 1,   note: 밑변 끝에서 올라가는 양 (1~1.3/4)}
+  뒤높이:   {value: 1.1/8}
+  앞높이:   {value: 3/4}
+  앞둥글기: {value: 1/2, note: 앞끝 모서리 라운드}
+  밑변:     {formula: "뒤네크 + 앞네크"}
+
+points:
+  CB_BOT:  {ko: 뒤중심 아래,      at: [0, 0]}
+  CB_TOP:  {ko: 뒤중심 위,        at: [0, "-뒤높이"]}
+  SNP:     {ko: 목옆점,           at: [뒤네크, 0]}
+  CF_BASE: {ko: 앞중심 기준점,    at: [밑변, 0]}
+  FR_BOT:  {ko: 앞끝 아래,        at: ["밑변 + 앞연장", "-앞올림"]}
+  FR_TOP:  {ko: 앞끝 위,          at: ["밑변 + 앞연장 - 앞둥글기", "-앞올림 - 앞높이"]}
+  FR_MID:  {ko: 앞끝 라운드 중간, at: ["밑변 + 앞연장", "-앞올림 - 앞높이 + 앞둥글기"]}
+  CF_TOP:  {ko: 앞중심 위,        at: [밑변, "-앞올림 - 앞높이 + 앞둥글기/4"], note: 단추 자리 근처}
+
+lines:
+  - {name: 뒤중심, role: fold, pts: [CB_BOT, CB_TOP]}
+  - {name: 밑변기준, role: construction, pts: [CB_BOT, CF_BASE]}
+  - {name: 앞중심표시, role: mark, pts: [CF_BASE, CF_TOP]}
+  - {name: 목둘레선, role: outline, curve: [CB_BOT, SNP, FR_BOT],
+     tangents: {CB_BOT: [1, 0], SNP: [1, 0], FR_BOT: [1, -0.45]}, handles: [[0.33, 0.33], [0.4, 0.3]]}
+  - {name: 앞끝, role: outline, curve: [FR_BOT, FR_MID, FR_TOP],
+     tangents: {FR_BOT: [0, -1], FR_MID: [0, -1], FR_TOP: [-1, 0]}, handles: [[0.33, 0.33], [0.55, 0.55]]}
+  - {name: 윗선, role: outline, curve: [FR_TOP, CB_TOP],
+     tangents: {FR_TOP: [-1, 0.2], CB_TOP: [-1, 0]}, handles: [[0.35, 0.35]], note: 칼라가 달리는 선}
