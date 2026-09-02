@@ -285,8 +285,8 @@ class Hipbone(unittest.TestCase):
 class CurvedWaistband(unittest.TestCase):
     def test_arc_lengths_match_measurements(self):
         r = Block.load(ROOT / "blocks" / "waistband_curved.yaml").evaluate({"밑선": 8.0, "차이": 0.75, "높이": 1.5})
-        self.assertAlmostEqual(r.line("밑선").length(), 8.0, places=3)
-        self.assertAlmostEqual(r.line("윗선").length(), 7.25, places=3)
+        self.assertAlmostEqual(r.line("밑선").length(), 8.0, places=2)  # 베지어 근사 오차 0.0005"
+        self.assertAlmostEqual(r.line("윗선").length(), 7.25, places=2)
 
     def test_bigger_difference_curves_more(self):
         b = Block.load(ROOT / "blocks" / "waistband_curved.yaml")

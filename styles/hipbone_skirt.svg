@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1063.267mm" height="531.066mm" viewBox="0 0 1063.267 531.066">
+<rect width="100%" height="100%" fill="white"/>
+<g id="skirt">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M241.3 215.9L241.3 482.6"><title>앞옆선아래</title></path>
+<path d="M25.4 482.6L241.3 482.6"><title>앞밑단</title></path>
+<path d="M241.3 215.9L241.3 482.6"><title>뒤옆선아래</title></path>
+<path d="M241.3 482.6L482.6 482.6"><title>뒤밑단</title></path>
+<path d="M482.6 317.5L533.4 368.3L533.4 482.6L482.6 482.6"><title>겹트임덧단</title></path>
+<path d="M25.4 92.075C35.56 92.075 40.132 92.075 50.8 92.075C149.875 92.075 186.839 72.353 222.25 63.5"><title>앞허리선</title></path>
+<path d="M222.25 63.5C231.077 92.922 241.3 166.752 241.3 215.9"><title>앞옆선위</title></path>
+<path d="M482.6 79.375L482.6 482.6"><title>뒤중심선</title></path>
+<path d="M482.6 79.375C476.504 79.375 472.694 79.375 457.2 79.375C393.55 79.375 406.601 73.665 393.951 72.238"><title>뒤허리선1</title></path>
+<path d="M368.551 72.238L257.175 63.5"><title>뒤허리선2</title></path>
+<path d="M257.175 63.5C248.369 92.853 241.3 172.997 241.3 215.9"><title>뒤옆선위</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M393.951 72.238L381.251 180.975L368.551 72.238"><title>뒤다트</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M25.4 25.4L482.6 25.4"><title>허리기준선</title></path>
+<path d="M25.4 215.9L482.6 215.9"><title>엉덩이선</title></path>
+<path d="M241.3 25.4L241.3 215.9"><title>옆선기준</title></path>
+<path d="M25.4 76.2L482.6 76.2"><title>힙본기준선</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M482.6 393.7L533.4 368.3"><title>겹트임표시</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M482.6 215.9L476.25 215.9"><title>지퍼끝</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M25.4 92.075L25.4 482.6"><title>앞중심선</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="25.4" cy="25.4" r="0.762" fill="#06c"/><text x="26.67" y="24.384">CF_W</text>
+<circle cx="241.3" cy="25.4" r="0.762" fill="#06c"/><text x="242.57" y="24.384">SS_W0</text>
+<circle cx="482.6" cy="25.4" r="0.762" fill="#06c"/><text x="483.87" y="24.384">CB_W0</text>
+<circle cx="25.4" cy="215.9" r="0.762" fill="#06c"/><text x="26.67" y="214.884">CF_H</text>
+<circle cx="241.3" cy="215.9" r="0.762" fill="#06c"/><text x="242.57" y="214.884">SS_H</text>
+<circle cx="482.6" cy="215.9" r="0.762" fill="#06c"/><text x="483.87" y="214.884">CB_H</text>
+<circle cx="25.4" cy="482.6" r="0.762" fill="#06c"/><text x="26.67" y="481.584">CF_HEM</text>
+<circle cx="241.3" cy="482.6" r="0.762" fill="#06c"/><text x="242.57" y="481.584">SS_HEM</text>
+<circle cx="482.6" cy="482.6" r="0.762" fill="#06c"/><text x="483.87" y="481.584">CB_HEM</text>
+<circle cx="482.6" cy="215.9" r="0.762" fill="#06c"/><text x="483.87" y="214.884">ZIP_END</text>
+<circle cx="476.25" cy="215.9" r="0.762" fill="#06c"/><text x="477.52" y="214.884">ZIP_END_N</text>
+<circle cx="482.6" cy="393.7" r="0.762" fill="#06c"/><text x="483.87" y="392.684">VENT_T</text>
+<circle cx="533.4" cy="368.3" r="0.762" fill="#06c"/><text x="534.67" y="367.284">VENT_O</text>
+<circle cx="482.6" cy="317.5" r="0.762" fill="#06c"/><text x="483.87" y="316.484">VENT_S</text>
+<circle cx="533.4" cy="482.6" r="0.762" fill="#06c"/><text x="534.67" y="481.584">VENT_OH</text>
+<circle cx="25.4" cy="92.075" r="0.762" fill="#06c"/><text x="26.67" y="91.059">HB_CF</text>
+<circle cx="50.8" cy="92.075" r="0.762" fill="#06c"/><text x="52.07" y="91.059">HB_CF1</text>
+<circle cx="222.25" cy="63.5" r="0.762" fill="#06c"/><text x="223.52" y="62.484">HB_SSF</text>
+<circle cx="257.175" cy="63.5" r="0.762" fill="#06c"/><text x="258.445" y="62.484">HB_SSB</text>
+<circle cx="482.6" cy="79.375" r="0.762" fill="#06c"/><text x="483.87" y="78.359">HB_CB</text>
+<circle cx="457.2" cy="79.375" r="0.762" fill="#06c"/><text x="458.47" y="78.359">HB_CB1</text>
+<circle cx="25.4" cy="76.2" r="0.762" fill="#06c"/><text x="26.67" y="75.184">HB_L</text>
+<circle cx="482.6" cy="76.2" r="0.762" fill="#06c"/><text x="483.87" y="75.184">HB_R</text>
+<circle cx="381.251" cy="72.238" r="0.762" fill="#06c"/><text x="382.521" y="71.222">BD_C</text>
+<circle cx="368.551" cy="72.238" r="0.762" fill="#06c"/><text x="369.821" y="71.222">BD_L</text>
+<circle cx="393.951" cy="72.238" r="0.762" fill="#06c"/><text x="395.221" y="71.222">BD_R</text>
+<circle cx="381.251" cy="180.975" r="0.762" fill="#06c"/><text x="382.521" y="179.959">BD_T</text>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt — 힙본 스커트 원형</text>
+</g>
+<g id="waistband_front">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M762.286 458.005C731.699 464.471 702.097 467.566 670.833 467.566C639.57 467.566 609.968 464.471 579.38 458.005"><title>윗선</title></path>
+<path d="M770.166 495.281C736.943 502.304 704.79 505.666 670.833 505.666C636.876 505.666 604.723 502.304 571.5 495.281"><title>밑선</title></path>
+<path d="M579.38 458.005L571.5 495.281"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M579.38 458.005L571.5 495.281"><title>옆선표시</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M762.286 458.005L770.166 495.281"><title>앞끝</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="670.833" cy="25.4" r="0.762" fill="#06c"/><text x="672.103" y="24.384">C</text>
+<circle cx="762.286" cy="458.005" r="0.762" fill="#06c"/><text x="763.556" y="456.989">T0</text>
+<circle cx="670.833" cy="467.566" r="0.762" fill="#06c"/><text x="672.103" y="466.55">TM</text>
+<circle cx="579.38" cy="458.005" r="0.762" fill="#06c"/><text x="580.65" y="456.989">T1</text>
+<circle cx="770.166" cy="495.281" r="0.762" fill="#06c"/><text x="771.436" y="494.265">B0</text>
+<circle cx="670.833" cy="505.666" r="0.762" fill="#06c"/><text x="672.103" y="504.65">BM</text>
+<circle cx="571.5" cy="495.281" r="0.762" fill="#06c"/><text x="572.77" y="494.265">B1</text>
+<circle cx="579.38" cy="458.005" r="0.762" fill="#06c"/><text x="580.65" y="456.989">TE</text>
+<circle cx="571.5" cy="495.281" r="0.762" fill="#06c"/><text x="572.77" y="494.265">BE</text>
+</g>
+<text x="571.5" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_front — 곡선 오비</text>
+</g>
+<g id="waistband_back">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1028.441 378.509C998.505 386.153 969.174 389.839 938.277 389.839C897.71 389.839 858.965 383.41 820.572 370.307"><title>윗선</title></path>
+<path d="M1037.867 415.425C1004.801 423.868 972.404 427.939 938.277 427.939C893.469 427.939 850.673 420.838 808.266 406.365"><title>밑선</title></path>
+<path d="M820.572 370.307L808.266 406.365"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M848.114 378.509L838.688 415.425"><title>옆선표시</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1028.441 378.509L1037.867 415.425"><title>앞끝</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="938.277" cy="25.4" r="0.762" fill="#06c"/><text x="939.547" y="24.384">C</text>
+<circle cx="1028.441" cy="378.509" r="0.762" fill="#06c"/><text x="1029.711" y="377.493">T0</text>
+<circle cx="938.277" cy="389.839" r="0.762" fill="#06c"/><text x="939.547" y="388.823">TM</text>
+<circle cx="848.114" cy="378.509" r="0.762" fill="#06c"/><text x="849.384" y="377.493">T1</text>
+<circle cx="1037.867" cy="415.425" r="0.762" fill="#06c"/><text x="1039.137" y="414.409">B0</text>
+<circle cx="938.277" cy="427.939" r="0.762" fill="#06c"/><text x="939.547" y="426.923">BM</text>
+<circle cx="838.688" cy="415.425" r="0.762" fill="#06c"/><text x="839.958" y="414.409">B1</text>
+<circle cx="820.572" cy="370.307" r="0.762" fill="#06c"/><text x="821.842" y="369.291">TE</text>
+<circle cx="808.266" cy="406.365" r="0.762" fill="#06c"/><text x="809.536" y="405.349">BE</text>
+</g>
+<text x="808.266" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_back — 곡선 오비</text>
+</g>
+</svg>

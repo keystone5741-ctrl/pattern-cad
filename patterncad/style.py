@@ -22,10 +22,11 @@ from pathlib import Path
 import yaml
 
 from .block import Block, Resolved
+from .expr import Env, evaluate
 from .units import parse_inch
 
-_LEN = re.compile(r"^len\(\s*(\w+)\.(\S+?)\s*\)$")
-_REF = re.compile(r"^(\w+)\.([^.\s]+)(?:\.(x|y))?$")
+_LEN = re.compile(r"len\(\s*(\w+)\.([^)\s]+)\s*\)")
+_REF = re.compile(r"\b(\w+)\.([^.\s()+\-*/,]+)(?:\.(x|y))?")
 
 
 @dataclass
@@ -63,24 +64,37 @@ class Style:
 
     @staticmethod
     def _resolve(v, done: dict[str, Resolved]):
+        """앞선 블록을 참조하는 식을 값으로. len(블록.선), 블록.치수, 블록.점.x 를 숫자로 바꾼 뒤 계산한다."""
         if not isinstance(v, str):
             return v
         s = v.strip()
-        if parse_inch(s) is not None:
-            return parse_inch(s)
-        m = _LEN.match(s)
-        if m:
-            blk, line = m.group(1), m.group(2)
-            return done[blk].line(line).length()
-        m = _REF.match(s)
-        if m and m.group(1) in done:
-            res, key, comp = done[m.group(1)], m.group(2), m.group(3)
+        n = parse_inch(s)
+        if n is not None:
+            return n
+
+        def lookup(blk, key, comp=None):
+            res = done[blk]
             if key in res.points:
                 return getattr(res.points[key], comp or "x")
             if key in res.measurements:
                 return res.measurements[key]
-            raise KeyError(f"{m.group(1)} 에 {key} 가 없다")
-        return s  # 선택값 글자 등
+            raise KeyError(f"{blk} 에 {key} 가 없다")
+
+        def sub_len(m):
+            return repr(done[m.group(1)].line(m.group(2)).length())
+
+        def sub_ref(m):
+            if m.group(1) not in done:
+                return m.group(0)
+            return repr(lookup(m.group(1), m.group(2), m.group(3)))
+
+        t = _REF.sub(sub_ref, _LEN.sub(sub_len, s))
+        if t == s and not any(c in s for c in "+-*/0123456789"):
+            return s  # 선택값 글자 (예: 기본)
+        try:
+            return evaluate(t, Env({}, {}))
+        except (SyntaxError, ValueError, NameError) as e:
+            raise ValueError(f"스타일 치수 식을 계산 못 함: {v!r} → {t!r} ({e})") from e
 
 
 def bbox(res: Resolved):

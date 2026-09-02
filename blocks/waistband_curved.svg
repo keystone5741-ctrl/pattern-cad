@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="250.012mm" height="532.384mm" viewBox="0 0 250.012 532.384"><rect width="100%" height="100%" fill="white"/><title>곡선 오비</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M216.731 459.295C186.053 465.78 156.362 468.884 125.006 468.884C93.649 468.884 63.959 465.78 33.28 459.295"><title>윗선</title></path>
+<path d="M224.612 496.571C191.297 503.613 159.056 506.984 125.006 506.984C90.955 506.984 58.714 503.613 25.4 496.571"><title>밑선</title></path>
+<path d="M33.28 459.295L25.4 496.571"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M33.28 459.295L25.4 496.571"><title>옆선표시</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M216.731 459.295L224.612 496.571"><title>앞끝</title></path>
+</g>
+<g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
+<circle cx="125.006" cy="25.4" r="0.762" fill="#06c"/><text x="126.276" y="24.384">C</text>
+<circle cx="216.731" cy="459.295" r="0.762" fill="#06c"/><text x="218.001" y="458.279">T0</text>
+<circle cx="125.006" cy="468.884" r="0.762" fill="#06c"/><text x="126.276" y="467.868">TM</text>
+<circle cx="33.28" cy="459.295" r="0.762" fill="#06c"/><text x="34.55" y="458.279">T1</text>
+<circle cx="224.612" cy="496.571" r="0.762" fill="#06c"/><text x="225.882" y="495.555">B0</text>
+<circle cx="125.006" cy="506.984" r="0.762" fill="#06c"/><text x="126.276" y="505.968">BM</text>
+<circle cx="25.4" cy="496.571" r="0.762" fill="#06c"/><text x="26.67" y="495.555">B1</text>
+<circle cx="33.28" cy="459.295" r="0.762" fill="#06c"/><text x="34.55" y="458.279">TE</text>
+<circle cx="25.4" cy="496.571" r="0.762" fill="#06c"/><text x="26.67" y="495.555">BE</text>
+</g></svg>
