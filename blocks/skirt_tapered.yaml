@@ -30,7 +30,11 @@ measurements:
   뒤턱2량:      {value: 1.1/2}
   턱이세:       {value: 1/8, note: 턱이 벌어지는 것을 줄인다}
   턱길이비:     {value: 1, note: 턱 길이 = 턱량 × 이 값. 턱량과 턱 길이는 비례한다 (p.11)}
-  화살표길이:   {value: 3/4, note: 턱 접는 방향 표시}
+  화살표깊이:   {value: 1.1/4, note: 허리선에서 화살표까지}
+  화살표여유:   {value: 1/4, note: 화살표가 턱 다리 밖으로 나가는 양}
+  화살촉:       {value: 3/8, note: 화살촉 크기}
+  접힘표시위:   {value: 0.22, note: 접힘 빗금 위치 (턱 길이 대비 비율)}
+  접힘표시간격: {value: 0.07}
   # 벌림각 — 밑단이 축이므로 반지름은 밑단에서 허리까지
   앞턱1각:  {formula: "atan2(앞턱1량, 기장 - (힙본내림 - 옆선올림))"}
   앞턱2각:  {formula: "atan2(앞턱2량, 기장 - (힙본내림 - 옆선올림))"}
@@ -68,16 +72,30 @@ points:
   FT1_P:  {ko: 앞턱1 산, along: [P1_B, FT1_MID], dist: "dist(P1_B, FT1_L)"}
   FT2_MID: {midpoint: [FT2_L, FT2_R]}
   FT2_P:  {ko: 앞턱2 산, along: [P2_B, FT2_MID], dist: "dist(P2_B, FT2_L)"}
-  FT1_A1: {ko: 앞턱1 화살표 끝, from: FT1_R, dx: "-화살표길이", dy: "화살표길이/2"}
-  FT1_A2: {from: FT1_A1, dx: "화살표길이/3", dy: "-화살표길이/6"}
-  FT1_A3: {from: FT1_A1, dx: "화살표길이/4", dy: "화살표길이/4"}
-  FT2_A1: {ko: 앞턱2 화살표 끝, from: FT2_R, dx: "-화살표길이", dy: "화살표길이/2"}
-  FT2_A2: {from: FT2_A1, dx: "화살표길이/3", dy: "-화살표길이/6"}
-  FT2_A3: {from: FT2_A1, dx: "화살표길이/4", dy: "화살표길이/4"}
   FT1_M:  {midpoint: [FT1_L, FT1_R]}
   FT1_TIP: {ko: 앞턱1 끝, along: [FT1_M, P1_B], dist: "앞턱1량 * 턱길이비"}
   FT2_M:  {midpoint: [FT2_L, FT2_R]}
   FT2_TIP: {ko: 앞턱2 끝, along: [FT2_M, P2_B], dist: "앞턱2량 * 턱길이비"}
+  FT1_AT: {ko: FT1 화살표 꼬리, at: ["FT1_R.x + 화살표여유", "(FT1_L.y + FT1_R.y)/2 + 화살표깊이"]}
+  FT1_AH: {ko: FT1 화살표 머리, at: ["FT1_L.x - 화살표여유", "(FT1_L.y + FT1_R.y)/2 + 화살표깊이"]}
+  FT1_AB1: {from: FT1_AH, dx: "화살촉", dy: "-화살촉/2"}
+  FT1_AB2: {from: FT1_AH, dx: "화살촉", dy: "화살촉/2"}
+  FT1_H0a: {along: [FT1_L, FT1_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격"}
+  FT1_H0b: {along: [FT1_R, FT1_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  FT1_H1a: {along: [FT1_L, FT1_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격"}
+  FT1_H1b: {along: [FT1_R, FT1_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  FT1_H2a: {along: [FT1_L, FT1_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격"}
+  FT1_H2b: {along: [FT1_R, FT1_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  FT2_AT: {ko: FT2 화살표 꼬리, at: ["FT2_R.x + 화살표여유", "(FT2_L.y + FT2_R.y)/2 + 화살표깊이"]}
+  FT2_AH: {ko: FT2 화살표 머리, at: ["FT2_L.x - 화살표여유", "(FT2_L.y + FT2_R.y)/2 + 화살표깊이"]}
+  FT2_AB1: {from: FT2_AH, dx: "화살촉", dy: "-화살촉/2"}
+  FT2_AB2: {from: FT2_AH, dx: "화살촉", dy: "화살촉/2"}
+  FT2_H0a: {along: [FT2_L, FT2_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격"}
+  FT2_H0b: {along: [FT2_R, FT2_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  FT2_H1a: {along: [FT2_L, FT2_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격"}
+  FT2_H1b: {along: [FT2_R, FT2_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  FT2_H2a: {along: [FT2_L, FT2_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격"}
+  FT2_H2b: {along: [FT2_R, FT2_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격 + 접힘표시간격 * 1.6"}
   # ---------------- 뒤판
   Q1_B:   {ko: 뒤턱1 밑단 축,   at: ["앞폭 + 뒤폭 - 뒤턱1위치", 기장]}
   Q1_V:   {ko: 뒤턱1 세로 기준,  at: ["앞폭 + 뒤폭 - 뒤턱1위치", 0]}
@@ -103,16 +121,30 @@ points:
   BT1_P:  {ko: 뒤턱1 산, along: [Q1_B, BT1_MID], dist: "dist(Q1_B, BT1_R)"}
   BT2_MID: {midpoint: [BT2_R, BT2_L]}
   BT2_P:  {ko: 뒤턱2 산, along: [Q2_B, BT2_MID], dist: "dist(Q2_B, BT2_R)"}
-  BT1_A1: {ko: 뒤턱1 화살표 끝, from: BT1_L, dx: 화살표길이, dy: "화살표길이/2"}
-  BT1_A2: {from: BT1_A1, dx: "-화살표길이/3", dy: "-화살표길이/6"}
-  BT1_A3: {from: BT1_A1, dx: "-화살표길이/4", dy: "화살표길이/4"}
-  BT2_A1: {ko: 뒤턱2 화살표 끝, from: BT2_L, dx: 화살표길이, dy: "화살표길이/2"}
-  BT2_A2: {from: BT2_A1, dx: "-화살표길이/3", dy: "-화살표길이/6"}
-  BT2_A3: {from: BT2_A1, dx: "-화살표길이/4", dy: "화살표길이/4"}
   BT1_M:  {midpoint: [BT1_R, BT1_L]}
   BT1_TIP: {ko: 뒤턱1 끝, along: [BT1_M, Q1_B], dist: "뒤턱1량 * 턱길이비"}
   BT2_M:  {midpoint: [BT2_R, BT2_L]}
   BT2_TIP: {ko: 뒤턱2 끝, along: [BT2_M, Q2_B], dist: "뒤턱2량 * 턱길이비"}
+  BT1_AT: {ko: BT1 화살표 꼬리, at: ["BT1_L.x - 화살표여유", "(BT1_R.y + BT1_L.y)/2 + 화살표깊이"]}
+  BT1_AH: {ko: BT1 화살표 머리, at: ["BT1_R.x + 화살표여유", "(BT1_R.y + BT1_L.y)/2 + 화살표깊이"]}
+  BT1_AB1: {from: BT1_AH, dx: "-화살촉", dy: "-화살촉/2"}
+  BT1_AB2: {from: BT1_AH, dx: "-화살촉", dy: "화살촉/2"}
+  BT1_H0a: {along: [BT1_R, BT1_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격"}
+  BT1_H0b: {along: [BT1_L, BT1_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  BT1_H1a: {along: [BT1_R, BT1_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격"}
+  BT1_H1b: {along: [BT1_L, BT1_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  BT1_H2a: {along: [BT1_R, BT1_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격"}
+  BT1_H2b: {along: [BT1_L, BT1_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  BT2_AT: {ko: BT2 화살표 꼬리, at: ["BT2_L.x - 화살표여유", "(BT2_R.y + BT2_L.y)/2 + 화살표깊이"]}
+  BT2_AH: {ko: BT2 화살표 머리, at: ["BT2_R.x + 화살표여유", "(BT2_R.y + BT2_L.y)/2 + 화살표깊이"]}
+  BT2_AB1: {from: BT2_AH, dx: "-화살촉", dy: "-화살촉/2"}
+  BT2_AB2: {from: BT2_AH, dx: "-화살촉", dy: "화살촉/2"}
+  BT2_H0a: {along: [BT2_R, BT2_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격"}
+  BT2_H0b: {along: [BT2_L, BT2_TIP], ratio: "접힘표시위 + 0 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  BT2_H1a: {along: [BT2_R, BT2_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격"}
+  BT2_H1b: {along: [BT2_L, BT2_TIP], ratio: "접힘표시위 + 1 * 접힘표시간격 + 접힘표시간격 * 1.6"}
+  BT2_H2a: {along: [BT2_R, BT2_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격"}
+  BT2_H2b: {along: [BT2_L, BT2_TIP], ratio: "접힘표시위 + 2 * 접힘표시간격 + 접힘표시간격 * 1.6"}
 
 lines:
   remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단]
@@ -122,13 +154,21 @@ lines:
        tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], FT1_L: {along: [HB_CF1, HB_SSF]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
     - {name: 앞턱1산, piece: 앞판, role: outline, pts: [FT1_L, FT1_P, FT1_R], note: 턱을 접으면 오비선에 맞도록 반전된 허리선}
     - {name: 앞턱1, piece: 앞판, role: dart, pts: [FT1_L, FT1_TIP, FT1_R], note: 턱 — 길이는 턱량에 비례}
-    - {name: 앞턱1방향, piece: 앞판, role: mark, pts: [FT1_A2, FT1_A1, FT1_A3], note: 접는 방향 (앞중심 쪽)}
-    - {name: 앞턱1방향축, piece: 앞판, role: mark, pts: [FT1_A1, FT1_R]}
+    - {name: 앞턱1접힘선, piece: 앞판, role: fold, pts: [FT1_P, FT1_TIP], note: 턱이 접히는 선}
+    - {name: 앞턱1접힘1, piece: 앞판, role: mark, pts: [FT1_H0a, FT1_H0b]}
+    - {name: 앞턱1접힘2, piece: 앞판, role: mark, pts: [FT1_H1a, FT1_H1b]}
+    - {name: 앞턱1접힘3, piece: 앞판, role: mark, pts: [FT1_H2a, FT1_H2b]}
+    - {name: 앞턱1방향, piece: 앞판, role: mark, pts: [FT1_AT, FT1_AH]}
+    - {name: 앞턱1화살촉, piece: 앞판, role: mark, pts: [FT1_AB1, FT1_AH, FT1_AB2]}
     - {name: 앞허리선2, piece: 앞판, role: outline, pts: [FT1_R, FT2_L]}
     - {name: 앞턱2산, piece: 앞판, role: outline, pts: [FT2_L, FT2_P, FT2_R]}
     - {name: 앞턱2, piece: 앞판, role: dart, pts: [FT2_L, FT2_TIP, FT2_R]}
-    - {name: 앞턱2방향, piece: 앞판, role: mark, pts: [FT2_A2, FT2_A1, FT2_A3]}
-    - {name: 앞턱2방향축, piece: 앞판, role: mark, pts: [FT2_A1, FT2_R]}
+    - {name: 앞턱2접힘선, piece: 앞판, role: fold, pts: [FT2_P, FT2_TIP], note: 턱이 접히는 선}
+    - {name: 앞턱2접힘1, piece: 앞판, role: mark, pts: [FT2_H0a, FT2_H0b]}
+    - {name: 앞턱2접힘2, piece: 앞판, role: mark, pts: [FT2_H1a, FT2_H1b]}
+    - {name: 앞턱2접힘3, piece: 앞판, role: mark, pts: [FT2_H2a, FT2_H2b]}
+    - {name: 앞턱2방향, piece: 앞판, role: mark, pts: [FT2_AT, FT2_AH]}
+    - {name: 앞턱2화살촉, piece: 앞판, role: mark, pts: [FT2_AB1, FT2_AH, FT2_AB2]}
     - {name: 앞허리선3, piece: 앞판, role: outline, pts: [FT2_R, HB_SSF_T]}
     - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF_T, SS_H_FT, SS_HEM_FT],
        tangents: {HB_SSF_T: {along: [HB_SSF_T, SS_H_FT]}, SS_H_FT: {along: [HB_SSF_T, SS_HEM_FT]}, SS_HEM_FT: {along: [SS_H_FT, SS_HEM_FT]}},
@@ -141,13 +181,21 @@ lines:
        tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0], BT1_R: {along: [HB_CB1, HB_SSB]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
     - {name: 뒤턱1산, piece: 뒤판, role: outline, pts: [BT1_R, BT1_P, BT1_L]}
     - {name: 뒤턱1, piece: 뒤판, role: dart, pts: [BT1_R, BT1_TIP, BT1_L]}
-    - {name: 뒤턱1방향, piece: 뒤판, role: mark, pts: [BT1_A2, BT1_A1, BT1_A3], note: 접는 방향 (뒤중심 쪽)}
-    - {name: 뒤턱1방향축, piece: 뒤판, role: mark, pts: [BT1_A1, BT1_L]}
+    - {name: 뒤턱1접힘선, piece: 뒤판, role: fold, pts: [BT1_P, BT1_TIP], note: 턱이 접히는 선}
+    - {name: 뒤턱1접힘1, piece: 뒤판, role: mark, pts: [BT1_H0a, BT1_H0b]}
+    - {name: 뒤턱1접힘2, piece: 뒤판, role: mark, pts: [BT1_H1a, BT1_H1b]}
+    - {name: 뒤턱1접힘3, piece: 뒤판, role: mark, pts: [BT1_H2a, BT1_H2b]}
+    - {name: 뒤턱1방향, piece: 뒤판, role: mark, pts: [BT1_AT, BT1_AH]}
+    - {name: 뒤턱1화살촉, piece: 뒤판, role: mark, pts: [BT1_AB1, BT1_AH, BT1_AB2]}
     - {name: 뒤허리선2, piece: 뒤판, role: outline, pts: [BT1_L, BT2_R]}
     - {name: 뒤턱2산, piece: 뒤판, role: outline, pts: [BT2_R, BT2_P, BT2_L]}
     - {name: 뒤턱2, piece: 뒤판, role: dart, pts: [BT2_R, BT2_TIP, BT2_L]}
-    - {name: 뒤턱2방향, piece: 뒤판, role: mark, pts: [BT2_A2, BT2_A1, BT2_A3]}
-    - {name: 뒤턱2방향축, piece: 뒤판, role: mark, pts: [BT2_A1, BT2_L]}
+    - {name: 뒤턱2접힘선, piece: 뒤판, role: fold, pts: [BT2_P, BT2_TIP], note: 턱이 접히는 선}
+    - {name: 뒤턱2접힘1, piece: 뒤판, role: mark, pts: [BT2_H0a, BT2_H0b]}
+    - {name: 뒤턱2접힘2, piece: 뒤판, role: mark, pts: [BT2_H1a, BT2_H1b]}
+    - {name: 뒤턱2접힘3, piece: 뒤판, role: mark, pts: [BT2_H2a, BT2_H2b]}
+    - {name: 뒤턱2방향, piece: 뒤판, role: mark, pts: [BT2_AT, BT2_AH]}
+    - {name: 뒤턱2화살촉, piece: 뒤판, role: mark, pts: [BT2_AB1, BT2_AH, BT2_AB2]}
     - {name: 뒤허리선3, piece: 뒤판, role: outline, pts: [BT2_L, HB_SSB_T]}
     - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB_T, SS_H_BT, SS_HEM_BT],
        tangents: {HB_SSB_T: {along: [HB_SSB_T, SS_H_BT]}, SS_H_BT: {along: [HB_SSB_T, SS_HEM_BT]}, SS_HEM_BT: {along: [SS_H_BT, SS_HEM_BT]}},
