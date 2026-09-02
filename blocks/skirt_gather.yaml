@@ -1,0 +1,57 @@
+# 게더 스커트 — p.13–14. A라인 스커트 원형을 이용한다.
+#
+# 허리에 잔주름(셔링)을 잡아 볼륨을 주는 스커트. 셔링 분량만큼 패턴 전체를 나란히 넓힌다
+# (허리에서 밑단까지 절개해 위아래를 같은 양으로 벌리는 것 = 평행 전개).
+#
+# 셔링 분량은 소재에 따라 (p.14):
+#   쉬폰   원하는 길이 + 50~100%   (밀도가 낮아 100% 이상도 가능)
+#   면     원하는 길이 + 30~50%
+#   분량이 적으면 애매하게 잡히고, 밀도가 높은 원단에 많이 주면 분량이 살아 벌룬 실루엣이 된다.
+# **뒤 셔링을 앞보다 많이 준다** — 신체 뒤 둘레(엉덩이)가 크기 때문에 같은 양이면 뒤가 적어 보인다.
+# 작업지시서에 "셔링 봉제 후 스팀으로 자리잡음 시킬 것" 을 반드시 적고 패턴에도 써 둔다.
+# 셔링이 한쪽으로 치우치지 않게 균형 있게 분배됐는지 확인한다.
+extends: skirt_aline.yaml
+name: 게더 스커트
+id: skirt_gather
+source: reference/portfolio.pdf p.13
+
+measurements:
+  실루엣:   {choice: A라인, options: [세미A, A라인]}
+  소재:     {choice: 면, options: [면, 쉬폰], note: 셔링 분량 배수를 정한다}
+  셔링비율: {table: {면: 0.4, 쉬폰: 0.75}, key: 소재, note: 면 30~50%, 쉬폰 50~100%}
+  뒤셔링가산: {value: 0.25, note: 뒤 셔링을 앞보다 이 비율만큼 더 (20~30%)}
+  앞셔링:   {formula: "앞폭 * 셔링비율", note: 앞판에 더하는 셔링 분량}
+  뒤셔링:   {formula: "뒤폭 * 셔링비율 * (1 + 뒤셔링가산)"}
+
+points:
+  # 평행 전개 — 앞판은 옆선 쪽으로, 뒤판은 옆선 쪽으로 셔링 분량만큼 넓힌다
+  GS_WF:   {ko: 앞 허리 옆선점,   from: HB_SSF2, dx: 앞셔링}
+  GS_HF:   {ko: 앞 엉덩이 옆선점, from: SS_H_F, dx: 앞셔링}
+  GS_MF:   {ko: 앞 밑단 옆선점,   from: SS_HEM_F, dx: 앞셔링}
+  GS_WB:   {ko: 뒤 허리 옆선점,   from: HB_SSB2, dx: "-뒤셔링"}
+  GS_HB:   {ko: 뒤 엉덩이 옆선점, from: SS_H_B, dx: "-뒤셔링"}
+  GS_MB:   {ko: 뒤 밑단 옆선점,   from: SS_HEM_B, dx: "-뒤셔링"}
+  # 셔링 구간 표시 (허리 전체가 셔링)
+  GS_SF1:  {ko: 앞 셔링 시작, at: [0, "HB_CF.y"]}
+  GS_SB1:  {ko: 뒤 셔링 시작, at: ["앞폭 + 뒤폭", "HB_CB.y"]}
+
+lines:
+  remove: [앞다트, 앞허리선안, 앞허리선밖, 앞옆선, 앞밑단, 뒤옆선, 뒤밑단, 앞절개선, 뒤절개선]
+  add:
+    - {name: 앞허리선, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, GS_WF],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]],
+       note: 전체가 셔링 구간 — 오비 길이에 맞춰 오그려 봉제}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [GS_WF, GS_HF, GS_MF],
+       tangents: {GS_WF: {along: [GS_WF, GS_HF]}, GS_HF: {along: [GS_WF, GS_MF]}, GS_MF: {along: [GS_HF, GS_MF]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, curve: [CF_HEM, GS_MF],
+       tangents: {CF_HEM: [1, 0]}, handles: [[0.4, 0.4]]}
+    - {name: 앞셔링표시, piece: 앞판, role: mark, pts: [GS_SF1, GS_WF], note: 셔링 구간}
+    - {name: 뒤허리선, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, GS_WB],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [GS_WB, GS_HB, GS_MB],
+       tangents: {GS_WB: {along: [GS_WB, GS_HB]}, GS_HB: {along: [GS_WB, GS_MB]}, GS_MB: {along: [GS_HB, GS_MB]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, curve: [CB_HEM, GS_MB],
+       tangents: {CB_HEM: [-1, 0]}, handles: [[0.4, 0.4]]}
+    - {name: 뒤셔링표시, piece: 뒤판, role: mark, pts: [GS_SB1, GS_WB]}

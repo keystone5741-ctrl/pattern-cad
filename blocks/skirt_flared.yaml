@@ -1,0 +1,131 @@
+# 플레어 스커트 — p.15–16. A라인 스커트 원형을 이용한다.
+#
+# A라인보다 벌림량을 크게 준 것. **밑단 총 벌림이 8" 를 넘으면 A라인이 아니라 플레어**다 (p.10).
+# 벌림을 한 곳에 몰지 않고 **절개선 4 개**로 나눠 부채꼴로 전개한다 (도면 p.15 에 방사형 절개선이 여러 개).
+#
+# 유의사항 (p.15–16):
+#   **뒤 플레어를 앞보다 20~30% 더 준다** — 뒤 엉덩이둘레가 넓어 같은 양이면 앞보다 적어 보인다.
+#   원단이 뻣뻣하면 플레어 양이 많아질수록 자연스럽게 떨어지지 않고 뻗어나가다 각지게 떨어진다.
+#   플레어 양이 과하면 곡이 울렁거린다 (남는 분량이 겹쳐서) → 전개량을 줄인다.
+#   원하는 위치에 플레어를 넣으려면 그 자리 허리선을 각지게 재단하고 오비에 맞춰 봉제한다.
+#   스트레치 원단은 몸판 허리선을 1/8~1/4 작게 제도하고 늘림 표시. 허리가 안 맞으면 옆솔기는 그대로 두고 몸판에서 M.P.
+#   중심선이 식서면 옆솔기선이 바이어스결이 되어 완성 후 늘어난다 — 감안한다.
+extends: skirt_hipbone.yaml
+name: 플레어 스커트
+id: skirt_flared
+source: reference/portfolio.pdf p.15
+
+measurements:
+  앞옆선들임: {value: 5/8}
+  플레어량: {value: 2.1/2, note: "절개선 하나가 밑단에서 벌어지는 양. 4곳 × 2 = 총 20\" 로 8\" 를 크게 넘어 플레어. 사이즈표의 패턴 엉덩이 57.1/2 는 부채꼴로 펼친 평면 치수라 여기 계산(약 47)과 다르다 — 확인 필요"}
+  뒤가산:   {value: 0.25, note: 뒤 플레어를 앞보다 20~30% 더}
+  앞벌림:   {formula: "플레어량"}
+  뒤벌림:   {formula: "플레어량 * (1 + 뒤가산)"}
+  옆벌림:   {formula: "플레어량"}
+  절개길이: {formula: "기장 - (힙본내림 - 옆선올림)"}
+  앞벌림각: {formula: "atan2(앞벌림, 절개길이)"}
+  뒤벌림각: {formula: "atan2(뒤벌림, 절개길이)"}
+  앞절개0위치: {formula: "(앞폭 * 0.2000)"}
+  앞절개1위치: {formula: "(앞폭 * 0.4000)"}
+  앞절개2위치: {formula: "(앞폭 * 0.6000)"}
+  앞절개3위치: {formula: "(앞폭 * 0.8000)"}
+  뒤절개0위치: {formula: "앞폭 + 뒤폭 - (뒤폭 * 0.2000)"}
+  뒤절개1위치: {formula: "앞폭 + 뒤폭 - (뒤폭 * 0.4000)"}
+  뒤절개2위치: {formula: "앞폭 + 뒤폭 - (뒤폭 * 0.6000)"}
+  뒤절개3위치: {formula: "앞폭 + 뒤폭 - (뒤폭 * 0.8000)"}
+
+points:
+  SLF0_V: {at: ["앞절개0위치", 0]}
+  SLF0_B0: {at: ["앞절개0위치", 기장]}
+  SLF0_T0: {intersect: [[HB_CF1, HB_SSF], [SLF0_V, SLF0_B0]]}
+  SLF0_T: {ko: 절개0 회전축, at: ["SLF0_T0.x", "SLF0_T0.y"]}
+  SLF1_V: {at: ["앞절개1위치", 0]}
+  SLF1_B0: {at: ["앞절개1위치", 기장]}
+  SLF1_T0: {intersect: [[HB_CF1, HB_SSF], [SLF1_V, SLF1_B0]]}
+  SLF1_T1: {rotate: {of: SLF1_T0, center: SLF0_T, angle: "-앞벌림각"}}
+  SLF1_T: {ko: 절개1 회전축, at: ["SLF1_T1.x", "SLF1_T1.y"]}
+  SLF2_V: {at: ["앞절개2위치", 0]}
+  SLF2_B0: {at: ["앞절개2위치", 기장]}
+  SLF2_T0: {intersect: [[HB_CF1, HB_SSF], [SLF2_V, SLF2_B0]]}
+  SLF2_T1: {rotate: {of: SLF2_T0, center: SLF0_T, angle: "-앞벌림각"}}
+  SLF2_T2: {rotate: {of: SLF2_T1, center: SLF1_T, angle: "-앞벌림각"}}
+  SLF2_T: {ko: 절개2 회전축, at: ["SLF2_T2.x", "SLF2_T2.y"]}
+  SLF3_V: {at: ["앞절개3위치", 0]}
+  SLF3_B0: {at: ["앞절개3위치", 기장]}
+  SLF3_T0: {intersect: [[HB_CF1, HB_SSF], [SLF3_V, SLF3_B0]]}
+  SLF3_T1: {rotate: {of: SLF3_T0, center: SLF0_T, angle: "-앞벌림각"}}
+  SLF3_T2: {rotate: {of: SLF3_T1, center: SLF1_T, angle: "-앞벌림각"}}
+  SLF3_T3: {rotate: {of: SLF3_T2, center: SLF2_T, angle: "-앞벌림각"}}
+  SLF3_T: {ko: 절개3 회전축, at: ["SLF3_T3.x", "SLF3_T3.y"]}
+  FLF_허리_0: {rotate: {of: HB_SSF, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_허리_1: {rotate: {of: FLF_허리_0, center: SLF1_T, angle: "-앞벌림각"}}
+  FLF_허리_2: {rotate: {of: FLF_허리_1, center: SLF2_T, angle: "-앞벌림각"}}
+  FLF_허리_3: {rotate: {of: FLF_허리_2, center: SLF3_T, angle: "-앞벌림각"}}
+  FLF_허리: {ko: F 옆선 허리점, at: ["FLF_허리_3.x", "FLF_허리_3.y"]}
+  FLF_엉덩이_0: {rotate: {of: SS_H, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_엉덩이_1: {rotate: {of: FLF_엉덩이_0, center: SLF1_T, angle: "-앞벌림각"}}
+  FLF_엉덩이_2: {rotate: {of: FLF_엉덩이_1, center: SLF2_T, angle: "-앞벌림각"}}
+  FLF_엉덩이_3: {rotate: {of: FLF_엉덩이_2, center: SLF3_T, angle: "-앞벌림각"}}
+  FLF_엉덩이: {ko: F 옆선 엉덩이점, at: ["FLF_엉덩이_3.x", "FLF_엉덩이_3.y"]}
+  FLF_밑단_0: {rotate: {of: SS_HEM, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_밑단_1: {rotate: {of: FLF_밑단_0, center: SLF1_T, angle: "-앞벌림각"}}
+  FLF_밑단_2: {rotate: {of: FLF_밑단_1, center: SLF2_T, angle: "-앞벌림각"}}
+  FLF_밑단_3: {rotate: {of: FLF_밑단_2, center: SLF3_T, angle: "-앞벌림각"}}
+  FLF_밑단: {ko: F 옆선 밑단점, at: ["FLF_밑단_3.x", "FLF_밑단_3.y"]}
+  SLB0_V: {at: ["뒤절개0위치", 0]}
+  SLB0_B0: {at: ["뒤절개0위치", 기장]}
+  SLB0_T0: {intersect: [[HB_CB1, HB_SSB], [SLB0_V, SLB0_B0]]}
+  SLB0_T: {ko: 절개0 회전축, at: ["SLB0_T0.x", "SLB0_T0.y"]}
+  SLB1_V: {at: ["뒤절개1위치", 0]}
+  SLB1_B0: {at: ["뒤절개1위치", 기장]}
+  SLB1_T0: {intersect: [[HB_CB1, HB_SSB], [SLB1_V, SLB1_B0]]}
+  SLB1_T1: {rotate: {of: SLB1_T0, center: SLB0_T, angle: "뒤벌림각"}}
+  SLB1_T: {ko: 절개1 회전축, at: ["SLB1_T1.x", "SLB1_T1.y"]}
+  SLB2_V: {at: ["뒤절개2위치", 0]}
+  SLB2_B0: {at: ["뒤절개2위치", 기장]}
+  SLB2_T0: {intersect: [[HB_CB1, HB_SSB], [SLB2_V, SLB2_B0]]}
+  SLB2_T1: {rotate: {of: SLB2_T0, center: SLB0_T, angle: "뒤벌림각"}}
+  SLB2_T2: {rotate: {of: SLB2_T1, center: SLB1_T, angle: "뒤벌림각"}}
+  SLB2_T: {ko: 절개2 회전축, at: ["SLB2_T2.x", "SLB2_T2.y"]}
+  SLB3_V: {at: ["뒤절개3위치", 0]}
+  SLB3_B0: {at: ["뒤절개3위치", 기장]}
+  SLB3_T0: {intersect: [[HB_CB1, HB_SSB], [SLB3_V, SLB3_B0]]}
+  SLB3_T1: {rotate: {of: SLB3_T0, center: SLB0_T, angle: "뒤벌림각"}}
+  SLB3_T2: {rotate: {of: SLB3_T1, center: SLB1_T, angle: "뒤벌림각"}}
+  SLB3_T3: {rotate: {of: SLB3_T2, center: SLB2_T, angle: "뒤벌림각"}}
+  SLB3_T: {ko: 절개3 회전축, at: ["SLB3_T3.x", "SLB3_T3.y"]}
+  FLB_허리_0: {rotate: {of: HB_SSB, center: SLB0_T, angle: "뒤벌림각"}}
+  FLB_허리_1: {rotate: {of: FLB_허리_0, center: SLB1_T, angle: "뒤벌림각"}}
+  FLB_허리_2: {rotate: {of: FLB_허리_1, center: SLB2_T, angle: "뒤벌림각"}}
+  FLB_허리_3: {rotate: {of: FLB_허리_2, center: SLB3_T, angle: "뒤벌림각"}}
+  FLB_허리: {ko: B 옆선 허리점, at: ["FLB_허리_3.x", "FLB_허리_3.y"]}
+  FLB_엉덩이_0: {rotate: {of: SS_H, center: SLB0_T, angle: "뒤벌림각"}}
+  FLB_엉덩이_1: {rotate: {of: FLB_엉덩이_0, center: SLB1_T, angle: "뒤벌림각"}}
+  FLB_엉덩이_2: {rotate: {of: FLB_엉덩이_1, center: SLB2_T, angle: "뒤벌림각"}}
+  FLB_엉덩이_3: {rotate: {of: FLB_엉덩이_2, center: SLB3_T, angle: "뒤벌림각"}}
+  FLB_엉덩이: {ko: B 옆선 엉덩이점, at: ["FLB_엉덩이_3.x", "FLB_엉덩이_3.y"]}
+  FLB_밑단_0: {rotate: {of: SS_HEM, center: SLB0_T, angle: "뒤벌림각"}}
+  FLB_밑단_1: {rotate: {of: FLB_밑단_0, center: SLB1_T, angle: "뒤벌림각"}}
+  FLB_밑단_2: {rotate: {of: FLB_밑단_1, center: SLB2_T, angle: "뒤벌림각"}}
+  FLB_밑단_3: {rotate: {of: FLB_밑단_2, center: SLB3_T, angle: "뒤벌림각"}}
+  FLB_밑단: {ko: B 옆선 밑단점, at: ["FLB_밑단_3.x", "FLB_밑단_3.y"]}
+  FLF_밑단끝: {ko: 앞 옆선 밑단, from: FLF_밑단, dx: "옆벌림/2"}
+  FLB_밑단끝: {ko: 뒤 옆선 밑단, from: FLB_밑단, dx: "-옆벌림/2"}
+
+lines:
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단]
+  add:
+    - {name: 앞허리선, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, FLF_허리],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [FLF_허리, FLF_엉덩이, FLF_밑단끝],
+       tangents: {FLF_허리: {along: [FLF_허리, FLF_엉덩이]}, FLF_엉덩이: {along: [FLF_허리, FLF_밑단끝]}, FLF_밑단끝: {along: [FLF_엉덩이, FLF_밑단끝]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, curve: [CF_HEM, FLF_밑단끝],
+       tangents: {CF_HEM: [1, 0]}, handles: [[0.45, 0.45]]}
+    - {name: 뒤허리선, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, FLB_허리],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [FLB_허리, FLB_엉덩이, FLB_밑단끝],
+       tangents: {FLB_허리: {along: [FLB_허리, FLB_엉덩이]}, FLB_엉덩이: {along: [FLB_허리, FLB_밑단끝]}, FLB_밑단끝: {along: [FLB_엉덩이, FLB_밑단끝]}},
+       handles: [[0.34, 0.34], [0.34, 0.34]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, curve: [CB_HEM, FLB_밑단끝],
+       tangents: {CB_HEM: [-1, 0]}, handles: [[0.45, 0.45]]}
