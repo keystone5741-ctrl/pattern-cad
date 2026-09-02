@@ -40,3 +40,6 @@ measurements:
 
 lines:
   remove: [앞허리다트, 뒤허리다트]
+
+handles:   # 곡선 모양을 원본 도면에 맞춘 값 — tools/fit_all.py
+  앞암홀: [[0.220, 0.220], [0.220, 0.220], [0.221, 0.367]]

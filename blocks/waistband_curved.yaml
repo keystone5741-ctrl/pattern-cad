@@ -12,7 +12,7 @@ name: 곡선 오비
 id: waistband_curved
 category: part
 units: inch
-source: reference/portfolio.pdf p.8
+source: reference/portfolio.pdf p.7
 
 measurements:
   밑선:   {ko: 몸판에 달리는 길이, value: 7.9, note: 스타일에서 몸판 허리선 길이를 자동으로 받는다}

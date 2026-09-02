@@ -1,7 +1,14 @@
-# 슬리브리스 원피스 (p.63) = 사이바 절개 몸판 (소매 없음)
+# 슬리브리스 원피스 (p.63) = 허리에서 끊긴 몸판 + 셔링 스커트 (소매 없음)
 name: 슬리브리스 원피스
 id: sleeveless_dress
 source: reference/portfolio.pdf p.63
+
 blocks:
   body:
     block: ../blocks/sleeveless_dress_body.yaml
+  skirt:
+    block: ../blocks/dress_gather_skirt.yaml
+    measurements:
+      앞반폭: "body.스커트앞반폭"
+      뒤반폭: "body.스커트뒤반폭"
+      길이: "body.총기장 - body.기장"

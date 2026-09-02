@@ -45,3 +45,6 @@ lines:
        handles: [[0.33, 0.33], [0.33, 0.33], [0.33, 0.33], [0.4, 0.4]]}
   add:
     - {name: 무릎선, role: construction, pts: [KL_SS_F, KL_SS_B]}
+
+handles:   # 곡선 모양을 원본 도면에 맞춘 값 — tools/fit_all.py
+  앞밑단: [[0.224, 0.355]]

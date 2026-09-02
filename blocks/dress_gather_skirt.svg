@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="844.55mm" height="571.5mm" viewBox="0 0 844.55 571.5"><rect width="100%" height="100%" fill="white"/>
+<g id="앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M25.4 25.4L406.4 25.4"><title>앞허리선</title></path>
+<path d="M406.4 25.4L419.1 546.1"><title>앞옆선</title></path>
+<path d="M419.1 546.1C241.935 543.242 202.588 539.75 25.4 539.75"><title>앞밑단</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M25.4 539.75L25.4 25.4"><title>앞중심</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g>
+<g id="뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M469.9 25.4L819.15 25.4"><title>뒤허리선</title></path>
+<path d="M819.15 539.75C656.247 539.75 620.077 543.242 457.2 546.1"><title>뒤밑단</title></path>
+<path d="M457.2 546.1L469.9 25.4"><title>뒤옆선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M819.15 25.4L819.15 539.75"><title>뒤중심</title></path>
+</g>
+<text x="457.2" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g></svg>

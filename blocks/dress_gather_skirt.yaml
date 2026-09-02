@@ -1,0 +1,37 @@
+# 셔링 스커트 (원피스 아랫단) — p.63 슬리브리스 원피스.
+# 허리선에서 끊긴 원피스의 아랫부분. 몸판 허리보다 훨씬 넓게 잘라 셔링을 잡아 붙인다.
+name: 셔링 스커트
+id: dress_gather_skirt
+category: skirt
+units: inch
+source: reference/portfolio.pdf p.63
+
+measurements:
+  앞반폭:   {value: 15, note: 앞중심 골에서 옆선까지 (도면 표기 15")}
+  뒤반폭:   {value: 13.3/4}
+  길이:     {value: 20.1/4, note: 총기장 − 몸판기장}
+  밑단벌림: {value: 1/2, note: 옆선이 밑단으로 조금 벌어진다}
+  옆선내림: {value: 1/4, note: 옆선 쪽 밑단이 중심보다 내려간다}
+  펼친폭:   {formula: "(앞반폭 + 뒤반폭) * 2", note: 사이즈표의 '엉덩이둘레'}
+
+points:
+  F_TL: {ko: 앞 허리 중심, at: [0, 0]}
+  F_TR: {ko: 앞 허리 옆선, at: [앞반폭, 0]}
+  F_BR: {ko: 앞 밑단 옆선, at: ["앞반폭 + 밑단벌림", "길이 + 옆선내림"]}
+  F_BL: {ko: 앞 밑단 중심, at: [0, 길이]}
+  B_TL: {ko: 뒤 허리 옆선, at: ["앞반폭 + 밑단벌림 + 2", 0]}
+  B_TR: {ko: 뒤 허리 중심, at: ["앞반폭 + 밑단벌림 + 2 + 뒤반폭", 0]}
+  B_BR: {ko: 뒤 밑단 중심, at: ["앞반폭 + 밑단벌림 + 2 + 뒤반폭", 길이]}
+  B_BL: {ko: 뒤 밑단 옆선, at: ["앞반폭 + 밑단벌림 + 2 - 밑단벌림", "길이 + 옆선내림"]}
+
+lines:
+  - {name: 앞허리선, piece: 앞판, role: outline, pts: [F_TL, F_TR], note: 셔링을 잡아 몸판 허리에 붙인다}
+  - {name: 앞옆선,   piece: 앞판, role: outline, pts: [F_TR, F_BR]}
+  - {name: 앞밑단,   piece: 앞판, role: outline, curve: [F_BR, F_BL],
+     tangents: {F_BL: [1, 0]}, handles: [[0.45, 0.45]]}
+  - {name: 앞중심,   piece: 앞판, role: fold, pts: [F_BL, F_TL]}
+  - {name: 뒤허리선, piece: 뒤판, role: outline, pts: [B_TL, B_TR]}
+  - {name: 뒤중심,   piece: 뒤판, role: fold, pts: [B_TR, B_BR]}
+  - {name: 뒤밑단,   piece: 뒤판, role: outline, curve: [B_BR, B_BL],
+     tangents: {B_BR: [-1, 0]}, handles: [[0.45, 0.45]]}
+  - {name: 뒤옆선,   piece: 뒤판, role: outline, pts: [B_BL, B_TL]}

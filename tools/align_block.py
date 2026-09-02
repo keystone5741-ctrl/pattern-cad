@@ -371,6 +371,8 @@ def main(argv=None):
                 got, c = optimise(pts, cloud, s, uniform=(not a.aniso))
                 if best is None or c < best[1]:
                     best = (got, c)
+        if best is None:
+            raise SystemExit(f"p.{a.page} 에서 맞출 만한 도면 그림을 못 찾았다")
         (sx, sy, ox, oy), err = best
 
     if not a.quiet:

@@ -6,7 +6,7 @@
 extends: shirt_collar_band.yaml
 name: 칼라밴드(바나나밴드)
 id: banana_band
-source: reference/portfolio.pdf p.72
+source: reference/portfolio.pdf p.71
 
 measurements:
   밴드앞길이: {value: 1.3/4, note: 목옆점에서 앞쪽으로 (1.1/2~2)}

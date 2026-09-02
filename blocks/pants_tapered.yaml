@@ -62,3 +62,6 @@ lines:
     - {name: 뒤허리선중, piece: 뒤판, role: outline, pts: [B_D1_R, B_D2_L]}
     - {name: 뒤다트2, piece: 뒤판, role: dart, pts: [B_D2_L, B_D2_T, B_D2_R]}
     - {name: 뒤허리선밖, piece: 뒤판, role: outline, pts: [B_D2_R, B_W_SS]}
+
+handles:   # 곡선 모양을 원본 도면에 맞춘 값 — tools/fit_all.py
+  뒤밑위곡선: [[0.220, 0.220]]

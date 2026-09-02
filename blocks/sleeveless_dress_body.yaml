@@ -13,6 +13,10 @@
 #     **무다트 원형**을 쓰고, 암홀에서 남는 1/2 은 M.P 한 다음 옆솔기 쪽으로 벌린다
 #   - 쉬폰처럼 얇은 원단에 **지퍼**가 달리면 무게 때문에 기장이 길어질 수 있다.
 #     변수가 많아 임의로 고칠 수 없으니 **샘플로 늘어난 정도를 확인**하고 패턴을 수정한다
+#
+# 구조: 이 원피스는 **허리선에서 끊긴다.** 몸판(여기)은 허리까지고, 그 아래는
+# 셔링을 잡아 붙이는 스커트다 (blocks/dress_gather_skirt.yaml). 사이즈표의 엉덩이둘레 55.3/8 은
+# 몸판이 아니라 **셔링 스커트를 펼친 폭**이다 (도면 표기 앞 15" · 뒤 13.3/4").
 extends: top_body.yaml
 name: 슬리브리스 원피스 몸판
 id: sleeveless_dress_body
@@ -23,7 +27,8 @@ measurements:
   진동깊이:     {value: 7.1/2}
   등길이:       {value: 15}
   엉덩이길이:   {value: 7.1/2}
-  기장:         {value: 35.1/4}
+  기장:         {value: 15, note: 몸판은 허리선까지다. 아래는 셔링 스커트를 따로 달아 붙인다 (도면 p.63)}
+  총기장:       {value: 35.1/4, note: 어깨에서 밑단까지 — 스커트 길이 = 총기장 − 기장}
   원형어깨끝너비: {value: 7.1/2}
   어깨줄임:     {value: 13/16, note: 민소매라 어깨를 좁힌다}
   뒤어깨끝너비: {formula: "원형어깨끝너비 - 어깨줄임", note: 어깨너비 13.3/8}
@@ -31,7 +36,9 @@ measurements:
   뒤품:         {value: 13}
   옆선허리들임: {value: 3/4, note: 패턴 허리 27.7/8 ≒ 표기 28}
   엉덩이여유:   {value: 3/4, note: 패턴 엉덩이 37.7/8}
-  밑단벌림:     {value: 4.3/8, note: 밑단이 벌어지는 플레어 — 패턴 밑단 55.3/8 (사이즈표의 '엉덩이둘레')}
+  밑단벌림:     {value: 0, note: 몸판은 허리에서 끊는다}
+  스커트앞반폭: {value: 15, note: 셔링 스커트 앞 반폭 (도면 표기 15")}
+  스커트뒤반폭: {value: 13.3/4, note: 뒤 반폭 (도면 표기 13.3/4"). 2 × (15 + 13.3/4) = 57.1/2}
   앞옆밑단올림: {value: 0}
   뒤옆밑단올림: {value: 0}
   사이바암홀:   {value: 2.1/2, note: 암홀 곡선 위 사이바 시작점 — 겨드랑점에서 위로}
@@ -40,14 +47,20 @@ measurements:
 
 points:
   FSB_T: {ko: 앞사이바 시작(암홀), at: ["FWD_C.x", "UP2.y - 사이바암홀"]}
-  FSB_H: {ko: 앞사이바 밑단, at: ["FWD_C.x + 밑단벌림 * 0.45", "HEM_CF.y"]}
   BSB_T: {ko: 뒤사이바 시작(암홀), at: ["BWD_C.x", "UP2.y - 사이바암홀"]}
-  BSB_H: {ko: 뒤사이바 밑단, at: ["BWD_C.x - 밑단벌림 * 0.45", "HEM_CB0.y"]}
 
 lines:
+  replace:
+    # 허리에서 끊기므로 옆선·밑단을 허리선까지만 그린다
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [BD2, WL_SS_F],
+       tangents: {BD2: {along: [BD2, WL_SS_F]}, WL_SS_F: [0, 1]}, handles: [[0.4, 0.4]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [UP2, WL_SS_B],
+       tangents: {UP2: {along: [UP2, WL_SS_B]}, WL_SS_B: [0, 1]}, handles: [[0.4, 0.4]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [HEM_CF, WL_SS_F], note: 허리선 — 셔링 스커트가 붙는다}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, WL_SS_B]}
   add:
-    - {name: 앞사이바, piece: 앞판, role: mark, curve: [FSB_T, BP, FWD_C, FSB_H],
-       tangents: {BP: [0, 1], FWD_C: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]],
-       note: BP 에 가깝게 지나야 가슴 입체분량을 처리할 수 있다 (남는 이세 3/8 이하)}
-    - {name: 뒤사이바, piece: 뒤판, role: mark, curve: [BSB_T, BWD_TOP, BWD_C, BSB_H],
-       tangents: {BWD_C: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 앞사이바, piece: 앞판, role: mark, curve: [FSB_T, BP, FWD_C],
+       tangents: {BP: [0, 1], FWD_C: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]],
+       note: BP 에 가깝게 지나야 가슴 입체분량을 처리할 수 있다 (남는 이세 3/8 이하). 허리선에서 끝난다}
+    - {name: 뒤사이바, piece: 뒤판, role: mark, curve: [BSB_T, BWD_TOP, BWD_C],
+       tangents: {BWD_C: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}

@@ -15,7 +15,7 @@ name: 플랫 칼라
 id: flat_collar
 category: part
 units: inch
-source: reference/portfolio.pdf p.68
+source: reference/portfolio.pdf p.69
 
 measurements:
   뒤네크:   {value: 3.1/2, note: 몸판 뒤목선 길이 — 스타일에서 자동}

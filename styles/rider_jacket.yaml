@@ -20,4 +20,4 @@ blocks:
     block: ../blocks/stand_collar.yaml
     measurements:
       뒤네크: "len(body.뒤목선)"
-      앞네크: "len(body.앞목선)"
+      앞네크: "len(body.고지라인)"   # 라펠이 있어 칼라는 고지라인에 달린다

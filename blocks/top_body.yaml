@@ -11,7 +11,7 @@
 extends: sichuni_basic.yaml
 name: 상의 몸판 기본틀
 id: top_body
-source: reference/portfolio.pdf p.44 + p.48
+source: reference/portfolio.pdf p.48
 
 measurements:
   진동깊이:     {value: 8.1/4}
