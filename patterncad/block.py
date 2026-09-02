@@ -43,6 +43,7 @@ from pathlib import Path
 import yaml
 
 from .expr import Env, evaluate
+from .units import parse_inch
 from .geometry import (
     Bezier,
     Pt,
@@ -206,27 +207,42 @@ class Block:
         for name, spec in self.measurements.items():
             spec = spec if isinstance(spec, dict) else {"value": spec}
             if name in overrides:
-                meas[name] = float(overrides[name])
+                v = overrides[name]
+                meas[name] = v if isinstance(v, str) and parse_inch(v) is None else float(parse_inch(v) if isinstance(v, str) else v)
+            elif "choice" in spec:  # 글자 선택값 (예: 소매산단계: 기본)
+                if spec.get("options") and spec["choice"] not in spec["options"]:
+                    raise ValueError(f"치수 {name}: {spec['choice']} 는 선택지 {spec['options']} 에 없다")
+                meas[name] = spec["choice"]
+            elif "table" in spec:  # 다른 선택값에 따른 표 (예: 소매산단계 → 소매산조정)
+                pending[name] = spec
             elif "formula" in spec:
                 pending[name] = spec["formula"]
             elif "value" in spec:
                 meas[name] = evaluate(spec["value"], env)
             else:
                 raise ValueError(f"치수 {name}: value 나 formula 가 필요하다")
-        for name in list(pending):  # 점을 참조하지 않는 식은 지금, 나머지는 점 계산 중에
-            try:
-                meas[name] = evaluate(pending[name], env)
-                del pending[name]
-            except NameError:
-                pass
+
+        def resolve_one(name):
+            spec = pending[name]
+            if isinstance(spec, dict):  # table
+                key = meas[spec["key"]]  # 없으면 KeyError → 아직
+                if isinstance(meas.get(name), str) and name in overrides:
+                    return
+                if key not in spec["table"]:
+                    raise ValueError(f"치수 {name}: 표에 {key!r} 가 없다 (선택지 {list(spec['table'])})")
+                meas[name] = evaluate(spec["table"][key], env)
+            else:
+                meas[name] = evaluate(spec, env)
 
         def resolve_pending():
             for name in list(pending):
                 try:
-                    meas[name] = evaluate(pending[name], env)
+                    resolve_one(name)
                     del pending[name]
-                except NameError:
+                except (NameError, KeyError):
                     pass
+
+        resolve_pending()  # 점을 참조하지 않는 식은 지금, 나머지는 점 계산 중에
 
         point_meta = {}
         for name, rule in self.points.items():

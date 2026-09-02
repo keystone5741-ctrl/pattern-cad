@@ -168,11 +168,37 @@ class Sleeve(unittest.TestCase):
         self.assertAlmostEqual(p["EL_B"].y, m["팔꿈치길이"])
         self.assertAlmostEqual(p["EL_F"].y, m["팔꿈치길이"])
 
+    def test_cap_level_sets_adjust_and_ease(self):
+        b = Block.load(ROOT / "blocks" / "sleeve_basic.yaml")
+        low = b.evaluate({"소매산단계": "낮음"}).measurements
+        self.assertAlmostEqual(low["소매산조정"], -1.625)
+        self.assertAlmostEqual(low["앞소매이세"], -0.5)
+        # 이세는 단계와 별개로 덮어쓸 수 있다
+        custom = b.evaluate({"소매산단계": "낮음", "앞소매이세": "1/4"}).measurements
+        self.assertAlmostEqual(custom["소매산조정"], -1.625)
+        self.assertAlmostEqual(custom["앞소매이세"], 0.25)
+        with self.assertRaises(ValueError):
+            b.evaluate({"소매산단계": "없는단계"})
+
     def test_lower_cap_lowers_height(self):
         low = Block.load(ROOT / "blocks" / "sleeve_basic.yaml").evaluate({"소매산조정": -1.625})
         self.assertLess(low.measurements["소매산높이"], self.res.measurements["소매산높이"])
         self.assertGreater(low.points["BIC_F"].x - low.points["BIC_B"].x,
                            self.res.points["BIC_F"].x - self.res.points["BIC_B"].x)  # 낮은 소매산 → 소매통 넓어짐
+
+
+class StyleLink(unittest.TestCase):
+    """몸판 암홀 길이가 소매로 자동 전달되는 스타일."""
+
+    def test_armhole_length_flows_to_sleeve(self):
+        from patterncad.style import Style
+
+        st = Style.load(ROOT / "styles" / "sichuni_with_sleeve.yaml")
+        res = st.evaluate()
+        self.assertAlmostEqual(res["sleeve"].measurements["앞AH"], res["body"].line("앞암홀").length())
+        self.assertAlmostEqual(res["sleeve"].measurements["뒤AH"], res["body"].line("뒤암홀").length())
+        big = st.evaluate({"body.B": 37.5})
+        self.assertGreater(big["sleeve"].measurements["앞AH"], res["sleeve"].measurements["앞AH"])
 
 
 if __name__ == "__main__":

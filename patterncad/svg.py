@@ -66,6 +66,32 @@ def render_group(res: Resolved, scale: float, dx: float, dy: float, color: str |
     return "\n".join(out)
 
 
+def render_style_svg(results: dict, gap_in: float = 2.0, margin_in: float = 1.0, labels: bool = True) -> str:
+    """여러 원형을 왼쪽부터 나란히 놓은 실물 크기(mm) SVG."""
+    from .style import bbox
+
+    S = MM_PER_INCH
+    boxes = {n: bbox(r) for n, r in results.items()}
+    total_w = sum(b[2] - b[0] for b in boxes.values()) + gap_in * (len(boxes) - 1) + 2 * margin_in
+    total_h = max(b[3] - b[1] for b in boxes.values()) + 2 * margin_in
+    out = [
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{_f(total_w * S)}mm" height="{_f(total_h * S)}mm" '
+        f'viewBox="0 0 {_f(total_w * S)} {_f(total_h * S)}">',
+        '<rect width="100%" height="100%" fill="white"/>',
+    ]
+    x = margin_in
+    for name, res in results.items():
+        x0, y0, x1, y1 = boxes[name]
+        out.append(f'<g id="{name}">')
+        out.append(render_group(res, S, (x - x0) * S, (margin_in - y0) * S, labels=labels, stroke_w=0.35))
+        out.append(f'<text x="{_f(x * S)}" y="{_f((margin_in - 0.4) * S)}" font-size="{_f(S * 0.3)}" '
+                   f'font-family="sans-serif" fill="#444">{name} — {res.block.name}</text>')
+        out.append("</g>")
+        x += (x1 - x0) + gap_in
+    out.append("</svg>")
+    return "\n".join(out)
+
+
 def render_svg(res: Resolved, unit: str = "mm", margin_in: float = 1.0, labels: bool = True) -> str:
     """원형 하나를 실물 크기(mm)의 독립 SVG로."""
     xs = [p.x for p in res.points.values()]

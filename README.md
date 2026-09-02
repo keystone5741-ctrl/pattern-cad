@@ -52,6 +52,8 @@ blocks/
   sleeve_basic.yaml         소매 원형 — 앞·뒤 암홀 길이에서 소매산높이(AH/3 + 조정)와 사선을 계산
   *.svg                     실물 크기(mm) 그림
   verify_*.png              원본(검정) 위에 규칙 계산(빨강) 겹친 검증 그림
+styles/
+  sichuni_with_sleeve.yaml  스타일 = 원형 묶음 + 치수 연결 (몸판 암홀 길이 → 소매 앞AH·뒤AH 자동)
 docs/drafting_notes.md      확인된 제도 규칙 · 미확인 사항 기록
 docs/sleeve_survey.md       아이템별 소매산 조정값·이세 표와 암홀–소매 관계
 tools/verify_block.py       규칙 ↔ 원본 도면 겹침 검증 · 곡선 핸들 맞춤

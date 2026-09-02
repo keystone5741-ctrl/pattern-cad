@@ -1,0 +1,14 @@
+# 시추니 기본 원형 + 소매 원형. 몸판 암홀 곡선 길이가 소매의 앞AH·뒤AH 로 자동 전달된다.
+name: 시추니 원형 + 소매
+id: sichuni_with_sleeve
+
+blocks:
+  body:
+    block: ../blocks/sichuni_basic.yaml
+  sleeve:
+    block: ../blocks/sleeve_basic.yaml
+    measurements:
+      앞AH: "len(body.앞암홀)"
+      뒤AH: "len(body.뒤암홀)"
+      소매산단계: 기본
+      # 이세를 따로 정하려면 여기서 덮어쓴다 (예: 앞소매이세: -1/4)
