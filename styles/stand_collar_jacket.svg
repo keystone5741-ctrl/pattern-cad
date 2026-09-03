@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1579.09mm" height="736.6mm" viewBox="0 0 1579.09 736.6">
+<svg xmlns="http://www.w3.org/2000/svg" width="1574.342mm" height="736.6mm" viewBox="0 0 1574.342 736.6">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -66,9 +66,9 @@
 </g>
 <g id="collar">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1350.818 73.025C1378.388 73.025 1406.794 73.025 1434.364 73.025C1482.699 73.025 1520.632 68.851 1553.69 53.975"><title>목둘레선</title></path>
-<path d="M1553.69 53.975C1553.69 46.641 1553.69 39.084 1553.69 31.75C1553.69 26.811 1552.279 25.4 1547.34 25.4"><title>앞끝</title></path>
-<path d="M1547.34 25.4C1479.673 38.933 1419.825 41.275 1350.818 41.275"><title>윗선</title></path>
+<path d="M1350.818 73.025C1378.388 73.025 1406.794 73.025 1434.364 73.025C1480.824 73.025 1517.166 68.274 1548.942 53.975"><title>목둘레선</title></path>
+<path d="M1548.942 53.975C1548.942 46.641 1548.942 39.084 1548.942 31.75C1548.942 26.811 1547.531 25.4 1542.592 25.4"><title>앞끝</title></path>
+<path d="M1542.592 25.4C1476.55 38.609 1418.169 41.275 1350.818 41.275"><title>윗선</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
 <path d="M1350.818 73.025L1540.99 73.025"><title>밑변기준</title></path>

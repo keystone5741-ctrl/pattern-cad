@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1893.53mm" height="694.073mm" viewBox="0 0 1893.53 694.073">
+<svg xmlns="http://www.w3.org/2000/svg" width="1882.668mm" height="694.073mm" viewBox="0 0 1882.668 694.073">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -67,9 +67,9 @@
 </g>
 <g id="band">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M979.783 69.85C1010.022 69.85 1041.178 69.85 1071.418 69.85C1131.193 69.85 1177.799 62.847 1218.682 44.45"><title>목둘레선</title></path>
-<path d="M1218.682 44.45C1218.682 42.354 1218.682 40.195 1218.682 38.1C1218.682 28.222 1215.86 25.4 1205.982 25.4"><title>앞끝</title></path>
-<path d="M1205.982 25.4C1128.159 40.965 1059.147 41.275 979.783 41.275"><title>윗선</title></path>
+<path d="M979.783 69.85C1010.022 69.85 1041.178 69.85 1071.418 69.85C1129.054 69.85 1173.831 62.189 1213.251 44.45"><title>목둘레선</title></path>
+<path d="M1213.251 44.45C1213.251 42.354 1213.251 40.195 1213.251 38.1C1213.251 28.222 1210.429 25.4 1200.551 25.4"><title>앞끝</title></path>
+<path d="M1200.551 25.4C1124.587 40.593 1057.251 41.275 979.783 41.275"><title>윗선</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
 <path d="M979.783 69.85L1199.632 69.85"><title>밑변기준</title></path>
@@ -84,38 +84,38 @@
 </g>
 <g id="collar">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1269.482 101.6C1381.546 101.6 1426.721 101.991 1493.48 93.98"><title>밑변</title></path>
-<path d="M1493.48 93.98L1512.53 36.83"><title>앞변</title></path>
-<path d="M1512.53 36.83C1415.325 31.97 1366.809 25.4 1269.482 25.4"><title>윗선</title></path>
+<path d="M1264.051 101.6C1373.401 101.6 1417.476 101.797 1482.618 93.98"><title>밑변</title></path>
+<path d="M1482.618 93.98L1501.668 36.83"><title>앞변</title></path>
+<path d="M1501.668 36.83C1406.63 32.078 1359.208 25.4 1264.051 25.4"><title>윗선</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1371.71 101.6L1371.71 95.25"><title>늘림표시1</title></path>
-<path d="M1422.51 101.6L1422.51 95.25"><title>늘림표시2</title></path>
+<path d="M1363.835 101.6L1363.835 95.25"><title>늘림표시1</title></path>
+<path d="M1414.635 101.6L1414.635 95.25"><title>늘림표시2</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1269.482 101.6L1269.482 25.4"><title>뒤중심</title></path>
+<path d="M1264.051 101.6L1264.051 25.4"><title>뒤중심</title></path>
 </g>
-<text x="1269.482" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 셔츠 칼라</text>
+<text x="1264.051" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 셔츠 칼라</text>
 </g>
 <g id="cuff">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1563.33 25.4L1791.93 25.4L1791.93 76.2L1563.33 76.2L1563.33 25.4"><title>외곽</title></path>
+<path d="M1552.468 25.4L1781.068 25.4L1781.068 76.2L1552.468 76.2L1552.468 25.4"><title>외곽</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M1569.68 50.8L1772.88 50.8"><title>단추선</title></path>
+<path d="M1558.818 50.8L1762.018 50.8"><title>단추선</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1677.63 76.2L1677.63 69.85"><title>중심노치</title></path>
+<path d="M1666.768 76.2L1666.768 69.85"><title>중심노치</title></path>
 </g>
-<text x="1563.33" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">cuff — 커프스</text>
+<text x="1552.468" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">cuff — 커프스</text>
 </g>
 <g id="placket">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1842.73 34.925L1855.43 25.4L1868.13 34.925L1868.13 136.525L1842.73 136.525L1842.73 34.925"><title>외곽</title></path>
+<path d="M1831.868 34.925L1844.568 25.4L1857.268 34.925L1857.268 136.525L1831.868 136.525L1831.868 34.925"><title>외곽</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M1855.43 39.688L1855.43 117.475"><title>절개</title></path>
+<path d="M1844.568 39.688L1844.568 117.475"><title>절개</title></path>
 </g>
-<text x="1842.73" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">placket — 견보루</text>
+<text x="1831.868" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">placket — 견보루</text>
 </g>
 </svg>

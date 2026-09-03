@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="279.4mm" height="98.425mm" viewBox="0 0 279.4 98.425"><rect width="100%" height="100%" fill="white"/><title>스탠 칼라</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M25.4 73.025C54.737 73.025 84.963 73.025 114.3 73.025C170.697 73.025 215.428 71.333 254 53.975"><title>목둘레선</title></path>
-<path d="M254 53.975C254 46.641 254 39.084 254 31.75C254 26.811 252.589 25.4 247.65 25.4"><title>앞끝</title></path>
-<path d="M247.65 25.4C171.179 40.694 103.386 41.275 25.4 41.275"><title>윗선</title></path>
+<svg xmlns="http://www.w3.org/2000/svg" width="274.889mm" height="98.425mm" viewBox="0 0 274.889 98.425"><rect width="100%" height="100%" fill="white"/><title>스탠 칼라</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M25.4 73.025C54.737 73.025 84.963 73.025 114.3 73.025C168.91 73.025 212.139 70.783 249.489 53.975"><title>목둘레선</title></path>
+<path d="M249.489 53.975C249.489 46.641 249.489 39.084 249.489 31.75C249.489 26.811 248.079 25.4 243.139 25.4"><title>앞끝</title></path>
+<path d="M243.139 25.4C168.212 40.385 101.811 41.275 25.4 41.275"><title>윗선</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
 <path d="M25.4 73.025L241.3 73.025"><title>밑변기준</title></path>
@@ -17,8 +17,8 @@
 <circle cx="25.4" cy="41.275" r="0.762" fill="#06c"/><text x="26.67" y="40.259">CB_TOP</text>
 <circle cx="114.3" cy="73.025" r="0.762" fill="#06c"/><text x="115.57" y="72.009">SNP</text>
 <circle cx="241.3" cy="73.025" r="0.762" fill="#06c"/><text x="242.57" y="72.009">CF_BASE</text>
-<circle cx="254" cy="53.975" r="0.762" fill="#06c"/><text x="255.27" y="52.959">FR_BOT</text>
-<circle cx="247.65" cy="25.4" r="0.762" fill="#06c"/><text x="248.92" y="24.384">FR_TOP</text>
-<circle cx="254" cy="31.75" r="0.762" fill="#06c"/><text x="255.27" y="30.734">FR_MID</text>
+<circle cx="249.489" cy="53.975" r="0.762" fill="#06c"/><text x="250.759" y="52.959">FR_BOT</text>
+<circle cx="243.139" cy="25.4" r="0.762" fill="#06c"/><text x="244.409" y="24.384">FR_TOP</text>
+<circle cx="249.489" cy="31.75" r="0.762" fill="#06c"/><text x="250.759" y="30.734">FR_MID</text>
 <circle cx="241.3" cy="26.987" r="0.762" fill="#06c"/><text x="242.57" y="25.971">CF_TOP</text>
 </g></svg>
