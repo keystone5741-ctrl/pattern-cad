@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1687.966mm" height="542.663mm" viewBox="0 0 1687.966 542.663">
+<rect width="100%" height="100%" fill="white"/>
+<g id="skirt · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M571.509 114.037L571.509 517.262"><title>뒤중심선</title></path>
+<path d="M571.509 114.037C563.127 114.037 554.491 114.037 546.109 114.037C458.289 114.037 450.483 65.287 372.243 25.4"><title>뒤허리선</title></path>
+<path d="M372.243 25.4L25.4 261.19"><title>뒤옆선</title></path>
+<path d="M571.509 517.262C521.975 517.262 496.848 517.631 447.877 510.187C398.623 502.7 374.03 496.563 327.033 480.032C279.766 463.405 256.615 452.733 213.272 427.593C169.682 402.308 148.418 387.87 110.689 354.464C72.838 320.95 53.823 302.999 25.4 261.19"><title>뒤밑단</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M571.509 250.562L565.159 250.562"><title>지퍼끝</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤판 — 플레어 스커트</text>
+</g>
+<g id="skirt · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M622.309 105.623C630.691 105.623 639.327 105.623 647.709 105.623C725.979 105.623 732.589 61.5 802.036 25.4"><title>앞허리선</title></path>
+<path d="M802.036 25.4L1099.876 320.677"><title>앞옆선</title></path>
+<path d="M622.309 496.148C663.195 496.148 683.83 496.554 724.428 491.708C765.447 486.812 785.944 482.782 825.763 471.783C865.992 460.672 885.854 453.538 923.958 436.513C962.45 419.315 981.462 409.574 1016.679 386.397C1052.105 363.083 1070.018 350.794 1099.876 320.677"><title>앞밑단</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M622.309 105.623L622.309 496.148"><title>앞중심선</title></path>
+</g>
+<text x="622.309" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 플레어 스커트</text>
+</g>
+<g id="waistband_front">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1348.328 63.924C1316.491 63.924 1286.346 60.773 1255.198 54.188C1224.05 47.603 1195.208 38.285 1166.095 25.4"><title>윗선</title></path>
+<path d="M1348.328 102.024C1313.798 102.024 1281.102 98.606 1247.318 91.464C1213.534 84.322 1182.252 74.215 1150.676 60.24"><title>밑선</title></path>
+<path d="M1166.095 25.4L1150.676 60.24"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1166.095 25.4L1150.676 60.24"><title>옆선표시</title></path>
+</g>
+<g id="grain" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1358.488 63.924L1358.488 102.024"><title>식서</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1348.328 63.924L1348.328 102.024"><title>앞끝</title></path>
+</g>
+<text x="1150.676" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_front — 곡선 오비</text>
+</g>
+<g id="waistband_back">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1652.406 90.663C1617.473 90.663 1584.31 86.496 1550.463 77.854C1507.139 66.791 1467.497 49.549 1429.865 25.4"><title>윗선</title></path>
+<path d="M1652.406 128.763C1614.243 128.763 1578.014 124.211 1541.037 114.769C1493.707 102.684 1450.4 83.847 1409.288 57.465"><title>밑선</title></path>
+<path d="M1429.865 25.4L1409.288 57.465"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1454.858 40.221L1436.592 73.657"><title>옆선표시</title></path>
+</g>
+<g id="grain" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1662.566 90.663L1662.566 128.763"><title>식서</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1652.406 90.663L1652.406 128.763"><title>앞끝</title></path>
+</g>
+<text x="1409.288" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_back — 곡선 오비</text>
+</g>
+</svg>

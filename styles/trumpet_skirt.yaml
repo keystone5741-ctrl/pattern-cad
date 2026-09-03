@@ -1,0 +1,22 @@
+# 트럼펫 스커트 = 몸판 + 앞·뒤 곡선 오비.
+# 오비 밑선은 몸판 허리선 길이(다트·턱을 뺀 값)를 받고, 윗선(= 허리둘레)은 앞 5/8 · 뒤 3/4 짧다.
+name: 트럼펫 스커트
+id: trumpet_skirt
+source: reference/portfolio.pdf p.17
+
+blocks:
+  skirt:
+    block: ../blocks/skirt_trumpet.yaml
+  waistband_front:
+    block: ../blocks/waistband_curved.yaml
+    measurements:
+      밑선: "len(skirt.앞허리선안) + len(skirt.앞허리선밖)"
+      차이: 5/8
+      높이: 1.1/2
+  waistband_back:
+    block: ../blocks/waistband_curved.yaml
+    measurements:
+      밑선: "len(skirt.뒤허리선안) + len(skirt.뒤허리선밖)"
+      차이: 3/4
+      높이: 1.1/2
+      연장: 1.1/4

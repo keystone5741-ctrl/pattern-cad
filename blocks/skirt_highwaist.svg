@@ -1,40 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="596.9mm" height="615.95mm" viewBox="0 0 596.9 615.95"><rect width="100%" height="100%" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="596.9mm" height="584.2mm" viewBox="0 0 596.9 584.2"><rect width="100%" height="100%" fill="white"/>
 <g id="뒤판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M260.35 393.7L311.15 444.5L311.15 590.55L260.35 590.55"><title>겹트임덧단</title></path>
-<path d="M260.35 38.1L260.35 590.55"><title>뒤중심선</title></path>
-<path d="M260.35 38.1L155.553 31.98"><title>뒤윗선안</title></path>
-<path d="M130.197 30.5L42.862 25.4"><title>뒤윗선밖</title></path>
-<path d="M42.862 25.4C37.382 52.804 45.48 67.322 44.45 95.25C41.534 174.304 25.4 212.992 25.4 292.1C25.4 411.588 33.02 471.17 38.1 590.55"><title>뒤옆선</title></path>
-<path d="M260.35 590.55L38.1 590.55"><title>뒤밑단</title></path>
+<path d="M266.7 361.95L317.5 412.75L317.5 558.8L266.7 558.8"><title>겹트임덧단</title></path>
+<path d="M266.7 38.1L266.7 558.8"><title>뒤중심선</title></path>
+<path d="M266.7 38.1L158.728 31.795"><title>뒤윗선안</title></path>
+<path d="M133.372 30.314L49.212 25.4"><title>뒤윗선밖</title></path>
+<path d="M49.212 25.4C46.221 40.357 51.461 48.261 50.8 63.5C47.36 142.818 25.4 180.957 25.4 260.35C25.4 379.838 33.02 439.42 38.1 558.8"><title>뒤옆선</title></path>
+<path d="M266.7 558.8L38.1 558.8"><title>뒤밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M155.553 31.98L142.875 266.7L130.197 30.5"><title>뒤절개</title></path>
+<path d="M158.728 31.795L146.05 234.95L133.372 30.314"><title>뒤절개</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M142.875 266.7L142.875 590.55"><title>뒤절개아래</title></path>
+<path d="M146.05 234.95L146.05 558.8"><title>뒤절개아래</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M260.35 469.9L311.15 444.5"><title>겹트임표시</title></path>
+<path d="M266.7 438.15L317.5 412.75"><title>겹트임표시</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M260.35 285.75L254 285.75"><title>지퍼끝</title></path>
+<path d="M266.7 254L260.35 254"><title>지퍼끝</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g>
 <g id="앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M349.25 31.75L447.681 28.698"><title>앞윗선안</title></path>
-<path d="M473.069 27.911L554.038 25.4"><title>앞윗선밖</title></path>
-<path d="M554.038 25.4C559.518 52.804 551.42 67.322 552.45 95.25C555.366 174.304 571.5 212.992 571.5 292.1C571.5 411.588 563.88 471.17 558.8 590.55"><title>앞옆선</title></path>
-<path d="M349.25 590.55L558.8 590.55"><title>앞밑단</title></path>
+<path d="M355.6 31.75L450.857 28.601"><title>앞윗선안</title></path>
+<path d="M476.243 27.762L547.688 25.4"><title>앞윗선밖</title></path>
+<path d="M547.688 25.4C550.679 40.357 545.439 48.261 546.1 63.5C549.54 142.818 571.5 180.957 571.5 260.35C571.5 379.838 563.88 439.42 558.8 558.8"><title>앞옆선</title></path>
+<path d="M355.6 558.8L558.8 558.8"><title>앞밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M447.681 28.698L460.375 266.7L473.069 27.911"><title>앞절개</title></path>
+<path d="M450.857 28.601L463.55 234.95L476.243 27.762"><title>앞절개</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M460.375 266.7L460.375 590.55"><title>앞절개아래</title></path>
+<path d="M463.55 234.95L463.55 558.8"><title>앞절개아래</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M349.25 31.75L349.25 590.55"><title>앞중심선</title></path>
+<path d="M355.6 31.75L355.6 558.8"><title>앞중심선</title></path>
 </g>
-<text x="349.25" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g></svg>
+<text x="355.6" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g></svg>

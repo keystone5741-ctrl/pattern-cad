@@ -1,7 +1,16 @@
 # 트럼펫 스커트 — p.17–18. 힙본 원형을 이용한다.
 #
-# 무릎 위쯤(플레어시작선)까지는 몸에 붙고 그 아래가 트럼펫처럼 퍼지는 실루엣.
-# 다트를 **절개선**으로 바꾸고, 절개선과 옆솔기를 따라 플레어시작선 아래로 벌린다.
+# 무릎 위쯤까지는 몸에 붙고 그 아래가 트럼펫처럼 퍼지는 실루엣.
+# 도면은 **몸판 + 겉장 + 속장 세 단**으로 나눠 각각 다른 방식으로 전개한다.
+#
+#   몸판   허리 ~ 겉장 절개선.  다트를 절개선처럼 작게(3/8) 잡는다
+#   겉장   겉장 절개선 ~ 속장 절개선.  **불규칙한 턱**으로 전개 (반쪽당 1 + 1 + 2(맞턱) + 1 = 5)
+#   속장   속장 절개선 ~ 밑단.  **밑단에만** 분량을 주고 플레어(부채꼴)로 전개
+#
+# 단을 나누는 절개선은 수평이 아니라 **나선(사선 물결)**이다 — 옆솔기에서 엉덩이선 아래 5.1/2,
+# 앞·뒤중심에서 6.3/4 로 중심 쪽이 더 깊다. 그래서 도면의 몸판은 앞중심을 가운데 두고
+# **한 장 통째로**(골이 아니라) 그려져 있다. 여기서는 반쪽(중심~옆솔기)만 규칙으로 두고,
+# 왼쪽 반이 오른쪽 반과 다른 것은 도면대로 재단할 때 뒤집지 말라는 주석으로 남긴다.
 #
 # 유의사항 (p.18):
 #   - 제허리 스커트에서는 다트를 1/2 이상 주지 않는 게 좋지만, 트럼펫은 다트가 아닌 **절개선**이라
@@ -15,60 +24,282 @@ name: 트럼펫 스커트
 id: skirt_trumpet
 source: reference/portfolio.pdf p.17
 
+# 몸판(앞판·뒤판)은 도면 위쪽 패턴 층에 있다. 겉장·속장은 전개 층에 따로 그려져 있는데
+# 축척이 몸판의 약 0.73 배라 같은 좌표계로 겹칠 수 없다 — 몸판만 겹쳐 본다.
+# 배율은 도면에서 직접 쟀다 — 엉덩이선~밑단 13" = 162.7pt, 앞판 전폭 17.08" = 213.8pt
+verify: {layer: pattern, scale: 12.52}
+
 measurements:
-  플레어시작: {value: 11.1/2, note: 허리선에서 이 아래부터 퍼진다 (무릎 위)}
-  플레어량:   {value: 3, note: 절개선 한 곳에서 밑단이 벌어지는 양}
-  절개다트량: {value: 1, note: 절개선에 넣는 다트 분량. 1 이상이면 보조개 현상}
-  속장턱량:   {value: 1.1/8, note: 속장은 밑단에만 (1~1.1/4)}
-  앞절개위치: {value: 3.15/16, note: 앞중심에서}
-  뒤절개위치: {formula: "뒤다트위치 + 뒤다트폭/2"}
-  플레어각:   {formula: "atan2(플레어량, 기장 - 플레어시작)"}
+  기장:         {value: 20.1/2, note: p.17 — 엉덩이길이 7.1/2 + 5.1/2 + 4.3/4 + 2.3/4}
+  절개다트량:   {value: 3/8, note: p.17 표기. 절개선이라 다트보다 크게 줄 수 있으나 1 을 넘기면 보조개}
+  앞옆선들임:   {value: 1/4, note: p.17 표기}
+  뒤옆선들임:   {value: 1/4}
+  # --- 단을 나누는 절개선 (엉덩이선 아래 깊이)
+  겉장시작옆:   {value: 5.1/2, note: 옆솔기 쪽}
+  겉장시작중심: {value: 6.3/4, note: 앞·뒤중심 쪽 — 절개선이 나선으로 돌아 중심이 더 깊다}
+  겉장높이옆:   {value: 4.3/4}
+  겉장높이중심: {value: 4.7/8}
+  속장높이옆:   {formula: "기장 - 엉덩이길이 - 겉장시작옆 - 겉장높이옆", note: 2.3/4}
+  속장높이중심: {formula: "기장 - 엉덩이길이 - 겉장시작중심 - 겉장높이중심", note: 1.3/8}
+  # --- 겉장 전개 (턱)
+  겉장턱1:     {value: 1}
+  겉장턱2:     {value: 2, note: 맞턱}
+  겉장턱3:     {value: 1}
+  겉장턱4:     {value: 1}
+  겉장턱합:    {formula: "겉장턱1 + 겉장턱2 + 겉장턱3 + 겉장턱4", note: 반쪽당 5}
+  겉장끝:      {value: 1/4, note: 겉장 양 끝을 이만큼 더 낸다}
+  # --- 속장 전개 (밑단 플레어)
+  속장벌림:    {value: 1.1/8, note: 절개 한 곳에서 밑단이 벌어지는 양 (1~1.1/4)}
+  속장절개수:  {value: 4, note: 반쪽당}
+  속장벌림합:  {formula: "속장벌림 * 속장절개수"}
+  # --- 조각 배치 (그림에서 겹치지 않게 아래로 떼어 놓는다)
+  조각간격:    {value: 2}
+  뒤다트폭:    {formula: "절개다트량", note: 도면 앞·뒤 모두 3/8}
+  앞다트위치:  {value: 4, note: p.17 실측 — 앞중심에서 4}
+  뒤다트위치:  {value: 4, note: p.17 표기 — 뒤중심에서 4}
+  앞다트끝올림: {value: 1, note: p.17 표기 — 다트 끝은 엉덩이선 1 위}
+  뒤다트끝올림: {value: 1.3/8, note: p.17 표기}
+  # --- 단 길이 (절개선의 길이 — 다음 단의 윗변이 된다)
+  앞겉장윗변:  {formula: "dist(T1_CF, T1_SS)"}
+  뒤겉장윗변:  {formula: "dist(T1_CB, T1_SS)"}
+  앞겉장밑변:  {formula: "dist(T2_CF, T2_SS) + 겉장턱합 + 겉장끝 * 2",
+               note: 턱은 겉장 안에서만 접히므로 밑변도 턱 분량만큼 넓다 — 여기에 속장이 붙는다}
+  뒤겉장밑변:  {formula: "dist(T2_CB, T2_SS) + 겉장턱합 + 겉장끝 * 2"}
+  앞속장윗변:  {formula: "앞겉장밑변"}
+  뒤속장윗변:  {formula: "뒤겉장밑변"}
+  속장각:      {formula: "atan2(속장벌림, 속장높이옆)", note: 절개 한 곳을 벌리는 각}
+  겉장Y:       {formula: "기장 + 조각간격"}
+  속장Y:       {formula: "겉장Y + 겉장높이옆 + 조각간격"}
+  속장뒤X:     {formula: "앞속장윗변 + 속장벌림합 + 조각간격"}
 
 points:
-  # 앞판 절개선 (다트 대신)
-  TF_V:   {at: [앞절개위치, 0]}
-  TF_B:   {at: [앞절개위치, 기장]}
-  TF_T:   {ko: 앞 절개선 위, intersect: [[HB_CF1, HB_SSF], [TF_V, TF_B]]}
-  TF_P:   {ko: 앞 플레어 시작점, at: [앞절개위치, 플레어시작]}
-  TF_L:   {ko: 앞 절개 왼다리, along: [TF_T, HB_CF1], dist: "절개다트량/2"}
-  TF_R:   {ko: 앞 절개 오른다리, along: [TF_T, HB_SSF], dist: "절개다트량/2"}
-  TF_HL:  {ko: 앞 절개 밑단 안, at: ["앞절개위치 - 플레어량/2", 기장]}
-  TF_HR:  {ko: 앞 절개 밑단 밖, at: ["앞절개위치 + 플레어량/2", 기장]}
-  # 뒤판 절개선
-  TB_V:   {at: ["앞폭 + 뒤폭 - 뒤절개위치", 0]}
-  TB_B:   {at: ["앞폭 + 뒤폭 - 뒤절개위치", 기장]}
-  TB_T:   {ko: 뒤 절개선 위, intersect: [[HB_CB1, HB_SSB], [TB_V, TB_B]]}
-  TB_P:   {ko: 뒤 플레어 시작점, at: ["앞폭 + 뒤폭 - 뒤절개위치", 플레어시작]}
-  TB_L:   {ko: 뒤 절개 왼다리, along: [TB_T, HB_SSB], dist: "절개다트량/2"}
-  TB_R:   {ko: 뒤 절개 오른다리, along: [TB_T, HB_CB1], dist: "절개다트량/2"}
-  TB_HL:  {ko: 뒤 절개 밑단 밖, at: ["앞폭 + 뒤폭 - 뒤절개위치 - 플레어량/2", 기장]}
-  TB_HR:  {ko: 뒤 절개 밑단 안, at: ["앞폭 + 뒤폭 - 뒤절개위치 + 플레어량/2", 기장]}
-  # 옆선도 플레어시작선 아래에서 퍼진다
-  TF_SS_P: {ko: 앞 옆선 플레어 시작, at: [앞폭, 플레어시작]}
-  TF_SS_H: {ko: 앞 옆선 밑단, at: ["앞폭 + 플레어량/2", 기장]}
-  TB_SS_P: {ko: 뒤 옆선 플레어 시작, at: [앞폭, 플레어시작]}
-  TB_SS_H: {ko: 뒤 옆선 밑단, at: ["앞폭 - 플레어량/2", 기장]}
+  # ---------------- 허리 다트 (도면 앞·뒤 각 3/8 — 절개선처럼 작게)
+  TDV_T: {at: [앞다트위치, 0]}
+  TDV_B: {at: [앞다트위치, 기장]}
+  TD_C:  {ko: 앞다트 중심, intersect: [[HB_CF1, HB_SSF], [TDV_T, TDV_B]]}
+  TD_L:  {from: TD_C, dx: "-절개다트량/2"}
+  TD_R:  {from: TD_C, dx: "절개다트량/2"}
+  TD_B:  {ko: 앞다트 끝, at: ["TD_C.x", "엉덩이길이 - 앞다트끝올림"]}
+  TDBV_T: {at: ["앞폭 + 뒤폭 - 뒤다트위치", 0]}
+  TDBV_B: {at: ["앞폭 + 뒤폭 - 뒤다트위치", 기장]}
+  TDB_C: {ko: 뒤다트 중심, intersect: [[HB_CB1, HB_SSB], [TDBV_T, TDBV_B]]}
+  TDB_L: {from: TDB_C, dx: "-절개다트량/2"}
+  TDB_R: {from: TDB_C, dx: "절개다트량/2"}
+  TDB_B: {ko: 뒤다트 끝, at: ["TDB_C.x", "엉덩이길이 - 뒤다트끝올림"]}
+  # ---------------- 단을 나누는 절개선
+  T1_CF: {ko: 겉장 절개선 앞중심, at: [0, "엉덩이길이 + 겉장시작중심"]}
+  T1_SS: {ko: 겉장 절개선 옆솔기, at: [앞폭, "엉덩이길이 + 겉장시작옆"]}
+  T1_CB: {ko: 겉장 절개선 뒤중심, at: ["앞폭 + 뒤폭", "엉덩이길이 + 겉장시작중심"]}
+  T2_CF: {ko: 속장 절개선 앞중심, at: [0, "엉덩이길이 + 겉장시작중심 + 겉장높이중심"]}
+  T2_SS: {ko: 속장 절개선 옆솔기, at: [앞폭, "엉덩이길이 + 겉장시작옆 + 겉장높이옆"]}
+  T2_CB: {ko: 속장 절개선 뒤중심, at: ["앞폭 + 뒤폭", "엉덩이길이 + 겉장시작중심 + 겉장높이중심"]}
+  # ---------------- 몸판 옆솔기 (허리 → 엉덩이 → 겉장 절개선)
+  TM_SSF: {ko: 앞 옆선 절개점, at: ["T1_SS.x", "T1_SS.y"]}
+  TM_SSB: {ko: 뒤 옆선 절개점, at: ["T1_SS.x", "T1_SS.y"]}
+  # ---------------- 앞 겉장 (턱으로 전개한 한 장)
+  GF_TL: {ko: 앞겉장 윗변 안쪽, at: [0, 겉장Y]}
+  GF_TR: {ko: 앞겉장 윗변 바깥, at: ["앞겉장윗변 + 겉장턱합 + 겉장끝 * 2", 겉장Y]}
+  GF_BL: {ko: 앞겉장 밑변 안쪽, at: [0, "겉장Y + 겉장높이중심"]}
+  GF_BR: {ko: 앞겉장 밑변 바깥, at: ["앞겉장윗변 + 겉장턱합 + 겉장끝 * 2", "겉장Y + 겉장높이옆"]}
+  # 턱 자리 — 윗변을 다섯 칸으로 나눠 그 경계마다 턱을 잡는다 (안쪽부터 1 · 2(맞턱) · 1 · 1)
+  GF_K1: {ko: 앞겉장 턱1, along: [GF_TL, GF_TR], ratio: 0.2}
+  GF_K2: {ko: 앞겉장 턱2(맞턱), along: [GF_TL, GF_TR], ratio: 0.4}
+  GF_K3: {ko: 앞겉장 턱3, along: [GF_TL, GF_TR], ratio: 0.6}
+  GF_K4: {ko: 앞겉장 턱4, along: [GF_TL, GF_TR], ratio: 0.8}
+  GF_K1B: {from: GF_K1, dy: "겉장높이중심 * 0.6"}
+  GF_K2B: {from: GF_K2, dy: "겉장높이중심 * 0.6"}
+  GF_K3B: {from: GF_K3, dy: "겉장높이중심 * 0.6"}
+  GF_K4B: {from: GF_K4, dy: "겉장높이중심 * 0.6"}
+  # ---------------- 뒤 겉장
+  GB_TL: {ko: 뒤겉장 윗변 안쪽, at: ["앞겉장윗변 + 겉장턱합 + 겉장끝 * 2 + 조각간격", 겉장Y]}
+  GB_TR: {ko: 뒤겉장 윗변 바깥,
+          at: ["GB_TL.x + 뒤겉장윗변 + 겉장턱합 + 겉장끝 * 2", 겉장Y]}
+  GB_BL: {ko: 뒤겉장 밑변 안쪽, at: ["GB_TL.x", "겉장Y + 겉장높이중심"]}
+  GB_BR: {ko: 뒤겉장 밑변 바깥, at: ["GB_TL.x + 뒤겉장윗변 + 겉장턱합 + 겉장끝 * 2", "겉장Y + 겉장높이옆"]}
+  GB_K1: {ko: 뒤겉장 턱1, along: [GB_TL, GB_TR], ratio: 0.2}
+  GB_K2: {ko: 뒤겉장 턱2(맞턱), along: [GB_TL, GB_TR], ratio: 0.4}
+  GB_K3: {ko: 뒤겉장 턱3, along: [GB_TL, GB_TR], ratio: 0.6}
+  GB_K4: {ko: 뒤겉장 턱4, along: [GB_TL, GB_TR], ratio: 0.8}
+  GB_K1B: {from: GB_K1, dy: "겉장높이중심 * 0.6"}
+  GB_K2B: {from: GB_K2, dy: "겉장높이중심 * 0.6"}
+  GB_K3B: {from: GB_K3, dy: "겉장높이중심 * 0.6"}
+  GB_K4B: {from: GB_K4, dy: "겉장높이중심 * 0.6"}
+  # ---------------- 앞 속장 — 밑단에만 분량을 주고 부채꼴로 전개한다 (p.18)
+  #   절개 위끝을 축으로 조각을 차례로 돌린다. 축도 앞 조각이 돌아간 만큼 함께 움직이므로
+  #   윗변이 오목한 호가 되고 밑단이 볼록한 호가 된다 — 도면의 부채꼴 그대로다.
+  SF_TL: {ko: 앞속장 윗변 안쪽, at: [0, 속장Y]}
+  SF_T0: {ko: 앞속장 윗변 바깥(전개 전), at: [앞속장윗변, 속장Y]}
+  SF_P1: {along: [SF_TL, SF_T0], ratio: 0.2}
+  SF_H0: {ko: 앞속장 밑단 안쪽, at: [0, "속장Y + 속장높이중심"]}
+  SF_B1: {at: ["SF_P1.x", "속장Y + 속장높이옆"]}
+  SF_P2a: {along: [SF_TL, SF_T0], ratio: 0.4}
+  SF_B2a: {at: ["SF_P2a.x", "속장Y + 속장높이옆"]}
+  SF_P3a: {along: [SF_TL, SF_T0], ratio: 0.6}
+  SF_B3a: {at: ["SF_P3a.x", "속장Y + 속장높이옆"]}
+  SF_P4a: {along: [SF_TL, SF_T0], ratio: 0.8}
+  SF_B4a: {at: ["SF_P4a.x", "속장Y + 속장높이옆"]}
+  SF_TE0: {at: ["SF_T0.x", "속장Y + 속장높이옆"]}
+  # 1 회전 (절개1 축)
+  SF_P2: {ko: 앞속장 절개2 위, rotate: {of: SF_P2a, center: SF_P1, angle: "-속장각"}}
+  SF_H1B: {ko: 앞속장 절개1 밑단 바깥, rotate: {of: SF_B1, center: SF_P1, angle: "-속장각"}}
+  SF_B2_1: {rotate: {of: SF_B2a, center: SF_P1, angle: "-속장각"}}
+  SF_P3_1: {rotate: {of: SF_P3a, center: SF_P1, angle: "-속장각"}}
+  SF_B3_1: {rotate: {of: SF_B3a, center: SF_P1, angle: "-속장각"}}
+  SF_P4_1: {rotate: {of: SF_P4a, center: SF_P1, angle: "-속장각"}}
+  SF_B4_1: {rotate: {of: SF_B4a, center: SF_P1, angle: "-속장각"}}
+  SF_TE_1: {rotate: {of: SF_TE0, center: SF_P1, angle: "-속장각"}}
+  SF_T_1:  {rotate: {of: SF_T0, center: SF_P1, angle: "-속장각"}}
+  # 2 회전 (절개2 축)
+  SF_H2A: {ko: 앞속장 절개2 밑단 안쪽, at: ["SF_B2_1.x", "SF_B2_1.y"]}
+  SF_H2B: {rotate: {of: SF_B2_1, center: SF_P2, angle: "-속장각"}}
+  SF_P3:  {ko: 앞속장 절개3 위, rotate: {of: SF_P3_1, center: SF_P2, angle: "-속장각"}}
+  SF_B3_2: {rotate: {of: SF_B3_1, center: SF_P2, angle: "-속장각"}}
+  SF_P4_2: {rotate: {of: SF_P4_1, center: SF_P2, angle: "-속장각"}}
+  SF_B4_2: {rotate: {of: SF_B4_1, center: SF_P2, angle: "-속장각"}}
+  SF_TE_2: {rotate: {of: SF_TE_1, center: SF_P2, angle: "-속장각"}}
+  SF_T_2:  {rotate: {of: SF_T_1, center: SF_P2, angle: "-속장각"}}
+  # 3 회전 (절개3 축)
+  SF_H3A: {ko: 앞속장 절개3 밑단 안쪽, at: ["SF_B3_2.x", "SF_B3_2.y"]}
+  SF_H3B: {rotate: {of: SF_B3_2, center: SF_P3, angle: "-속장각"}}
+  SF_P4:  {ko: 앞속장 절개4 위, rotate: {of: SF_P4_2, center: SF_P3, angle: "-속장각"}}
+  SF_B4_3: {rotate: {of: SF_B4_2, center: SF_P3, angle: "-속장각"}}
+  SF_TE_3: {rotate: {of: SF_TE_2, center: SF_P3, angle: "-속장각"}}
+  SF_T_3:  {rotate: {of: SF_T_2, center: SF_P3, angle: "-속장각"}}
+  # 4 회전 (절개4 축)
+  SF_H4A: {ko: 앞속장 절개4 밑단 안쪽, at: ["SF_B4_3.x", "SF_B4_3.y"]}
+  SF_H4B: {rotate: {of: SF_B4_3, center: SF_P4, angle: "-속장각"}}
+  SF_HE:  {ko: 앞속장 밑단 바깥, rotate: {of: SF_TE_3, center: SF_P4, angle: "-속장각"}}
+  SF_TR:  {ko: 앞속장 윗변 바깥, rotate: {of: SF_T_3, center: SF_P4, angle: "-속장각"}}
+  SF_H1A: {ko: 앞속장 절개1 밑단 안쪽, at: ["SF_B1.x", "SF_B1.y"]}
+
+  # ---------------- 앞 속장 — 밑단에만 분량을 주고 부채꼴로 전개한다 (p.18)
+  #   절개 위끝을 축으로 조각을 차례로 돌린다. 축도 앞 조각이 돌아간 만큼 함께 움직이므로
+  #   윗변이 오목한 호가 되고 밑단이 볼록한 호가 된다 — 도면의 부채꼴 그대로다.
+  SB_TL: {ko: 뒤속장 윗변 안쪽, at: [속장뒤X, 속장Y]}
+  SB_T0: {ko: 뒤속장 윗변 바깥(전개 전), at: ["속장뒤X + 뒤속장윗변", 속장Y]}
+  SB_P1: {along: [SB_TL, SB_T0], ratio: 0.2}
+  SB_H0: {ko: 뒤속장 밑단 안쪽, at: [속장뒤X, "속장Y + 속장높이중심"]}
+  SB_B1: {at: ["SB_P1.x", "속장Y + 속장높이옆"]}
+  SB_P2a: {along: [SB_TL, SB_T0], ratio: 0.4}
+  SB_B2a: {at: ["SB_P2a.x", "속장Y + 속장높이옆"]}
+  SB_P3a: {along: [SB_TL, SB_T0], ratio: 0.6}
+  SB_B3a: {at: ["SB_P3a.x", "속장Y + 속장높이옆"]}
+  SB_P4a: {along: [SB_TL, SB_T0], ratio: 0.8}
+  SB_B4a: {at: ["SB_P4a.x", "속장Y + 속장높이옆"]}
+  SB_TE0: {at: ["SB_T0.x", "속장Y + 속장높이옆"]}
+  # 1 회전 (절개1 축)
+  SB_P2: {ko: 뒤속장 절개2 위, rotate: {of: SB_P2a, center: SB_P1, angle: "-속장각"}}
+  SB_H1B: {ko: 뒤속장 절개1 밑단 바깥, rotate: {of: SB_B1, center: SB_P1, angle: "-속장각"}}
+  SB_B2_1: {rotate: {of: SB_B2a, center: SB_P1, angle: "-속장각"}}
+  SB_P3_1: {rotate: {of: SB_P3a, center: SB_P1, angle: "-속장각"}}
+  SB_B3_1: {rotate: {of: SB_B3a, center: SB_P1, angle: "-속장각"}}
+  SB_P4_1: {rotate: {of: SB_P4a, center: SB_P1, angle: "-속장각"}}
+  SB_B4_1: {rotate: {of: SB_B4a, center: SB_P1, angle: "-속장각"}}
+  SB_TE_1: {rotate: {of: SB_TE0, center: SB_P1, angle: "-속장각"}}
+  SB_T_1:  {rotate: {of: SB_T0, center: SB_P1, angle: "-속장각"}}
+  # 2 회전 (절개2 축)
+  SB_H2A: {ko: 뒤속장 절개2 밑단 안쪽, at: ["SB_B2_1.x", "SB_B2_1.y"]}
+  SB_H2B: {rotate: {of: SB_B2_1, center: SB_P2, angle: "-속장각"}}
+  SB_P3:  {ko: 뒤속장 절개3 위, rotate: {of: SB_P3_1, center: SB_P2, angle: "-속장각"}}
+  SB_B3_2: {rotate: {of: SB_B3_1, center: SB_P2, angle: "-속장각"}}
+  SB_P4_2: {rotate: {of: SB_P4_1, center: SB_P2, angle: "-속장각"}}
+  SB_B4_2: {rotate: {of: SB_B4_1, center: SB_P2, angle: "-속장각"}}
+  SB_TE_2: {rotate: {of: SB_TE_1, center: SB_P2, angle: "-속장각"}}
+  SB_T_2:  {rotate: {of: SB_T_1, center: SB_P2, angle: "-속장각"}}
+  # 3 회전 (절개3 축)
+  SB_H3A: {ko: 뒤속장 절개3 밑단 안쪽, at: ["SB_B3_2.x", "SB_B3_2.y"]}
+  SB_H3B: {rotate: {of: SB_B3_2, center: SB_P3, angle: "-속장각"}}
+  SB_P4:  {ko: 뒤속장 절개4 위, rotate: {of: SB_P4_2, center: SB_P3, angle: "-속장각"}}
+  SB_B4_3: {rotate: {of: SB_B4_2, center: SB_P3, angle: "-속장각"}}
+  SB_TE_3: {rotate: {of: SB_TE_2, center: SB_P3, angle: "-속장각"}}
+  SB_T_3:  {rotate: {of: SB_T_2, center: SB_P3, angle: "-속장각"}}
+  # 4 회전 (절개4 축)
+  SB_H4A: {ko: 뒤속장 절개4 밑단 안쪽, at: ["SB_B4_3.x", "SB_B4_3.y"]}
+  SB_H4B: {rotate: {of: SB_B4_3, center: SB_P4, angle: "-속장각"}}
+  SB_HE:  {ko: 뒤속장 밑단 바깥, rotate: {of: SB_TE_3, center: SB_P4, angle: "-속장각"}}
+  SB_TR:  {ko: 뒤속장 윗변 바깥, rotate: {of: SB_T_3, center: SB_P4, angle: "-속장각"}}
+  SB_H1A: {ko: 뒤속장 절개1 밑단 안쪽, at: ["SB_B1.x", "SB_B1.y"]}
+
+
 
 lines:
   remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단,
-           겹트임덧단, 겹트임표시]
+           겹트임덧단, 겹트임표시, 앞중심선, 뒤중심선]
   add:
-    - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, TF_L],
-       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], TF_L: {along: [HB_CF1, HB_SSF]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
-    - {name: 앞절개선안, piece: 앞판, role: outline, pts: [TF_L, TF_P, TF_HL], note: 절개선 — 다트 분량을 여기 넣는다}
-    - {name: 앞절개선밖, piece: 앞판, role: outline, pts: [TF_R, TF_P, TF_HR]}
-    - {name: 앞허리선밖, piece: 앞판, role: outline, curve: [TF_R, HB_SSF],
-       tangents: {TF_R: {along: [HB_CF1, HB_SSF]}}, handles: [[0.4, 0.4]]}
-    - {name: 앞옆선, piece: 앞판, role: outline, pts: [HB_SSF, SS_H, TF_SS_P, TF_SS_H]}
-    - {name: 앞밑단1, piece: 앞판, role: outline, pts: [CF_HEM, TF_HL]}
-    - {name: 앞밑단2, piece: 앞판, role: outline, pts: [TF_HR, TF_SS_H]}
-    - {name: 뒤허리선안, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, TB_R],
-       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0], TB_R: {along: [HB_CB1, HB_SSB]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}
-    - {name: 뒤절개선안, piece: 뒤판, role: outline, pts: [TB_R, TB_P, TB_HR]}
-    - {name: 뒤절개선밖, piece: 뒤판, role: outline, pts: [TB_L, TB_P, TB_HL]}
-    - {name: 뒤허리선밖, piece: 뒤판, role: outline, curve: [TB_L, HB_SSB],
-       tangents: {TB_L: {along: [HB_CB1, HB_SSB]}}, handles: [[0.4, 0.4]]}
-    - {name: 뒤옆선, piece: 뒤판, role: outline, pts: [HB_SSB, SS_H, TB_SS_P, TB_SS_H]}
-    - {name: 뒤밑단1, piece: 뒤판, role: outline, pts: [CB_HEM, TB_HR]}
-    - {name: 뒤밑단2, piece: 뒤판, role: outline, pts: [TB_HL, TB_SS_H]}
-    - {name: 플레어시작선, role: construction, pts: [TF_SS_P, TB_SS_P]}
+    # ---------------- 몸판 (앞판 · 뒤판)
+    - {name: 앞중심선, piece: 앞판, role: fold, pts: [HB_CF, T1_CF]}
+    - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, TD_L],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 앞다트, piece: 앞판, role: dart, pts: [TD_L, TD_B, TD_R], note: 절개선이라 다트보다 작게 (3/8)}
+    - {name: 앞허리선밖, piece: 앞판, role: outline, curve: [TD_R, HB_SSF],
+       tangents: {TD_R: {along: [HB_CF1, HB_SSF]}}, handles: [[0.4, 0.4]]}
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF, SS_H, TM_SSF],
+       tangents: {HB_SSF: [0.2, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+    - {name: 앞겉장절개, piece: 앞판, role: outline, curve: [T1_CF, T1_SS],
+       tangents: {T1_CF: [1, -0.35], T1_SS: [1, -0.15]}, handles: [[0.45, 0.45]],
+       note: 나선 절개선 — 앞중심이 옆솔기보다 1.1/4 깊다}
+    - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [HB_CB, T1_CB]}
+    - {name: 뒤허리선안, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, TDB_R],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
+    - {name: 뒤다트, piece: 뒤판, role: dart, pts: [TDB_R, TDB_B, TDB_L]}
+    - {name: 뒤허리선밖, piece: 뒤판, role: outline, curve: [TDB_L, HB_SSB],
+       tangents: {TDB_L: {along: [HB_CB1, HB_SSB]}}, handles: [[0.4, 0.4]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB, SS_H, TM_SSB],
+       tangents: {HB_SSB: [-0.2, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤겉장절개, piece: 뒤판, role: outline, curve: [T1_CB, T1_SS],
+       tangents: {T1_CB: [-1, -0.35], T1_SS: [-1, -0.15]}, handles: [[0.45, 0.45]]}
+    # ---------------- 앞 겉장
+    - {name: 앞겉장윗선, piece: 앞겉장, role: outline, pts: [GF_TL, GF_TR], note: 턱을 접으면 몸판 밑변과 맞는다}
+    - {name: 앞겉장안선, piece: 앞겉장, role: outline, pts: [GF_TL, GF_BL]}
+    - {name: 앞겉장밑선, piece: 앞겉장, role: outline, pts: [GF_BL, GF_BR]}
+    - {name: 앞겉장밖선, piece: 앞겉장, role: outline, pts: [GF_BR, GF_TR]}
+    - {name: 앞겉장턱1, piece: 앞겉장, role: fold, pts: [GF_K1, GF_K1B], note: 1 · 한 방향}
+    - {name: 앞겉장턱2, piece: 앞겉장, role: fold, pts: [GF_K2, GF_K2B], note: 2 · 맞턱}
+    - {name: 앞겉장턱3, piece: 앞겉장, role: fold, pts: [GF_K3, GF_K3B], note: 1 · 한 방향}
+    - {name: 앞겉장턱4, piece: 앞겉장, role: fold, pts: [GF_K4, GF_K4B], note: 1 · 한 방향}
+    # ---------------- 뒤 겉장
+    - {name: 뒤겉장윗선, piece: 뒤겉장, role: outline, pts: [GB_TL, GB_TR]}
+    - {name: 뒤겉장안선, piece: 뒤겉장, role: outline, pts: [GB_TL, GB_BL]}
+    - {name: 뒤겉장밑선, piece: 뒤겉장, role: outline, pts: [GB_BL, GB_BR]}
+    - {name: 뒤겉장밖선, piece: 뒤겉장, role: outline, pts: [GB_BR, GB_TR]}
+    - {name: 뒤겉장턱1, piece: 뒤겉장, role: fold, pts: [GB_K1, GB_K1B]}
+    - {name: 뒤겉장턱2, piece: 뒤겉장, role: fold, pts: [GB_K2, GB_K2B], note: 맞턱}
+    - {name: 뒤겉장턱3, piece: 뒤겉장, role: fold, pts: [GB_K3, GB_K3B]}
+    - {name: 뒤겉장턱4, piece: 뒤겉장, role: fold, pts: [GB_K4, GB_K4B]}
+    # ---------------- 앞 속장 (밑단만 벌린 부채꼴)
+    - {name: 앞속장윗선, piece: 앞속장, role: outline,
+       curve: [SF_TL, SF_P1, SF_P2, SF_P3, SF_P4, SF_TR],
+       handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4]],
+       note: 겉장 밑변과 같은 길이 — 여기는 벌리지 않는다}
+    - {name: 앞속장안선, piece: 앞속장, role: outline, pts: [SF_TL, SF_H0]}
+    - {name: 앞속장밑단, piece: 앞속장, role: outline,
+       curve: [SF_H0, SF_H1A, SF_H1B, SF_H2A, SF_H2B, SF_H3A, SF_H3B, SF_H4A, SF_H4B, SF_HE],
+       handles: [[0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35]],
+       note: 벌린 자리를 이어 하나의 호로 블렌딩한다 — 이것이 완성 밑단이다}
+    - {name: 앞속장밖선, piece: 앞속장, role: outline, pts: [SF_HE, SF_TR]}
+    - {name: 앞속장절개1, piece: 앞속장, role: mark, pts: [SF_P1, SF_H1A]}
+    - {name: 앞속장절개1밖, piece: 앞속장, role: mark, pts: [SF_P1, SF_H1B]}
+    - {name: 앞속장절개2, piece: 앞속장, role: mark, pts: [SF_P2, SF_H2A]}
+    - {name: 앞속장절개2밖, piece: 앞속장, role: mark, pts: [SF_P2, SF_H2B]}
+    - {name: 앞속장절개3, piece: 앞속장, role: mark, pts: [SF_P3, SF_H3A]}
+    - {name: 앞속장절개3밖, piece: 앞속장, role: mark, pts: [SF_P3, SF_H3B]}
+    - {name: 앞속장절개4, piece: 앞속장, role: mark, pts: [SF_P4, SF_H4A]}
+    - {name: 앞속장절개4밖, piece: 앞속장, role: mark, pts: [SF_P4, SF_H4B]}
+    # ---------------- 뒤 속장
+    - {name: 뒤속장윗선, piece: 뒤속장, role: outline,
+       curve: [SB_TL, SB_P1, SB_P2, SB_P3, SB_P4, SB_TR],
+       handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤속장안선, piece: 뒤속장, role: outline, pts: [SB_TL, SB_H0]}
+    - {name: 뒤속장밑단, piece: 뒤속장, role: outline,
+       curve: [SB_H0, SB_H1A, SB_H1B, SB_H2A, SB_H2B, SB_H3A, SB_H3B, SB_H4A, SB_H4B, SB_HE],
+       handles: [[0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35], [0.35, 0.35]],
+       note: 벌린 자리를 이어 하나의 호로 블렌딩한다 — 이것이 완성 밑단이다}
+    - {name: 뒤속장밖선, piece: 뒤속장, role: outline, pts: [SB_HE, SB_TR]}
+    - {name: 뒤속장절개1, piece: 뒤속장, role: mark, pts: [SB_P1, SB_H1A]}
+    - {name: 뒤속장절개1밖, piece: 뒤속장, role: mark, pts: [SB_P1, SB_H1B]}
+    - {name: 뒤속장절개2, piece: 뒤속장, role: mark, pts: [SB_P2, SB_H2A]}
+    - {name: 뒤속장절개2밖, piece: 뒤속장, role: mark, pts: [SB_P2, SB_H2B]}
+    - {name: 뒤속장절개3, piece: 뒤속장, role: mark, pts: [SB_P3, SB_H3A]}
+    - {name: 뒤속장절개3밖, piece: 뒤속장, role: mark, pts: [SB_P3, SB_H3B]}
+    - {name: 뒤속장절개4, piece: 뒤속장, role: mark, pts: [SB_P4, SB_H4A]}
+    - {name: 뒤속장절개4밖, piece: 뒤속장, role: mark, pts: [SB_P4, SB_H4B]}

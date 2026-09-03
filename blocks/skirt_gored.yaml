@@ -48,6 +48,9 @@ points:
   GB1_V: {at: [뒤고어1, 0]}
   GB1_P: {ko: 뒤 절개1 위끝, at: [뒤고어1, 퍼짐시작]}
   GB1_T: {ko: 뒤고어1 허리점, intersect: [[HB_CB1, HB_SSB], [GB1_V, GB1_P]]}
+  # 뒤 허리다트는 없애는 것이 아니라 고어 절개선이 흡수한다 (M.P) — p.19 뒤 절개선 7/8 표기
+  GB1_TR: {ko: 뒤고어1 허리 중심쪽 다리, along: [GB1_T, HB_CB1], dist: "뒤다트폭/2"}
+  GB1_TL: {ko: 뒤고어1 허리 옆선쪽 다리, along: [GB1_T, HB_SSB], dist: "뒤다트폭/2"}
   GB1_R: {ko: 뒤 절개1 밑단(고어1 쪽), at: [뒤고어1, 기장]}
   GB1_L: {ko: 뒤 절개1 밑단(고어2 쪽), at: ["뒤고어1 - 고어플레어", 기장]}
   GB2_V: {at: [뒤고어2, 0]}
@@ -63,7 +66,7 @@ points:
 
 
 lines:
-  remove: [앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 뒤다트,
+  remove: [앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 뒤다트, 뒤허리선2,
            겹트임덧단, 겹트임표시]
   add:
     - {name: 퍼짐시작선, role: construction, pts: [GD_PF, GD_PB]}
@@ -78,8 +81,9 @@ lines:
     - {name: 앞밑단2, piece: 앞판, role: outline, pts: [GF1_R, GF2_L]}
     - {name: 앞밑단3, piece: 앞판, role: outline, pts: [GF2_R, GD_SSF_H]}
     # 뒤
-    - {name: 뒤고어절개1, piece: 뒤판, role: outline, pts: [GB1_T, GB1_P, GB1_R]}
-    - {name: 뒤고어절개1밖, piece: 뒤판, role: outline, pts: [GB1_P, GB1_L]}
+    - {name: 뒤허리선2, piece: 뒤판, role: outline, pts: [GB1_TL, HB_SSB]}
+    - {name: 뒤고어절개1, piece: 뒤판, role: outline, pts: [GB1_TR, GB1_P, GB1_R]}
+    - {name: 뒤고어절개1밖, piece: 뒤판, role: outline, pts: [GB1_TL, GB1_P, GB1_L]}
     - {name: 뒤고어절개2, piece: 뒤판, role: outline, pts: [GB2_T, GB2_P, GB2_R]}
     - {name: 뒤고어절개2밖, piece: 뒤판, role: outline, pts: [GB2_P, GB2_L]}
     - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB, SS_H, GD_SSB_P, GD_SSB_H],

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2661.417mm" height="374.65mm" viewBox="0 0 2661.417 374.65">
+<rect width="100%" height="100%" fill="white"/>
+<g id="skirt · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M268.012 41.275L268.012 349.25"><title>뒤중심선</title></path>
+<path d="M268.012 41.275C259.63 41.275 250.994 41.275 242.612 41.275C210.36 41.275 203.321 38.1 171.175 35.502"><title>뒤허리선안</title></path>
+<path d="M161.65 35.502C110.204 31.605 84.497 29.441 33.062 25.4"><title>뒤허리선밖</title></path>
+<path d="M33.062 25.4C21.096 85.228 26.712 116.787 26.712 177.8C26.712 233.68 26.712 261.62 26.712 317.5"><title>뒤옆선</title></path>
+<path d="M268.012 349.25C164.64 313.07 135.021 333.746 26.712 317.5"><title>뒤겉장절개</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M171.175 35.502L166.412 142.875L161.65 35.502"><title>뒤다트</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M268.012 177.8L261.662 177.8"><title>지퍼끝</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤판 — 트럼펫 스커트</text>
+</g>
+<g id="skirt · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M318.812 53.975C327.194 53.975 335.83 53.975 344.212 53.975C376.796 53.975 383.503 47.472 415.65 42.151"><title>앞허리선안</title></path>
+<path d="M425.175 42.151C466.495 35.739 487.087 32.1 528.362 25.4"><title>앞허리선밖</title></path>
+<path d="M528.362 25.4C540.328 85.228 534.712 116.787 534.712 177.8C534.712 233.68 534.712 261.62 534.712 317.5"><title>앞옆선</title></path>
+<path d="M318.812 349.25C411.499 316.81 437.599 332.067 534.712 317.5"><title>앞겉장절개</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M415.65 42.151L420.412 152.4L425.175 42.151"><title>앞다트</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M318.812 53.975L318.812 349.25"><title>앞중심선</title></path>
+</g>
+<text x="318.812" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 트럼펫 스커트</text>
+</g>
+<g id="skirt · 앞겉장">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M586.824 25.4L944.746 25.4"><title>앞겉장윗선</title></path>
+<path d="M586.824 25.4L586.824 149.225"><title>앞겉장안선</title></path>
+<path d="M586.824 149.225L944.746 146.05"><title>앞겉장밑선</title></path>
+<path d="M944.746 146.05L944.746 25.4"><title>앞겉장밖선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M658.409 25.4L658.409 99.695"><title>앞겉장턱1</title></path>
+<path d="M729.993 25.4L729.993 99.695"><title>앞겉장턱2</title></path>
+<path d="M801.577 25.4L801.577 99.695"><title>앞겉장턱3</title></path>
+<path d="M873.162 25.4L873.162 99.695"><title>앞겉장턱4</title></path>
+</g>
+<text x="586.824" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞겉장 — 트럼펫 스커트</text>
+</g>
+<g id="skirt · 뒤겉장">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M995.546 25.4L1378.626 25.4"><title>뒤겉장윗선</title></path>
+<path d="M995.546 25.4L995.546 149.225"><title>뒤겉장안선</title></path>
+<path d="M995.546 149.225L1378.626 146.05"><title>뒤겉장밑선</title></path>
+<path d="M1378.626 146.05L1378.626 25.4"><title>뒤겉장밖선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M1072.162 25.4L1072.162 99.695"><title>뒤겉장턱1</title></path>
+<path d="M1148.778 25.4L1148.778 99.695"><title>뒤겉장턱2</title></path>
+<path d="M1225.394 25.4L1225.394 99.695"><title>뒤겉장턱3</title></path>
+<path d="M1302.01 25.4L1302.01 99.695"><title>뒤겉장턱4</title></path>
+</g>
+<text x="995.546" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤겉장 — 트럼펫 스커트</text>
+</g>
+<g id="skirt · 앞속장">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1429.426 240.31C1458.099 240.31 1472.974 245.842 1501.107 240.31C1529.241 234.778 1543.507 228.942 1567.452 213.169C1591.396 197.397 1602.391 186.593 1618.58 162.929C1634.77 139.265 1640.855 125.103 1646.879 97.07C1652.904 69.038 1647.633 54.068 1648.135 25.4"><title>앞속장윗선</title></path>
+<path d="M1429.426 240.31L1429.426 275.235"><title>앞속장안선</title></path>
+<path d="M1429.426 275.235C1454.515 287.459 1473.434 306.553 1501.107 310.16C1510.462 311.38 1518.518 307.669 1527.555 304.96C1551.587 297.756 1571.709 289.524 1593.899 277.819C1602.244 273.417 1609.071 268.92 1616.409 262.992C1635.924 247.225 1651.431 231.987 1667.537 212.751C1673.594 205.518 1678.209 198.771 1682.756 190.505C1694.849 168.523 1703.432 148.549 1711.056 124.646C1713.922 115.659 1715.64 107.666 1716.719 98.294C1719.588 73.37 1717.535 51.708 1717.975 26.624"><title>앞속장밑단</title></path>
+<path d="M1717.975 26.624L1648.135 25.4"><title>앞속장밖선</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M1501.107 240.31L1501.107 310.16"><title>앞속장절개1</title></path>
+<path d="M1501.107 240.31L1527.555 304.96"><title>앞속장절개1밖</title></path>
+<path d="M1567.452 213.169L1593.899 277.819"><title>앞속장절개2</title></path>
+<path d="M1567.452 213.169L1616.409 262.992"><title>앞속장절개2밖</title></path>
+<path d="M1618.58 162.929L1667.537 212.751"><title>앞속장절개3</title></path>
+<path d="M1618.58 162.929L1682.756 190.505"><title>앞속장절개3밖</title></path>
+<path d="M1646.879 97.07L1711.056 124.646"><title>앞속장절개4</title></path>
+<path d="M1646.879 97.07L1716.719 98.294"><title>앞속장절개4밖</title></path>
+</g>
+<text x="1429.426" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞속장 — 트럼펫 스커트</text>
+</g>
+<g id="skirt · 뒤속장">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1769.061 255.366C1799.742 255.366 1815.659 261.285 1845.764 255.366C1875.868 249.446 1891.134 243.201 1916.756 226.323C1942.378 209.446 1954.142 197.886 1971.466 172.563C1988.79 147.241 1995.301 132.087 2001.748 102.091C2008.194 72.095 2002.554 56.076 2003.092 25.4"><title>뒤속장윗선</title></path>
+<path d="M1769.061 255.366L1769.061 290.291"><title>뒤속장안선</title></path>
+<path d="M1769.061 290.291C1795.907 302.514 1816.466 321.785 1845.764 325.216C1855.134 326.313 1863.175 322.724 1872.211 320.015C1897.927 312.307 1919.458 303.498 1943.203 290.973C1951.548 286.571 1958.375 282.074 1965.713 276.146C1986.595 259.274 2003.188 242.969 2020.423 222.386C2026.479 215.153 2031.095 208.405 2035.642 200.14C2048.582 176.618 2057.766 155.244 2065.924 129.667C2068.791 120.679 2070.508 112.687 2071.587 103.315C2074.657 76.645 2072.46 53.466 2072.931 26.624"><title>뒤속장밑단</title></path>
+<path d="M2072.931 26.624L2003.092 25.4"><title>뒤속장밖선</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M1845.764 255.366L1845.764 325.216"><title>뒤속장절개1</title></path>
+<path d="M1845.764 255.366L1872.211 320.015"><title>뒤속장절개1밖</title></path>
+<path d="M1916.756 226.323L1943.203 290.973"><title>뒤속장절개2</title></path>
+<path d="M1916.756 226.323L1965.713 276.146"><title>뒤속장절개2밖</title></path>
+<path d="M1971.466 172.563L2020.423 222.386"><title>뒤속장절개3</title></path>
+<path d="M1971.466 172.563L2035.642 200.14"><title>뒤속장절개3밖</title></path>
+<path d="M2001.748 102.091L2065.924 129.667"><title>뒤속장절개4</title></path>
+<path d="M2001.748 102.091L2071.587 103.315"><title>뒤속장절개4밖</title></path>
+</g>
+<text x="1769.061" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤속장 — 트럼펫 스커트</text>
+</g>
+<g id="waistband_front">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M2320.789 63.734C2289.109 63.734 2259.113 60.598 2228.119 54.046C2197.125 47.493 2168.426 38.221 2139.457 25.4"><title>윗선</title></path>
+<path d="M2320.789 101.834C2286.416 101.834 2253.869 98.431 2220.239 91.322C2186.609 84.212 2155.47 74.152 2124.037 60.24"><title>밑선</title></path>
+<path d="M2139.457 25.4L2124.037 60.24"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M2139.457 25.4L2124.037 60.24"><title>옆선표시</title></path>
+</g>
+<g id="grain" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M2330.949 63.734L2330.949 101.834"><title>식서</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M2320.789 63.734L2320.789 101.834"><title>앞끝</title></path>
+</g>
+<text x="2124.037" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_front — 곡선 오비</text>
+</g>
+<g id="waistband_back">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M2625.857 90.918C2590.749 90.918 2557.42 86.73 2523.404 78.044C2479.907 66.937 2440.106 49.633 2402.316 25.4"><title>윗선</title></path>
+<path d="M2625.857 129.018C2587.519 129.018 2551.124 124.444 2513.978 114.959C2466.479 102.831 2423.016 83.935 2381.749 57.472"><title>밑선</title></path>
+<path d="M2402.316 25.4L2381.749 57.472"><title>뒤끝</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M2427.321 40.223L2409.055 73.659"><title>옆선표시</title></path>
+</g>
+<g id="grain" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M2636.017 90.918L2636.017 129.018"><title>식서</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M2625.857 90.918L2625.857 129.018"><title>앞끝</title></path>
+</g>
+<text x="2381.749" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_back — 곡선 오비</text>
+</g>
+</svg>
