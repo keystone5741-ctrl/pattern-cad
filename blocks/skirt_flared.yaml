@@ -14,6 +14,7 @@ extends: skirt_hipbone.yaml
 name: 플레어 스커트
 id: skirt_flared
 source: reference/portfolio.pdf p.15
+verify: {layer: developed, rotate: true}   # 완성 패턴은 전개 층에 있고, 도면에서 돌려 놓여 있다
 
 measurements:
   앞옆선들임: {value: 5/8}
@@ -21,7 +22,12 @@ measurements:
   뒤가산:   {value: 0.25, note: 뒤 플레어를 앞보다 20~30% 더}
   앞벌림:   {formula: "플레어량"}
   뒤벌림:   {formula: "플레어량 * (1 + 뒤가산)"}
-  옆벌림:   {formula: "플레어량"}
+  앞옆벌림: {formula: "앞벌림", note: "옆솔기에서도 벌린다. 앞 밑단 늘어난 양 = 앞벌림 × 4 + 앞옆벌림 = 12.1/2 (도면 표기 ○ + 12.1/2)"}
+  뒤옆벌림: {formula: "뒤벌림", note: "뒤 밑단 늘어난 양 = 뒤벌림 × 4 + 뒤옆벌림 = 15.5/8 (도면 표기 △ + 15.5/8)"}
+  앞옆벌림각: {formula: "atan2(앞옆벌림, 절개길이)"}
+  뒤옆벌림각: {formula: "atan2(뒤옆벌림, 절개길이)"}
+  앞밑단늘어남: {formula: "앞벌림 * 4 + 앞옆벌림", note: 확인용}
+  뒤밑단늘어남: {formula: "뒤벌림 * 4 + 뒤옆벌림", note: 확인용}
   절개길이: {formula: "기장 - (힙본내림 - 옆선올림)"}
   앞벌림각: {formula: "atan2(앞벌림, 절개길이)"}
   뒤벌림각: {formula: "atan2(뒤벌림, 절개길이)"}
@@ -109,23 +115,53 @@ points:
   FLB_밑단_2: {rotate: {of: FLB_밑단_1, center: SLB2_T, angle: "뒤벌림각"}}
   FLB_밑단_3: {rotate: {of: FLB_밑단_2, center: SLB3_T, angle: "뒤벌림각"}}
   FLB_밑단: {ko: B 옆선 밑단점, at: ["FLB_밑단_3.x", "FLB_밑단_3.y"]}
-  FLF_밑단끝: {ko: 앞 옆선 밑단, from: FLF_밑단, dx: "옆벌림/2"}
-  FLB_밑단끝: {ko: 뒤 옆선 밑단, from: FLB_밑단, dx: "-옆벌림/2"}
+  # 밑단은 조각마다 돌아간 지점을 지나야 진짜 부채꼴이 된다 (한 줄로 이으면 밑단만 불룩해진다)
+  FLF_H0_0: {rotate: {of: SLF0_B0, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_H0: {ko: 밑단 절개0, at: ["FLF_H0_0.x", "FLF_H0_0.y"]}
+  FLF_H1_0: {rotate: {of: SLF1_B0, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_H1_1: {rotate: {of: FLF_H1_0, center: SLF1_T, angle: "-앞벌림각"}}
+  FLF_H1: {ko: 밑단 절개1, at: ["FLF_H1_1.x", "FLF_H1_1.y"]}
+  FLF_H2_0: {rotate: {of: SLF2_B0, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_H2_1: {rotate: {of: FLF_H2_0, center: SLF1_T, angle: "-앞벌림각"}}
+  FLF_H2_2: {rotate: {of: FLF_H2_1, center: SLF2_T, angle: "-앞벌림각"}}
+  FLF_H2: {ko: 밑단 절개2, at: ["FLF_H2_2.x", "FLF_H2_2.y"]}
+  FLF_H3_0: {rotate: {of: SLF3_B0, center: SLF0_T, angle: "-앞벌림각"}}
+  FLF_H3_1: {rotate: {of: FLF_H3_0, center: SLF1_T, angle: "-앞벌림각"}}
+  FLF_H3_2: {rotate: {of: FLF_H3_1, center: SLF2_T, angle: "-앞벌림각"}}
+  FLF_H3_3: {rotate: {of: FLF_H3_2, center: SLF3_T, angle: "-앞벌림각"}}
+  FLF_H3: {ko: 밑단 절개3, at: ["FLF_H3_3.x", "FLF_H3_3.y"]}
+  FLB_H0_0: {rotate: {of: SLB0_B0, center: SLB0_T, angle: 뒤벌림각}}
+  FLB_H0: {ko: 밑단 절개0, at: ["FLB_H0_0.x", "FLB_H0_0.y"]}
+  FLB_H1_0: {rotate: {of: SLB1_B0, center: SLB0_T, angle: 뒤벌림각}}
+  FLB_H1_1: {rotate: {of: FLB_H1_0, center: SLB1_T, angle: 뒤벌림각}}
+  FLB_H1: {ko: 밑단 절개1, at: ["FLB_H1_1.x", "FLB_H1_1.y"]}
+  FLB_H2_0: {rotate: {of: SLB2_B0, center: SLB0_T, angle: 뒤벌림각}}
+  FLB_H2_1: {rotate: {of: FLB_H2_0, center: SLB1_T, angle: 뒤벌림각}}
+  FLB_H2_2: {rotate: {of: FLB_H2_1, center: SLB2_T, angle: 뒤벌림각}}
+  FLB_H2: {ko: 밑단 절개2, at: ["FLB_H2_2.x", "FLB_H2_2.y"]}
+  FLB_H3_0: {rotate: {of: SLB3_B0, center: SLB0_T, angle: 뒤벌림각}}
+  FLB_H3_1: {rotate: {of: FLB_H3_0, center: SLB1_T, angle: 뒤벌림각}}
+  FLB_H3_2: {rotate: {of: FLB_H3_1, center: SLB2_T, angle: 뒤벌림각}}
+  FLB_H3_3: {rotate: {of: FLB_H3_2, center: SLB3_T, angle: 뒤벌림각}}
+  FLB_H3: {ko: 밑단 절개3, at: ["FLB_H3_3.x", "FLB_H3_3.y"]}
+  FLF_밑단끝: {ko: 앞 옆선 밑단, rotate: {of: FLF_밑단, center: FLF_허리, angle: "-앞옆벌림각"},
+               note: 옆솔기에서도 벌린다. 옮기지 않고 **허리점을 축으로 돌려야** 옆솔기 길이가 그대로다}
+  FLB_밑단끝: {ko: 뒤 옆선 밑단, rotate: {of: FLB_밑단, center: FLB_허리, angle: 뒤옆벌림각}}
 
 lines:
-  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단]
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단,
+           겹트임덧단, 겹트임선]
   add:
     - {name: 앞허리선, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, FLF_허리],
        tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
-    - {name: 앞옆선, piece: 앞판, role: outline, curve: [FLF_허리, FLF_엉덩이, FLF_밑단끝],
-       tangents: {FLF_허리: {along: [FLF_허리, FLF_엉덩이]}, FLF_엉덩이: {along: [FLF_허리, FLF_밑단끝]}, FLF_밑단끝: {along: [FLF_엉덩이, FLF_밑단끝]}},
-       handles: [[0.34, 0.34], [0.34, 0.34]]}
-    - {name: 앞밑단, piece: 앞판, role: outline, curve: [CF_HEM, FLF_밑단끝],
-       tangents: {CF_HEM: [1, 0]}, handles: [[0.45, 0.45]]}
+    # 전개한 뒤 옆솔기는 허리에서 밑단까지 **직선**으로 다시 그린다 (엉덩이점의 꺾임을 없앤다)
+    - {name: 앞옆선, piece: 앞판, role: outline, pts: [FLF_허리, FLF_밑단끝]}
+    - {name: 앞밑단, piece: 앞판, role: outline, curve: [CF_HEM, FLF_H0, FLF_H1, FLF_H2, FLF_H3, FLF_밑단끝],
+       tangents: {CF_HEM: [1, 0], FLF_밑단끝: {perp: [FLF_허리, FLF_밑단끝]}},
+       handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
     - {name: 뒤허리선, piece: 뒤판, role: outline, curve: [HB_CB, HB_CB1, FLB_허리],
        tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
-    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [FLB_허리, FLB_엉덩이, FLB_밑단끝],
-       tangents: {FLB_허리: {along: [FLB_허리, FLB_엉덩이]}, FLB_엉덩이: {along: [FLB_허리, FLB_밑단끝]}, FLB_밑단끝: {along: [FLB_엉덩이, FLB_밑단끝]}},
-       handles: [[0.34, 0.34], [0.34, 0.34]]}
-    - {name: 뒤밑단, piece: 뒤판, role: outline, curve: [CB_HEM, FLB_밑단끝],
-       tangents: {CB_HEM: [-1, 0]}, handles: [[0.45, 0.45]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, pts: [FLB_허리, FLB_밑단끝]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, curve: [CB_HEM, FLB_H0, FLB_H1, FLB_H2, FLB_H3, FLB_밑단끝],
+       tangents: {CB_HEM: [-1, 0], FLB_밑단끝: {perp: [FLB_허리, FLB_밑단끝]}},
+       handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}

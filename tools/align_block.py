@@ -30,14 +30,18 @@ from patterncad.svg import render_group  # noqa: E402
 from verify_block import fit_curve_handles  # noqa: E402
 
 
-def page_polylines(page, dashed_ok=True, min_len_pt=6.0):
-    """패턴 층의 선을 pt 폴리라인 목록으로."""
+def page_polylines(page, dashed_ok=True, min_len_pt=6.0, layers=("pattern", "developed")):
+    """도면 선을 pt 폴리라인 목록으로.
+
+    절개-벌림으로 만드는 아이템(A라인·개더·플레어·트럼펫·플리츠 스커트)은 **전개한 뒤의 것이
+    완성 패턴**이고, 그 그림은 '전개(developed)' 층에 있다. 그래서 기본으로 두 층을 함께 본다.
+    """
     spans = ex.page_spans(page)
     lines = ex.page_lines(page)
     reg = ex.detect_regions(page, spans, lines, True)
     out = []
     for d in page.get_drawings():
-        if ex.classify_drawing(d, reg) != "pattern":
+        if ex.classify_drawing(d, reg) not in layers:
             continue
         if not dashed_ok and bool(d.get("dashes")) and d.get("dashes") != "[] 0":
             continue
@@ -213,6 +217,25 @@ def cluster_polylines(polys, gap=26.0):
     return out
 
 
+def rotate_resolved(res, deg, center=None):
+    """계산된 원형을 통째로 회전시킨 사본. 전개 조각은 도면에서 돌려 놓여 있어서 필요하다."""
+    from patterncad.block import Resolved, ResolvedLine
+    from patterncad.geometry import Bezier
+
+    c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    ct = center or Pt(0, 0)
+
+    def R(p):
+        x, y = p.x - ct.x, p.y - ct.y
+        return Pt(x * c - y * s + ct.x, x * s + y * c + ct.y)
+    lines = [ResolvedLine(l.name, l.role, l.kind, l.point_names, [R(p) for p in l.pts],
+                          [Bezier(R(b.p0), R(b.c1), R(b.c2), R(b.p3)) for b in l.beziers],
+                          l.piece, l.ko)
+             for l in res.lines]
+    return Resolved(res.block, res.measurements, {k: R(v) for k, v in res.points.items()},
+                    res.point_meta, lines)
+
+
 def block_points(res, n=10, cap=300):
     pts = []
     for l in res.lines:
@@ -224,17 +247,33 @@ def block_points(res, n=10, cap=300):
     return pts
 
 
-def cost(pts, cloud, sx, sy, ox, oy, cap=30.0):
+def cost(pts, cloud, sx, sy, ox, oy, rot=0.0, cap=30.0):
+    """원형 점들을 (회전 → 배율 → 이동) 시켜 도면 선까지의 평균 거리.
+
+    전개(절개-벌림)한 조각은 도면에서 돌려 놓는 경우가 많아 회전도 맞춰야 한다."""
     s = 0.0
-    for p in pts:
-        s += cloud.nearest(Pt(p.x * sx + ox, p.y * sy + oy), cap)
+    if rot:
+        c, sn = math.cos(math.radians(rot)), math.sin(math.radians(rot))
+        for p in pts:
+            x, y = p.x * c - p.y * sn, p.x * sn + p.y * c
+            s += cloud.nearest(Pt(x * sx + ox, y * sy + oy), cap)
+    else:
+        for p in pts:
+            s += cloud.nearest(Pt(p.x * sx + ox, p.y * sy + oy), cap)
     return s / len(pts)
 
 
+def xform(p: Pt, sx, sy, ox, oy, rot=0.0) -> Pt:
+    if rot:
+        c, sn = math.cos(math.radians(rot)), math.sin(math.radians(rot))
+        p = Pt(p.x * c - p.y * sn, p.x * sn + p.y * c)
+    return Pt(p.x * sx + ox, p.y * sy + oy)
+
+
 def optimise(pts, cloud, start, steps=(8.0, 3.0, 1.0, 0.35, 0.12, 0.04), uniform=False,
-             smin=6.0, smax=30.0):
-    """(sx, sy, ox, oy) 를 패턴 서치로 줄인다. sx·sy 는 pt/inch, ox·oy 는 pt."""
-    cur = list(start)
+             smin=6.0, smax=30.0, rotate=False):
+    """(sx, sy, ox, oy, 회전) 을 패턴 서치로 줄인다. sx·sy 는 pt/inch, ox·oy 는 pt, 회전은 도."""
+    cur = list(start) + ([0.0] if len(start) == 4 else [])
     if uniform:
         cur[1] = cur[0]
     best = cost(pts, cloud, *cur)
@@ -244,6 +283,8 @@ def optimise(pts, cloud, start, steps=(8.0, 3.0, 1.0, 0.35, 0.12, 0.04), uniform
             improved = False
             moves = ((0, st * 0.06), (2, st), (3, st)) if uniform else \
                     ((0, st * 0.06), (1, st * 0.06), (2, st), (3, st))
+            if rotate:
+                moves = moves + ((4, st * 0.9),)
             for k, scale in moves:
                 for sgn in (1, -1):
                     trial = list(cur)
@@ -271,7 +312,10 @@ def main(argv=None):
     ap.add_argument("--groups", type=int, default=4, help="맞춰 볼 도면 그림 개수 (큰 것부터)")
     ap.add_argument("--kind", choices=["body", "pants", "sleeve"], help="눈금 종류 (기본: 원형 id 로 판단)")
     ap.add_argument("--no-ruler", action="store_true", help="눈금을 쓰지 않고 형태만으로 맞춘다")
+    ap.add_argument("--layer", default="",
+                    help="맞출 도면 층 (pattern·developed …). 비우면 전개 층이 있으면 전개, 없으면 패턴")
     ap.add_argument("--min-ox", type=float, help="가로 원점의 하한 (앞판 오른쪽에 뒤판이 오도록 묶어 맞출 때)")
+    ap.add_argument("--rotate", action="store_true", help="회전까지 맞춘다 (전개 층이면 자동)")
     ap.add_argument("--points", action="store_true", help="도면 꼭짓점을 원형 좌표로 찍어 본다")
     ap.add_argument("--quiet", action="store_true")
     a = ap.parse_args(argv)
@@ -291,9 +335,22 @@ def main(argv=None):
 
     doc = pymupdf.open(str(ROOT / "reference" / "portfolio.pdf"))
     page = doc[a.page - 1]
-    polys = page_polylines(page)
+    # 전개(절개-벌림)하는 아이템은 **전개한 뒤가 완성 패턴**이고 그 그림은 전개 층에 있다.
+    # 다만 A라인처럼 벌림이 작아 패턴 층 그림이 이미 완성 패턴인 경우도 있어 두 층을 함께 본다.
+    hint = block.data.get("verify") or {}
+    layers = tuple((a.layer or hint.get("layer") or "pattern,developed").split(","))
+    polys = page_polylines(page, layers=layers)
     cloud = Cloud(polys)
     pts = block_points(res)
+
+    rot = 0.0
+    # 전개 조각은 도면에서 돌려 놓여 있으므로 회전까지 맞춘다.
+    # 회전은 조각의 무게중심을 축으로 해야 자리를 벗어나지 않는다 → 중심을 원점으로 옮겨 놓고 맞춘다
+    # 회전은 도면에서 조각을 돌려 놓은 경우에만 쓴다 (원형 파일의 verify.rotate 로 표시)
+    allow_rot = a.rotate or bool((block.data.get("verify") or {}).get("rotate"))
+    ctr = Pt(sum(p.x for p in pts) / len(pts), sum(p.y for p in pts) / len(pts))
+    if allow_rot:
+        pts = [p - ctr for p in pts]
 
     kind = a.kind
     if not kind:
@@ -326,20 +383,23 @@ def main(argv=None):
                 continue
             picked.append(ox0)
             got, e = optimise(pts, cloud, [s, s, ox0, oy0], steps=(3.0, 1.0, 0.35, 0.12, 0.04),
-                              uniform=True)
+                              uniform=True, rotate=allow_rot)
             if a.min_ox is not None and got[2] < a.min_ox - 1:
                 continue
             if best is None or e < best[1]:
                 best = (got, e)
             if len(picked) >= 5:
                 break
-        (sx, sy, ox, oy), err = best
+        got, err = best
+        sx, sy, ox, oy = got[:4]
+        rot = got[4] if len(got) > 4 else 0.0
         if err / s > 0.45 and not a.min_ox:
             try:
                 alt = main([a.block, "--page", str(a.page), "--no-ruler", "--quiet"] +
                            (["--piece", a.piece] if a.piece else []))
                 if alt and alt[4] / alt[0] < err / s:
-                    sx, sy, ox, oy, err = alt
+                    sx, sy, ox, oy, err = alt[:5]
+                    rot = 0.0
             except Exception:  # noqa: BLE001
                 pass
     else:
@@ -365,19 +425,46 @@ def main(argv=None):
                         for ay in (0.0, 0.5, 1.0):
                             oxx = px0 + (px1 - px0) * ax - (bx0 + (bx1 - bx0) * ax) * sxx
                             oyy = py0 + (py1 - py0) * ay - (by0 + (by1 - by0) * ay) * syy
-                            starts.append([sxx, syy, oxx, oyy])
+                            if 6.0 <= sxx <= 30.0 and 6.0 <= syy <= 30.0:
+                                starts.append([sxx, syy, oxx, oyy])
+            if not starts:
+                continue
             starts.sort(key=lambda s: cost(pts, cloud, *s))
+            grp_area = (px1 - px0) * (py1 - py0)
             for s in starts[:3]:
-                got, c = optimise(pts, cloud, s, uniform=(not a.aniso))
+                if allow_rot:
+                    s0, best_r = list(s) + [0.0], None
+                    for r in range(-60, 61, 6):     # 거친 각도 훑기
+                        s0[4] = r
+                        cr = cost(pts, cloud, *s0)
+                        if best_r is None or cr < best_r[0]:
+                            best_r = (cr, r)
+                    s = list(s) + [best_r[1]]
+                got, c = optimise(pts, cloud, s, uniform=(not a.aniso), rotate=allow_rot)
+                # 원형을 빽빽한 곳에 쪼그려 넣으면 오차가 작게 나온다.
+                # 놓인 크기가 그림 크기와 비슷할 때만 인정한다
+                area = (bx1 - bx0) * got[0] * (by1 - by0) * got[1]
+                if not (0.4 <= area / grp_area <= 2.5):
+                    continue
                 if best is None or c < best[1]:
                     best = (got, c)
         if best is None:
             raise SystemExit(f"p.{a.page} 에서 맞출 만한 도면 그림을 못 찾았다")
-        (sx, sy, ox, oy), err = best
+        got, err = best
+        sx, sy, ox, oy = got[:4]
+        rot = got[4] if len(got) > 4 else 0.0
+
+    if allow_rot:
+        # 중심을 옮겨 놓고 맞췄으므로 원래 좌표계로 되돌린다
+        ox, oy = ox - ctr.x * sx, oy - ctr.y * sy
+        if rot:
+            res = rotate_resolved(res, rot, ctr)
+        pts = block_points(res)
 
     if not a.quiet:
         print(f"# {block.name} ↔ p.{a.page}{'  ('+a.piece+')' if a.piece else ''}")
-        print(f"  배율 가로 {sx:.2f} 세로 {sy:.2f} pt/in · 원점 ({ox:.1f}, {oy:.1f}) · 평균오차 {err/sx:.3f}\"")
+        rtxt = f" · 회전 {rot:.1f}°" if rot else ""
+        print(f"  배율 가로 {sx:.2f} 세로 {sy:.2f} pt/in · 원점 ({ox:.1f}, {oy:.1f}){rtxt} · 평균오차 {err/sx:.3f}\"")
 
     if a.fit:
         import yaml
@@ -434,7 +521,10 @@ def main(argv=None):
     for item in json.load(open(ROOT / "extracted" / "index.json", encoding="utf-8")):
         if a.page in item["pages"]:
             idx = item
-    src = ROOT / idx["dir"] / f"p{a.page:03d}_pattern.svg"
+    # 전개 층까지 보는 경우가 있으니 겹침 그림은 페이지 전체 SVG 위에 그린다
+    src = ROOT / idx["dir"] / f"p{a.page:03d}.svg"
+    if not src.exists():
+        src = ROOT / idx["dir"] / f"p{a.page:03d}_pattern.svg"
     svg = src.read_text(encoding="utf-8")
     overlay = render_group(res, (sx, sy), ox, oy, color="#d22", stroke_w=0.6, labels=False)
     svg = svg.replace("</svg>", f'<g id="rule" opacity="0.9">{overlay}</g></svg>')

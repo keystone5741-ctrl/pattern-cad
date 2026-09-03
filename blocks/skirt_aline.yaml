@@ -50,7 +50,8 @@ points:
   HB_SSF2: {ko: 앞 옆선 허리점(전개), rotate: {of: HB_SSF, center: SL_F_T, angle: "-앞벌림각"}}
   SS_H_F:  {ko: 앞 옆선 엉덩이점(전개), rotate: {of: SS_H, center: SL_F_T, angle: "-앞벌림각"}}
   SS_HEM_F0: {ko: 앞 옆선 밑단(회전만), rotate: {of: SS_HEM, center: SL_F_T, angle: "-앞벌림각"}}
-  SS_HEM_F: {ko: 앞 옆선 밑단, from: SS_HEM_F0, dx: "옆벌림/2"}
+  SS_HEM_F: {ko: 앞 옆선 밑단, from: SS_HEM_F0, dx: "옆벌림/2",
+             note: A라인은 옆솔기를 밑단에서 내보낸다 (돌리지 않는다) — 도면 p.9 와 맞다}
   # 뒤판 절개선 (뒤다트 자리)
   SL_B_TOP: {ko: 뒤 절개선 세로 기준, at: ["앞폭 + 뒤폭 - 뒤절개위치", 0]}
   SL_B_B:  {ko: 뒤 절개선 아래, at: ["앞폭 + 뒤폭 - 뒤절개위치", 기장]}
