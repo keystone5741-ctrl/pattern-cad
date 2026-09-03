@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="771.45mm" height="472.894mm" viewBox="0 0 771.45 472.894"><rect width="100%" height="100%" fill="white"/>
 <g id="뒤판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M284.122 282.278L334.922 333.078L334.922 447.378L284.122 447.378"><title>겹트임덧단</title></path>
 <path d="M284.122 44.153L284.122 447.378"><title>뒤중심선</title></path>
 <path d="M284.122 44.153C278.026 44.153 274.216 44.153 258.722 44.153C195.072 44.153 208.123 38.444 195.473 37.016"><title>뒤허리선1</title></path>
 <path d="M170.073 37.016L58.697 28.278"><title>뒤허리선2</title></path>
@@ -17,7 +16,6 @@
 <path d="M182.522 38.106L182.522 447.378"><title>뒤절개선</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M284.122 358.478L334.922 333.078"><title>겹트임표시</title></path>
 <path d="M233.322 40.978C182.632 46.047 157.122 46.693 106.322 50.503"><title>외입술주머니</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">

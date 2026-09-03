@@ -273,6 +273,26 @@ def xform(p: Pt, sx, sy, ox, oy, rot=0.0) -> Pt:
     return Pt(p.x * sx + ox, p.y * sy + oy)
 
 
+
+def mirror_resolved(res):
+    """계산된 원형을 좌우로 뒤집은 사본.
+
+    도면은 장마다 조각을 놓는 방향이 다르다 (뒤판의 뒤중심을 왼쪽에 두기도, 오른쪽에 두기도).
+    모양을 견주려면 방향을 맞춰야 해서, 원형 파일의 verify.mirror 로 표시한 조각을 뒤집는다.
+    """
+    from patterncad.block import Resolved, ResolvedLine
+    from patterncad.geometry import Bezier
+
+    def M(p):
+        return Pt(-p.x, p.y)
+    lines = [ResolvedLine(l.name, l.role, l.kind, l.point_names, [M(p) for p in l.pts],
+                          [Bezier(M(b.p0), M(b.c1), M(b.c2), M(b.p3)) for b in l.beziers],
+                          l.piece, l.ko)
+             for l in res.lines]
+    return Resolved(res.block, res.measurements, {k: M(v) for k, v in res.points.items()},
+                    res.point_meta, lines)
+
+
 def optimise(pts, cloud, start, steps=(8.0, 3.0, 1.0, 0.35, 0.12, 0.04), uniform=False,
              smin=6.0, smax=30.0, rotate=False):
     """(sx, sy, ox, oy, 회전) 을 패턴 서치로 줄인다. sx·sy 는 pt/inch, ox·oy 는 pt, 회전은 도."""
@@ -302,7 +322,8 @@ def optimise(pts, cloud, start, steps=(8.0, 3.0, 1.0, 0.35, 0.12, 0.04), uniform
     return cur, best
 
 
-def cluster_align(pts, cloud, polys, groups=4, aniso=False, allow_rot=False, min_ox=None, max_ox=None):
+def cluster_align(pts, cloud, polys, groups=4, aniso=False, allow_rot=False, min_ox=None,
+                  max_ox=None, area_lo=0.25):
     """도면을 그림 단위로 나눠 각각 맞춰 보고 가장 잘 맞는 자리를 고른다.
 
     눈금이 없는 장(원형 페이지)에서 쓰고, 눈금으로 맞춘 결과가 시원찮을 때도 다시 써 본다.
@@ -355,7 +376,7 @@ def cluster_align(pts, cloud, polys, groups=4, aniso=False, allow_rot=False, min
             # 원형을 빽빽한 곳에 쪼그려 넣으면 오차가 작게 나온다.
             # 놓인 크기가 그림 크기와 비슷할 때만 인정한다
             area = (bx1 - bx0) * got[0] * (by1 - by0) * got[1]
-            if not (0.4 <= area / grp_area <= 2.5):
+            if not (area_lo <= area / grp_area <= 2.5):
                 continue
             if best is None or c < best[1]:
                 best = (got, c)
@@ -400,6 +421,11 @@ def main(argv=None):
         used = {n for l in res.lines for n in l.point_names}
         res.points = {k: v for k, v in res.points.items() if k in used}
 
+    # 도면에서 조각을 좌우 반대로 놓은 장이 있다 (점프수트 p.71 의 뒤판 — 뒤중심이 오른쪽)
+    mir = (block.data.get("verify") or {}).get("mirror")
+    if mir is True or (isinstance(mir, list) and a.piece in mir):
+        res = mirror_resolved(res)
+
     doc = pymupdf.open(str(ROOT / "reference" / "portfolio.pdf"))
     page = doc[a.page - 1]
     # 전개(절개-벌림)하는 아이템은 **전개한 뒤가 완성 패턴**이고 그 그림은 전개 층에 있다.
@@ -426,11 +452,12 @@ def main(argv=None):
     if allow_rot:
         pts = [p - ctr for p in pts]
 
-    kind = a.kind
+    kind = a.kind or hint.get("kind")
     if not kind:
         bid = block.id
+        # '소매' 조각으로 판단한다 — 이름만 보면 sleeveless_dress 가 소매로 잡힌다
         kind = ("pants" if any(k in bid for k in ("pants", "leggings")) else
-                "sleeve" if "sleeve" in bid else "body")
+                "sleeve" if any(l.piece == "소매" for l in res.lines) else "body")
     rf = None if a.no_ruler else ruler_fit(a.page, kind)
     # 눈금 이름표가 조각마다 흩어져 있어 못 믿을 장이 있다 (점프수트 p.71).
     # 그럴 땐 도면에 적힌 치수로 잰 배율을 원형 파일 verify.scale 에 적어 두고 자리만 찾는다
@@ -510,6 +537,9 @@ def main(argv=None):
     else:
         # 눈금이 없는 도면(원형 페이지 등): 그림 단위로 나눠 각각 맞춰 보고 가장 잘 맞는 것을 고른다
         best = cluster_align(pts, cloud, polys, a.groups, a.aniso, allow_rot, a.min_ox, a.max_ox)
+        if best is None:   # 한 무리에 조각이 여럿 그려져 있으면 조각 하나가 차지하는 넓이가 작다
+            best = cluster_align(pts, cloud, polys, a.groups, a.aniso, allow_rot,
+                                 a.min_ox, a.max_ox, area_lo=0.1)
         if best is None:
             raise SystemExit(f"p.{a.page} 에서 맞출 만한 도면 그림을 못 찾았다")
         got, err = best

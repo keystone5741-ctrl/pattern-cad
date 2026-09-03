@@ -24,7 +24,8 @@ source: reference/portfolio.pdf p.91
 measurements:
   여유:         {value: 12.7/8, note: 패턴 가슴 46.3/8}
   진동깊이:     {value: 10}
-  기장:         {value: 26, note: p.91 눈금 표기}
+  기장:         {value: 27.7/8, note: "사이즈표. p.91 눈금 글자는 26 이지만 눈금선 좌표는 27.74 —
+                 같은 눈금자의 진동깊이·등길이·엉덩이길이는 모두 맞으므로 기장 글자만 오식이다"}
   어깨드롭:     {value: 7/16, note: 3/8~1/2. 어깨너비가 원형보다 1 이상 커질 때}
   앞어깨드롭:   {formula: "어깨드롭", note: 뒤보다 앞을 더 내린다}
   뒤어깨드롭:   {formula: "어깨드롭 - 뒤어깨각도올림"}
@@ -52,7 +53,7 @@ points:
 
 lines:
   # 헌팅 자켓은 테일러드 라펠이 없다 — 지퍼 여밈에 오픈 칼라가 달린다 (p.91 도면)
-  remove: [앞허리다트, 뒤허리다트, 라펠꺾임선, 고지라인, 라펠노치, 라펠외곽]
+  remove: [라펠꺾임선, 고지라인, 라펠노치, 라펠외곽]
   replace:
     - {name: 낸단, piece: 앞판, role: outline, pts: [EXT_T, EXT_B], note: 지퍼가 물리는 앞단}
   add:

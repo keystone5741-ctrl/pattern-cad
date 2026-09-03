@@ -12,9 +12,16 @@ id: pants_tapered
 source: reference/portfolio.pdf p.33
 
 measurements:
+  뒤허리소요: {formula: "뒤다트1폭 + 뒤다트2폭", note: 뒤 다트 두 개}
+  앞허리소요: {formula: "턱1량 + 턱2량"}
   엉덩이여유: {value: 6.1/2, note: 패턴 엉덩이 42}
   밑위길이:   {value: 10.1/2}
-  기장:       {value: 36.7/8, note: p.33 눈금 표기}
+  기장:       {value: 39.1/2, note: 신체 허리선 기준 (p.33 눈금 36.7/8 은 내려간 허리에서)}
+  앞뒤차:     {value: 1/2, note: p.33 표기 H/4 ∓ 1/2}
+  앞샅:       {value: 1.3/8, note: p.33 표기}
+  뒤샅:       {value: 4.1/2, note: p.33 표기}
+  앞무릎폭:   {value: 7.5/8, note: p.33 실측}
+  뒤무릎폭:   {value: 8.3/16, note: p.33 실측}
   밑단둘레:   {value: 6}
   옆선들임:   {value: 5/8, note: 엉덩이 42 → 허리 29.5/8, 차이가 커서 옆솔기에서도 들인다}
   턱1량:      {value: 1.1/4, note: 중심 쪽 턱}

@@ -15,22 +15,28 @@ name: 게더 스커트
 id: skirt_gather
 source: reference/portfolio.pdf p.13
 
+# 완성 패턴은 전개(절개-벌림)한 뒤의 것이고, 그 그림은 도면의 전개 층에 있다
+verify: {layer: developed}
+
 measurements:
   실루엣:   {choice: A라인, options: [세미A, A라인]}
   소재:     {choice: 면, options: [면, 쉬폰], note: 셔링 분량 배수를 정한다}
   셔링비율: {table: {면: 0.4, 쉬폰: 0.75}, key: 소재, note: 면 30~50%, 쉬폰 50~100%}
   뒤셔링가산: {value: 0.25, note: 뒤 셔링을 앞보다 이 비율만큼 더 (20~30%)}
-  앞셔링:   {formula: "앞폭 * 셔링비율", note: 앞판에 더하는 셔링 분량}
+  앞뒤셔링차: {value: 3/4, note: 뒤 셔링이 앞보다 많은 양 (p.13 표기 — 앞 □+4, 뒤 ◇+4.3/4)}
+  밑단추가: {value: 1/4, note: 밑단은 허리보다 더 벌린다 (p.13 표기 — 앞뒤 모두 5)}
   뒤셔링:   {formula: "뒤폭 * 셔링비율 * (1 + 뒤셔링가산)"}
+  앞셔링:   {formula: "뒤셔링 - 앞뒤셔링차", note: 앞판에 더하는 셔링 분량}
+  밑단셔링: {formula: "뒤셔링 + 밑단추가", note: 밑단은 앞뒤 같은 양으로 벌린다}
 
 points:
   # 평행 전개 — 앞판은 옆선 쪽으로, 뒤판은 옆선 쪽으로 셔링 분량만큼 넓힌다
   GS_WF:   {ko: 앞 허리 옆선점,   from: HB_SSF2, dx: 앞셔링}
   GS_HF:   {ko: 앞 엉덩이 옆선점, from: SS_H_F, dx: 앞셔링}
-  GS_MF:   {ko: 앞 밑단 옆선점,   from: SS_HEM_F, dx: 앞셔링}
+  GS_MF:   {ko: 앞 밑단 옆선점,   from: SS_HEM_F, dx: 밑단셔링}
   GS_WB:   {ko: 뒤 허리 옆선점,   from: HB_SSB2, dx: "-뒤셔링"}
   GS_HB:   {ko: 뒤 엉덩이 옆선점, from: SS_H_B, dx: "-뒤셔링"}
-  GS_MB:   {ko: 뒤 밑단 옆선점,   from: SS_HEM_B, dx: "-뒤셔링"}
+  GS_MB:   {ko: 뒤 밑단 옆선점,   from: SS_HEM_B, dx: "-밑단셔링"}
   # 셔링 구간 표시 (허리 전체가 셔링)
   GS_SF1:  {ko: 앞 셔링 시작, at: [0, "HB_CF.y"]}
   GS_SB1:  {ko: 뒤 셔링 시작, at: ["앞폭 + 뒤폭", "HB_CB.y"]}

@@ -150,7 +150,7 @@ points:
 
 lines:
   remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단,
-           겹트임덧단, 겹트임선]
+           겹트임덧단, 겹트임표시]
   add:
     - {name: 앞허리선, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, FLF_허리],
        tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}

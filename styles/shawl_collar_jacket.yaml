@@ -20,5 +20,5 @@ blocks:
     block: ../blocks/shawl_collar.yaml
     measurements:
       뒤네크: "len(body.뒤목선)"
-      고지네크: 3.1/2
+      고지네크: "body.숄고지"
       칼라줄임: 1/8

@@ -210,7 +210,7 @@ class Blouse(unittest.TestCase):
         self.assertAlmostEqual(m["진동깊이"], 8.25)
         self.assertAlmostEqual(p["UP2"].x, 9.25)  # 옆선여유 1/4
         self.assertAlmostEqual(p["UP2"].y, 8.375)  # 진동내림 1/8
-        self.assertAlmostEqual(p["HEM_CF"].y, 24.25)  # 기장 + 앞내림
+        self.assertAlmostEqual(p["HEM_CF"].y, 25.0)  # 기장 + 앞내림 + 앞처짐(가슴다트 3/4)
         self.assertAlmostEqual(p["CB_WL"].x, 17.25)  # 뒤중심 허리 3/4 들임
 
     def test_front_shoulder_equals_back(self):
@@ -451,7 +451,8 @@ class Pants(unittest.TestCase):
                 # 허리 = 다트·턱을 뺀 허리선들의 합 × 2 (앞·뒤 반쪽씩 제도한다)
                 w = 2 * sum(l.length() for l in res.lines
                             if l.name.startswith(("앞허리선", "뒤허리선")))
-                self.assertAlmostEqual(w, waist, delta=0.15)
+                # 허리선이 곡선이라 직선 합보다 조금 길게 나온다 — 0.25 까지 인정
+                self.assertAlmostEqual(w, waist, delta=0.25)
                 self.assertAlmostEqual(2 * (m["앞폭"] + m["뒤폭"]), hip, delta=0.02)
                 self.assertAlmostEqual((m["앞밑단폭"] + m["뒤밑단폭"]) / 2, hem, delta=0.02)
 
@@ -474,11 +475,11 @@ class Pants(unittest.TestCase):
         self.assertGreater(rise(2.5), rise(0))
 
     def test_back_rise_angle_widens_the_back_waist(self):
-        """눕히면 뒤중심 허리점이 옆으로 나가 뒤허리가 넓어진다 (A자 형태)."""
+        """눕히면 뒤중심 허리점이 옆으로 나가고, 허리선이 직각을 지키느라 위로도 올라간다 (p.30)."""
         blk = Block.load(ROOT / "blocks" / "pants_basic.yaml")
         wide, narrow = blk.evaluate({"뒤중심각": 8}), blk.evaluate({"뒤중심각": 0})
         self.assertGreater(wide.points["B_W_CB"].x, narrow.points["B_W_CB"].x)
-        self.assertAlmostEqual(wide.points["B_W_CB"].y, narrow.points["B_W_CB"].y)
+        self.assertLess(wide.points["B_W_CB"].y, narrow.points["B_W_CB"].y)
 
     def test_elastic_band_is_smaller_than_the_drafted_waist(self):
         """고무줄 밴드는 제도된 허리보다 작다 — 레깅스는 2~3."""

@@ -9,6 +9,10 @@ name: 무다트 상의 몸판틀
 id: box_body
 source: reference/portfolio.pdf p.46 + p.52
 
+# 이 원형은 제 도면이 없다 (p.46 은 시추니 무다트 원형, p.52 는 오버사이즈 제도 설명).
+# 오버사이즈 아이템들의 공통 부모일 뿐이므로 도면 겹침 검증에서 뺀다.
+verify: {skip: true}
+
 measurements:
   앞처짐:       {value: 0, note: 앞뒤 밑단 같은 높이}
   앞올림:       {value: 1.1/4, note: 가슴다트 분량이 앞판 길이로 분산된 것}

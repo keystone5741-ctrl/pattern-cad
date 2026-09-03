@@ -43,7 +43,7 @@ points:
   TS_B_H: {ko: 통사이바 뒤 밑단, at: ["전폭 - 뒤밑단반 + 통사이바뒤", "HEM_CB0.y"]}
 
 lines:
-  remove: [앞허리다트, 뒤허리다트, 앞사이바, 뒤사이바]
+  remove: [앞사이바, 뒤사이바]
   add:
     - {name: 통사이바앞선, piece: 앞판, role: mark, curve: [TS_F_T, TS_F_H],
        tangents: {TS_F_T: [0, 1], TS_F_H: [0, 1]}, handles: [[0.4, 0.4]]}

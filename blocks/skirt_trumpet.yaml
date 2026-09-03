@@ -50,7 +50,8 @@ points:
   TB_SS_H: {ko: 뒤 옆선 밑단, at: ["앞폭 - 플레어량/2", 기장]}
 
 lines:
-  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단]
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤허리선1, 뒤다트, 뒤허리선2, 뒤옆선위, 뒤옆선아래, 뒤밑단,
+           겹트임덧단, 겹트임표시]
   add:
     - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, TF_L],
        tangents: {HB_CF: [1, 0], HB_CF1: [1, 0], TF_L: {along: [HB_CF1, HB_SSF]}}, handles: [[0.33, 0.33], [0.45, 0.45]]}

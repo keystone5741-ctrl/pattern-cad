@@ -1,17 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="531.812mm" height="596.9mm" viewBox="0 0 531.812 596.9"><rect width="100%" height="100%" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="531.812mm" height="463.55mm" viewBox="0 0 531.812 463.55"><rect width="100%" height="100%" fill="white"/>
 <g id="앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M95.25 25.4C91.011 34.995 93.197 52.402 72.799 72.799C62.044 83.554 35.889 95.25 25.4 95.25"><title>앞목선</title></path>
 <path d="M95.25 25.4L181.933 63.695"><title>앞어깨선</title></path>
 <path d="M181.933 63.695C176.03 77.058 177.8 122.013 177.8 136.622C177.8 154.248 184.301 176.519 197.332 190.018C210.736 203.904 232.097 212.725 253.206 212.725"><title>앞암홀</title></path>
-<path d="M25.4 95.25L25.4 406.4"><title>앞중심선</title></path>
+<path d="M25.4 95.25L25.4 438.15"><title>앞중심선</title></path>
 <path d="M253.206 212.725L253.206 278.903"><title>앞옆선위</title></path>
-<path d="M253.206 310.653C245.586 346.412 234.156 363.488 234.156 400.05"><title>앞옆선</title></path>
-<path d="M25.4 406.4L234.156 400.05"><title>앞밑단</title></path>
+<path d="M253.206 310.653C242.983 358.63 241.776 383.341 234.156 431.8"><title>앞옆선</title></path>
+<path d="M25.4 438.15L234.156 431.8"><title>앞밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M253.206 278.903L111.125 278.903L253.206 310.653"><title>가슴다트</title></path>
-<path d="M174.625 278.903L161.925 400.05L174.625 565.15L187.325 400.05L174.625 278.903"><title>앞허리다트</title></path>
+<path d="M174.625 278.903L161.925 400.05L174.625 431.8L187.325 400.05L174.625 278.903"><title>앞허리다트</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
 <path d="M174.625 149.225C149.225 201.096 111.125 221.147 111.125 278.903C111.125 333.615 174.625 345.338 174.625 400.05"><title>앞사이바</title></path>
@@ -28,7 +28,7 @@
 <path d="M487.362 431.8L310.356 431.8"><title>뒤밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M366.712 241.3L354.012 431.8L366.712 571.5L379.412 431.8L366.712 241.3"><title>뒤허리다트</title></path>
+<path d="M366.712 241.3L354.012 431.8L366.712 431.8L379.412 431.8L366.712 241.3"><title>뒤허리다트</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
 <path d="M394.921 39.756L389.039 42.149"><title>뒤어깨이세</title></path>

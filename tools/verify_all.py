@@ -44,8 +44,9 @@ def one_block(args):
     path, page, pieces = args
     blk = Block.load(ROOT / path)
     res = blk.evaluate()
-    kind = ("pants" if any(k in blk.id for k in ("pants", "leggings")) else
-            "sleeve" if "sleeve" in blk.id else "body")
+    kind = ((blk.data.get("verify") or {}).get("kind") or
+            ("pants" if any(k in blk.id for k in ("pants", "leggings")) else
+             "sleeve" if any(l.piece == "소매" for l in res.lines) else "body"))
     rf = align_block.ruler_fit(page, kind)
 
     fits = {pc: align(path, page, pc) for pc in pieces}
@@ -93,7 +94,7 @@ def main():
             continue
         blk = Block.load(f)
         m = re.search(r"p\.(\d+)", str(blk.data.get("source", "")))
-        if not m:
+        if not m or (blk.data.get("verify") or {}).get("skip"):
             continue
         res = blk.evaluate()
         pieces = [p for p in a.pieces.split(",") if any(l.piece == p for l in res.lines)] or [None]

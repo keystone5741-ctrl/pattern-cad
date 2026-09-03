@@ -16,9 +16,16 @@ id: pants_onetuck
 source: reference/portfolio.pdf p.31
 
 measurements:
+  뒤허리소요: {formula: "뒤다트1폭 + 뒤다트2폭", note: 뒤 다트 두 개}
+  앞허리소요: {formula: "턱량"}
   엉덩이여유: {value: 2.7/8, note: 패턴 엉덩이 38.3/8}
   밑위길이:   {value: 10.1/2, note: 턱 분량에 맞춰 내린다}
-  기장:       {value: 35, note: 총장 36.1/2 − 오비}
+  기장:       {value: 39.1/2, note: 신체 허리선 기준 (p.31 눈금 36.1/2 는 내려간 허리에서)}
+  앞뒤차:     {value: 1/2, note: p.31 표기 H/4 ∓ 1/2}
+  앞샅:       {value: 1.3/8, note: p.31 표기}
+  뒤샅:       {value: 4.1/2, note: p.31 표기}
+  앞무릎폭:   {value: 7.5/8, note: p.31 실측}
+  뒤무릎폭:   {value: 8.1/8, note: p.31 실측}
   밑단둘레:   {value: 5.3/4}
   옆선들임:   {value: 1/4, note: 턱이 있으므로 옆솔기 곡을 완만하게 (1/8~1/4)}
   턱량:       {value: 1.1/4}

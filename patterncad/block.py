@@ -115,6 +115,10 @@ def merge_block(parent: dict, child: dict) -> dict:
     if isinstance(cl, list):
         cl = {"add": cl}
     removed = set(cl.get("remove") or [])
+    # 없는 이름을 지우려 하면 오타다. 조용히 넘어가면 지웠다고 착각한 선이 그대로 남는다.
+    missing = removed - {l["name"] for l in lines}
+    if missing:
+        raise ValueError(f"지울 선이 없다: {', '.join(sorted(missing))}")
     lines = [l for l in lines if l["name"] not in removed]
     for rep in cl.get("replace") or []:
         idx = next((i for i, l in enumerate(lines) if l["name"] == rep["name"]), None)

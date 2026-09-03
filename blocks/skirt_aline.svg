@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="672.503mm" height="477.668mm" viewBox="0 0 672.503 477.668"><rect width="100%" height="100%" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="621.703mm" height="477.668mm" viewBox="0 0 621.703 477.668"><rect width="100%" height="100%" fill="white"/>
 <g id="뒤판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M304.483 287.051L355.283 337.851L355.283 452.151L304.483 452.151"><title>겹트임덧단</title></path>
 <path d="M304.483 48.926L304.483 452.151"><title>뒤중심선</title></path>
 <path d="M304.483 48.926C298.387 48.926 294.577 48.926 279.083 48.926C215.433 48.926 228.484 43.216 215.834 41.789"><title>뒤허리선1</title></path>
 <path d="M190.434 41.789L79.058 33.051"><title>뒤허리선2</title></path>
@@ -14,27 +13,24 @@
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
 <path d="M202.883 42.878L202.883 452.151"><title>뒤절개선</title></path>
 </g>
-<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M304.483 363.251L355.283 337.851"><title>겹트임표시</title></path>
-</g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M304.483 185.451L298.133 185.451"><title>지퍼끝</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g>
 <g id="앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M393.383 60.238C401.765 60.238 410.401 60.238 418.783 60.238C451.376 60.238 458.097 53.805 490.262 48.541"><title>앞허리선안</title></path>
-<path d="M496.529 47.516C535.283 41.174 552.98 27.752 592.18 25.4"><title>앞허리선밖</title></path>
-<path d="M592.18 25.4C609.791 84.105 610.867 115.581 617.616 176.499C627.641 266.997 637.077 352.172 647.103 442.67"><title>앞옆선</title></path>
-<path d="M393.383 450.763C436.007 450.763 476.142 451.309 518.745 449.964C562.435 448.584 603.461 445.15 647.103 442.67"><title>앞밑단</title></path>
+<path d="M342.583 60.238C350.965 60.238 359.601 60.238 367.983 60.238C400.576 60.238 407.297 53.805 439.462 48.541"><title>앞허리선안</title></path>
+<path d="M445.729 47.516C484.483 41.174 502.18 27.752 541.38 25.4"><title>앞허리선밖</title></path>
+<path d="M541.38 25.4C558.991 84.105 560.067 115.581 566.816 176.499C576.841 266.997 586.277 352.172 596.303 442.67"><title>앞옆선</title></path>
+<path d="M342.583 450.763C385.207 450.763 425.342 451.309 467.945 449.964C511.635 448.584 552.661 445.15 596.303 442.67"><title>앞밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M490.262 48.541L493.395 111.528L496.529 47.516"><title>앞다트</title></path>
+<path d="M439.462 48.541L442.595 111.528L445.729 47.516"><title>앞다트</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M493.395 48.028L493.395 450.763"><title>앞절개선</title></path>
+<path d="M442.595 48.028L442.595 450.763"><title>앞절개선</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M393.383 60.238L393.383 450.763"><title>앞중심선</title></path>
+<path d="M342.583 60.238L342.583 450.763"><title>앞중심선</title></path>
 </g>
-<text x="393.383" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g></svg>
+<text x="342.583" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g></svg>

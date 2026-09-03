@@ -46,17 +46,19 @@ measurements:
                 note: 유동 → 비바이어스, 유동 없게 → 식서, 소매 달릴 때 → 암홀테이프}
 
 points:
+  # 앞 허리선은 가슴다트 분량만큼 내려 그린다 — 다트를 접으면 뒤 허리선과 높이가 맞는다
+  WL_SS_F2: {ko: 앞 옆선 허리점(다트 내림), at: ["WL_SS_F.x", "WL_SS_F.y + 앞처짐"]}
   FSB_T: {ko: 앞사이바 시작(암홀), at: ["FWD_C.x", "UP2.y - 사이바암홀"]}
   BSB_T: {ko: 뒤사이바 시작(암홀), at: ["BWD_C.x", "UP2.y - 사이바암홀"]}
 
 lines:
   replace:
     # 허리에서 끊기므로 옆선·밑단을 허리선까지만 그린다
-    - {name: 앞옆선, piece: 앞판, role: outline, curve: [BD2, WL_SS_F],
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [BD2, WL_SS_F2],
        tangents: {BD2: {along: [BD2, WL_SS_F]}, WL_SS_F: [0, 1]}, handles: [[0.4, 0.4]]}
     - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [UP2, WL_SS_B],
        tangents: {UP2: {along: [UP2, WL_SS_B]}, WL_SS_B: [0, 1]}, handles: [[0.4, 0.4]]}
-    - {name: 앞밑단, piece: 앞판, role: outline, pts: [HEM_CF, WL_SS_F], note: 허리선 — 셔링 스커트가 붙는다}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [HEM_CF, WL_SS_F2], note: 허리선 — 셔링 스커트가 붙는다}
     - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, WL_SS_B]}
   add:
     - {name: 앞사이바, piece: 앞판, role: mark, curve: [FSB_T, BP, FWD_C],
