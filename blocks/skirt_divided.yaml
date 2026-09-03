@@ -16,39 +16,61 @@ name: 디바이디드 스커트
 id: skirt_divided
 source: reference/portfolio.pdf p.23
 
+# p.23 은 눈금이 없다. 배율은 도면에서 직접 쟀다 —
+# 허리(148.2pt)~H.L(207.3pt) 이 4.7/8" 이고, H.L~밑위선 36.2pt 가 표기 3" 와 맞는다.
+verify: {scale: 12.06}
+
 measurements:
   실루엣:     {choice: 세미A, options: [세미A, A라인]}
-  밑위내림:   {value: 3.1/2, note: 엉덩이선에서 밑위선까지 (3~4)}
+  밑위내림:   {value: 3, note: p.23 표기. 디바이디드는 3~4 중 가장 적게 내려간 3 을 쓴다 (p.24)}
   밑위길이:   {formula: "엉덩이길이 + 밑위내림"}
-  앞샅:       {formula: "앞폭 / 3", note: 앞 밑위선의 1/3}
+  기장:       {value: 17.1/4, note: p.23 실측 (엉덩이선에서 밑단 9.13/16)}
+  # 밑위선 폭은 A라인으로 벌어진 뒤의 폭이다 — 앞샅은 그 1/3 (p.23 유의사항)
+  앞밑위폭:   {formula: "DV_SS_F.x"}
+  뒤밑위폭:   {formula: "앞폭 + 뒤폭 - DV_SS_B.x"}
+  앞샅:       {formula: "앞밑위폭 / 3", note: 앞 밑위선의 1/3}
   뒤샅가산:   {value: 1.1/2, note: 1~2}
-  뒤샅:       {formula: "뒤폭 / 3 + 뒤샅가산"}
+  뒤샅:       {formula: "뒤밑위폭 / 3 + 뒤샅가산"}
   샅합:       {formula: "앞샅 + 뒤샅", note: 7.1/2~8 이 적당}
-  인심밑단올림: {value: 1/2, note: 얇은 원단은 더 올린다}
+  인심밑단올림: {value: 1/4, note: p.23 표기 (옆솔기 쪽은 1/8). 얇은 원단은 더 올린다}
   주머니들임: {value: 2, note: 뒤중심에서}
   주머니내림: {value: 2, note: 허리선에서}
-  주머니길이: {value: 5}
+  주머니길이: {value: 4.1/4, note: p.23 표기 3/8" x 4.1/4"}
 
 points:
   # 밑위선과 샅
   DV_CL_F:  {ko: 앞 밑위선(앞중심), at: [0, 밑위길이]}
   DV_CL_B:  {ko: 뒤 밑위선(뒤중심), at: ["앞폭 + 뒤폭", 밑위길이]}
+  DV_CLR:   {at: ["앞폭 + 뒤폭", 밑위길이], note: 밑위선을 가로지르는 기준점}
+  DV_SS_F:  {ko: 앞 옆선 밑위점, intersect: [[SS_H_F, SS_HEM_F], [DV_CL_F, DV_CLR]]}
+  DV_SS_B:  {ko: 뒤 옆선 밑위점, intersect: [[SS_H_B, SS_HEM_B], [DV_CL_F, DV_CLR]]}
   DV_CP_F:  {ko: 앞 샅점, at: ["-앞샅", 밑위길이]}
   DV_CP_B:  {ko: 뒤 샅점, at: ["앞폭 + 뒤폭 + 뒤샅", 밑위길이]}
-  DV_IN_F:  {ko: 앞 인심 밑단, at: ["-앞샅 * 0.55", "기장 - 인심밑단올림"]}
-  DV_IN_B:  {ko: 뒤 인심 밑단, at: ["앞폭 + 뒤폭 + 뒤샅 * 0.55", "기장 - 인심밑단올림"]}
+  # 인심은 도면에서 수직이다 (샅점에서 곧장 내려온다)
+  DV_IN_F:  {ko: 앞 인심 밑단, at: ["-앞샅", "기장 - 인심밑단올림"]}
+  DV_IN_B:  {ko: 뒤 인심 밑단, at: ["앞폭 + 뒤폭 + 뒤샅", "기장 - 인심밑단올림"]}
   # 외입술 주머니 (뒤판)
   DV_PK1: {ko: 주머니 시작, at: ["앞폭 + 뒤폭 - 주머니들임", 주머니내림]}
   DV_PK2: {ko: 주머니 끝,   at: ["앞폭 + 뒤폭 - 주머니들임 - 주머니길이", "주머니내림 + 3/8"]}
 
 lines:
+  # 치마바지는 앞중심이 밑위선에서 끊기고 그 아래는 샅으로 이어진다.
+  # 밑단도 앞중심이 아니라 **인심 끝에서** 시작해야 외곽선이 닫힌다.
+  replace:
+    - {name: 앞중심선, piece: 앞판, role: fold, pts: [HB_CF, DV_CL_F]}
+    - {name: 뒤중심선, piece: 뒤판, role: outline, pts: [HB_CB, DV_CL_B]}
+    - {name: 앞밑단, piece: 앞판, role: outline, curve: [DV_IN_F, HEM_F_OUT, SS_HEM_F],
+       tangents: {SS_HEM_F: [1, 0]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, curve: [DV_IN_B, HEM_B_OUT, SS_HEM_B],
+       tangents: {SS_HEM_B: [-1, 0]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
   add:
     - {name: 밑위선, role: construction, pts: [DV_CP_F, DV_CP_B]}
-    - {name: 앞샅선, piece: 앞판, role: outline, curve: [CF_HEM, DV_CL_F, DV_CP_F],
-       tangents: {DV_CL_F: [0, -1]}, handles: [[0.4, 0.4], [0.4, 0.4]], note: 앞중심 아래가 샅으로 이어진다}
+    - {name: 앞샅선, piece: 앞판, role: outline, curve: [DV_CL_F, DV_CP_F],
+       tangents: {DV_CL_F: [-1, 0.35], DV_CP_F: [-1, 0]}, handles: [[0.45, 0.45]],
+       note: 앞중심 아래가 샅으로 이어진다}
     - {name: 앞인심, piece: 앞판, role: outline, pts: [DV_CP_F, DV_IN_F]}
-    - {name: 뒤샅선, piece: 뒤판, role: outline, curve: [CB_HEM, DV_CL_B, DV_CP_B],
-       tangents: {DV_CL_B: [0, -1]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤샅선, piece: 뒤판, role: outline, curve: [DV_CL_B, DV_CP_B],
+       tangents: {DV_CL_B: [1, 0.35], DV_CP_B: [1, 0]}, handles: [[0.45, 0.45]]}
     - {name: 뒤인심, piece: 뒤판, role: outline, pts: [DV_CP_B, DV_IN_B]}
     - {name: 외입술주머니, piece: 뒤판, role: mark, curve: [DV_PK1, DV_PK2],
        tangents: {DV_PK1: [-1, 0.1]}, handles: [[0.4, 0.4]], note: 허리선에 맞게 곡선으로}
