@@ -110,8 +110,8 @@ class Cloud:
         return best
 
 
-RULER_BODY = ["진동깊이", "등길이", "엉덩이길이", "무릎길이", "기장"]
-FROM_WAIST = {"엉덩이길이", "무릎길이"}   # 이 둘만 허리선에서 잰다
+RULER_BODY = ["진동깊이", "등길이", "엉덩이길이", "밑위길이", "무릎길이", "기장"]
+FROM_WAIST = {"엉덩이길이", "밑위길이", "무릎길이"}   # 이것들은 허리선에서 잰다
 RULER_PANTS = ["엉덩이길이", "밑위길이", "무릎길이", "기장"]
 RULER_SLEEVE = ["소매산높이", "팔꿈치길이", "소매길이"]
 
@@ -151,14 +151,17 @@ def ruler_fit(page_no: int, kind: str = "body"):
     found.sort(key=lambda f: f[3])
     groups: list[list] = []
     for f in found:
-        if groups and f[3] - groups[-1][-1][3] < 40:
+        if groups and f[3] - groups[-1][-1][3] < 24:
             groups[-1].append(f)
         else:
             groups.append([f])
     anchor = {"body": ("등길이", "진동깊이"), "pants": ("밑위길이", "기장"),
               "sleeve": ("소매산높이", "소매길이")}[kind]
     named = [g for g in groups if any(x[0] in anchor for x in g)]
-    grp = max(named or groups, key=len)
+    # 이름표가 둘뿐인 눈금은 최소제곱이 항상 딱 맞아 버려서 틀려도 걸러지지 않는다.
+    # 그래서 짝이 셋 이상인 그룹이 있으면 그쪽을 먼저 쓴다.
+    big = [g for g in named if len(g) >= 3] or [g for g in groups if len(g) >= 3]
+    grp = max(big or named or groups, key=len)
     grp.sort(key=lambda f: f[2])
     pairs, cum, waist = [], 0.0, 0.0
     for name, v, y, _ in grp:
@@ -299,6 +302,66 @@ def optimise(pts, cloud, start, steps=(8.0, 3.0, 1.0, 0.35, 0.12, 0.04), uniform
     return cur, best
 
 
+def cluster_align(pts, cloud, polys, groups=4, aniso=False, allow_rot=False, min_ox=None, max_ox=None):
+    """도면을 그림 단위로 나눠 각각 맞춰 보고 가장 잘 맞는 자리를 고른다.
+
+    눈금이 없는 장(원형 페이지)에서 쓰고, 눈금으로 맞춘 결과가 시원찮을 때도 다시 써 본다.
+    """
+    bx0, bx1 = min(p.x for p in pts), max(p.x for p in pts)
+    by0, by1 = min(p.y for p in pts), max(p.y for p in pts)
+    best = None
+    for grp in cluster_polylines(polys)[:groups]:
+        px0 = min(p.x for pl in grp for p in pl)
+        px1 = max(p.x for pl in grp for p in pl)
+        py0 = min(p.y for pl in grp for p in pl)
+        py1 = max(p.y for pl in grp for p in pl)
+        if px1 - px0 < 20 or py1 - py0 < 20:
+            continue
+        starts = []
+        for fx in (1.0, 0.85, 0.7, 0.55):
+            for fy in (1.0, 0.85, 0.7, 0.55):
+                sxx = (px1 - px0) / (bx1 - bx0) * fx
+                syy = (py1 - py0) / (by1 - by0) * fy
+                if not aniso:
+                    sxx = syy = (sxx + syy) / 2
+                for ax in (0.0, 0.5, 1.0):
+                    for ay in (0.0, 0.5, 1.0):
+                        oxx = px0 + (px1 - px0) * ax - (bx0 + (bx1 - bx0) * ax) * sxx
+                        oyy = py0 + (py1 - py0) * ay - (by0 + (by1 - by0) * ay) * syy
+                        if min_ox is not None and oxx < min_ox:
+                            continue
+                        if max_ox is not None and oxx > max_ox:
+                            continue
+                        if 6.0 <= sxx <= 30.0 and 6.0 <= syy <= 30.0:
+                            starts.append([sxx, syy, oxx, oyy])
+        if not starts:
+            continue
+        starts.sort(key=lambda s: cost(pts, cloud, *s))
+        grp_area = (px1 - px0) * (py1 - py0)
+        for s in starts[:3]:
+            if allow_rot:
+                s0, best_r = list(s) + [0.0], None
+                for r in range(-60, 61, 6):     # 거친 각도 훑기
+                    s0[4] = r
+                    cr = cost(pts, cloud, *s0)
+                    if best_r is None or cr < best_r[0]:
+                        best_r = (cr, r)
+                s = list(s) + [best_r[1]]
+            got, c = optimise(pts, cloud, s, uniform=(not aniso), rotate=allow_rot)
+            if min_ox is not None and got[2] < min_ox - 1:
+                continue
+            if max_ox is not None and got[2] > max_ox + 1:
+                continue
+            # 원형을 빽빽한 곳에 쪼그려 넣으면 오차가 작게 나온다.
+            # 놓인 크기가 그림 크기와 비슷할 때만 인정한다
+            area = (bx1 - bx0) * got[0] * (by1 - by0) * got[1]
+            if not (0.4 <= area / grp_area <= 2.5):
+                continue
+            if best is None or c < best[1]:
+                best = (got, c)
+    return best
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("block")
@@ -314,7 +377,11 @@ def main(argv=None):
     ap.add_argument("--no-ruler", action="store_true", help="눈금을 쓰지 않고 형태만으로 맞춘다")
     ap.add_argument("--layer", default="",
                     help="맞출 도면 층 (pattern·developed …). 비우면 전개 층이 있으면 전개, 없으면 패턴")
+    ap.add_argument("--cluster", type=int,
+                    help="도면 그림 무리 번호 (0 = 가장 큰 것). 한 무리 안에서만 맞춘다")
     ap.add_argument("--min-ox", type=float, help="가로 원점의 하한 (앞판 오른쪽에 뒤판이 오도록 묶어 맞출 때)")
+    ap.add_argument("--max-ox", type=float, help="가로 원점의 상한")
+    ap.add_argument("--fix-scale", type=float, help="배율을 이 값으로 못박고 자리만 찾는다 (pt/inch)")
     ap.add_argument("--rotate", action="store_true", help="회전까지 맞춘다 (전개 층이면 자동)")
     ap.add_argument("--points", action="store_true", help="도면 꼭짓점을 원형 좌표로 찍어 본다")
     ap.add_argument("--quiet", action="store_true")
@@ -340,6 +407,13 @@ def main(argv=None):
     hint = block.data.get("verify") or {}
     layers = tuple((a.layer or hint.get("layer") or "pattern,developed").split(","))
     polys = page_polylines(page, layers=layers)
+    # 한 장에 몸판·소매·칼라가 같이 있어 엉뚱한 그림에 붙는 장이 있다.
+    # 그럴 땐 원형 파일의 verify.cluster 로 어느 그림 무리에 맞출지 못박는다 (0 = 가장 큰 것)
+    ci = a.cluster if a.cluster is not None else hint.get("cluster")
+    if ci is not None:
+        groups = cluster_polylines(polys)
+        if ci < len(groups):
+            polys = groups[ci]
     cloud = Cloud(polys)
     pts = block_points(res)
 
@@ -358,6 +432,11 @@ def main(argv=None):
         kind = ("pants" if any(k in bid for k in ("pants", "leggings")) else
                 "sleeve" if "sleeve" in bid else "body")
     rf = None if a.no_ruler else ruler_fit(a.page, kind)
+    # 눈금 이름표가 조각마다 흩어져 있어 못 믿을 장이 있다 (점프수트 p.71).
+    # 그럴 땐 도면에 적힌 치수로 잰 배율을 원형 파일 verify.scale 에 적어 두고 자리만 찾는다
+    fixed_s = a.fix_scale or hint.get("scale")
+    if fixed_s:
+        rf = (float(fixed_s), rf[1] if rf else min(p.y for p in cloud.pts))
 
     if a.scale and a.origin:
         sx = sy = a.scale
@@ -373,81 +452,64 @@ def main(argv=None):
         x = px0 - 40
         while x < px1 + 40:
             ox0 = x - bx0 * s
-            if a.min_ox is None or ox0 >= a.min_ox:
+            if (a.min_ox is None or ox0 >= a.min_ox) and (a.max_ox is None or ox0 <= a.max_ox):
                 cands.append((cost(pts, cloud, s, s, ox0, oy0, cap=30.0), ox0))
             x += 4.0
         cands.sort()
-        picked, best = [], None
-        for c, ox0 in cands:                       # 서로 떨어진 후보 몇 개에서 각각 다듬는다
+        starts, picked = [], []
+        for c, ox0 in cands:                       # 서로 떨어진 후보 몇 개를 고른다
             if any(abs(ox0 - q) < 12 for q in picked):
                 continue
             picked.append(ox0)
-            got, e = optimise(pts, cloud, [s, s, ox0, oy0], steps=(3.0, 1.0, 0.35, 0.12, 0.04),
-                              uniform=True, rotate=allow_rot)
+            starts.append([s, s, ox0, oy0])
+            if len(picked) >= 5:
+                break
+        # 눈금이 조각마다 따로 그려진 장(점프수트 p.71 처럼)에서는 눈금의 세로 원점이
+        # 이 조각의 것이 아닐 수 있다. 배율만 눈금에서 받고 자리는 그림 상자에서도 잡아 본다
+        bx0b, bx1b = min(p.x for p in pts), max(p.x for p in pts)
+        by0b, by1b = min(p.y for p in pts), max(p.y for p in pts)
+        for grp in cluster_polylines(polys)[:a.groups]:
+            gx0 = min(p.x for pl in grp for p in pl)
+            gx1 = max(p.x for pl in grp for p in pl)
+            gy0 = min(p.y for pl in grp for p in pl)
+            gy1 = max(p.y for pl in grp for p in pl)
+            if gx1 - gx0 < 20 or gy1 - gy0 < 20:
+                continue
+            for ax in (0.0, 0.5, 1.0):
+                for ay in (0.0, 0.5, 1.0):
+                    oxx = gx0 + (gx1 - gx0) * ax - (bx0b + (bx1b - bx0b) * ax) * s
+                    oyy = gy0 + (gy1 - gy0) * ay - (by0b + (by1b - by0b) * ay) * s
+                    if a.min_ox is not None and oxx < a.min_ox:
+                        continue
+                    if a.max_ox is not None and oxx > a.max_ox:
+                        continue
+                    starts.append([s, s, oxx, oyy])
+        starts.sort(key=lambda st: cost(pts, cloud, *st))
+        best = None
+        lo, hi = (s, s) if fixed_s else (6.0, 30.0)
+        for st in starts[:8]:
+            got, e = optimise(pts, cloud, st, steps=(3.0, 1.0, 0.35, 0.12, 0.04),
+                              uniform=True, rotate=allow_rot, smin=lo, smax=hi)
             if a.min_ox is not None and got[2] < a.min_ox - 1:
+                continue
+            if a.max_ox is not None and got[2] > a.max_ox + 1:
                 continue
             if best is None or e < best[1]:
                 best = (got, e)
-            if len(picked) >= 5:
-                break
+        if best is None:
+            best = (list(starts[0]) + ([0.0] if allow_rot else []), cost(pts, cloud, *starts[0]))
         got, err = best
         sx, sy, ox, oy = got[:4]
         rot = got[4] if len(got) > 4 else 0.0
-        if err / s > 0.45 and not a.min_ox:
-            try:
-                alt = main([a.block, "--page", str(a.page), "--no-ruler", "--quiet"] +
-                           (["--piece", a.piece] if a.piece else []))
-                if alt and alt[4] / alt[0] < err / s:
-                    sx, sy, ox, oy, err = alt[:5]
-                    rot = 0.0
-            except Exception:  # noqa: BLE001
-                pass
+        if err / s > 0.25 and not fixed_s:
+            alt = cluster_align(pts, cloud, polys, a.groups, a.aniso, allow_rot, a.min_ox, a.max_ox)
+            if alt and alt[1] / alt[0][0] < err / sx:
+                got, err = alt
+                sx, sy, ox, oy = got[:4]
+                rot = got[4] if len(got) > 4 else 0.0
     else:
         # 눈금이 없는 도면(원형 페이지 등): 그림 단위로 나눠 각각 맞춰 보고 가장 잘 맞는 것을 고른다
-        bx0, bx1 = min(p.x for p in pts), max(p.x for p in pts)
-        by0, by1 = min(p.y for p in pts), max(p.y for p in pts)
-        best = None
-        for grp in cluster_polylines(polys)[:a.groups]:
-            px0 = min(p.x for pl in grp for p in pl)
-            px1 = max(p.x for pl in grp for p in pl)
-            py0 = min(p.y for pl in grp for p in pl)
-            py1 = max(p.y for pl in grp for p in pl)
-            if px1 - px0 < 20 or py1 - py0 < 20:
-                continue
-            starts = []
-            for fx in (1.0, 0.85, 0.7, 0.55):
-                for fy in (1.0, 0.85, 0.7, 0.55):
-                    sxx = (px1 - px0) / (bx1 - bx0) * fx
-                    syy = (py1 - py0) / (by1 - by0) * fy
-                    if (not a.aniso):
-                        sxx = syy = (sxx + syy) / 2
-                    for ax in (0.0, 0.5, 1.0):
-                        for ay in (0.0, 0.5, 1.0):
-                            oxx = px0 + (px1 - px0) * ax - (bx0 + (bx1 - bx0) * ax) * sxx
-                            oyy = py0 + (py1 - py0) * ay - (by0 + (by1 - by0) * ay) * syy
-                            if 6.0 <= sxx <= 30.0 and 6.0 <= syy <= 30.0:
-                                starts.append([sxx, syy, oxx, oyy])
-            if not starts:
-                continue
-            starts.sort(key=lambda s: cost(pts, cloud, *s))
-            grp_area = (px1 - px0) * (py1 - py0)
-            for s in starts[:3]:
-                if allow_rot:
-                    s0, best_r = list(s) + [0.0], None
-                    for r in range(-60, 61, 6):     # 거친 각도 훑기
-                        s0[4] = r
-                        cr = cost(pts, cloud, *s0)
-                        if best_r is None or cr < best_r[0]:
-                            best_r = (cr, r)
-                    s = list(s) + [best_r[1]]
-                got, c = optimise(pts, cloud, s, uniform=(not a.aniso), rotate=allow_rot)
-                # 원형을 빽빽한 곳에 쪼그려 넣으면 오차가 작게 나온다.
-                # 놓인 크기가 그림 크기와 비슷할 때만 인정한다
-                area = (bx1 - bx0) * got[0] * (by1 - by0) * got[1]
-                if not (0.4 <= area / grp_area <= 2.5):
-                    continue
-                if best is None or c < best[1]:
-                    best = (got, c)
+        best = cluster_align(pts, cloud, polys, a.groups, a.aniso, allow_rot, a.min_ox, a.max_ox)
         if best is None:
             raise SystemExit(f"p.{a.page} 에서 맞출 만한 도면 그림을 못 찾았다")
         got, err = best
@@ -473,6 +535,7 @@ def main(argv=None):
 
         fitted = fit_curve_handles(res, original_polylines(page, (sx, sy), (ox, oy), curves_only=True))
         print(yaml.safe_dump({"handles": fitted}, allow_unicode=True, sort_keys=False))
+        doc.close()
         return sx, sy, ox, oy, err
 
     if a.points:
@@ -505,6 +568,7 @@ def main(argv=None):
             d = near[1].dist(c)
             tag = f"  ~ {near[0]} ({d:.2f})" if d < 0.9 else ""
             print(f"    ({c.x:7.3f}, {c.y:7.3f}){tag}")
+        doc.close()
         return sx, sy, ox, oy, err
 
     # 선별 편차
@@ -534,6 +598,8 @@ def main(argv=None):
     out.write_text(svg, encoding="utf-8")
     d = pymupdf.open(str(out))
     d[0].get_pixmap(dpi=110).save(str(out.with_suffix(".png")))
+    d.close()
+    doc.close()
     if not a.quiet:
         print(f"  → {out.with_suffix('.png')}")
     return sx, sy, ox, oy, err

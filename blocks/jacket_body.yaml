@@ -51,7 +51,7 @@ source: reference/portfolio.pdf p.74
 
 measurements:
   여유:         {value: 1.3/4, note: 패턴 가슴 35.1/4}
-  진동깊이:     {value: 8.3/4, note: 사이즈표. 도면 눈금 표기는 8.1/4 — docs/drafting_notes.md}
+  진동깊이:     {value: 8.1/4, note: p.74 눈금 표기를 따른다}
   등길이:       {value: 15}
   엉덩이길이:   {value: 7.1/2}
   기장:         {value: 24.3/8}

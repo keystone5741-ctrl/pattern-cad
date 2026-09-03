@@ -14,6 +14,13 @@ id: sleeve_tuck
 source: reference/portfolio.pdf p.53
 
 measurements:
+  # p.53 도면 표기 — 소매산높이 AH/3 + 1.7/8, 소매길이 8.7/8 (커프스 달린 짧은 퍼프 소매)
+  소매산조정: {value: 1.7/8, note: 턱 분량 때문에 소매산이 높아진다}
+  앞소매이세: {value: 7/8, note: 앞AH + 7/8}
+  뒤소매이세: {value: 7/8, note: 뒤AH + 7/8}
+  소매길이:   {value: 8.7/8}
+  팔꿈치길이: {value: 8.7/8, note: 짧아서 팔꿈치선이 없다 — 밑단과 같이 둔다}
+  소매부리들임: {value: 1/8, note: 소매통 12 → 밑단 11.3/4 (커프스 길이)}
   앞턱내림: {value: 1,     note: 소매산점에서 앞 사선을 따라 내려온 거리}
   뒤턱내림: {value: 1.1/4, note: 앞보다 1/4 더 내려와야 착용 시 앞뒤 턱이 같은 선상}
   턱량:     {value: 3/4,   note: 턱 하나의 접힘 분량}

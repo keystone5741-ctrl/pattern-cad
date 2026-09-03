@@ -24,7 +24,7 @@ source: reference/portfolio.pdf p.91
 measurements:
   여유:         {value: 12.7/8, note: 패턴 가슴 46.3/8}
   진동깊이:     {value: 10}
-  기장:         {value: 27.7/8}
+  기장:         {value: 26, note: p.91 눈금 표기}
   어깨드롭:     {value: 7/16, note: 3/8~1/2. 어깨너비가 원형보다 1 이상 커질 때}
   앞어깨드롭:   {formula: "어깨드롭", note: 뒤보다 앞을 더 내린다}
   뒤어깨드롭:   {formula: "어깨드롭 - 뒤어깨각도올림"}
@@ -46,12 +46,19 @@ measurements:
   낸단폭:       {value: 1.1/4}
 
 points:
+  EXT_T: {ko: 낸단 위끝(칼라끝), at: ["-낸단폭", "FNP.y"]}
   YK_CB: {ko: 요크 뒤중심, at: ["CB_BL.x", "BNP.y + 요크깊이"]}
   YK_AH: {ko: 요크 암홀쪽, at: ["전폭 - 뒤품/2", "BNP.y + 요크깊이 + 1/2"]}
 
 lines:
-  remove: [앞허리다트, 뒤허리다트]
+  # 헌팅 자켓은 테일러드 라펠이 없다 — 지퍼 여밈에 오픈 칼라가 달린다 (p.91 도면)
+  remove: [앞허리다트, 뒤허리다트, 라펠꺾임선, 고지라인, 라펠노치, 라펠외곽]
+  replace:
+    - {name: 낸단, piece: 앞판, role: outline, pts: [EXT_T, EXT_B], note: 지퍼가 물리는 앞단}
   add:
+    - {name: 앞목선, piece: 앞판, role: outline, curve: [SNP_F, G_NF, FNP],
+       tangents: {SNP_F: {perp: [SNP_F, SP_F]}, FNP: [-1, 0]}, handles: [[0.2, 0.55], [0.29, 0.2]]}
+    - {name: 낸단위선, piece: 앞판, role: outline, pts: [FNP, EXT_T]}
     - {name: 뒤요크선, piece: 뒤판, role: mark, curve: [YK_CB, YK_AH],
        tangents: {YK_CB: [1, 0], YK_AH: [1, 0.4]}, handles: [[0.4, 0.4]],
        note: 무다트 암홀 분량을 이 절개로 M.P 한다}

@@ -9,6 +9,10 @@ name: 점프수트 하의
 id: jump_suite_pants
 source: reference/portfolio.pdf p.71
 
+# 도면 검증용 — p.71 은 눈금 이름표가 조각마다 흩어져 있어 못 믿는다.
+# 도면에 적힌 밑단 폭(앞 4.3/4 x2, 뒤 5.1/2 x2)으로 잰 배율을 쓴다.
+verify: {scale: 7.22, cluster: 0}
+
 measurements:
   허리여유:   {value: 15.3/4, note: 패턴 허리 41.3/4 — 상의 허리와 같다}
   엉덩이여유: {value: 9.1/8, note: 패턴 엉덩이 44.5/8}

@@ -12,6 +12,10 @@ name: 점프수트 상의
 id: jump_suite_body
 source: reference/portfolio.pdf p.71
 
+# 도면 검증용 — p.71 은 눈금 이름표가 조각마다 흩어져 있어 못 믿는다.
+# 도면에 적힌 밑단 폭(앞 4.3/4 x2, 뒤 5.1/2 x2)으로 잰 배율을 쓴다.
+verify: {scale: 7.22, cluster: 0}
+
 measurements:
   여유:         {value: 10.3/4, note: 패턴 가슴 44.1/4}
   옆선여유:     {value: -5/8, note: 앞판을 뒤판보다 1.1/4(≈3cm) 작게 — 옆선이 뒤로 넘어가 보이지 않게}

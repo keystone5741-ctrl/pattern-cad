@@ -13,10 +13,10 @@ source: reference/portfolio.pdf p.61
 
 measurements:
   여유:         {value: -1.1/8, note: 패턴 가슴 32.3/8 — 신체(33.1/2)보다 작다 (신축성)}
-  진동깊이:     {value: 6.3/8}
+  진동깊이:     {value: 7.1/2, note: p.61 눈금 표기. 원형(8.1/4)보다 3/4 얕다}
   등길이:       {value: 15}
   엉덩이길이:   {value: 7.1/2}
-  기장:         {value: 22.3/8}
+  기장:         {value: 22.1/2}
   뒤어깨끝너비: {value: 7, note: 어깨너비 14}
   앞품:         {value: 12.1/2}
   뒤품:         {value: 13}

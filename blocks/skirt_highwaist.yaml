@@ -18,6 +18,7 @@ id: skirt_highwaist
 source: reference/portfolio.pdf p.21
 
 measurements:
+  기장:       {value: 19.1/4, note: p.21 눈금 표기 — 허리선에서 밑단}
   하이높이:   {value: 2.3/4, note: 허리선 위로 올라가는 높이}
   윗선가산:   {value: 1/4, note: 완성 윗선 둘레는 허리선보다 이만큼 크다}
   절개다트량: {value: 1, note: 1 을 넘으면 보조개 현상}

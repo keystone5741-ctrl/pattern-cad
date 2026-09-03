@@ -14,7 +14,7 @@ source: reference/portfolio.pdf p.33
 measurements:
   엉덩이여유: {value: 6.1/2, note: 패턴 엉덩이 42}
   밑위길이:   {value: 10.1/2}
-  기장:       {value: 34, note: 총장 35.1/2 − 오비}
+  기장:       {value: 36.7/8, note: p.33 눈금 표기}
   밑단둘레:   {value: 6}
   옆선들임:   {value: 5/8, note: 엉덩이 42 → 허리 29.5/8, 차이가 커서 옆솔기에서도 들인다}
   턱1량:      {value: 1.1/4, note: 중심 쪽 턱}
