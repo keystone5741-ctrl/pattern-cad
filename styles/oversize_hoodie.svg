@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2202.934mm" height="793.75mm" viewBox="0 0 2202.934 793.75">
+<svg xmlns="http://www.w3.org/2000/svg" width="2214.359mm" height="793.75mm" viewBox="0 0 2214.359 793.75">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -28,61 +28,61 @@
 </g>
 <g id="sleeve">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M727.075 190.38C788.655 168.106 808.788 133.987 814.004 130.387C821.61 125.138 884.801 25.4 966.129 25.4"><title>뒤소매산</title></path>
-<path d="M966.129 25.4C1043.37 25.4 1086.797 103.766 1093.148 107.89C1099.499 112.015 1137.07 184.563 1220.166 190.38"><title>앞소매산</title></path>
+<path d="M727.075 190.38C789.665 167.741 810.758 133.987 816.1 130.387C823.889 125.138 889.232 25.4 971.893 25.4"><title>뒤소매산</title></path>
+<path d="M971.893 25.4C1050.349 25.4 1095.25 103.766 1101.742 107.89C1108.235 112.015 1147.188 184.472 1231.591 190.38"><title>앞소매산</title></path>
 <path d="M727.075 190.38L850.9 549.275"><title>뒤옆선</title></path>
-<path d="M1220.166 190.38L1096.341 549.275"><title>앞옆선</title></path>
-<path d="M850.9 549.275C888.925 552.418 927.974 558.8 966.129 558.8C1009.214 558.8 1053.371 552.418 1096.341 549.275"><title>소매부리</title></path>
+<path d="M1231.591 190.38L1107.766 549.275"><title>앞옆선</title></path>
+<path d="M850.9 549.275C890.828 552.418 931.842 558.8 971.893 558.8C1016.841 558.8 1062.928 552.418 1107.766 549.275"><title>소매부리</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M966.129 25.4L966.129 558.8"><title>소매중심선</title></path>
-<path d="M727.075 190.38L1220.166 190.38"><title>소매통선</title></path>
-<path d="M766.552 304.8L1180.69 304.8"><title>팔꿈치선</title></path>
-<path d="M921.679 25.4L1004.229 25.4"><title>소매산높이선</title></path>
-<path d="M966.129 25.4L727.075 190.38"><title>뒤사선</title></path>
-<path d="M966.129 25.4L1220.166 190.38"><title>앞사선</title></path>
-<path d="M921.679 25.4L752.475 190.38"><title>뒤가이드</title></path>
-<path d="M1004.229 25.4L1182.066 190.38"><title>앞가이드</title></path>
+<path d="M971.893 25.4L971.893 558.8"><title>소매중심선</title></path>
+<path d="M727.075 190.38L1231.591 190.38"><title>소매통선</title></path>
+<path d="M766.552 304.8L1192.114 304.8"><title>팔꿈치선</title></path>
+<path d="M927.443 25.4L1009.993 25.4"><title>소매산높이선</title></path>
+<path d="M971.893 25.4L727.075 190.38"><title>뒤사선</title></path>
+<path d="M971.893 25.4L1231.591 190.38"><title>앞사선</title></path>
+<path d="M927.443 25.4L752.475 190.38"><title>뒤가이드</title></path>
+<path d="M1009.993 25.4L1193.491 190.38"><title>앞가이드</title></path>
 <path d="M727.075 190.38L727.075 558.8"><title>뒤틀세로</title></path>
-<path d="M1220.166 190.38L1220.166 558.8"><title>앞틀세로</title></path>
-<path d="M727.075 558.8L1220.166 558.8"><title>밑단틀</title></path>
+<path d="M1231.591 190.38L1231.591 558.8"><title>앞틀세로</title></path>
+<path d="M727.075 558.8L1231.591 558.8"><title>밑단틀</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
 <path d="M766.552 304.8L772.902 304.8"><title>뒤팔꿈치표시</title></path>
-<path d="M1180.69 304.8L1174.34 304.8"><title>앞팔꿈치표시</title></path>
+<path d="M1192.114 304.8L1185.764 304.8"><title>앞팔꿈치표시</title></path>
 </g>
 <text x="727.075" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve — 소매 원형</text>
 </g>
 <g id="hood">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1302.716 46.357L1270.966 401.957"><title>얼굴선</title></path>
-<path d="M1302.716 46.357C1335.137 30.147 1345.439 30.482 1381.687 30.482C1417.934 30.482 1450.241 11.638 1460.657 46.357"><title>후드윗선</title></path>
-<path d="M1270.966 401.957C1347.171 382.906 1390.399 386.286 1460.657 351.157"><title>후드밑선</title></path>
+<path d="M1314.141 46.357L1282.391 401.957"><title>얼굴선</title></path>
+<path d="M1314.141 46.357C1346.562 30.147 1356.864 30.482 1393.111 30.482C1429.359 30.482 1461.666 11.638 1472.081 46.357"><title>후드윗선</title></path>
+<path d="M1282.391 401.957C1358.596 382.906 1401.824 386.286 1472.081 351.157"><title>후드밑선</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M1416.207 351.157C1413.531 215.426 1546.019 49.532 1410.262 49.532C1384.686 49.532 1379.052 47.786 1353.516 46.357"><title>두장절개선</title></path>
+<path d="M1427.631 351.157C1424.956 215.426 1557.444 49.532 1421.686 49.532C1396.111 49.532 1390.477 47.786 1364.941 46.357"><title>두장절개선</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1460.657 46.357L1460.657 351.157"><title>뒤중심선</title></path>
+<path d="M1472.081 46.357L1472.081 351.157"><title>뒤중심선</title></path>
 </g>
-<text x="1270.966" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">hood — 후드</text>
+<text x="1282.391" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">hood — 후드</text>
 </g>
 <g id="밑단시보리">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1521.896 25.4L2021.959 25.4L2021.959 127L1521.896 127L1521.896 25.4"><title>외곽</title></path>
+<path d="M1533.321 25.4L2033.384 25.4L2033.384 127L1533.321 127L1533.321 25.4"><title>외곽</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1521.896 76.2L2021.959 76.2"><title>접는선</title></path>
+<path d="M1533.321 76.2L2033.384 76.2"><title>접는선</title></path>
 </g>
-<text x="1521.896" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">밑단시보리 — 시보리 · 립</text>
+<text x="1533.321" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">밑단시보리 — 시보리 · 립</text>
 </g>
 <g id="소매부리시보리">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M2072.759 25.4L2177.534 25.4L2177.534 88.9L2072.759 88.9L2072.759 25.4"><title>외곽</title></path>
+<path d="M2084.184 25.4L2188.959 25.4L2188.959 88.9L2084.184 88.9L2084.184 25.4"><title>외곽</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M2072.759 57.15L2177.534 57.15"><title>접는선</title></path>
+<path d="M2084.184 57.15L2188.959 57.15"><title>접는선</title></path>
 </g>
-<text x="2072.759" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">소매부리시보리 — 시보리 · 립</text>
+<text x="2084.184" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">소매부리시보리 — 시보리 · 립</text>
 </g>
 </svg>

@@ -1,25 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1819.476mm" height="463.55mm" viewBox="0 0 1819.476 463.55">
+<svg xmlns="http://www.w3.org/2000/svg" width="1819.476mm" height="501.65mm" viewBox="0 0 1819.476 501.65">
 <rect width="100%" height="100%" fill="white"/>
 <g id="skirt · 뒤판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M445.995 41.275L445.995 438.15"><title>뒤중심선</title></path>
-<path d="M445.995 41.275C437.613 41.275 428.977 41.275 420.595 41.275C250.424 41.275 212.791 32.544 42.77 25.4"><title>뒤허리선</title></path>
-<path d="M42.77 25.4C37.373 77.216 28.897 125.742 26.895 177.8C23.493 266.254 26.895 349.631 26.895 438.15"><title>뒤옆선</title></path>
-<path d="M445.995 438.15L26.895 438.15"><title>뒤밑단</title></path>
+<path d="M445.995 79.375L445.995 476.25"><title>뒤중심선</title></path>
+<path d="M445.995 79.375C437.613 79.375 428.977 79.375 420.595 79.375C250.424 79.375 212.791 70.644 42.77 63.5"><title>뒤허리선</title></path>
+<path d="M42.77 63.5C37.373 115.316 28.897 163.842 26.895 215.9C23.493 304.354 26.895 387.731 26.895 476.25"><title>뒤옆선</title></path>
+<path d="M445.995 476.25L26.895 476.25"><title>뒤밑단</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M385.67 25.4L385.67 476.25"><title>뒤주름1배치</title></path>
+<path d="M385.67 190.5L341.22 190.5"><title>뒤주름1막음</title></path>
+<path d="M280.895 25.4L280.895 476.25"><title>뒤주름2배치</title></path>
+<path d="M280.895 190.5L236.445 190.5"><title>뒤주름2막음</title></path>
+<path d="M176.12 25.4L176.12 476.25"><title>뒤주름3배치</title></path>
+<path d="M176.12 190.5L131.67 190.5"><title>뒤주름3막음</title></path>
+<path d="M71.345 25.4L71.345 476.25"><title>뒤주름4배치</title></path>
+<path d="M71.345 190.5L26.895 190.5"><title>뒤주름4막음</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M445.995 177.8L439.645 177.8"><title>지퍼끝</title></path>
+<path d="M445.995 215.9L439.645 215.9"><title>지퍼끝</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M341.22 25.4L341.22 476.25"><title>뒤주름1접힘</title></path>
+<path d="M236.445 25.4L236.445 476.25"><title>뒤주름2접힘</title></path>
+<path d="M131.67 25.4L131.67 476.25"><title>뒤주름3접힘</title></path>
+<path d="M26.895 25.4L26.895 476.25"><title>뒤주름4접힘</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤판 — 플리츠 스커트</text>
 </g>
 <g id="skirt · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M496.795 53.975C505.177 53.975 513.813 53.975 522.195 53.975C679.883 53.975 714.283 38.259 871.445 25.4"><title>앞허리선</title></path>
-<path d="M871.445 25.4C877.922 77.216 888.087 125.636 890.495 177.8C894.576 266.225 890.495 349.631 890.495 438.15"><title>앞옆선</title></path>
-<path d="M496.795 438.15L890.495 438.15"><title>앞밑단</title></path>
+<path d="M496.795 92.075C505.177 92.075 513.813 92.075 522.195 92.075C679.883 92.075 714.283 76.359 871.445 63.5"><title>앞허리선</title></path>
+<path d="M871.445 63.5C877.922 115.316 888.087 163.736 890.495 215.9C894.576 304.325 890.495 387.731 890.495 476.25"><title>앞옆선</title></path>
+<path d="M496.795 476.25L890.495 476.25"><title>앞밑단</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M550.77 25.4L550.77 476.25"><title>앞주름1배치</title></path>
+<path d="M550.77 190.5L595.22 190.5"><title>앞주름1막음</title></path>
+<path d="M649.195 25.4L649.195 476.25"><title>앞주름2배치</title></path>
+<path d="M649.195 190.5L693.645 190.5"><title>앞주름2막음</title></path>
+<path d="M747.62 25.4L747.62 476.25"><title>앞주름3배치</title></path>
+<path d="M747.62 190.5L792.07 190.5"><title>앞주름3막음</title></path>
+<path d="M846.045 25.4L846.045 476.25"><title>앞주름4배치</title></path>
+<path d="M846.045 190.5L890.495 190.5"><title>앞주름4막음</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M496.795 53.975L496.795 438.15"><title>앞중심선</title></path>
+<path d="M496.795 92.075L496.795 476.25"><title>앞중심선</title></path>
+<path d="M595.22 25.4L595.22 476.25"><title>앞주름1접힘</title></path>
+<path d="M693.645 25.4L693.645 476.25"><title>앞주름2접힘</title></path>
+<path d="M792.07 25.4L792.07 476.25"><title>앞주름3접힘</title></path>
+<path d="M890.495 25.4L890.495 476.25"><title>앞주름4접힘</title></path>
 </g>
 <text x="496.795" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 플리츠 스커트</text>
 </g>

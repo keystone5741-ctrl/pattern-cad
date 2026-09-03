@@ -1,22 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="904.989mm" height="463.55mm" viewBox="0 0 904.989 463.55"><rect width="100%" height="100%" fill="white"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="904.989mm" height="501.65mm" viewBox="0 0 904.989 501.65"><rect width="100%" height="100%" fill="white"/>
 <g id="뒤판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M445.995 41.275L445.995 438.15"><title>뒤중심선</title></path>
-<path d="M445.995 41.275C437.613 41.275 428.977 41.275 420.595 41.275C250.424 41.275 212.791 32.544 42.77 25.4"><title>뒤허리선</title></path>
-<path d="M42.77 25.4C37.373 77.216 28.897 125.742 26.895 177.8C23.493 266.254 26.895 349.631 26.895 438.15"><title>뒤옆선</title></path>
-<path d="M445.995 438.15L26.895 438.15"><title>뒤밑단</title></path>
+<path d="M445.995 79.375L445.995 476.25"><title>뒤중심선</title></path>
+<path d="M445.995 79.375C437.613 79.375 428.977 79.375 420.595 79.375C250.424 79.375 212.791 70.644 42.77 63.5"><title>뒤허리선</title></path>
+<path d="M42.77 63.5C37.373 115.316 28.897 163.842 26.895 215.9C23.493 304.354 26.895 387.731 26.895 476.25"><title>뒤옆선</title></path>
+<path d="M445.995 476.25L26.895 476.25"><title>뒤밑단</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M385.67 25.4L385.67 476.25"><title>뒤주름1배치</title></path>
+<path d="M385.67 190.5L341.22 190.5"><title>뒤주름1막음</title></path>
+<path d="M280.895 25.4L280.895 476.25"><title>뒤주름2배치</title></path>
+<path d="M280.895 190.5L236.445 190.5"><title>뒤주름2막음</title></path>
+<path d="M176.12 25.4L176.12 476.25"><title>뒤주름3배치</title></path>
+<path d="M176.12 190.5L131.67 190.5"><title>뒤주름3막음</title></path>
+<path d="M71.345 25.4L71.345 476.25"><title>뒤주름4배치</title></path>
+<path d="M71.345 190.5L26.895 190.5"><title>뒤주름4막음</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M445.995 177.8L439.645 177.8"><title>지퍼끝</title></path>
+<path d="M445.995 215.9L439.645 215.9"><title>지퍼끝</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M341.22 25.4L341.22 476.25"><title>뒤주름1접힘</title></path>
+<path d="M236.445 25.4L236.445 476.25"><title>뒤주름2접힘</title></path>
+<path d="M131.67 25.4L131.67 476.25"><title>뒤주름3접힘</title></path>
+<path d="M26.895 25.4L26.895 476.25"><title>뒤주름4접힘</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g>
 <g id="앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M484.095 53.975C492.477 53.975 501.113 53.975 509.495 53.975C667.183 53.975 701.583 38.259 858.745 25.4"><title>앞허리선</title></path>
-<path d="M858.745 25.4C865.222 77.216 875.387 125.636 877.795 177.8C881.876 266.225 877.795 349.631 877.795 438.15"><title>앞옆선</title></path>
-<path d="M484.095 438.15L877.795 438.15"><title>앞밑단</title></path>
+<path d="M484.095 92.075C492.477 92.075 501.113 92.075 509.495 92.075C667.183 92.075 701.583 76.359 858.745 63.5"><title>앞허리선</title></path>
+<path d="M858.745 63.5C865.222 115.316 875.387 163.736 877.795 215.9C881.876 304.325 877.795 387.731 877.795 476.25"><title>앞옆선</title></path>
+<path d="M484.095 476.25L877.795 476.25"><title>앞밑단</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M538.07 25.4L538.07 476.25"><title>앞주름1배치</title></path>
+<path d="M538.07 190.5L582.52 190.5"><title>앞주름1막음</title></path>
+<path d="M636.495 25.4L636.495 476.25"><title>앞주름2배치</title></path>
+<path d="M636.495 190.5L680.945 190.5"><title>앞주름2막음</title></path>
+<path d="M734.92 25.4L734.92 476.25"><title>앞주름3배치</title></path>
+<path d="M734.92 190.5L779.37 190.5"><title>앞주름3막음</title></path>
+<path d="M833.345 25.4L833.345 476.25"><title>앞주름4배치</title></path>
+<path d="M833.345 190.5L877.795 190.5"><title>앞주름4막음</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M484.095 53.975L484.095 438.15"><title>앞중심선</title></path>
+<path d="M484.095 92.075L484.095 476.25"><title>앞중심선</title></path>
+<path d="M582.52 25.4L582.52 476.25"><title>앞주름1접힘</title></path>
+<path d="M680.945 25.4L680.945 476.25"><title>앞주름2접힘</title></path>
+<path d="M779.37 25.4L779.37 476.25"><title>앞주름3접힘</title></path>
+<path d="M877.795 25.4L877.795 476.25"><title>앞주름4접힘</title></path>
 </g>
 <text x="484.095" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g></svg>
