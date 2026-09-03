@@ -1,17 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="762mm" height="139.7mm" viewBox="0 0 762 139.7"><rect width="100%" height="100%" fill="white"/><title>보우 타이</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M25.4 53.975L25.4 85.725"><title>도매끝</title></path>
-<path d="M25.4 53.975C106.68 53.975 147.421 58.034 228.6 53.975C482.684 41.271 533.4 36.83 736.6 25.4"><title>윗선</title></path>
-<path d="M25.4 85.725C106.68 85.725 147.421 81.666 228.6 85.725C482.684 98.429 533.4 102.87 736.6 114.3"><title>아랫선</title></path>
-<path d="M736.6 25.4L736.6 114.3"><title>타이끝</title></path>
+<svg xmlns="http://www.w3.org/2000/svg" width="749.3mm" height="152.4mm" viewBox="0 0 749.3 152.4"><rect width="100%" height="100%" fill="white"/><title>보우 타이</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M25.4 25.4L25.4 76.2"><title>뒤중심</title></path>
+<path d="M25.4 25.4L723.9 25.4"><title>윗선</title></path>
+<path d="M25.4 76.2C101.6 76.2 116.893 73.667 177.8 76.2C401.264 85.495 425.45 96.838 673.1 117.475"><title>아랫선</title></path>
+<path d="M673.1 117.475L723.9 127"><title>끝아랫선</title></path>
+<path d="M723.9 25.4L723.9 127"><title>타이끝</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M228.6 53.975L228.6 85.725"><title>목선끝표시</title></path>
+<path d="M25.4 25.4L673.1 117.475"><title>끝사선</title></path>
+<path d="M107.95 69.85L107.95 82.55"><title>목옆점표시</title></path>
+<path d="M177.8 69.85L177.8 82.55"><title>트임표시</title></path>
 </g>
 <g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
-<circle cx="25.4" cy="53.975" r="0.762" fill="#06c"/><text x="26.67" y="52.959">A_T</text>
-<circle cx="25.4" cy="85.725" r="0.762" fill="#06c"/><text x="26.67" y="84.709">A_B</text>
-<circle cx="228.6" cy="53.975" r="0.762" fill="#06c"/><text x="229.87" y="52.959">N_T</text>
-<circle cx="228.6" cy="85.725" r="0.762" fill="#06c"/><text x="229.87" y="84.709">N_B</text>
-<circle cx="736.6" cy="25.4" r="0.762" fill="#06c"/><text x="737.87" y="24.384">E_T</text>
-<circle cx="736.6" cy="114.3" r="0.762" fill="#06c"/><text x="737.87" y="113.284">E_B</text>
+<circle cx="25.4" cy="25.4" r="0.762" fill="#06c"/><text x="26.67" y="24.384">CB_T</text>
+<circle cx="25.4" cy="76.2" r="0.762" fill="#06c"/><text x="26.67" y="75.184">CB_B</text>
+<circle cx="107.95" cy="76.2" r="0.762" fill="#06c"/><text x="109.22" y="75.184">SNP</text>
+<circle cx="177.8" cy="76.2" r="0.762" fill="#06c"/><text x="179.07" y="75.184">OP</text>
+<circle cx="107.95" cy="69.85" r="0.762" fill="#06c"/><text x="109.22" y="68.834">SNP_A</text>
+<circle cx="107.95" cy="82.55" r="0.762" fill="#06c"/><text x="109.22" y="81.534">SNP_B</text>
+<circle cx="177.8" cy="69.85" r="0.762" fill="#06c"/><text x="179.07" y="68.834">OP_A</text>
+<circle cx="177.8" cy="82.55" r="0.762" fill="#06c"/><text x="179.07" y="81.534">OP_B</text>
+<circle cx="673.1" cy="117.475" r="0.762" fill="#06c"/><text x="674.37" y="116.459">K</text>
+<circle cx="723.9" cy="25.4" r="0.762" fill="#06c"/><text x="725.17" y="24.384">E_T</text>
+<circle cx="723.9" cy="127" r="0.762" fill="#06c"/><text x="725.17" y="125.984">E_B</text>
 </g></svg>

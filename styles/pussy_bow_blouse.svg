@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2226.382mm" height="723.9mm" viewBox="0 0 2226.382 723.9">
+<svg xmlns="http://www.w3.org/2000/svg" width="2012.183mm" height="723.9mm" viewBox="0 0 2012.183 723.9">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -59,26 +59,29 @@
 </g>
 <g id="tie">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1027.933 53.975L1027.933 85.725"><title>도매끝</title></path>
-<path d="M1027.933 53.975C1189.813 53.975 1270.954 62.059 1432.632 53.975C1686.716 41.271 1737.432 36.83 1940.632 25.4"><title>윗선</title></path>
-<path d="M1027.933 85.725C1189.813 85.725 1270.954 77.641 1432.632 85.725C1686.716 98.429 1737.432 102.87 1940.632 114.3"><title>아랫선</title></path>
-<path d="M1940.632 25.4L1940.632 114.3"><title>타이끝</title></path>
+<path d="M1027.933 25.4L1027.933 76.2"><title>뒤중심</title></path>
+<path d="M1027.933 25.4L1726.433 25.4"><title>윗선</title></path>
+<path d="M1027.933 76.2C1104.623 76.2 1120.014 73.645 1181.313 76.2C1404.338 85.495 1428.473 96.838 1675.633 117.475"><title>아랫선</title></path>
+<path d="M1675.633 117.475L1726.433 127"><title>끝아랫선</title></path>
+<path d="M1726.433 25.4L1726.433 127"><title>타이끝</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M1432.632 53.975L1432.632 85.725"><title>목선끝표시</title></path>
+<path d="M1027.933 25.4L1675.633 117.475"><title>끝사선</title></path>
+<path d="M1111.463 69.85L1111.463 82.55"><title>목옆점표시</title></path>
+<path d="M1181.313 69.85L1181.313 82.55"><title>트임표시</title></path>
 </g>
 <text x="1027.933" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">tie — 보우 타이</text>
 </g>
 <g id="cuff">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1991.432 25.4L2200.982 25.4L2200.982 76.2L1991.432 76.2L1991.432 25.4"><title>외곽</title></path>
+<path d="M1777.233 25.4L1986.783 25.4L1986.783 76.2L1777.233 76.2L1777.233 25.4"><title>외곽</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M1997.782 50.8L2200.982 50.8"><title>단추선</title></path>
+<path d="M1783.583 50.8L1986.783 50.8"><title>단추선</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M2096.207 76.2L2096.207 69.85"><title>중심노치</title></path>
+<path d="M1882.008 76.2L1882.008 69.85"><title>중심노치</title></path>
 </g>
-<text x="1991.432" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">cuff — 커프스</text>
+<text x="1777.233" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">cuff — 커프스</text>
 </g>
 </svg>

@@ -20,8 +20,9 @@ blocks:
   tie:
     block: ../blocks/bow_tie.yaml
     measurements:
-      목길이: "len(body.앞목선) * 2 + len(body.뒤목선) * 2"
-      타이길이: 20
+      뒤구간: "len(body.뒤목선)"   # 뒤중심 → 목옆점 = 뒤네크둘레/2
+      앞구간: 2.3/4                 # 목옆점 → 트임(도매) p.55 표기
+      전체길이: 27.1/2              # p.55 표기
   cuff:
     block: ../blocks/cuff.yaml
     measurements:
