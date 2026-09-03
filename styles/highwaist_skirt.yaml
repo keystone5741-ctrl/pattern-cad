@@ -1,0 +1,9 @@
+# 하이웨이스트 스커트 = 몸판 + 미까시(안단).
+# 오비가 없다 — 허리선 위로 올라간 윗선을 미까시로 처리하고 허리선에 식서테이프를 붙인다 (p.22).
+name: 하이웨이스트 스커트
+id: highwaist_skirt
+source: reference/portfolio.pdf p.21
+
+blocks:
+  skirt:
+    block: ../blocks/skirt_highwaist.yaml

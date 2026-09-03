@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1403.066mm" height="1247.836mm" viewBox="0 0 1403.066 1247.836">
+<svg xmlns="http://www.w3.org/2000/svg" width="1335.33mm" height="1247.836mm" viewBox="0 0 1335.33 1247.836">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -63,18 +63,18 @@
 </g>
 <g id="collar">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1269.716 25.4C1269.716 54.33 1263.85 80.537 1249.161 105.46C1231.076 136.146 1207.322 159.99 1175.183 175.348"><title>목둘레선</title></path>
-<path d="M1377.666 25.4C1377.666 73.121 1367.99 116.351 1343.76 157.463C1313.927 208.082 1274.743 247.413 1221.729 272.748"><title>외곽선</title></path>
-<path d="M1175.183 175.348L1221.729 272.748"><title>앞끝</title></path>
+<path d="M1201.98 25.4C1201.98 54.616 1200.581 79.758 1196.601 108.701C1191.675 144.527 1185.477 175.112 1175.183 209.779"><title>목둘레선</title></path>
+<path d="M1309.93 25.4C1309.93 59.485 1308.298 88.817 1303.654 122.584C1297.908 164.38 1290.677 200.063 1278.668 240.507"><title>외곽선</title></path>
+<path d="M1175.183 209.779L1278.668 240.507"><title>앞끝</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M1282.416 25.4C1282.416 120.803 1266.738 145.671 1180.659 186.807"><title>스탠드선</title></path>
+<path d="M1214.68 25.4C1214.68 120.384 1214.396 122.339 1187.358 213.394"><title>스탠드선</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1249.161 105.46L1343.76 157.463"><title>목옆점</title></path>
+<path d="M1196.601 108.701L1303.654 122.584"><title>목옆점</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1269.716 25.4L1377.666 25.4"><title>뒤중심</title></path>
+<path d="M1201.98 25.4L1309.93 25.4"><title>뒤중심</title></path>
 </g>
 <text x="1175.183" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 플랫 칼라</text>
 </g>

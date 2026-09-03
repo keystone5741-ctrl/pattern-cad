@@ -26,6 +26,12 @@ measurements:
   # ※ 확인 필요 — 도면 표기대로(절개 1 · 옆솔기 좌우 각 1) 잡으면 윗선 둘레가 28.1/4 가 되어
   #   사이즈표(허리 26.1/2 + 1/4 = 26.3/4)보다 1.1/2 크다. 도면 자체가 그렇다.
   절개다트량: {value: 1, note: 1 을 넘으면 보조개 현상}
+  # 미까시(안단) — 오비가 없으므로 윗선을 미까시로 처리한다 (p.21 도면에 앞·뒤 각 1 장)
+  미까시깊이: {value: 2.1/2, note: 하이높이 1.1/2 + 허리선 아래 1. 도면에 깊이 표기는 없다}
+  조각간격:   {value: 2, note: 그림에서 조각이 겹치지 않게 아래로 떼어 놓는 간격}
+  앞윗선길이: {formula: "dist(HW_CF, HWF_L) + dist(HWF_R, HW_SSF)", note: 절개를 접은 뒤 윗선 길이}
+  뒤윗선길이: {formula: "dist(HW_CB, HWB_R) + dist(HWB_L, HW_SSB)"}
+  미까시Y:    {formula: "기장 + 조각간격"}
   다트끝올림: {value: 1, note: 다트 끝은 엉덩이선 이만큼 위까지}
   밑단들임:   {value: 1/2, note: 오마진 실루엣을 위해 절개선·옆솔기 밑단을 들인다}
   앞절개위치: {formula: "앞폭 / 2"}
@@ -52,6 +58,15 @@ points:
   HWB_R:  {along: [HWB_T, HW_CB], dist: "절개다트량/2"}
   HWB_E:  {ko: 뒤 절개 끝, at: [뒤절개위치, "엉덩이길이 - 다트끝올림"]}
   HWB_H:  {ko: 뒤 절개 밑단, at: [뒤절개위치, 기장]}
+  # 미까시 (앞·뒤 각 한 장. 절개를 접은 윗선을 그대로 뜬다)
+  MF_TL: {ko: 앞미까시 윗선 안쪽, at: [0, 미까시Y]}
+  MF_TR: {ko: 앞미까시 윗선 바깥, at: [앞윗선길이, 미까시Y]}
+  MF_BL: {ko: 앞미까시 밑선 안쪽, at: [0, "미까시Y + 미까시깊이"]}
+  MF_BR: {ko: 앞미까시 밑선 바깥, at: [앞윗선길이, "미까시Y + 미까시깊이"]}
+  MB_TL: {ko: 뒤미까시 윗선 안쪽, at: ["앞윗선길이 + 조각간격", 미까시Y]}
+  MB_TR: {ko: 뒤미까시 윗선 바깥, at: ["앞윗선길이 + 조각간격 + 뒤윗선길이", 미까시Y]}
+  MB_BL: {ko: 뒤미까시 밑선 안쪽, at: ["앞윗선길이 + 조각간격", "미까시Y + 미까시깊이"]}
+  MB_BR: {ko: 뒤미까시 밑선 바깥, at: ["앞윗선길이 + 조각간격 + 뒤윗선길이", "미까시Y + 미까시깊이"]}
   # 밑단 들임
   HW_HEM_F: {ko: 앞 옆선 밑단, at: ["앞폭 - 밑단들임", 기장]}
   HW_HEM_B: {ko: 뒤 옆선 밑단, at: ["앞폭 + 밑단들임", 기장]}
@@ -77,3 +92,12 @@ lines:
        tangents: {HW_SSB: [-0.2, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
     - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, HW_HEM_B]}
     - {name: 허리선표시, role: construction, pts: [CF_W, CB_W0], note: 여기에 식서테이프}
+    # 미까시 — 오비가 없으므로 윗선 안쪽을 이 조각으로 처리한다
+    - {name: 앞미까시윗선, piece: 앞미까시, role: outline, pts: [MF_TL, MF_TR]}
+    - {name: 앞미까시안선, piece: 앞미까시, role: fold, pts: [MF_TL, MF_BL], note: 앞중심 골}
+    - {name: 앞미까시밑선, piece: 앞미까시, role: outline, pts: [MF_BL, MF_BR]}
+    - {name: 앞미까시밖선, piece: 앞미까시, role: outline, pts: [MF_BR, MF_TR]}
+    - {name: 뒤미까시윗선, piece: 뒤미까시, role: outline, pts: [MB_TL, MB_TR]}
+    - {name: 뒤미까시안선, piece: 뒤미까시, role: outline, pts: [MB_TL, MB_BL]}
+    - {name: 뒤미까시밑선, piece: 뒤미까시, role: outline, pts: [MB_BL, MB_BR]}
+    - {name: 뒤미까시밖선, piece: 뒤미까시, role: outline, pts: [MB_BR, MB_TR]}

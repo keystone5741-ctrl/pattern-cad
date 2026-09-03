@@ -1,25 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="266.308mm" height="318.809mm" viewBox="0 0 266.308 318.809"><rect width="100%" height="100%" fill="white"/><title>플랫 칼라</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M132.958 25.4C132.958 56.229 127.662 84.251 112.442 111.061C91.427 148.08 63.808 177.654 25.4 196.009"><title>목둘레선</title></path>
-<path d="M240.908 25.4C240.908 73.829 232.589 117.848 208.68 159.964C175.666 218.118 132.281 264.575 71.946 293.409"><title>외곽선</title></path>
-<path d="M25.4 196.009L71.946 293.409"><title>앞끝</title></path>
+<svg xmlns="http://www.w3.org/2000/svg" width="185.202mm" height="288.023mm" viewBox="0 0 185.202 288.023"><rect width="100%" height="100%" fill="white"/><title>플랫 칼라</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M51.852 25.4C51.852 56.501 50.773 83.242 47.213 114.138C42.255 157.154 36.113 193.962 25.4 235.916"><title>목둘레선</title></path>
+<path d="M159.802 25.4C159.802 60.446 158.586 90.58 154.574 125.396C148.988 173.869 142.066 215.346 129.994 262.623"><title>외곽선</title></path>
+<path d="M25.4 235.916L129.994 262.623"><title>앞끝</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M145.658 25.4C145.658 133.015 127.973 161.067 30.876 207.468"><title>스탠드선</title></path>
+<path d="M64.552 25.4C64.552 133.069 64.343 134.736 37.705 239.058"><title>스탠드선</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M112.442 111.061L208.68 159.964"><title>목옆점</title></path>
+<path d="M47.213 114.138L154.574 125.396"><title>목옆점</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M132.958 25.4L240.908 25.4"><title>뒤중심</title></path>
+<path d="M51.852 25.4L159.802 25.4"><title>뒤중심</title></path>
 </g>
 <g id="points" font-size="2.794" font-family="sans-serif" fill="#06c">
-<circle cx="-56.131" cy="25.4" r="0.762" fill="#06c"/><text x="-54.861" y="24.384">C</text>
-<circle cx="132.958" cy="25.4" r="0.762" fill="#06c"/><text x="134.228" y="24.384">N_CB</text>
-<circle cx="112.442" cy="111.061" r="0.762" fill="#06c"/><text x="113.712" y="110.045">N_SNP</text>
-<circle cx="25.4" cy="196.009" r="0.762" fill="#06c"/><text x="26.67" y="194.993">N_CF</text>
-<circle cx="240.908" cy="25.4" r="0.762" fill="#06c"/><text x="242.178" y="24.384">O_CB</text>
-<circle cx="208.68" cy="159.964" r="0.762" fill="#06c"/><text x="209.95" y="158.948">O_SNP</text>
-<circle cx="71.946" cy="293.409" r="0.762" fill="#06c"/><text x="73.216" y="292.393">O_CF</text>
-<circle cx="145.658" cy="25.4" r="0.762" fill="#06c"/><text x="146.928" y="24.384">S_CB</text>
-<circle cx="30.876" cy="207.468" r="0.762" fill="#06c"/><text x="32.146" y="206.452">S_CF</text>
+<circle cx="-799.048" cy="25.4" r="0.762" fill="#06c"/><text x="-797.778" y="24.384">C</text>
+<circle cx="51.852" cy="25.4" r="0.762" fill="#06c"/><text x="53.122" y="24.384">N_CB</text>
+<circle cx="47.213" cy="114.138" r="0.762" fill="#06c"/><text x="48.483" y="113.122">N_SNP</text>
+<circle cx="25.4" cy="235.916" r="0.762" fill="#06c"/><text x="26.67" y="234.9">N_CF</text>
+<circle cx="159.802" cy="25.4" r="0.762" fill="#06c"/><text x="161.072" y="24.384">O_CB</text>
+<circle cx="154.574" cy="125.396" r="0.762" fill="#06c"/><text x="155.844" y="124.38">O_SNP</text>
+<circle cx="129.994" cy="262.623" r="0.762" fill="#06c"/><text x="131.264" y="261.607">O_CF</text>
+<circle cx="64.552" cy="25.4" r="0.762" fill="#06c"/><text x="65.822" y="24.384">S_CB</text>
+<circle cx="37.705" cy="239.058" r="0.762" fill="#06c"/><text x="38.975" y="238.042">S_CF</text>
 </g></svg>

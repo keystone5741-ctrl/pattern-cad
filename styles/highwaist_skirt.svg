@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1070.45mm" height="584.2mm" viewBox="0 0 1070.45 584.2">
+<rect width="100%" height="100%" fill="white"/>
+<g id="skirt · 뒤판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M266.7 361.95L317.5 412.75L317.5 558.8L266.7 558.8"><title>겹트임덧단</title></path>
+<path d="M266.7 38.1L266.7 558.8"><title>뒤중심선</title></path>
+<path d="M266.7 38.1L158.728 31.795"><title>뒤윗선안</title></path>
+<path d="M133.372 30.314L49.212 25.4"><title>뒤윗선밖</title></path>
+<path d="M49.212 25.4C46.221 40.357 51.461 48.261 50.8 63.5C47.36 142.818 25.4 180.957 25.4 260.35C25.4 379.838 33.02 439.42 38.1 558.8"><title>뒤옆선</title></path>
+<path d="M266.7 558.8L38.1 558.8"><title>뒤밑단</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M158.728 31.795L146.05 234.95L133.372 30.314"><title>뒤절개</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M146.05 234.95L146.05 558.8"><title>뒤절개아래</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M266.7 438.15L317.5 412.75"><title>겹트임표시</title></path>
+</g>
+<g id="notch" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M266.7 254L260.35 254"><title>지퍼끝</title></path>
+</g>
+<text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤판 — 하이웨이스트 스커트</text>
+</g>
+<g id="skirt · 앞판">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M368.3 31.75L463.557 28.601"><title>앞윗선안</title></path>
+<path d="M488.943 27.762L560.387 25.4"><title>앞윗선밖</title></path>
+<path d="M560.387 25.4C563.379 40.357 558.139 48.261 558.8 63.5C562.24 142.818 584.2 180.957 584.2 260.35C584.2 379.838 576.58 439.42 571.5 558.8"><title>앞옆선</title></path>
+<path d="M368.3 558.8L571.5 558.8"><title>앞밑단</title></path>
+</g>
+<g id="dart" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M463.557 28.601L476.25 234.95L488.943 27.762"><title>앞절개</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M476.25 234.95L476.25 558.8"><title>앞절개아래</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M368.3 31.75L368.3 558.8"><title>앞중심선</title></path>
+</g>
+<text x="368.3" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 하이웨이스트 스커트</text>
+</g>
+<g id="skirt · 앞미까시">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M635 25.4L801.792 25.4"><title>앞미까시윗선</title></path>
+<path d="M635 88.9L801.792 88.9"><title>앞미까시밑선</title></path>
+<path d="M801.792 88.9L801.792 25.4"><title>앞미까시밖선</title></path>
+</g>
+<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
+<path d="M635 25.4L635 88.9"><title>앞미까시안선</title></path>
+</g>
+<text x="635" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞미까시 — 하이웨이스트 스커트</text>
+</g>
+<g id="skirt · 뒤미까시">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M852.592 25.4L1045.05 25.4"><title>뒤미까시윗선</title></path>
+<path d="M852.592 25.4L852.592 88.9"><title>뒤미까시안선</title></path>
+<path d="M852.592 88.9L1045.05 88.9"><title>뒤미까시밑선</title></path>
+<path d="M1045.05 88.9L1045.05 25.4"><title>뒤미까시밖선</title></path>
+</g>
+<text x="852.592" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤미까시 — 하이웨이스트 스커트</text>
+</g>
+</svg>

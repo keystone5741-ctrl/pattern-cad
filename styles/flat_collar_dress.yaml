@@ -22,6 +22,7 @@ blocks:
     measurements:
       뒤네크: "len(body.뒤목선)"
       앞네크: "len(body.앞목선)"
+      어깨길이: "len(body.뒤어깨선)"
       드러난폭: "body.칼라폭"
       겹침분: "body.칼라겹침분"
       칼라줄임: 1/8

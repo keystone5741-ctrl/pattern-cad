@@ -1,116 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1324.457mm" height="505.345mm" viewBox="0 0 1324.457 505.345">
+<svg xmlns="http://www.w3.org/2000/svg" width="1324.847mm" height="503.145mm" viewBox="0 0 1324.847 503.145">
 <rect width="100%" height="100%" fill="white"/>
 <g id="skirt · 뒤판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M344.639 266.998L395.439 317.798L395.439 444.798L344.639 444.798"><title>겹트임덧단</title></path>
-<path d="M344.639 28.873L344.639 444.798"><title>뒤중심선</title></path>
-<path d="M344.639 28.873C336.257 28.873 327.621 28.873 319.239 28.873C299.176 28.873 294.792 26.963 274.789 25.4"><title>뒤허리선1</title></path>
-<path d="M274.789 25.4L234.539 27.336L194.397 30.387"><title>뒤턱1산</title></path>
-<path d="M194.397 30.387L194.32 30.391"><title>뒤허리선2</title></path>
-<path d="M194.32 30.391L175.997 33.228L157.817 36.868"><title>뒤턱2산</title></path>
-<path d="M157.817 36.868L25.4 55.748"><title>뒤허리선3</title></path>
-<path d="M25.4 55.748C32.473 107.26 36.006 156.269 46.203 207.255C64.881 300.642 88.468 387.23 110.241 479.945"><title>뒤옆선</title></path>
-<path d="M344.639 444.798L110.241 479.945"><title>뒤밑단</title></path>
+<path d="M345.03 266.998L395.83 317.798L395.83 444.798L345.03 444.798"><title>겹트임덧단</title></path>
+<path d="M345.03 28.873L345.03 444.798"><title>뒤중심선</title></path>
+<path d="M345.03 28.873C336.648 28.873 328.012 28.873 319.63 28.873C299.566 28.873 295.182 26.963 275.18 25.4"><title>뒤허리선1</title></path>
+<path d="M275.18 25.4L234.93 27.336L194.787 30.387"><title>뒤턱1산</title></path>
+<path d="M194.787 30.387L169.269 31.757"><title>뒤허리선2</title></path>
+<path d="M169.269 31.757L150.86 34.607L132.595 38.264"><title>뒤턱2산</title></path>
+<path d="M132.595 38.264L25.4 53.548"><title>뒤허리선3</title></path>
+<path d="M25.4 53.548C32.473 105.06 36.006 154.069 46.203 205.054C64.881 298.442 88.468 385.03 110.241 477.745"><title>뒤옆선</title></path>
+<path d="M345.03 444.798L110.241 477.745"><title>뒤밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M274.789 25.4L240.078 84.78L194.397 30.387"><title>뒤턱1</title></path>
-<path d="M194.32 30.391L182.724 71.144L157.817 36.868"><title>뒤턱2</title></path>
+<path d="M275.18 25.4L240.468 84.78L194.787 30.387"><title>뒤턱1</title></path>
+<path d="M169.269 31.757L157.588 72.524L132.595 38.264"><title>뒤턱2</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M234.593 27.894L274.789 444.798"><title>뒤절개1</title></path>
-<path d="M176.068 33.629L249.609 448.13"><title>뒤절개2</title></path>
+<path d="M234.984 27.894L275.18 444.798"><title>뒤절개1</title></path>
+<path d="M150.932 35.01L224.819 451.463"><title>뒤절개2</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M344.639 343.198L395.439 317.798"><title>겹트임표시</title></path>
-<path d="M267.153 38.464L209.563 48.445"><title>뒤턱1접힘1</title></path>
-<path d="M264.723 42.62L212.761 52.253"><title>뒤턱1접힘2</title></path>
-<path d="M262.293 46.777L215.958 56.06"><title>뒤턱1접힘3</title></path>
-<path d="M188.047 59.644L281.139 59.644"><title>뒤턱1방향</title></path>
-<path d="M271.614 54.881L281.139 59.644L271.614 64.406"><title>뒤턱1화살촉</title></path>
-<path d="M191.769 39.357L166.086 48.247"><title>뒤턱2접힘1</title></path>
-<path d="M190.957 42.209L167.83 50.647"><title>뒤턱2접힘2</title></path>
-<path d="M190.145 45.062L169.573 53.046"><title>뒤턱2접힘3</title></path>
-<path d="M151.467 65.379L200.67 65.379"><title>뒤턱2방향</title></path>
-<path d="M191.145 60.617L200.67 65.379L191.145 70.142"><title>뒤턱2화살촉</title></path>
+<path d="M345.03 343.198L395.83 317.798"><title>겹트임표시</title></path>
+<path d="M267.543 38.464L209.953 48.445"><title>뒤턱1접힘1</title></path>
+<path d="M265.113 42.62L213.151 52.253"><title>뒤턱1접힘2</title></path>
+<path d="M262.683 46.777L216.349 56.06"><title>뒤턱1접힘3</title></path>
+<path d="M188.437 59.644L281.53 59.644"><title>뒤턱1방향</title></path>
+<path d="M272.005 54.881L281.53 59.644L272.005 64.406"><title>뒤턱1화살촉</title></path>
+<path d="M166.699 40.726L140.892 49.638"><title>뒤턱2접힘1</title></path>
+<path d="M165.882 43.579L142.642 52.036"><title>뒤턱2접힘2</title></path>
+<path d="M165.064 46.433L144.391 54.435"><title>뒤턱2접힘3</title></path>
+<path d="M126.245 66.76L175.619 66.76"><title>뒤턱2방향</title></path>
+<path d="M166.094 61.998L175.619 66.76L166.094 71.523"><title>뒤턱2화살촉</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M344.639 165.398L338.289 165.398"><title>지퍼끝</title></path>
+<path d="M345.03 165.398L338.68 165.398"><title>지퍼끝</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M234.539 27.336L240.078 84.78"><title>뒤턱1접힘선</title></path>
-<path d="M175.997 33.228L182.724 71.144"><title>뒤턱2접힘선</title></path>
+<path d="M234.93 27.336L240.468 84.78"><title>뒤턱1접힘선</title></path>
+<path d="M150.86 34.607L157.588 72.524"><title>뒤턱2접힘선</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 뒤판 — 테이퍼드 스커트</text>
 </g>
 <g id="skirt · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M446.239 33.713C454.621 33.713 463.257 33.713 471.639 33.713C494.803 33.713 499.579 29.141 522.439 25.4"><title>앞허리선1</title></path>
-<path d="M522.439 25.4L552.457 26.496L582.315 29.779"><title>앞턱1산</title></path>
-<path d="M582.315 29.779L608.05 29.363"><title>앞허리선2</title></path>
-<path d="M608.05 29.363L633.488 33.915L658.595 40.04"><title>앞턱2산</title></path>
-<path d="M658.595 40.04L757.746 50.807"><title>앞허리선3</title></path>
-<path d="M757.746 50.807C749.108 102.182 744.762 151.317 732.34 201.911C709.62 294.453 680.993 379.616 654.542 471.161"><title>앞옆선</title></path>
-<path d="M446.239 436.938L654.542 471.161"><title>앞밑단</title></path>
+<path d="M446.63 33.713C455.012 33.713 463.648 33.713 472.03 33.713C495.194 33.713 499.97 29.141 522.83 25.4"><title>앞허리선1</title></path>
+<path d="M522.83 25.4L552.848 26.496L582.706 29.779"><title>앞턱1산</title></path>
+<path d="M582.706 29.779L608.44 29.363"><title>앞허리선2</title></path>
+<path d="M608.44 29.363L633.879 33.915L658.985 40.04"><title>앞턱2산</title></path>
+<path d="M658.985 40.04L758.136 50.807"><title>앞허리선3</title></path>
+<path d="M758.136 50.807C749.498 102.182 745.152 151.317 732.731 201.911C710.01 294.453 681.384 379.616 654.932 471.161"><title>앞옆선</title></path>
+<path d="M446.63 436.938L654.932 471.161"><title>앞밑단</title></path>
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M522.439 25.4L547.746 90.92L582.315 29.779"><title>앞턱1</title></path>
-<path d="M608.05 29.363L622.166 87.511L658.595 40.04"><title>앞턱2</title></path>
+<path d="M522.83 25.4L548.136 90.92L582.706 29.779"><title>앞턱1</title></path>
+<path d="M608.44 29.363L622.557 87.511L658.985 40.04"><title>앞턱2</title></path>
 </g>
 <g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M552.377 27.59L522.439 436.938"><title>앞절개1</title></path>
-<path d="M633.322 34.701L547.569 440.633"><title>앞절개2</title></path>
+<path d="M552.768 27.59L522.83 436.938"><title>앞절개1</title></path>
+<path d="M633.713 34.701L547.959 440.633"><title>앞절개2</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M528.007 39.814L570.838 50.078"><title>앞턱1접힘1</title></path>
-<path d="M529.778 44.401L568.418 54.358"><title>앞턱1접힘2</title></path>
-<path d="M531.549 48.987L565.998 58.638"><title>앞턱1접힘3</title></path>
-<path d="M588.665 59.34L516.089 59.34"><title>앞턱1방향</title></path>
-<path d="M525.614 54.577L516.089 59.34L525.614 64.102"><title>앞턱1화살촉</title></path>
-<path d="M611.156 42.155L646.5 55.8"><title>앞턱2접힘1</title></path>
-<path d="M612.144 46.226L643.95 59.123"><title>앞턱2접힘2</title></path>
-<path d="M613.132 50.296L641.4 62.446"><title>앞턱2접힘3</title></path>
-<path d="M664.945 66.451L601.7 66.451"><title>앞턱2방향</title></path>
-<path d="M611.225 61.689L601.7 66.451L611.225 71.214"><title>앞턱2화살촉</title></path>
+<path d="M528.397 39.814L571.229 50.078"><title>앞턱1접힘1</title></path>
+<path d="M530.168 44.401L568.809 54.358"><title>앞턱1접힘2</title></path>
+<path d="M531.94 48.987L566.389 58.638"><title>앞턱1접힘3</title></path>
+<path d="M589.056 59.34L516.48 59.34"><title>앞턱1방향</title></path>
+<path d="M526.005 54.577L516.48 59.34L526.005 64.102"><title>앞턱1화살촉</title></path>
+<path d="M611.546 42.155L646.891 55.8"><title>앞턱2접힘1</title></path>
+<path d="M612.534 46.226L644.341 59.123"><title>앞턱2접힘2</title></path>
+<path d="M613.522 50.296L641.791 62.446"><title>앞턱2접힘3</title></path>
+<path d="M665.335 66.451L602.09 66.451"><title>앞턱2방향</title></path>
+<path d="M611.615 61.689L602.09 66.451L611.615 71.214"><title>앞턱2화살촉</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M446.239 33.713L446.239 436.938"><title>앞중심선</title></path>
-<path d="M552.457 26.496L547.746 90.92"><title>앞턱1접힘선</title></path>
-<path d="M633.488 33.915L622.166 87.511"><title>앞턱2접힘선</title></path>
+<path d="M446.63 33.713L446.63 436.938"><title>앞중심선</title></path>
+<path d="M552.848 26.496L548.136 90.92"><title>앞턱1접힘선</title></path>
+<path d="M633.879 33.915L622.557 87.511"><title>앞턱2접힘선</title></path>
 </g>
-<text x="446.239" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 테이퍼드 스커트</text>
+<text x="446.63" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 테이퍼드 스커트</text>
 </g>
 <g id="waistband_front">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1005.234 63.72C973.565 63.72 943.58 60.585 912.596 54.035C881.613 47.485 852.924 38.217 823.966 25.4"><title>윗선</title></path>
-<path d="M1005.234 101.82C970.871 101.82 938.335 98.419 904.716 91.312C871.097 84.204 839.968 74.147 808.546 60.24"><title>밑선</title></path>
-<path d="M823.966 25.4L808.546 60.24"><title>뒤끝</title></path>
+<path d="M1005.624 63.72C973.956 63.72 943.97 60.585 912.987 54.035C882.003 47.485 853.315 38.217 824.356 25.4"><title>윗선</title></path>
+<path d="M1005.624 101.82C971.262 101.82 938.726 98.419 905.107 91.312C871.487 84.204 840.358 74.147 808.936 60.24"><title>밑선</title></path>
+<path d="M824.356 25.4L808.936 60.24"><title>뒤끝</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M823.966 25.4L808.546 60.24"><title>옆선표시</title></path>
+<path d="M824.356 25.4L808.936 60.24"><title>옆선표시</title></path>
 </g>
 <g id="grain" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1015.394 63.72L1015.394 101.82"><title>식서</title></path>
+<path d="M1015.784 63.72L1015.784 101.82"><title>식서</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1005.234 63.72L1005.234 101.82"><title>앞끝</title></path>
+<path d="M1005.624 63.72L1005.624 101.82"><title>앞끝</title></path>
 </g>
-<text x="808.546" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_front — 곡선 오비</text>
+<text x="808.936" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_front — 곡선 오비</text>
 </g>
 <g id="waistband_back">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1288.897 85.414C1257.563 85.414 1227.817 81.676 1197.457 73.924C1157.714 63.776 1121.363 47.806 1087.005 25.4"><title>윗선</title></path>
-<path d="M1288.897 123.514C1254.333 123.514 1221.521 119.391 1188.031 110.839C1144.192 99.645 1104.093 82.029 1066.194 57.313"><title>밑선</title></path>
-<path d="M1087.005 25.4L1066.194 57.313"><title>뒤끝</title></path>
+<path d="M1289.287 85.414C1257.953 85.414 1228.207 81.676 1197.847 73.924C1158.105 63.776 1121.753 47.806 1087.396 25.4"><title>윗선</title></path>
+<path d="M1289.287 123.514C1254.723 123.514 1221.911 119.391 1188.421 110.839C1144.582 99.645 1104.483 82.029 1066.584 57.313"><title>밑선</title></path>
+<path d="M1087.396 25.4L1066.584 57.313"><title>뒤끝</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1111.702 40.168L1093.436 73.604"><title>옆선표시</title></path>
+<path d="M1112.093 40.168L1093.827 73.604"><title>옆선표시</title></path>
 </g>
 <g id="grain" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1299.057 85.414L1299.057 123.514"><title>식서</title></path>
+<path d="M1299.447 85.414L1299.447 123.514"><title>식서</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1288.897 85.414L1288.897 123.514"><title>앞끝</title></path>
+<path d="M1289.287 85.414L1289.287 123.514"><title>앞끝</title></path>
 </g>
-<text x="1066.194" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_back — 곡선 오비</text>
+<text x="1066.584" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">waistband_back — 곡선 오비</text>
 </g>
 </svg>
