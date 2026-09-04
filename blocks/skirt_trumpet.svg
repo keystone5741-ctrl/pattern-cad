@@ -16,6 +16,7 @@
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">뒤판</text></g>
 <g id="앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M306.112 53.975L306.112 349.25"><title>앞중심선</title></path>
 <path d="M306.112 53.975C314.494 53.975 323.13 53.975 331.512 53.975C364.096 53.975 370.803 47.472 402.95 42.151"><title>앞허리선안</title></path>
 <path d="M412.475 42.151C453.795 35.739 474.387 32.1 515.662 25.4"><title>앞허리선밖</title></path>
 <path d="M515.662 25.4C527.628 85.228 522.012 116.787 522.012 177.8C522.012 233.68 522.012 261.62 522.012 317.5"><title>앞옆선</title></path>
@@ -23,9 +24,6 @@
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M402.95 42.151L407.712 152.4L412.475 42.151"><title>앞다트</title></path>
-</g>
-<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M306.112 53.975L306.112 349.25"><title>앞중심선</title></path>
 </g>
 <text x="306.112" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">앞판</text></g>
 <g id="앞겉장">

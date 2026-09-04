@@ -18,6 +18,7 @@
 </g>
 <g id="skirt · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M318.812 53.975L318.812 349.25"><title>앞중심선</title></path>
 <path d="M318.812 53.975C327.194 53.975 335.83 53.975 344.212 53.975C376.796 53.975 383.503 47.472 415.65 42.151"><title>앞허리선안</title></path>
 <path d="M425.175 42.151C466.495 35.739 487.087 32.1 528.362 25.4"><title>앞허리선밖</title></path>
 <path d="M528.362 25.4C540.328 85.228 534.712 116.787 534.712 177.8C534.712 233.68 534.712 261.62 534.712 317.5"><title>앞옆선</title></path>
@@ -25,9 +26,6 @@
 </g>
 <g id="dart" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M415.65 42.151L420.412 152.4L425.175 42.151"><title>앞다트</title></path>
-</g>
-<g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M318.812 53.975L318.812 349.25"><title>앞중심선</title></path>
 </g>
 <text x="318.812" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">skirt · 앞판 — 트럼펫 스커트</text>
 </g>

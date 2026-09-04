@@ -227,7 +227,9 @@ lines:
            겹트임덧단, 겹트임표시, 앞중심선, 뒤중심선]
   add:
     # ---------------- 몸판 (앞판 · 뒤판)
-    - {name: 앞중심선, piece: 앞판, role: fold, pts: [HB_CF, T1_CF]}
+    - {name: 앞중심선, piece: 앞판, role: outline, pts: [HB_CF, T1_CF],
+       note: 골선이 아니다 — 절개선이 나선이라 앞중심 왼쪽 반과 오른쪽 반의 밑변 높이가 다르다.
+             이 조각은 반쪽 규칙이고, 재단할 때는 반대쪽 반을 따로 떠서 한 장으로 이어 쓴다}
     - {name: 앞허리선안, piece: 앞판, role: outline, curve: [HB_CF, HB_CF1, TD_L],
        tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.33, 0.33], [0.45, 0.45]]}
     - {name: 앞다트, piece: 앞판, role: dart, pts: [TD_L, TD_B, TD_R], note: 절개선이라 다트보다 작게 (3/8)}
