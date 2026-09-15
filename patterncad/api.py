@@ -16,8 +16,10 @@ import sys
 import threading
 
 from .block import Block, Resolved
+from .compose import availability, category_of, compose
 from .dxf import write_dxf
 from .grading import size_overrides, systems
+from .hpgl import write_hpgl
 from .pieces import build_pieces, transform_piece
 from .style import Style
 from .svg import render_pieces_svg, render_style_svg, render_svg
@@ -193,11 +195,17 @@ def _split(prefix_map: dict, key: str) -> dict:
     return {k[len(key) + 1:]: v for k, v in prefix_map.items() if k.startswith(key + ".")}
 
 
-def _evaluate(kind: str, ident: str, overrides: dict, point_overrides: dict, line_overrides: dict | None = None):
-    """(결과 dict, 스타일별 치수 지정, 이름). block 은 'block' 키 하나로 감싼다."""
+def load_style(ident: str, compose_choices: dict | None = None) -> Style:
+    st = Style.load(ROOT / "styles" / f"{ident}.yaml")
+    return compose(st, compose_choices) if compose_choices else st
+
+
+def _evaluate(kind: str, ident: str, overrides: dict, point_overrides: dict, line_overrides: dict | None = None,
+              compose_choices: dict | None = None):
+    """(결과 dict, 스타일별 치수 지정, 이름). block 은 'block' 키 하나로 감싼다. compose_choices 는 디테일 옵션."""
     line_overrides = line_overrides or {}
     if kind == "style":
-        st = Style.load(ROOT / "styles" / f"{ident}.yaml")
+        st = load_style(ident, compose_choices)
         results = st.evaluate(overrides, point_overrides, line_overrides)
         style_meas = {name: meas for name, _, meas in st.blocks}
         return results, style_meas, st.name
@@ -207,10 +215,10 @@ def _evaluate(kind: str, ident: str, overrides: dict, point_overrides: dict, lin
 
 
 def to_json(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None,
-            line_overrides: dict | None = None) -> dict:
+            line_overrides: dict | None = None, compose_choices: dict | None = None) -> dict:
     overrides = overrides or {}
     point_overrides = point_overrides or {}
-    results, style_meas, name = _evaluate(kind, ident, overrides, point_overrides, line_overrides)
+    results, style_meas, name = _evaluate(kind, ident, overrides, point_overrides, line_overrides, compose_choices)
     pieces = layout(results)
     blocks = []
     for key, res in results.items():
@@ -246,8 +254,8 @@ def to_json(kind: str, ident: str, overrides: dict | None = None, point_override
 
 
 def to_svg(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None,
-           line_overrides: dict | None = None) -> str:
-    results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {})
+           line_overrides: dict | None = None, compose_choices: dict | None = None) -> str:
+    results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {}, compose_choices)
     if kind == "style":
         return render_style_svg(results, labels=False)
     res = results["block"]
@@ -335,7 +343,7 @@ def project_list() -> list[dict]:
 def project_save(name: str, data: dict) -> dict:
     import datetime  # noqa: PLC0415
     name = _safe_name(name)
-    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "grading", "marker", "view", "note")}
+    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "grading", "marker", "compose", "view", "note")}
     keep["name"] = name
     keep["saved"] = datetime.datetime.now().isoformat(timespec="seconds")
     PROJECTS.mkdir(exist_ok=True)
@@ -351,8 +359,8 @@ def project_load(name: str) -> dict:
 
 
 # ------------------------------------------------------------------ 조각 · 시접 · DXF
-def _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings):
-    results, _, name = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {})
+def _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings, compose_choices=None):
+    results, _, name = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {}, compose_choices)
     pieces = []
     for key, res in results.items():
         pieces += build_pieces(res, key, piece_settings or {})
@@ -366,8 +374,8 @@ def _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_s
     return name, pieces, positions
 
 
-def pieces_json(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None) -> dict:
-    name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings)
+def pieces_json(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None, compose_choices=None) -> dict:
+    name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings, compose_choices)
     from .dxf import _allow_at  # noqa: PLC0415
     out = []
     for pc, (dx, dy) in zip(pieces, positions):
@@ -384,17 +392,17 @@ def pieces_json(kind, ident, overrides=None, point_overrides=None, line_override
 
 
 def to_dxf(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None,
-           grading=None) -> str:
+           grading=None, compose_choices=None) -> str:
     """grading = {"system", "base", "sizes": [...]} 이면 사이즈마다 조각을 만들어 줄줄이 놓는다 (조각 이름에 호칭을 붙인다)."""
-    name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings)
+    name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings, compose_choices)
     if not grading or not grading.get("sizes"):
         return write_dxf(pieces, positions, title=name)
     base = grading["base"]
     all_pieces, all_pos = [], []
     row_h = max(pc.bbox()[3] - pc.bbox()[1] for pc in pieces) + 2.0
     for r, size in enumerate([base] + [s for s in grading["sizes"] if s != base]):
-        ov = overrides if size == base else grade_overrides(kind, ident, overrides, grading["system"], base, size)
-        _, pcs, pos = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings)
+        ov = overrides if size == base else grade_overrides(kind, ident, overrides, grading["system"], base, size, compose_choices)
+        _, pcs, pos = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings, compose_choices)
         for pc, (dx, dy) in zip(pcs, pos):
             pc.name = f"{pc.name}_{size}"
             all_pieces.append(pc)
@@ -407,17 +415,18 @@ def size_systems() -> dict:
     return systems()
 
 
-def grade_overrides(kind, ident, overrides, system, base, target) -> dict:
+def grade_overrides(kind, ident, overrides, system, base, target, compose_choices=None) -> dict:
     """기준 사이즈에서 계산한 치수를 알아야 차이를 더할 수 있다."""
-    results, _, _ = _evaluate(kind, ident, overrides or {}, {}, {})
+    results, _, _ = _evaluate(kind, ident, overrides or {}, {}, {}, compose_choices)
     base_values = {f"{key}.{n}": v for key, res in results.items() for n, v in res.measurements.items()
                    if isinstance(v, (int, float))}
-    return size_overrides(kind, ident, overrides or {}, base_values, system, base, target)
+    blocks = [(k, blk) for k, blk, _ in load_style(ident, compose_choices).blocks] if kind == "style" else None
+    return size_overrides(kind, ident, overrides or {}, base_values, system, base, target, blocks)
 
 
-def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, base, sizes) -> dict:
+def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, base, sizes, compose_choices=None) -> dict:
     """사이즈마다 선(완성선·골선·다트)만 — 겹쳐 보기용. 조각 자리는 기준 사이즈 배치를 그대로 쓴다."""
-    base_results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {})
+    base_results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {}, compose_choices)
 
     def centers(results):
         out = {}
@@ -431,8 +440,8 @@ def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, 
     for size in sizes:
         if size == base:
             continue
-        ov = grade_overrides(kind, ident, overrides, system, base, size)
-        results, _, _ = _evaluate(kind, ident, ov, point_overrides or {}, line_overrides or {})
+        ov = grade_overrides(kind, ident, overrides, system, base, size, compose_choices)
+        results, _, _ = _evaluate(kind, ident, ov, point_overrides or {}, line_overrides or {}, compose_choices)
         size_c = centers(results)
         blocks = []
         for key, res in results.items():
@@ -452,7 +461,7 @@ def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, 
 
 # ------------------------------------------------------------------ 마카
 def marker_dxf(kind, ident, overrides, point_overrides, line_overrides, piece_settings, placements, width=58.0,
-               grading=None) -> str:
+               grading=None, compose_choices=None, fmt="dxf") -> str:
     """placements: [{"key": "body.앞판", "size": "55"(선택), "rot": 90, "flip": false, "x": 3.2, "y": 0.5}] — 원단 좌표(인치).
     놓인 조각을 실제 좌표로 바꿔 한 층에 쓴다 (조각 이름에 번호)."""
     cache = {}
@@ -461,8 +470,8 @@ def marker_dxf(kind, ident, overrides, point_overrides, line_overrides, piece_se
         if size not in cache:
             ov = overrides
             if grading and size and size != grading.get("base"):
-                ov = grade_overrides(kind, ident, overrides, grading["system"], grading["base"], size)
-            _, pcs, _ = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings)
+                ov = grade_overrides(kind, ident, overrides, grading["system"], grading["base"], size, compose_choices)
+            _, pcs, _ = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings, compose_choices)
             cache[size] = {f"{pc.block}.{pc.name}": pc for pc in pcs}
         return cache[size]
     placed = []
@@ -475,4 +484,17 @@ def marker_dxf(kind, ident, overrides, point_overrides, line_overrides, piece_se
         t.name = f"{pc.name}{'_' + pl['size'] if pl.get('size') else ''}_{i + 1}"
         placed.append(t)
     title = f"marker {ident} width {width}in"
+    if fmt == "hpgl":
+        return write_hpgl(placed, [(0.0, 0.0)] * len(placed))
     return write_dxf(placed, [(0.0, 0.0)] * len(placed), title=title)
+
+
+def to_hpgl(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None, compose_choices=None) -> str:
+    _, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings, compose_choices)
+    return write_hpgl(pieces, positions)
+
+
+# ------------------------------------------------------------------ 디테일 옵션
+def options_json(style_id: str, compose_choices: dict | None = None) -> dict:
+    st = load_style(style_id, compose_choices)
+    return {"style": style_id, "category": category_of(style_id), "slots": availability(st, category_of(style_id))}

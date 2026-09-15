@@ -143,6 +143,11 @@ python -m patterncad.server          # http://127.0.0.1:8765 를 브라우저로
 - **그레이딩**(왼쪽 패널): 사이즈 체계(`data/sizes.yaml` — KS 여성복 44~88, S/M/L, 초안)와 기준 호칭을 고르고 사이즈를 켜면
   **치수 재대입**으로 다시 그린 원형이 색색으로 겹쳐 보인다. 기준 사이즈에서 손본 치수·점·핸들은 그대로 두고 표의 **차이만** 더한다.
   켠 사이즈는 DXF 에 함께 나간다 (조각 이름에 호칭, 사이즈마다 한 줄). 점별 편차 방식은 아직
+- **디테일 갈아끼우기**(왼쪽 패널 · 마법사 5단계): 칼라(셔츠·차이나·스탠드·플랫·숄·테일러드·넥립) · 소매(한 장·턱·두 장·민소매) ·
+  소매 밑단(커프스+견보루·시보리) · 밑단 시보리 · 오비(일자·곡선·고무줄). 재료는 `data/options.yaml` — 부속 원형과 치수 연결식.
+  몸판에 없는 치수·선이 필요한 선택지는 회색. 빠진 부속의 치수(소매길이 …)는 새 부속이 이어받는다.
+  연결식 `len(skirt.앞허리선*)` 은 그 이름으로 시작하는 완성선 길이의 합
+- **HPGL**(플로터, 0.025 mm): 조각 배치 또는 마카를 그대로
 - **마카**(위쪽 토글): 원단 폭을 정하고 조각을 매수대로(둘째 장은 뒤집어) 놓는다. 끌어 옮기기(1/8" 눈금), `R` 90° 돌리기, `M` 뒤집기,
   겹치면 빨강·원단 밖이면 점선. 자동 배치는 선반 채우기(시작점일 뿐, 자동 네스팅은 다음). **요척**(yd·m)과 효율을 바로 보여 주고
   마카 DXF(놓인 자리대로 한 층)·SVG 로 내보낸다. 놓은 자리는 프로젝트 파일에 저장
@@ -153,6 +158,8 @@ patterncad/api.py       계산 결과 → 점·선·치수 JSON, 조각 자리 �
 patterncad/wizard.py    마법사 재료 — 포트폴리오 아이템·사이즈표 ↔ 스타일, 핏 가감
 patterncad/pieces.py    조각 — 외곽선 잇기 · 시접(변별) · 노치 · 식서 · 골 펼치기
 patterncad/grading.py   사이즈 체계 · 치수 재대입 그레이딩
+patterncad/compose.py   디테일 옵션 — 부속 갈아끼우기 (data/options.yaml)
+patterncad/hpgl.py      플로터 HPGL
 patterncad/dxf.py       AAMA 층 DXF 쓰기
 patterncad/server.py    /api/catalog · eval · svg · pieces · dxf · overlay · page · projects · wizard, ui/ 정적 파일
 ui/index.html · app.css · app.js   화면 (바닐라 JS, SVG)

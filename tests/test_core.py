@@ -904,3 +904,62 @@ class Marker(unittest.TestCase):
                             {"key": "없는조각", "x": 0, "y": 0}], 58)
         self.assertEqual(d.count("\nBLOCK\n"), 2)
         self.assertIn("앞판_2", d)
+
+
+class Compose(unittest.TestCase):
+    """디테일 옵션 — 부속 갈아끼우기."""
+
+    def test_glob_len_sums_split_waist_lines(self):
+        from patterncad import api
+        d = api.to_json("style", "basic_pants", compose_choices={"waistband": "curved"})
+        keys = [b["key"] for b in d["blocks"]]
+        self.assertIn("waistband_front", keys)
+        self.assertNotIn("waistband", keys)
+        pants = next(b for b in d["blocks"] if b["key"] == "pants")
+        waist = sum(l["length"] for l in pants["lines"] if l["name"].startswith("앞허리선") and l["role"] == "outline")
+        front = next(b for b in d["blocks"] if b["key"] == "waistband_front")
+        self.assertAlmostEqual(next(m["value"] for m in front["measurements"] if m["name"] == "밑선"), waist, places=6)
+
+    def test_swap_collar_and_sleeve_keeps_sleeve_length(self):
+        from patterncad import api
+        base = api.to_json("style", "shirt_collar_blouse")
+        d = api.to_json("style", "shirt_collar_blouse", compose_choices={"collar": "stand", "sleeve": "two_piece", "cuff": "rib"})
+        keys = [b["key"] for b in d["blocks"]]
+        self.assertEqual(keys[:2], ["body", "sleeve"])
+        self.assertIn("collar", keys)
+        self.assertNotIn("band", keys)
+        self.assertIn("소매부리시보리", keys)
+        val = lambda j, key, name: next(m["value"] for m in next(b for b in j["blocks"] if b["key"] == key)["measurements"] if m["name"] == name)  # noqa: E731
+        self.assertEqual(val(d, "sleeve", "소매길이"), val(base, "sleeve", "소매길이"))   # 빠진 소매의 길이를 이어받는다
+        self.assertEqual(next(b for b in d["blocks"] if b["key"] == "collar")["id"], "stand_collar")
+
+    def test_options_report_current_and_availability(self):
+        from patterncad import api
+        o = api.options_json("shirt_collar_blouse")
+        self.assertEqual(o["category"], "top")
+        collar = next(s for s in o["slots"] if s["id"] == "collar")
+        self.assertEqual(collar["current"], "shirt")
+        self.assertFalse(next(c for c in collar["choices"] if c["id"] == "shawl")["available"])
+        self.assertTrue(next(c for c in collar["choices"] if c["id"] == "flat")["available"])
+        j = api.options_json("tailored_jacket")
+        self.assertTrue(next(c for s in j["slots"] if s["id"] == "collar" for c in s["choices"] if c["id"] == "tailored")["available"])
+
+    def test_hpgl(self):
+        from patterncad import api
+        h = api.to_hpgl("style", "basic_skirt")
+        self.assertTrue(h.startswith("IN;SP1;"))
+        self.assertIn("PD", h)
+        self.assertTrue(h.rstrip().endswith("IN;"))
+
+    def test_rib_slots_do_not_confuse_each_other(self):
+        from patterncad import api
+        o = api.options_json("sweat_shirt")
+        cur = {s["id"]: s["current"] for s in o["slots"]}
+        self.assertEqual((cur["collar"], cur["cuff"], cur["hem"]), ("neck_rib", "rib", "rib"))
+        d = api.to_json("style", "sweat_shirt", compose_choices={"hem": "none"})
+        keys = [b["key"] for b in d["blocks"]]
+        self.assertNotIn("밑단시보리", keys)
+        self.assertIn("소매부리시보리", keys)
+        self.assertIn("넥립", keys)
+        o2 = api.options_json("shirt_collar_blouse", {"cuff": "rib"})
+        self.assertEqual(next(s for s in o2["slots"] if s["id"] == "hem")["current"], "none")

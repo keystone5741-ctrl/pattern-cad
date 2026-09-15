@@ -9,6 +9,7 @@
 치수 덮어쓰기 값으로 쓸 수 있는 것:
     숫자 / 인치표기 / 선택값 글자        그대로
     len(블록.선이름)                       앞서 계산한 블록의 선 길이 (곡선이면 곡선 길이)
+    len(블록.앞허리선*)                    그 이름으로 시작하는 완성선 길이의 합 (허리선안 + 허리선밖 …)
     블록.치수이름                          앞서 계산한 블록의 치수
     블록.점이름.x / .y                     앞서 계산한 블록의 점 좌표
 """
@@ -88,7 +89,13 @@ class Style:
             raise KeyError(f"{blk} 에 {key} 가 없다")
 
         def sub_len(m):
-            return repr(done[m.group(1)].line(m.group(2)).length())
+            blk, name = m.group(1), m.group(2)
+            if name.endswith("*"):   # len(skirt.앞허리선*) — 그 이름으로 시작하는 완성선을 모두 더한다 (허리선안+허리선밖 …)
+                ls = [l for l in done[blk].lines if l.name.startswith(name[:-1]) and l.role in ("outline", "fold")]
+                if not ls:
+                    raise ValueError(f"{blk} 에 {name[:-1]} 로 시작하는 선이 없다")
+                return repr(sum(l.length() for l in ls))
+            return repr(done[blk].line(name).length())
 
         def sub_ref(m):
             if m.group(1) not in done:

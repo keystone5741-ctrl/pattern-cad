@@ -13,6 +13,7 @@ const S = {
   mode: 'draft', piecesData: null,          // 'draft' | 'pieces'
   grading: {system: null, base: null, sizes: []}, gradeData: null, sizeSystems: null,
   marker: {width: 58, gap: 0.25, items: []},   // items: [{key, size, rot, flip, x, y}] 원단 좌표(inch)
+  compose: {}, optionsData: null,               // 디테일 옵션 {collar: 'stand', …}
   unit: 'in', sel: null, measure: null,        // sel: {type:'point'|'line', block, name}
   layers: Object.fromEntries(ROLES.map(r => [r, r !== 'dimension'])), labels: false, helpers: false,
   overlays: {}, pageCache: {},                 // overlays: 'block|piece' → {on, fit, loading}
@@ -79,7 +80,8 @@ async function getJson(url) {
   return j;
 }
 const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides, piece_settings: S.pieceSettings,
-                        grading: S.grading.sizes.length ? S.grading : null, marker: S.marker});
+                        grading: S.grading.sizes.length ? S.grading : null, marker: S.marker,
+                        compose: Object.keys(S.compose).length ? S.compose : null});
 function showErr(e) { $('err').hidden = false; $('err').textContent = e.message || String(e); }
 
 let evalTimer = null;
@@ -95,7 +97,7 @@ async function evaluate() {
     if (S.mode === 'pieces' || S.mode === 'marker') S.piecesData = await post('/api/pieces', payload());
     S.gradeData = S.grading.sizes.length ? await post('/api/grade', payload()) : null;
     if (my !== S.seq) return;
-    draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList(); renderGrading();
+    draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList(); renderGrading(); renderDetails();
     $('title').textContent = d.name;
     $('counts').textContent = `조각 ${d.pieces.length} · 점 ${d.blocks.reduce((n, b) => n + b.points.length, 0)} · 선 ${d.blocks.reduce((n, b) => n + b.lines.length, 0)}`;
   } catch (e) {
@@ -274,6 +276,41 @@ async function renderGrading() {
 }
 $('gSystem').addEventListener('change', e => { S.grading.system = e.target.value; S.grading.base = null; S.grading.sizes = []; renderGrading(); scheduleEval(0); });
 $('gBase').addEventListener('change', e => { S.grading.base = e.target.value.replace(/ 기준$/, ''); S.grading.sizes = S.grading.sizes.filter(x => x !== S.grading.base); renderGrading(); scheduleEval(0); });
+
+// ------------------------------------------------------------ 디테일 옵션 (부속 갈아끼우기)
+function optionRows(slots, current, onPick) {
+  const box = document.createElement('div'); box.className = 'col';
+  for (const sl of slots) {
+    const row = document.createElement('div'); row.className = 'optrow';
+    row.innerHTML = `<b>${esc(sl.label)}</b>`;
+    for (const ch of sl.choices) {
+      const t = document.createElement('span');
+      const on = (current[sl.id] ?? sl.current) === ch.id;
+      t.className = 'tag' + (on ? ' on' : '') + (ch.available ? '' : ' off');
+      t.textContent = ch.label;
+      if (!ch.available) t.title = '몸판에 없음: ' + ch.missing.join(', ');
+      else t.addEventListener('click', () => onPick(sl.id, ch.id));
+      row.appendChild(t);
+    }
+    box.appendChild(row);
+  }
+  return box;
+}
+async function renderDetails() {
+  const sec = $('detailSec'), box = $('details');
+  if (S.kind !== 'style') { sec.hidden = true; return; }
+  sec.hidden = false;
+  try { S.optionsData = await post('/api/options', {id: S.id, compose: Object.keys(S.compose).length ? S.compose : null}); }
+  catch (e) { box.textContent = e.message; return; }
+  box.innerHTML = '';
+  box.appendChild(optionRows(S.optionsData.slots, S.compose, (slot, id) => {
+    S.compose = {...S.compose, [slot]: id};
+    S.sel = null; S.marker.items = []; scheduleEval(0);
+  }));
+  if (S.optionsData.slots.some(sl => sl.needs_slot && (S.compose[sl.needs_slot] ?? S.optionsData.slots.find(x => x.id === sl.needs_slot)?.current) === 'none' && (S.compose[sl.id] ?? sl.current) !== 'none')) {
+    const n = document.createElement('div'); n.className = 'note'; n.textContent = '소매가 없으면 소매 밑단 부속은 뜬다'; box.appendChild(n);
+  }
+}
 
 // ------------------------------------------------------------ 마카 (손으로 놓기 + 요척)
 const rotPt = ([x, y], rot, flip) => {           // 조각 좌표 → 원단 좌표 (patterncad.pieces.transform_piece 와 같은 순서)
@@ -807,7 +844,8 @@ $('modes').querySelectorAll('button').forEach(btn => btn.addEventListener('click
   $('modes').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
   await evaluate(); fitAll();
 }));
-$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; S.grading.sizes = []; S.marker.items = []; scheduleEval(0); });
+$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; S.grading.sizes = []; S.marker.items = []; S.compose = {}; scheduleEval(0); });
+$('saveHpgl').addEventListener('click', () => download(S.mode === 'marker' ? '/api/marker_dxf' : '/api/hpgl', S.mode === 'marker' ? {...payload(), placements: S.marker.items, width: S.marker.width, format: 'hpgl'} : payload(), `${S.projName || S.id}${S.mode === 'marker' ? '_marker' : ''}.plt`));
 $('saveDxf').addEventListener('click', async () => {
   try {
     const r = await post('/api/dxf', payload());
@@ -824,7 +862,8 @@ $('saveSvg').addEventListener('click', async () => {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   } catch (e) { showErr(e); }
 });
-function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, grading = null, marker = null, projName = '', view = null} = {}) {
+function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, grading = null, marker = null, compose = {}, projName = '', view = null} = {}) {
+  S.compose = compose || {};
   S.marker = marker && marker.items ? marker : {width: S.marker.width, gap: S.marker.gap, items: []};
   S.kind = kind; S.id = id; S.overrides = overrides; S.pointOverrides = pointOverrides; S.lineOverrides = lineOverrides; S.pieceSettings = pieceSettings;
   S.grading = grading && grading.system ? grading : {system: S.grading.system, base: S.grading.base, sizes: []};
@@ -848,7 +887,7 @@ $('projects').addEventListener('change', async () => {
   const name = $('projects').value; if (!name) return;
   try {
     const p = await getJson(`/api/project?name=${encodeURIComponent(name)}`);
-    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, grading: p.grading, marker: p.marker, projName: p.name, view: p.view});
+    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, grading: p.grading, marker: p.marker, compose: p.compose || {}, projName: p.name, view: p.view});
   } catch (e) { showErr(e); }
 });
 $('saveProj').addEventListener('click', async () => {
@@ -862,7 +901,7 @@ $('saveProj').addEventListener('click', async () => {
 });
 
 // ------------------------------------------------------------ 새 패턴 마법사
-const W = {cat: null, item: null, fit: '레귤러', data: null};
+const W = {cat: null, item: null, fit: '레귤러', data: null, opts: null, optStyle: null, compose: {}};
 $('newPat').addEventListener('click', async () => {
   try {
     if (!W.data) W.data = await getJson('/api/wizard');
@@ -898,6 +937,12 @@ function renderWizard() {
     fit.appendChild(l);
   }
   $('wizMsg').textContent = it ? `${it.name} — 신체 치수는 원형의 같은 이름 치수(가슴둘레·허리둘레·엉덩이둘레…)에 들어간다` : '';
+  const ob = $('wizOpts'); ob.innerHTML = '';
+  if (it) {
+    if (W.optStyle !== it.style) { W.optStyle = it.style; W.compose = {}; W.opts = null; }
+    if (!W.opts) post('/api/options', {id: it.style}).then(o => { W.opts = o; renderWizard(); }).catch(showErr);
+    else ob.appendChild(optionRows(W.opts.slots, W.compose, (slot, id) => { W.compose = {...W.compose, [slot]: id}; renderWizard(); }));
+  }
 }
 $('wiz').addEventListener('close', async () => {
   const v = $('wiz').returnValue;
@@ -910,7 +955,7 @@ $('wiz').addEventListener('close', async () => {
       $('wizSize').querySelectorAll('input[data-name]').forEach(inp => { const n = parseUnit(inp.value); if (n != null) body[inp.dataset.name] = n; });
       overrides = (await post('/api/wizard', {style: W.item, body, fit: W.fit})).overrides;
     }
-    await open_('style', W.item, {overrides});
+    await open_('style', W.item, {overrides, compose: W.compose});
   } catch (e) { showErr(e); }
 });
 
@@ -941,6 +986,7 @@ async function init() {
     const b = S.data.blocks.find(x => x.key === blk);
     if (b) select({type: b.lines.some(l => l.name === name) ? 'line' : 'point', block: blk, name});
   }
+  if (hq.compose) { S.compose = Object.fromEntries(hq.compose.split(',').map(kv => kv.split(':'))); await evaluate(); fitAll(); }   // ?compose=collar:stand,sleeve:two_piece
   if (hq.mode === 'pieces' || hq.mode === 'marker') $('modes').querySelector(`[data-m=${hq.mode}]`).click();
   if (hq.sizes) { await renderGrading(); S.grading.sizes = hq.sizes.split(','); await evaluate(); }
   if (hq.wiz) $('newPat').click();

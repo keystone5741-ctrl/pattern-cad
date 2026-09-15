@@ -24,6 +24,7 @@
     <button id="fit" class="btn">맞춤</button>
     <button id="saveSvg" class="btn">SVG</button>
     <button id="saveDxf" class="btn pri" title="AAMA 층 DXF (인치) 내보내기">DXF</button>
+    <button id="saveHpgl" class="btn" title="플로터 HPGL (0.025mm)">HPGL</button>
   </header>
 
   <aside id="left">
@@ -34,6 +35,10 @@
     <section>
       <h3>층</h3>
       <div id="layers" class="col"></div>
+    </section>
+    <section id="detailSec">
+      <h3>디테일 <span class="muted small" style="font-weight:400">갈아끼우기</span></h3>
+      <div id="details" class="col small"></div>
     </section>
     <section>
       <h3>그레이딩 <span class="muted small" style="font-weight:400">치수 재대입</span></h3>
@@ -100,6 +105,8 @@
         <div id="wizSize"></div>
         <h4>4 · 핏</h4><div id="wizFit" class="row"></div>
         <div class="note">핏 가감표는 data/fit_levels.yaml (초안 — 현장 값으로 고쳐 주세요)</div>
+        <h4 style="margin-top:12px">5 · 디테일 <span class="muted small">칼라·소매·커프스·밑단·오비 갈아끼우기 (data/options.yaml)</span></h4>
+        <div id="wizOpts" class="col"></div>
       </div>
     </div>
     <div class="wizfoot"><span id="wizMsg" class="muted small"></span><span class="spacer"></span><button value="blank" class="btn">빈 원형만</button><button value="draw" class="btn pri">이대로 그리기</button></div>

@@ -50,7 +50,7 @@ def _blocks(kind: str, ident: str):
 
 
 def size_overrides(kind: str, ident: str, base_overrides: dict, base_values: dict,
-                   system: str, base: str, target: str) -> dict:
+                   system: str, base: str, target: str, blocks=None) -> dict:
     """기준 사이즈의 치수 덮어쓰기 → 목표 사이즈의 덮어쓰기.
 
     base_values 는 기준 사이즈로 계산한 결과의 {"block.치수": 값} (덮어쓰기가 없어도 원형 기본값을 알아야 차이를 더한다)."""
@@ -60,7 +60,7 @@ def size_overrides(kind: str, ident: str, base_overrides: dict, base_values: dic
     if b not in idx or t not in idx:
         raise ValueError(f"{system} 에 없는 호칭: {base} / {target}")
     out = dict(base_overrides)
-    for key, blk in _blocks(kind, ident):
+    for key, blk in (blocks if blocks is not None else _blocks(kind, ident)):
         for name, spec in blk.measurements.items():
             spec = spec if isinstance(spec, dict) else {"value": spec}
             if "value" not in spec:

@@ -12,7 +12,10 @@ POST /api/svg         → 같은 입력, 실물 크기 SVG 본문
 POST /api/pieces      → 같은 입력 + "piece_settings" → 조각(완성선·재단선·노치·식서)
 POST /api/dxf         → 같은 입력 (+ "grading": {"system", "base", "sizes"}), AAMA 층 DXF (인치)
 GET  /api/sizes · POST /api/grade  → 사이즈 체계 / 사이즈별 선 (치수 재대입 그레이딩)
-POST /api/marker_dxf  → 같은 입력 + "placements", "width" → 마카 DXF (놓인 자리대로, 한 층)
+POST /api/marker_dxf  → 같은 입력 + "placements", "width" (+ "format": "hpgl") → 마카 DXF/HPGL (놓인 자리대로, 한 층)
+POST /api/options     → {"id": 스타일, "compose": {...}} → 디테일 슬롯·선택지·가능 여부
+POST /api/hpgl        → 조각 HPGL (플로터, 0.025mm)
+모든 POST 에 "compose": {"collar": "stand", "sleeve": "two_piece", …} 를 주면 부속을 갈아끼운 스타일로 계산한다
 GET  /api/projects · GET/POST /api/project?name=   → 프로젝트 파일 (projects/*.pcad)
 POST /api/overlay     → {"block": 원형id, "piece": 조각} → 원본 도면 맞춤 변환 (verify/fits.json 에 캐시)
 GET  /api/page?page=48&layers=pattern,developed    → 추출 도면의 층 그림 (SVG 조각)
@@ -103,25 +106,33 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(200, {"kind": "style", "id": req["style"], "overrides": ov})
             kind, ident = req.get("kind", "style"), req["id"]
             ov, po, lo = req.get("overrides") or {}, req.get("point_overrides") or {}, req.get("line_overrides") or {}
-            ps = req.get("piece_settings") or {}
+            ps, cc = req.get("piece_settings") or {}, (req.get("compose") or None) if kind == "style" else None
+            if path == "/api/options":
+                return self._json(200, api.options_json(ident, cc))
+            if path == "/api/hpgl":
+                body = api.to_hpgl(kind, ident, ov, po, lo, ps, cc).encode("utf-8")
+                return self._send(200, body, "application/vnd.hp-hpgl; charset=utf-8",
+                                  {"Content-Disposition": f'attachment; filename="{ident}.plt"'})
             if path == "/api/pieces":
-                return self._json(200, api.pieces_json(kind, ident, ov, po, lo, ps))
+                return self._json(200, api.pieces_json(kind, ident, ov, po, lo, ps, cc))
             if path == "/api/marker_dxf":
+                fm = req.get("format") or "dxf"
                 body = api.marker_dxf(kind, ident, ov, po, lo, ps, req.get("placements") or [],
-                                      float(req.get("width") or 58), req.get("grading")).encode("utf-8")
-                return self._send(200, body, "application/dxf; charset=utf-8",
-                                  {"Content-Disposition": f'attachment; filename="{ident}_marker.dxf"'})
+                                      float(req.get("width") or 58), req.get("grading"), cc, fm).encode("utf-8")
+                ctype = "application/vnd.hp-hpgl" if fm == "hpgl" else "application/dxf"
+                return self._send(200, body, ctype + "; charset=utf-8",
+                                  {"Content-Disposition": f'attachment; filename="{ident}_marker.{"plt" if fm == "hpgl" else "dxf"}"'})
             if path == "/api/grade":
                 g = req.get("grading") or {}
-                return self._json(200, api.grade_json(kind, ident, ov, po, lo, g["system"], g["base"], g.get("sizes") or []))
+                return self._json(200, api.grade_json(kind, ident, ov, po, lo, g["system"], g["base"], g.get("sizes") or [], cc))
             if path == "/api/dxf":
-                body = api.to_dxf(kind, ident, ov, po, lo, ps, req.get("grading")).encode("utf-8")
+                body = api.to_dxf(kind, ident, ov, po, lo, ps, req.get("grading"), cc).encode("utf-8")
                 return self._send(200, body, "application/dxf; charset=utf-8",
                                   {"Content-Disposition": f'attachment; filename="{ident}.dxf"'})
             if path == "/api/eval":
-                return self._json(200, api.to_json(kind, ident, ov, po, lo))
+                return self._json(200, api.to_json(kind, ident, ov, po, lo, cc))
             if path == "/api/svg":
-                svg = api.to_svg(kind, ident, ov, po, lo).encode("utf-8")
+                svg = api.to_svg(kind, ident, ov, po, lo, cc).encode("utf-8")
                 return self._send(200, svg, "image/svg+xml; charset=utf-8",
                                   {"Content-Disposition": f'attachment; filename="{ident}.svg"'})
             self._json(404, {"error": f"없는 주소: {path}"})
