@@ -16,6 +16,8 @@ import sys
 import threading
 
 from .block import Block, Resolved
+from .dxf import write_dxf
+from .pieces import build_pieces
 from .style import Style
 from .svg import render_pieces_svg, render_style_svg, render_svg
 from .units import parse_inch
@@ -332,7 +334,7 @@ def project_list() -> list[dict]:
 def project_save(name: str, data: dict) -> dict:
     import datetime  # noqa: PLC0415
     name = _safe_name(name)
-    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "view", "note")}
+    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "view", "note")}
     keep["name"] = name
     keep["saved"] = datetime.datetime.now().isoformat(timespec="seconds")
     PROJECTS.mkdir(exist_ok=True)
@@ -345,3 +347,41 @@ def project_load(name: str) -> dict:
     if not f.exists():
         raise FileNotFoundError(f"프로젝트가 없다: {name}")
     return json.loads(f.read_text(encoding="utf-8"))
+
+
+# ------------------------------------------------------------------ 조각 · 시접 · DXF
+def _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings):
+    results, _, name = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {})
+    pieces = []
+    for key, res in results.items():
+        pieces += build_pieces(res, key, piece_settings or {})
+    # 재단선 상자로 왼쪽부터 나란히 (펼치면 크기가 달라지므로 그림 배치와 따로 잡는다)
+    x = 0.0
+    positions = []
+    for pc in pieces:
+        x0, y0, x1, y1 = pc.bbox()
+        positions.append((x - x0, -y0))
+        x += (x1 - x0) + 1.5
+    return name, pieces, positions
+
+
+def pieces_json(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None) -> dict:
+    name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings)
+    from .dxf import _allow_at  # noqa: PLC0415
+    out = []
+    for pc, (dx, dy) in zip(pieces, positions):
+        P = lambda pts: [[p.x, p.y] for p in pts]  # noqa: E731
+        out.append({"key": f"{pc.block}.{pc.name}", "block": pc.block, "name": pc.name,
+                    "loop": P(pc.loop), "cut": P(pc.cut),
+                    "edges": [{"name": e.name, "role": e.role, "allowance": e.allowance, "synthetic": e.synthetic} for e in pc.edges],
+                    "notches": [[q.x, q.y, n.x, n.y, _allow_at(pc, q)] for q, n in pc.notches],
+                    "grain": P(pc.grain) if pc.grain else None,
+                    "internal": [{"name": n, "role": r, "pts": P(pts)} for n, r, pts in pc.internal],
+                    "fold": pc.fold, "unfolded": pc.unfolded, "quantity": pc.quantity, "fabric": pc.fabric,
+                    "warnings": pc.warnings, "dx": dx, "dy": dy, "bbox": list(pc.bbox())})
+    return {"name": name, "pieces": out}
+
+
+def to_dxf(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None) -> str:
+    name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings)
+    return write_dxf(pieces, positions, title=name)

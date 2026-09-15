@@ -793,3 +793,54 @@ class Wizard(unittest.TestCase):
         svg = api.page_svg_layers(48)
         self.assertIn('class="layer-pattern"', svg)
         self.assertIn("<path", svg)
+
+
+class Pieces(unittest.TestCase):
+    """조각 — 외곽선 잇기 · 시접 · 노치 · 골 펼치기 · DXF."""
+
+    def _blouse(self):
+        from patterncad.style import Style
+        return Style.load(ROOT / "styles" / "shirt_collar_blouse.yaml").evaluate()
+
+    def test_outline_closes_and_cut_is_outside(self):
+        from patterncad.pieces import build_pieces, signed_area
+        r = self._blouse()
+        for key, res in r.items():
+            for pc in build_pieces(res, key):
+                self.assertEqual(pc.warnings, [], f"{key} {pc.name}: {pc.warnings}")
+                self.assertGreaterEqual(len(pc.loop), 4)
+                self.assertGreater(abs(signed_area(pc.cut)), abs(signed_area(pc.loop)))
+
+    def test_bust_dart_gap_is_bridged_with_notches(self):
+        from patterncad.pieces import build_pieces
+        front = next(p for p in build_pieces(self._blouse()["body"], "body") if p.name == "앞판")
+        self.assertTrue(any(e.synthetic for e in front.edges))
+        self.assertEqual(len(front.notches), 2)
+        hem = next(e for e in front.edges if e.name == "앞밑단")
+        self.assertEqual(hem.allowance, 1.0)
+        self.assertEqual(next(e for e in front.edges if e.name == "앞목선").allowance, 0.375)
+
+    def test_allowance_override_and_unfold(self):
+        from patterncad.pieces import build_pieces, signed_area
+        r = self._blouse()
+        band = build_pieces(r["band"], "band")[0]
+        self.assertEqual(band.fold, "뒤중심")
+        self.assertEqual(band.quantity, 1)
+        band2 = build_pieces(r["band"], "band", {"band.": {"unfold": True, "allowance": {"윗선": 0.25}, "quantity": 2}})[0]
+        self.assertTrue(band2.unfolded)
+        self.assertAlmostEqual(abs(signed_area(band2.loop)), 2 * abs(signed_area(band.loop)), places=2)
+        self.assertEqual(band2.quantity, 2)
+        self.assertEqual({e.allowance for e in band2.edges if e.name.startswith("윗선")}, {0.25})
+
+    def test_dxf_has_a_block_per_piece_and_aama_layers(self):
+        from patterncad import api
+        d = api.to_dxf("style", "basic_pants")
+        self.assertGreaterEqual(d.count("\nBLOCK\n"), 3)  # 앞판 · 뒤판 · 오비 — 조각 수만큼
+        for layer in ("1", "14", "8", "7", "15"):
+            self.assertIn(f"\n8\n{layer}\n", d)
+        self.assertTrue(d.rstrip().endswith("EOF"))
+        j = api.pieces_json("style", "basic_pants")
+        self.assertEqual(len(j["pieces"]), d.count("\nBLOCK\n"))
+        xs = sorted((p["bbox"][0] + p["dx"], p["bbox"][2] + p["dx"]) for p in j["pieces"])
+        for (a0, a1), (b0, b1) in zip(xs, xs[1:]):
+            self.assertLessEqual(a1, b0 + 1e-9)

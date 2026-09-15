@@ -9,6 +9,8 @@ GET  /api/catalog     → 스타일·원형 목록
 POST /api/eval        → {"kind": "style"|"block", "id", "overrides": {"body.가슴둘레": "34"},
                           "point_overrides": {"body.SP_F": [x, y]}, "line_overrides": {"body.앞암홀": {"0": {"c1": [비율, 각]}}}}
 POST /api/svg         → 같은 입력, 실물 크기 SVG 본문
+POST /api/pieces      → 같은 입력 + "piece_settings" → 조각(완성선·재단선·노치·식서)
+POST /api/dxf         → 같은 입력, AAMA 층 DXF (인치)
 GET  /api/projects · GET/POST /api/project?name=   → 프로젝트 파일 (projects/*.pcad)
 POST /api/overlay     → {"block": 원형id, "piece": 조각} → 원본 도면 맞춤 변환 (verify/fits.json 에 캐시)
 GET  /api/page?page=48&layers=pattern,developed    → 추출 도면의 층 그림 (SVG 조각)
@@ -97,6 +99,13 @@ class Handler(BaseHTTPRequestHandler):
                 return self._json(200, {"kind": "style", "id": req["style"], "overrides": ov})
             kind, ident = req.get("kind", "style"), req["id"]
             ov, po, lo = req.get("overrides") or {}, req.get("point_overrides") or {}, req.get("line_overrides") or {}
+            ps = req.get("piece_settings") or {}
+            if path == "/api/pieces":
+                return self._json(200, api.pieces_json(kind, ident, ov, po, lo, ps))
+            if path == "/api/dxf":
+                body = api.to_dxf(kind, ident, ov, po, lo, ps).encode("utf-8")
+                return self._send(200, body, "application/dxf; charset=utf-8",
+                                  {"Content-Disposition": f'attachment; filename="{ident}.dxf"'})
             if path == "/api/eval":
                 return self._json(200, api.to_json(kind, ident, ov, po, lo))
             if path == "/api/svg":

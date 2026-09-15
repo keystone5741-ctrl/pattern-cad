@@ -9,7 +9,8 @@ const ROLE_KO = {outline: '완성선', dart: '다트·턱', construction: '안�
 
 const S = {
   kind: 'style', id: null, data: null, projName: '',
-  overrides: {}, pointOverrides: {}, lineOverrides: {},
+  overrides: {}, pointOverrides: {}, lineOverrides: {}, pieceSettings: {},
+  mode: 'draft', piecesData: null,          // 'draft' | 'pieces'
   unit: 'in', sel: null, measure: null,        // sel: {type:'point'|'line', block, name}
   layers: Object.fromEntries(ROLES.map(r => [r, r !== 'dimension'])), labels: false, helpers: false,
   overlays: {}, pageCache: {},                 // overlays: 'block|piece' → {on, fit, loading}
@@ -75,7 +76,7 @@ async function getJson(url) {
   if (!r.ok) throw new Error(j.error || r.statusText);
   return j;
 }
-const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides});
+const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides, piece_settings: S.pieceSettings});
 function showErr(e) { $('err').hidden = false; $('err').textContent = e.message || String(e); }
 
 let evalTimer = null;
@@ -88,6 +89,8 @@ async function evaluate() {
     if (my !== S.seq) return;                  // 더 새 요청이 나갔다
     S.data = d;
     $('err').hidden = true;
+    if (S.mode === 'pieces') S.piecesData = await post('/api/pieces', payload());
+    if (my !== S.seq) return;
     draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList();
     $('title').textContent = d.name;
     $('counts').textContent = `조각 ${d.pieces.length} · 점 ${d.blocks.reduce((n, b) => n + b.points.length, 0)} · 선 ${d.blocks.reduce((n, b) => n + b.lines.length, 0)}`;
@@ -116,7 +119,8 @@ function applyView() {
 function fitAll(pieceFilter) {
   if (!S.data) return;
   let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-  for (const p of S.data.pieces) {
+  const boxes = S.mode === 'pieces' && S.piecesData ? S.piecesData.pieces : S.data.pieces;
+  for (const p of boxes) {
     if (pieceFilter && !pieceFilter(p)) continue;
     const [ax, ay] = toScreen(p.bbox[0], p.bbox[1], p), [bx, by] = toScreen(p.bbox[2], p.bbox[3], p);
     x0 = Math.min(x0, ax); y0 = Math.min(y0, ay); x1 = Math.max(x1, bx); y1 = Math.max(y1, by);
@@ -155,6 +159,7 @@ const isSel = (type, block, name) => S.sel && S.sel.type === type && S.sel.block
 
 function draw() {
   world.innerHTML = '';
+  if (S.mode === 'pieces') return drawPieces();
   const d = S.data;
   drawOverlays();
   for (const b of d.blocks) {                   // 원형 이름은 한 번, 조각 이름은 조각마다
@@ -219,6 +224,65 @@ function draw() {
 }
 function hint(s) { $('hint').textContent = s; }
 
+// ------------------------------------------------------------ 조각·시접 보기
+const pieceOff = pc => ({dx: pc.dx, dy: pc.dy});
+function drawPieces() {
+  const pd = S.piecesData;
+  if (!pd) return;
+  const poly = (pts, off) => pts.map(([x, y]) => toScreen(x, y, off).map(v => v.toFixed(2)).join(' ')).join('L');
+  for (const pc of pd.pieces) {
+    const off = pieceOff(pc), g = el('g', {}, world);
+    const on = S.sel && S.sel.type === 'piece' && S.sel.key === pc.key;
+    const cut = el('path', {d: 'M' + poly(pc.cut, off) + 'Z', class: 'cut' + (on ? ' on' : '') + (pc.warnings.length ? ' warn' : '')}, g);
+    cut.addEventListener('click', ev => { ev.stopPropagation(); select({type: 'piece', key: pc.key}); });
+    cut.addEventListener('mouseenter', () => hint(`${pc.name} ×${pc.quantity} ${pc.fabric} — 시접: ` + pc.edges.filter(e => !e.synthetic).map(e => `${e.name} ${fmt(e.allowance)}`).join(' · ')));
+    cut.addEventListener('mouseleave', () => hint(''));
+    el('path', {d: 'M' + poly(pc.loop, off) + 'Z', class: 'sew'}, g);
+    for (const l of pc.internal) {
+      if (!S.layers[l.role === 'fold' ? 'fold' : l.role]) continue;
+      el('path', {d: 'M' + poly(l.pts, off), class: `r-${l.role}`}, g);
+    }
+    for (const [x, y, nx, ny, a] of pc.notches) {       // 재단선에서 안쪽으로 1/4" (a = 그 자리 시접)
+      const [ax, ay] = toScreen(x + nx * a, y + ny * a, off), [bx, by] = toScreen(x + nx * (a - 0.25), y + ny * (a - 0.25), off);
+      el('line', {x1: ax, y1: ay, x2: bx, y2: by, class: 'notch'}, g);
+    }
+    if (pc.grain) {
+      const [a, b] = pc.grain, A = toScreen(a[0], a[1], off), B = toScreen(b[0], b[1], off);
+      el('line', {x1: A[0], y1: A[1], x2: B[0], y2: B[1], class: 'grainl', 'marker-start': 'url(#arw)', 'marker-end': 'url(#arw)'}, g);
+    }
+    const [bx, by] = toScreen(pc.bbox[0], pc.bbox[1], off), [, by1] = toScreen(pc.bbox[0], pc.bbox[3], off);
+    text(bx, by, `${pc.block} · ${pc.name}`, 'pcname', g, 0, -7);
+    text(bx, by1, `×${pc.quantity} ${pc.fabric}${pc.unfolded ? ' · 골 펼침' : pc.fold ? ' · 골' : ''}`, 'lbl', g, 0, 14);
+  }
+  applyView();
+}
+function renderPiecePanel() {
+  const box = $('sel');
+  const pd = S.piecesData; if (!pd) return;
+  const pc = pd.pieces.find(p => p.key === S.sel.key);
+  if (!pc) { S.sel = null; return renderSel(); }
+  const st = S.pieceSettings[pc.key] || {};
+  const rows = pc.edges.filter(e => !e.synthetic).map(e => `<tr><td>${esc(e.name)}${e.role === 'fold' ? ' <span class="tag">골</span>' : ''}</td><td class="num">${e.role === 'fold' ? '—' : `<input data-edge="${esc(e.name)}" value="${fmt(e.allowance)}" class="${(st.allowance || {})[e.name] != null ? 'mod' : ''}">`}</td></tr>`).join('');
+  box.className = '';
+  box.innerHTML = `<div class="kv">
+    <b>조각</b><div><strong>${esc(pc.name)}</strong> <span class="muted">(${esc(pc.block)})</span></div>
+    <b>매수</b><div><input id="pcQty" type="number" min="1" value="${pc.quantity}" style="width:56px"> <select id="pcFab"><option ${pc.fabric === '겉감' ? 'selected' : ''}>겉감</option><option ${pc.fabric === '안감' ? 'selected' : ''}>안감</option><option ${pc.fabric === '심지' ? 'selected' : ''}>심지</option></select></div>
+    ${pc.fold ? `<b>골선</b><div>${esc(pc.fold)} <label class="chk" style="display:inline-flex;margin-left:8px"><input id="pcUnfold" type="checkbox" ${pc.unfolded ? 'checked' : ''}> 펼쳐서 한 장으로</label></div>` : ''}
+    <b>시접</b><div>기본 <input id="pcDef" value="${st.default_allowance != null ? fmt(st.default_allowance) : ''}" placeholder="변마다" style="width:56px"> ${unitLabel()}</div></div>
+    <table style="margin-top:6px"><tr><th>변</th><th>시접 (${unitLabel()})</th></tr>${rows}</table>
+    ${pc.warnings.length ? `<div class="warnbox">${pc.warnings.map(esc).join('<br>')}</div>` : ''}
+    <div class="note" style="margin-top:6px">노치: 다트 다리 · 노치 표시 · 끊긴 자리 양 끝. 식서: 식서선이 없으면 세로. 다트를 접어 자르는 다트 캡은 아직 없다</div>`;
+  const setSt = (patch) => { S.pieceSettings[pc.key] = {...(S.pieceSettings[pc.key] || {}), ...patch}; scheduleEval(0); };
+  $('pcQty').addEventListener('change', e => setSt({quantity: +e.target.value || 1}));
+  $('pcFab').addEventListener('change', e => setSt({fabric: e.target.value}));
+  $('pcUnfold')?.addEventListener('change', e => setSt({unfold: e.target.checked}));
+  $('pcDef').addEventListener('change', e => { const v = parseUnit(e.target.value); if (v != null) setSt({default_allowance: v}); else { const st2 = {...(S.pieceSettings[pc.key] || {})}; delete st2.default_allowance; S.pieceSettings[pc.key] = st2; scheduleEval(0); } });
+  box.querySelectorAll('input[data-edge]').forEach(inp => inp.addEventListener('change', () => {
+    const v = parseUnit(inp.value); if (v == null) { inp.style.borderColor = '#c33'; return; }
+    setSt({allowance: {...((S.pieceSettings[pc.key] || {}).allowance || {}), [inp.dataset.edge]: v}});
+  }));
+}
+
 // ------------------------------------------------------------ 선택 · 자
 function select(sel) { S.sel = sel; draw(); renderSel(); }
 cv.addEventListener('click', ev => { if (ev.target === $('bg')) { S.measure = null; select(null); } });
@@ -241,6 +305,7 @@ function drawMeasure() {
 function renderSel() {
   const box = $('sel');
   if (!S.sel || !S.data) { box.className = 'small muted'; box.textContent = '점이나 선을 누르세요. 점은 끌어 옮기고, 점을 고른 뒤 다른 점을 Shift+클릭하면 거리를 잰다.'; return; }
+  if (S.sel.type === 'piece') return renderPiecePanel();
   box.className = '';
   const b = S.data.blocks.find(x => x.key === S.sel.block);
   if (S.sel.type === 'point') {
@@ -379,6 +444,15 @@ window.addEventListener('keydown', ev => {
 // ------------------------------------------------------------ 왼쪽: 조각 나무 · 층 · 원형 이력 · 원본 도면
 function renderTree() {
   const t = $('tree'); t.innerHTML = '';
+  if (S.mode === 'pieces' && S.piecesData) {
+    for (const pc of S.piecesData.pieces) {
+      const e = document.createElement('div'); e.className = (S.sel && S.sel.key === pc.key ? 'on' : '');
+      e.innerHTML = `${esc(pc.name)} <span class="muted">×${pc.quantity} ${esc(pc.fabric)}${pc.fold ? (pc.unfolded ? ' 펼침' : ' 골') : ''}</span>${pc.warnings.length ? ' <span class="tag" style="color:#c33;border-color:#c33">!</span>' : ''}`;
+      e.addEventListener('click', () => { select({type: 'piece', key: pc.key}); fitAll(p => p.key === pc.key); });
+      t.appendChild(e);
+    }
+    return;
+  }
   for (const b of S.data.blocks) {
     const h = document.createElement('div'); h.className = 'blk'; h.textContent = `${b.key} · ${b.name}`;
     h.addEventListener('click', () => fitAll(p => p.block === b.key)); t.appendChild(h);
@@ -516,7 +590,20 @@ $('units').querySelectorAll('button').forEach(btn => btn.addEventListener('click
   $('units').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
   renderMeas(); renderSel(); renderOverlayList(); drawMeasure();
 }));
-$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; scheduleEval(0); });
+$('modes').querySelectorAll('button').forEach(btn => btn.addEventListener('click', async () => {
+  S.mode = btn.dataset.m; S.sel = null;
+  $('modes').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
+  await evaluate(); fitAll();
+}));
+$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; scheduleEval(0); });
+$('saveDxf').addEventListener('click', async () => {
+  try {
+    const r = await post('/api/dxf', payload());
+    const blob = await r.blob(), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = `${S.projName || S.id}.dxf`; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  } catch (e) { showErr(e); }
+});
 $('saveSvg').addEventListener('click', async () => {
   try {
     const r = await post('/api/svg', payload());
@@ -525,8 +612,8 @@ $('saveSvg').addEventListener('click', async () => {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   } catch (e) { showErr(e); }
 });
-function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, projName = '', view = null} = {}) {
-  S.kind = kind; S.id = id; S.overrides = overrides; S.pointOverrides = pointOverrides; S.lineOverrides = lineOverrides;
+function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, projName = '', view = null} = {}) {
+  S.kind = kind; S.id = id; S.overrides = overrides; S.pointOverrides = pointOverrides; S.lineOverrides = lineOverrides; S.pieceSettings = pieceSettings;
   S.sel = null; S.measure = null; S.overlays = {}; measTab = null; S.projName = projName;
   $('picker').value = `${kind}:${id}`;
   $('proj').textContent = projName ? `프로젝트 ${projName}` : '';
@@ -547,7 +634,7 @@ $('projects').addEventListener('change', async () => {
   const name = $('projects').value; if (!name) return;
   try {
     const p = await getJson(`/api/project?name=${encodeURIComponent(name)}`);
-    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, projName: p.name, view: p.view});
+    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, projName: p.name, view: p.view});
   } catch (e) { showErr(e); }
 });
 $('saveProj').addEventListener('click', async () => {
@@ -640,6 +727,7 @@ async function init() {
     const b = S.data.blocks.find(x => x.key === blk);
     if (b) select({type: b.lines.some(l => l.name === name) ? 'line' : 'point', block: blk, name});
   }
+  if (hq.mode === 'pieces') $('modes').querySelector('[data-m=pieces]').click();
   if (hq.wiz) $('newPat').click();
   for (const key of (hq.ovl || '').split(',').filter(Boolean)) {
     const [bid, pc] = key.split('|'), b = S.data.blocks.find(x => x.id === bid);

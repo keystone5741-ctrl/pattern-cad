@@ -135,12 +135,19 @@ python -m patterncad.server          # http://127.0.0.1:8765 를 브라우저로
 - **새 패턴 마법사**: 카테고리(상의·스커트·팬츠·아우터) → 아이템(스타일 41) → 신체 치수(그 아이템의 포트폴리오 사이즈표에서 시작,
   원형 치수의 같은 이름(ko)에 대입) → 핏(타이트·레귤러·루즈·오버 — `data/fit_levels.yaml` 의 여유 가감, 초안).
   다른 사이즈 체계(55/66, S/M/L)는 그레이딩 단계에서
-- **프로젝트 파일** `projects/*.pcad`(JSON): 스타일·치수 수정값·점 수정값·핸들 수정값·화면 위치
+- **프로젝트 파일** `projects/*.pcad`(JSON): 스타일·치수 수정값·점 수정값·핸들 수정값·조각 설정·화면 위치
+- **조각·시접 보기**(위쪽 토글): 조각마다 외곽선을 이어 닫고 변마다 시접을 붙인 **재단선**(파랑), 노치(다트 다리·노치 표시·끊긴 자리),
+  식서(식서선이 없으면 세로)를 그린다. 조각을 누르면 매수·원단·골 펼치기·변별 시접을 고칠 수 있다.
+  시접 기본값: 밑단·부리 1", 목선·암홀·소매산 3/8", 골선 0, 그 밖에 1/2" (`patterncad/pieces.py`).
+  옆솔기 가슴다트처럼 외곽선이 벌어진 자리는 곧게 이어 붙이고 양 끝에 노치를 둔다 — 다트를 접어 자르는 다트 캡은 아직 없다
+- **DXF 내보내기**: AAMA/ASTM 층 관습(1 재단선 · 14 완성선 · 8 안쪽 선 · 4 노치 · 7 식서 · 15 글자), 조각마다 BLOCK, 인치, R12 ASCII (`patterncad/dxf.py`)
 
 ```
 patterncad/api.py       계산 결과 → 점·선·치수 JSON, 조각 자리 잡기, 점 규칙을 글로, 도면 겹침 변환·프로젝트 파일
 patterncad/wizard.py    마법사 재료 — 포트폴리오 아이템·사이즈표 ↔ 스타일, 핏 가감
-patterncad/server.py    /api/catalog · eval · svg · overlay · page · projects · wizard, ui/ 정적 파일
+patterncad/pieces.py    조각 — 외곽선 잇기 · 시접(변별) · 노치 · 식서 · 골 펼치기
+patterncad/dxf.py       AAMA 층 DXF 쓰기
+patterncad/server.py    /api/catalog · eval · svg · pieces · dxf · overlay · page · projects · wizard, ui/ 정적 파일
 ui/index.html · app.css · app.js   화면 (바닐라 JS, SVG)
 ```
 

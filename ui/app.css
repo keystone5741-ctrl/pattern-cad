@@ -3,13 +3,15 @@
 html,body{height:100%;margin:0}
 body{background:var(--paper);color:var(--ink);font:13px/1.35 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
 #app{display:grid;height:100%;grid-template-rows:44px 1fr 24px;grid-template-columns:230px 1fr 330px;grid-template-areas:"top top top" "left center right" "status status status"}
-#top{grid-area:top;display:flex;align-items:center;gap:12px;padding:0 14px;border-bottom:1.5px solid var(--ink);background:var(--panel)}
-.brand{font-weight:700;font-size:18px;letter-spacing:.01em}
+#top{grid-area:top;display:flex;align-items:center;gap:8px;padding:0 12px;border-bottom:1.5px solid var(--ink);background:var(--panel);white-space:nowrap;overflow:hidden}
+#top .btn,#top .seg button{padding:3px 9px}
+@media (max-width:1560px){#title{display:none}}
+.brand{font-weight:700;font-size:17px;letter-spacing:.01em;margin-right:4px}
 .spacer{flex:1}
 .muted{color:var(--muted)}
 .small{font-size:12px}
 select,input,button{font:inherit;color:inherit}
-select{border:1.2px solid var(--ink);border-radius:3px;background:#fff;padding:3px 6px;max-width:320px}
+select{border:1.2px solid var(--ink);border-radius:3px;background:#fff;padding:3px 6px;max-width:260px}
 .btn{border:1.5px solid var(--ink);border-radius:3px;background:#fff;padding:4px 11px;cursor:pointer}
 .btn.pri{background:var(--ink);color:var(--paper)}
 .btn:hover{background:var(--accent-bg)} .btn.pri:hover{background:#000}
@@ -104,3 +106,12 @@ dialog::backdrop{background:rgba(31,29,26,.35)}
 #wizSize table td input{width:80px}
 #wizFit label{display:flex;align-items:center;gap:5px;margin-right:14px;cursor:pointer}
 .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* 조각·시접 보기 */
+#world .cut{stroke:var(--accent);stroke-width:1.6px;fill:rgba(61,120,179,.05);vector-effect:non-scaling-stroke;cursor:pointer}
+#world .cut.on{stroke-width:2.6px;fill:rgba(61,120,179,.12)}
+#world .sew{stroke:var(--ink);stroke-width:1.1px;fill:none;vector-effect:non-scaling-stroke;pointer-events:none}
+#world .notch{stroke:var(--ink);stroke-width:1.8px;vector-effect:non-scaling-stroke}
+#world .grainl{stroke:var(--ink);stroke-width:1.2px;vector-effect:non-scaling-stroke}
+#world .warn{stroke:#c33}
+.warnbox{color:#7a1c1c;background:#fff1f0;border:1px solid #e3b5b1;padding:4px 6px;border-radius:3px;font-size:11.5px;margin-top:6px}

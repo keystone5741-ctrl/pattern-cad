@@ -13,15 +13,17 @@
     <select id="picker" title="스타일 / 원형"></select>
     <span id="title" class="muted"></span>
     <button id="newPat" class="btn">새 패턴</button>
-    <select id="projects" title="저장한 프로젝트"><option value="">열기…</option></select>
+    <select id="projects" title="저장한 프로젝트" style="max-width:150px"><option value="">열기…</option></select>
     <button id="saveProj" class="btn">저장</button>
     <span class="spacer"></span>
     <span class="seg" id="units">
       <button data-u="in" class="on">inch</button><button data-u="cm">cm</button><button data-u="mm">mm</button>
     </span>
-    <button id="resetAll" class="btn" title="치수·점 수정값 전부 초기화">수정 초기화</button>
+    <span class="seg" id="modes"><button data-m="draft" class="on">제도</button><button data-m="pieces">조각·시접</button></span>
+    <button id="resetAll" class="btn" title="치수·점·핸들·시접 수정값 전부 초기화">초기화</button>
     <button id="fit" class="btn">맞춤</button>
-    <button id="saveSvg" class="btn pri">SVG 저장</button>
+    <button id="saveSvg" class="btn">SVG</button>
+    <button id="saveDxf" class="btn pri" title="AAMA 층 DXF (인치) 내보내기">DXF</button>
   </header>
 
   <aside id="left">
@@ -47,6 +49,7 @@
   <main id="center">
     <svg id="cv" xmlns="http://www.w3.org/2000/svg">
       <defs>
+        <marker id="arw" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1f1d1a"/></marker>
         <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
           <path d="M24 0H0V24" fill="none" stroke="#ece9e2" stroke-width="1"/>
         </pattern>
