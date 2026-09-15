@@ -73,17 +73,21 @@ measurements:
   # --- 여밈 · 라펠
   낸단폭:       {value: 3/4, note: 앞중심에서 낸단 끝까지. 단추 끝에서 1/4~3/8 더 나간 값이다}
   단추끝나감:   {value: 3/8}
-  첫단추높이:   {formula: "등길이 + 1", note: 꺾임선이 낸단에 닿는 높이 (허리선 아래 1)}
+  첫단추높이:   {formula: "등길이 - 5/16", note: 첫 단추 높이. p.74 는 허리선 위 5/16 (두 단추 사이 3.1/2)}
+  꺾임점올림:   {value: 1/8, note: 꺾임선이 낸단에 닿는 점은 첫 단추보다 이만큼 위 (p.74)}
   밴드폭:       {value: 1.1/4, note: 칼라밴드(스탠드) 폭 — 꺾임선을 옆목점에서 이만큼 연장}
-  # 라펠 (p.74 도면 실측). 낸단선이 라펠끝높이까지 그대로 올라가다가 밖으로 벌어져 라펠 끝이 되고,
-  # 거기서 노치 골로 꺾여 들어왔다가 칼라 끝으로 다시 올라간다 — 노치드 라펠.
-  라펠끝높이:   {value: 2.1/4, note: 낸단선이 라펠로 꺾여 나가기 시작하는 높이 (기준선에서)}
-  라펠벌림:     {value: 1.1/4, note: 라펠 끝이 낸단선보다 밖으로 나간 양}
+  # 라펠 (p.74 도면 실측). 낸단선은 꺾임점(첫 단추 높이)까지만 올라가고, 거기서 라펠 바깥선이
+  # 살짝 볼록하게 라펠 끝까지 길게 올라간다. 라펠 끝에서 노치 골로 꺾여 들어왔다가 칼라 끝으로 다시
+  # 올라간다 — 노치드 라펠. (라펠 끝 바로 아래에서 낸단선으로 되돌아오게 그리면 라펠 바깥선이
+  # 노치를 가로지른다)
+  라펠끝높이:   {value: 2.1/4, note: 라펠 끝 높이의 기준 (기준선에서). 앞중심선 위끝도 이 높이}
+  라펠벌림:     {value: 3/4, note: 라펠 끝이 낸단선보다 밖으로 나간 양. p.74 실측 — 앞중심에서 라펠 끝까지 1.1/2}
   라펠올림:     {value: 1.1/4, note: 라펠 끝이 라펠끝높이보다 위로 올라간 양}
-  노치가로:     {value: 1/2, note: 라펠 끝에서 노치 골까지 (몸판 쪽으로)}
-  노치세로:     {value: 5/8, note: 라펠 끝에서 노치 골까지 (아래로)}
-  칼라끝가로:   {value: 3/16, note: 노치 골에서 칼라 끝까지}
-  칼라끝세로:   {value: 7/8}
+  노치가로:     {value: 3/4, note: 라펠 끝에서 노치 골까지 (몸판 쪽으로). p.74 실측 0.71}
+  노치세로:     {value: 3/4, note: 라펠 끝에서 노치 골까지 (아래로). p.74 실측 0.73}
+  칼라끝가로:   {value: 1/2, note: 노치 골에서 칼라 끝까지. p.74 실측 0.54}
+  칼라끝세로:   {value: 7/8, note: p.74 실측 0.84}
+  라펠볼록:     {value: 1/8, note: 라펠 바깥선이 라펠 끝~꺾임점 직선보다 밖으로 나가는 양 (p.74 실측 0.12)}
   고지올림:     {value: 1/4, note: 1/8~1/4. 고지라인을 올려 그려야 쳐져 보이지 않는다}
   라펠폭:       {formula: "낸단폭 + 라펠벌림", note: 앞중심에서 라펠 끝까지 (확인용)}
   # --- 주머니 (후다)
@@ -120,11 +124,14 @@ points:
   BTN1:  {ko: 첫 단추, at: [0, 첫단추높이]}
   # --- 라펠 꺾임선
   ROLL_T: {ko: 꺾임선 위(어깨 연장), along: [SP_F, SNP_F], dist: "dist(SP_F, SNP_F) + 밴드폭"}
-  ROLL_B: {ko: 꺾임선 아래(꺾임점), at: ["-낸단폭", 첫단추높이]}
-  LP_BREAK:  {ko: 낸단선이 라펠로 꺾이는 점, at: ["-낸단폭", 라펠끝높이]}
+  BTN1_E: {ko: 첫 단추 높이의 낸단 끝, at: ["-낸단폭", 첫단추높이]}
+  ROLL_B: {ko: 꺾임선 아래(꺾임점), at: ["-낸단폭", "첫단추높이 - 꺾임점올림"]}
+  LP_BREAK:  {ko: 낸단선 위끝 기준점, at: ["-낸단폭", 라펠끝높이], note: 라펠이 없는 파생(스탠드칼라·숄칼라)이 낸단 위끝으로 쓴다}
   LAPEL_TIP: {ko: 라펠 끝, at: ["-낸단폭 - 라펠벌림", "라펠끝높이 - 라펠올림"]}
   NOTCH:     {ko: 노치 골, from: LAPEL_TIP, dx: 노치가로, dy: 노치세로}
   GORGE:     {ko: 칼라 끝, from: NOTCH, dx: 칼라끝가로, dy: "-칼라끝세로"}
+  LP_MID0:   {along: [LAPEL_TIP, ROLL_B], ratio: 0.5}
+  LP_MID:    {ko: 라펠 바깥선 중간(볼록점), perp: {from: LP_MID0, line: [LAPEL_TIP, ROLL_B], dist: 라펠볼록, side: [-1, 0]}}
   # --- 사이바 (프린세스) 절개
   FSB_T: {ko: 앞사이바 시작(암홀), at: ["BP.x + 3/8", "UP2.y - 사이바암홀"]}
   FSB_H: {ko: 앞사이바 밑단, at: ["FWD_C.x + 사이바겹침", "HEM_CF.y"]}
@@ -148,12 +155,14 @@ lines:
     - {name: 앞밑단, piece: 앞판, role: outline, curve: [HEM_CF, HEM_SS_F],
        tangents: {HEM_CF: [1, 0], HEM_SS_F: [1, 0]}, handles: [[0.4, 0.4]]}
   add:
-    - {name: 낸단, piece: 앞판, role: outline, pts: [LP_BREAK, EXT_B], note: 꺾임점 위로도 그대로 올라간다}
+    - {name: 낸단, piece: 앞판, role: outline, pts: [ROLL_B, EXT_B], note: 꺾임점(첫 단추 높이)까지}
     - {name: 낸단밑단, piece: 앞판, role: outline, pts: [EXT_B, HEM_CF]}
     - {name: 라펠꺾임선, piece: 앞판, role: fold, pts: [ROLL_T, ROLL_B]}
     - {name: 고지라인, piece: 앞판, role: outline, pts: [SNP_F, GORGE], note: 칼라가 달리는 선. 1/8~1/4 올려 그린다}
     - {name: 라펠노치, piece: 앞판, role: outline, pts: [GORGE, NOTCH, LAPEL_TIP], note: 칼라 끝 → 노치 골 → 라펠 끝}
-    - {name: 라펠외곽, piece: 앞판, role: outline, pts: [LAPEL_TIP, LP_BREAK], note: 라펠 끝에서 낸단선으로}
+    - {name: 라펠외곽, piece: 앞판, role: outline, curve: [LAPEL_TIP, LP_MID, ROLL_B],
+       tangents: {LAPEL_TIP: {along: [LAPEL_TIP, LP_MID]}, LP_MID: {along: [LAPEL_TIP, ROLL_B]}, ROLL_B: [0, 1]},
+       handles: [[0.4, 0.4], [0.4, 0.4]], note: 라펠 끝에서 꺾임점까지 살짝 볼록하게 길게 내려온다}
     # 허리 다트는 따로 그리지 않는다 — 사이바 절개선이 그 자리를 지나며 다트 분량을 가져간다
     - {name: 앞사이바, piece: 앞판, role: mark, curve: [FSB_T, BP, FWD_C, FSB_H],
        tangents: {FSB_T: [0, 1], BP: [0, 1], FWD_C: [0, 1]}, handles: [[0.3, 0.3], [0.3, 0.3], [0.35, 0.35]]}
@@ -161,7 +170,7 @@ lines:
        tangents: {BWD_C: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
     - {name: 주머니입구, piece: 앞판, role: mark, pts: [PK_IN, PK_OUT]}
     - {name: 후다, piece: 앞판, role: mark, pts: [PK_IN, PK_IN2, PK_OUT2, PK_OUT]}
-    - {name: 첫단추, piece: 앞판, role: notch, pts: [BTN1, ROLL_B]}
+    - {name: 첫단추, piece: 앞판, role: notch, pts: [BTN1, BTN1_E]}
     - {name: 미까시, piece: 앞판, role: mark, curve: [MK_T, MK_W, MK_B],
        tangents: {MK_W: [0, 1], MK_B: [0, 1]}, handles: [[0.5, 0.5], [0.4, 0.4]],
        note: 목옆점 1.1/4~1.1/2 · 앞중심 3 — 허리선부터 밑단까지는 일자}

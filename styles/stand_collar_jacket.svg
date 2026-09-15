@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1574.342mm" height="736.6mm" viewBox="0 0 1574.342 736.6">
+<svg xmlns="http://www.w3.org/2000/svg" width="1721.604mm" height="736.6mm" viewBox="0 0 1721.604 736.6">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -7,7 +7,7 @@
 <path d="M269.081 241.3L269.081 278.903"><title>앞옆선위</title></path>
 <path d="M269.081 285.253C268.295 323.136 266.7 362.159 266.7 400.05C266.7 454.99 288.131 510.21 288.131 565.15C288.131 605.733 311.944 645.217 311.944 685.8"><title>앞옆선</title></path>
 <path d="M44.45 685.8C151.447 685.8 204.946 685.8 311.944 685.8"><title>앞밑단</title></path>
-<path d="M25.4 82.55L25.4 685.8"><title>낸단</title></path>
+<path d="M25.4 388.938L25.4 685.8"><title>낸단</title></path>
 <path d="M25.4 685.8L44.45 685.8"><title>낸단밑단</title></path>
 <path d="M114.3 25.4C110.592 35.212 112.247 52.402 91.849 72.799C81.094 83.554 54.939 95.25 44.45 95.25"><title>앞목선</title></path>
 <path d="M44.45 95.25L25.4 82.55"><title>앞목선연장</title></path>
@@ -25,7 +25,7 @@
 <path d="M146.971 37.745C124.285 218.897 101.6 217.483 101.6 400.05C101.6 514.35 101.6 571.5 101.6 685.8"><title>미까시</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M44.45 425.45L25.4 425.45"><title>첫단추</title></path>
+<path d="M44.45 392.113L25.4 392.113"><title>첫단추</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body · 앞판 — 스탠 칼라 테일러드 자켓 몸판</text>
 </g>
@@ -64,21 +64,33 @@
 </g>
 <text x="979.786" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve · 작은소매 — 두 장 소매</text>
 </g>
-<g id="collar">
+<g id="sleeve · 작은소매(펼침)">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1350.818 73.025C1378.388 73.025 1406.794 73.025 1434.364 73.025C1480.824 73.025 1517.166 68.274 1548.942 53.975"><title>목둘레선</title></path>
-<path d="M1548.942 53.975C1548.942 46.641 1548.942 39.084 1548.942 31.75C1548.942 26.811 1547.531 25.4 1542.592 25.4"><title>앞끝</title></path>
-<path d="M1542.592 25.4C1476.55 38.609 1418.169 41.275 1350.818 41.275"><title>윗선</title></path>
-</g>
-<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M1350.818 73.025L1540.99 73.025"><title>밑변기준</title></path>
+<path d="M1409.18 25.4C1419.096 110.373 1424.133 128.973 1431.214 214.229C1441.285 335.47 1440.051 362.66 1447.28 484.104"><title>펼침뒤절개</title></path>
+<path d="M1447.28 484.104L1415.53 484.104L1387.347 488.818"><title>펼침밑단</title></path>
+<path d="M1387.347 488.818C1377.471 367.339 1375.276 340.344 1365.4 218.865C1358.838 138.155 1357.38 120.219 1350.818 39.509"><title>펼침앞절개</title></path>
+<path d="M1350.818 39.509C1365.409 45.154 1364.355 50.8 1379.999 50.8C1399.343 50.8 1394.59 38.1 1409.18 25.4"><title>펼침소매산</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M1540.99 73.025L1540.99 26.987"><title>앞중심표시</title></path>
+<path d="M1377.43 25.4L1415.53 484.104"><title>펼침밑선</title></path>
+</g>
+<text x="1350.818" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve · 작은소매(펼침) — 두 장 소매</text>
+</g>
+<g id="collar">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1498.08 73.025C1525.65 73.025 1554.056 73.025 1581.626 73.025C1628.086 73.025 1664.428 68.274 1696.204 53.975"><title>목둘레선</title></path>
+<path d="M1696.204 53.975C1696.204 46.641 1696.204 39.084 1696.204 31.75C1696.204 26.811 1694.793 25.4 1689.854 25.4"><title>앞끝</title></path>
+<path d="M1689.854 25.4C1623.812 38.609 1565.431 41.275 1498.08 41.275"><title>윗선</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M1498.08 73.025L1688.252 73.025"><title>밑변기준</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M1688.252 73.025L1688.252 26.987"><title>앞중심표시</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1350.818 73.025L1350.818 41.275"><title>뒤중심</title></path>
+<path d="M1498.08 73.025L1498.08 41.275"><title>뒤중심</title></path>
 </g>
-<text x="1350.818" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 스탠 칼라</text>
+<text x="1498.08" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 스탠 칼라</text>
 </g>
 </svg>

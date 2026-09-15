@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1523.151mm" height="650.875mm" viewBox="0 0 1523.151 650.875">
+<svg xmlns="http://www.w3.org/2000/svg" width="1670.41mm" height="650.875mm" viewBox="0 0 1670.41 650.875">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -25,7 +25,7 @@
 <path d="M159.773 37.471C130.686 218.761 101.6 216.442 101.6 400.05C101.6 453.39 101.6 480.06 101.6 533.4"><title>미까시</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M57.15 425.45L25.4 425.45"><title>첫단추</title></path>
+<path d="M57.15 392.113L25.4 392.113"><title>첫단추</title></path>
 </g>
 <text x="25.4" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">body · 앞판 — 라이더 자켓 몸판</text>
 </g>
@@ -65,21 +65,33 @@
 </g>
 <text x="927.2" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve · 작은소매 — 두 장 소매</text>
 </g>
-<g id="collar">
+<g id="sleeve · 작은소매(펼침)">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
-<path d="M1299.615 73.025C1327.186 73.025 1355.593 73.025 1383.165 73.025C1429.629 73.025 1465.973 68.275 1497.751 53.975"><title>목둘레선</title></path>
-<path d="M1497.751 53.975C1497.751 46.641 1497.751 39.084 1497.751 31.75C1497.751 26.811 1496.34 25.4 1491.401 25.4"><title>앞끝</title></path>
-<path d="M1491.401 25.4C1425.354 38.609 1366.97 41.275 1299.615 41.275"><title>윗선</title></path>
-</g>
-<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
-<path d="M1299.615 73.025L1489.799 73.025"><title>밑변기준</title></path>
+<path d="M1357.974 25.4C1367.876 110.099 1372.91 128.638 1379.978 213.621C1390.062 334.862 1388.831 362.052 1396.074 483.496"><title>펼침뒤절개</title></path>
+<path d="M1396.074 483.496L1364.324 483.496L1336.141 488.216"><title>펼침밑단</title></path>
+<path d="M1336.141 488.216C1326.252 366.737 1324.055 339.742 1314.166 218.262C1307.618 137.826 1306.163 119.951 1299.615 39.515"><title>펼침앞절개</title></path>
+<path d="M1299.615 39.515C1314.204 45.157 1313.151 50.8 1328.794 50.8C1348.137 50.8 1343.384 38.1 1357.974 25.4"><title>펼침소매산</title></path>
 </g>
 <g id="mark" fill="none" stroke="#111" stroke-width="0.21">
-<path d="M1489.799 73.025L1489.799 26.987"><title>앞중심표시</title></path>
+<path d="M1326.224 25.4L1364.324 483.496"><title>펼침밑선</title></path>
+</g>
+<text x="1299.615" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve · 작은소매(펼침) — 두 장 소매</text>
+</g>
+<g id="collar">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1446.874 73.025C1474.445 73.025 1502.852 73.025 1530.424 73.025C1576.887 73.025 1613.232 68.275 1645.01 53.975"><title>목둘레선</title></path>
+<path d="M1645.01 53.975C1645.01 46.641 1645.01 39.084 1645.01 31.75C1645.01 26.811 1643.599 25.4 1638.66 25.4"><title>앞끝</title></path>
+<path d="M1638.66 25.4C1572.613 38.609 1514.228 41.275 1446.874 41.275"><title>윗선</title></path>
+</g>
+<g id="construction" fill="none" stroke="#888" stroke-width="0.21" stroke-dasharray="1.4,1.0499999999999998">
+<path d="M1446.874 73.025L1637.058 73.025"><title>밑변기준</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M1637.058 73.025L1637.058 26.987"><title>앞중심표시</title></path>
 </g>
 <g id="fold" fill="none" stroke="#111" stroke-width="0.35" stroke-dasharray="2.8,1.4">
-<path d="M1299.615 73.025L1299.615 41.275"><title>뒤중심</title></path>
+<path d="M1446.874 73.025L1446.874 41.275"><title>뒤중심</title></path>
 </g>
-<text x="1299.615" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 스탠 칼라</text>
+<text x="1446.874" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">collar — 스탠 칼라</text>
 </g>
 </svg>

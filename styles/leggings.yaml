@@ -1,6 +1,6 @@
 # 레깅스 = 레깅스 몸판 + 고무줄 밴드 (밴드 길이는 허리에서 자동)
 name: 레깅스
-id: leggings_style
+id: leggings
 source: reference/portfolio.pdf p.41
 
 blocks:

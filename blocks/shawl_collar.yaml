@@ -17,5 +17,5 @@ lines:
   remove: [칼라끝]
   add:
     - {name: 칼라끝, role: outline, curve: [N_END, O_END],
-       tangents: {N_END: {perp: [C, N_END]}}, handles: [[0.35, 0.35]],
+       tangents: {N_END: {along: [C, N_END]}}, handles: [[0.35, 0.35]],   # 목둘레선에서 직각으로 나간다 (접선 방향이면 되돌아간다)
        note: 고지 절개 없이 라펠로 이어진다}

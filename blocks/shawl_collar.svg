@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="166.261mm" height="251.956mm" viewBox="0 0 166.261 251.956"><rect width="100%" height="100%" fill="white"/><title>숄 칼라</title><g id="outline" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M58.311 25.4C58.311 56.466 55.648 83.25 49.704 113.742C43.972 143.149 36.556 168.013 25.4 195.819"><title>목둘레선</title></path>
 <path d="M140.861 25.4C140.861 62.069 137.717 93.684 130.702 129.676C123.936 164.386 115.182 193.736 102.014 226.556"><title>외곽선</title></path>
-<path d="M25.4 195.819C36.158 169.004 75.199 215.798 102.014 226.556"><title>칼라끝</title></path>
+<path d="M25.4 195.819C52.215 206.577 75.199 215.798 102.014 226.556"><title>칼라끝</title></path>
 </g>
 <g id="notch" fill="none" stroke="#111" stroke-width="0.35">
 <path d="M49.704 113.742L130.702 129.676"><title>목옆점</title></path>

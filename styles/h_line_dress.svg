@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1227.979mm" height="957.168mm" viewBox="0 0 1227.979 957.168">
+<svg xmlns="http://www.w3.org/2000/svg" width="1375.271mm" height="957.168mm" viewBox="0 0 1375.271 957.168">
 <rect width="100%" height="100%" fill="white"/>
 <g id="body · 앞판">
 <g id="outline" fill="none" stroke="#111" stroke-width="0.35">
@@ -52,5 +52,17 @@
 <path d="M1174.004 34.925C1112.323 42.862 1112.832 50.8 1050.642 50.8C987.667 50.8 988.961 38.1 927.279 25.4"><title>작은소매산</title></path>
 </g>
 <text x="895.529" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve · 작은소매 — 두 장 소매</text>
+</g>
+<g id="sleeve · 작은소매(펼침)">
+<g id="outline" fill="none" stroke="#111" stroke-width="0.35">
+<path d="M1311.771 25.4C1321.815 113.034 1326.881 132.229 1334.09 220.141C1344.033 341.385 1342.77 368.572 1349.871 490.016"><title>펼침뒤절개</title></path>
+<path d="M1349.871 490.016L1318.121 490.016L1289.928 494.671"><title>펼침밑단</title></path>
+<path d="M1289.928 494.671C1280.174 373.194 1278.007 346.199 1268.254 224.721C1261.56 141.35 1260.073 122.824 1253.379 39.453"><title>펼침앞절개</title></path>
+<path d="M1253.379 39.453C1267.977 45.126 1266.913 50.8 1282.575 50.8C1301.924 50.8 1297.173 38.1 1311.771 25.4"><title>펼침소매산</title></path>
+</g>
+<g id="mark" fill="none" stroke="#111" stroke-width="0.21">
+<path d="M1280.021 25.4L1318.121 490.016"><title>펼침밑선</title></path>
+</g>
+<text x="1253.379" y="15.24" font-size="7.62" font-family="sans-serif" fill="#444">sleeve · 작은소매(펼침) — 두 장 소매</text>
 </g>
 </svg>

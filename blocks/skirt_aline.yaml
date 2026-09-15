@@ -68,7 +68,7 @@ points:
   HEM_B_OUT: {ko: 뒤 절개 밑단 바깥, rotate: {of: SL_B_B, center: SL_B_T, angle: 뒤벌림각}}
 
 lines:
-  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단,
+  remove: [앞허리선, 앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 뒤허리선2,
            겹트임덧단, 겹트임표시]
   add:
     # 앞판
@@ -85,7 +85,9 @@ lines:
     - {name: 앞밑단, piece: 앞판, role: outline, curve: [CF_HEM, HEM_F_OUT, SS_HEM_F],
        tangents: {CF_HEM: [1, 0]}, handles: [[0.34, 0.34], [0.34, 0.34]],
        note: 벌어진 쐐기를 메운 채 이어진다 — 각확인 후 블렌딩}
-    # 뒤판
+    # 뒤판 — 허리선 바깥쪽은 돌린 옆선 허리점(HB_SSB2)에서 끝나야 옆선과 이어진다
+    - {name: 뒤허리선2, piece: 뒤판, role: outline, curve: [BD_L, HB_SSB2],
+       tangents: {BD_L: {along: [HB_CB1, HB_SSB]}, HB_SSB2: [-1, -0.06]}, handles: [[0.4, 0.4]]}
     - {name: 뒤절개선, piece: 뒤판, role: construction, pts: [SL_B_T, SL_B_B]}
     - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB2, SS_H_B, SS_HEM_B],
        tangents: {HB_SSB2: [-0.3, 1], SS_H_B: {along: [SS_H_B, SS_HEM_B]}, SS_HEM_B: {along: [SS_H_B, SS_HEM_B]}},

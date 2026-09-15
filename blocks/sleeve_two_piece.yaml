@@ -51,7 +51,8 @@ points:
   UJ_E:  {ko: 펼친 앞 팔꿈치, from: UJ_E0, dx: "BIC_B.x - BIC_F.x", dy: "BIC_B.y - BIC_F.y"}
   UJ_H0: {rotate: {of: FS_H, center: BIC_F, angle: 접합각}}
   UJ_H:  {ko: 펼친 앞 밑단, from: UJ_H0, dx: "BIC_B.x - BIC_F.x", dy: "BIC_B.y - BIC_F.y"}
-  UJ_M:  {ko: 펼친 작은소매 위선 바닥(밑선 자리), from: BIC_B, dy: 언더깊이}
+  UJ_M:  {ko: 펼친 작은소매 위선 바닥, at: ["(UJ_T.x + BS_T.x) / 2", "BIC_B.y + 언더깊이"],
+          note: 앞이동이 0 이면 앞 띠 위끝이 밑선 자리에 오므로, 바닥은 두 위끝 가운데에 둔다}
 
 lines:
   replace:

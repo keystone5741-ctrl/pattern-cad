@@ -30,3 +30,15 @@ measurements:
   옆선허리들임: {value: 5/8, note: 패턴 허리 41.3/4 — 하의 허리와 같다}
   앞옆밑단올림: {value: 0}
   뒤옆밑단올림: {value: 0}
+
+# 기장 = 등길이 이므로 허리·엉덩이·밑단 옆점이 한 높이에 겹친다.
+# 상자형 옆선(겨드랑점→허리→엉덩이→밑단)을 그대로 쓰면 같은 높이의 세 점 사이를 오가며 선이 되돌아간다
+# → 옆선은 겨드랑점→허리옆점 한 구간, 밑단은 허리옆점까지. 도면 밑단 폭(앞 4.3/4 x2 · 뒤 5.1/2 x2)과 맞는다
+lines:
+  replace:
+    - {name: 앞옆선, piece: 앞판, role: outline, curve: [UP2, WL_SS_F],
+       tangents: {UP2: {along: [UP2, WL_SS_F]}, WL_SS_F: [0, 1]}, handles: [[0.33, 0.33]]}
+    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [UP2, WL_SS_B],
+       tangents: {UP2: {along: [UP2, WL_SS_B]}, WL_SS_B: [0, 1]}, handles: [[0.33, 0.33]]}
+    - {name: 앞밑단, piece: 앞판, role: outline, pts: [HEM_CF, WL_SS_F]}
+    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, WL_SS_B]}
