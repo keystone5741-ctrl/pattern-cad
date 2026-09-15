@@ -59,9 +59,10 @@ points:
   GB2_R: {ko: 뒤 절개2 밑단(고어2 쪽), at: ["뒤고어2 - 고어플레어", 기장]}
   GB2_L: {ko: 뒤 절개2 밑단(고어3 쪽), at: ["뒤고어2 - 고어플레어 * 2", 기장]}
   # --- 옆선 — 퍼짐 시작에서 엉덩이 가산만큼 넓히고, 밑단은 절개 두 곳의 벌림 + 옆벌림만큼 나간다
-  GD_SSF_P: {ko: 앞 옆선 퍼짐점, at: ["앞폭 + 엉덩이가산/2", 퍼짐시작]}
+  # 퍼짐점은 허리→엉덩이 옆선 위(퍼짐시작 높이)에 둔다. 거기서 밑단으로 곧게 벌리면 엉덩이선에서 엉덩이가산/2 만큼 넓어진다
+  GD_SSF_P: {ko: 앞 옆선 퍼짐점, along: [HB_SSF, SS_H], ratio: "(퍼짐시작 - HB_SSF.y) / (SS_H.y - HB_SSF.y)"}
   GD_SSF_H: {ko: 앞 옆선 밑단,   at: ["앞폭 + 엉덩이가산/2 + 고어플레어 * 2 + 옆벌림", 기장]}
-  GD_SSB_P: {ko: 뒤 옆선 퍼짐점, at: ["앞폭 - 엉덩이가산/2", 퍼짐시작]}
+  GD_SSB_P: {ko: 뒤 옆선 퍼짐점, along: [HB_SSB, SS_H], ratio: "(퍼짐시작 - HB_SSB.y) / (SS_H.y - HB_SSB.y)"}
   GD_SSB_H: {ko: 뒤 옆선 밑단,   at: ["앞폭 - 엉덩이가산/2 - 고어플레어 * 2 - 옆벌림", 기장]}
 
 
@@ -85,8 +86,9 @@ lines:
     - {name: 앞고어절개1밖, piece: 앞판, cut_piece: 앞고어2, role: outline, pts: [GF1_P, GF1_R]}
     - {name: 앞고어절개2, piece: 앞판, cut_piece: [앞고어2, 앞고어3], role: outline, pts: [GF2_T, GF2_P, GF2_L]}
     - {name: 앞고어절개2밖, piece: 앞판, cut_piece: 앞고어3, role: outline, pts: [GF2_P, GF2_R]}
-    - {name: 앞옆선, piece: 앞판, cut_piece: 앞고어3, role: outline, curve: [HB_SSF, SS_H, GD_SSF_P, GD_SSF_H],
-       tangents: {HB_SSF: [0.3, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    # 퍼짐 시작(엉덩이선 위 1.1/2)부터 곧게 벌어진다 — 엉덩이점(SS_H)은 퍼짐선 아래라 지나지 않는다 (지나면 옆선이 갈고리처럼 꺾였다)
+    - {name: 앞옆선, piece: 앞판, cut_piece: 앞고어3, role: outline, curve: [HB_SSF, GD_SSF_P, GD_SSF_H],
+       tangents: {HB_SSF: [0.3, 1], GD_SSF_P: {along: [GD_SSF_P, GD_SSF_H]}}, handles: [[0.4, 0.4], [0.33, 0.33]]}
     - {name: 앞밑단, piece: 앞판, cut_piece: 앞고어1, role: outline, pts: [CF_HEM, GF1_L]}
     - {name: 앞밑단2, piece: 앞판, cut_piece: 앞고어2, role: outline, pts: [GF1_R, GF2_L]}
     - {name: 앞밑단3, piece: 앞판, cut_piece: 앞고어3, role: outline, pts: [GF2_R, GD_SSF_H]}
@@ -99,8 +101,8 @@ lines:
     - {name: 뒤고어절개1밖, piece: 뒤판, cut_piece: 뒤고어2, role: outline, pts: [GB1_TL, GB1_P, GB1_L]}
     - {name: 뒤고어절개2, piece: 뒤판, cut_piece: [뒤고어2, 뒤고어3], role: outline, pts: [GB2_T, GB2_P, GB2_R]}
     - {name: 뒤고어절개2밖, piece: 뒤판, cut_piece: 뒤고어3, role: outline, pts: [GB2_P, GB2_L]}
-    - {name: 뒤옆선, piece: 뒤판, cut_piece: 뒤고어3, role: outline, curve: [HB_SSB, SS_H, GD_SSB_P, GD_SSB_H],
-       tangents: {HB_SSB: [-0.3, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
+    - {name: 뒤옆선, piece: 뒤판, cut_piece: 뒤고어3, role: outline, curve: [HB_SSB, GD_SSB_P, GD_SSB_H],
+       tangents: {HB_SSB: [-0.3, 1], GD_SSB_P: {along: [GD_SSB_P, GD_SSB_H]}}, handles: [[0.4, 0.4], [0.33, 0.33]]}
     - {name: 뒤밑단, piece: 뒤판, cut_piece: 뒤고어1, role: outline, pts: [CB_HEM, GB1_R]}
     - {name: 뒤밑단2, piece: 뒤판, cut_piece: 뒤고어2, role: outline, pts: [GB1_L, GB2_R]}
     - {name: 뒤밑단3, piece: 뒤판, cut_piece: 뒤고어3, role: outline, pts: [GB2_L, GD_SSB_H]}

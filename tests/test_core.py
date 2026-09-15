@@ -1018,7 +1018,7 @@ class CutPieces(unittest.TestCase):
         self.assertEqual(sorted(p.name for p in pcs), ["뒤고어1", "뒤고어2", "뒤고어3", "앞고어1", "앞고어2", "앞고어3"])
         self.assertTrue(all(not p.warnings for p in pcs))
         front = sum(abs(signed_area(p.loop)) for p in pcs if p.name.startswith("앞"))
-        self.assertGreater(front, 150)   # 세 고어를 합치면 앞판 하나 넓이
+        self.assertGreater(front, 130)   # 세 고어를 합치면 앞판 하나 넓이
         self.assertEqual(next(p for p in pcs if p.name == "앞고어1").fold, "앞중심선")
 
     def test_two_piece_under_sleeve_is_one_joined_cut_piece(self):
