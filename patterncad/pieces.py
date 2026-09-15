@@ -75,43 +75,209 @@ def _poly(l: ResolvedLine) -> list:
     return out
 
 
-def chain(lines: list, warnings: list) -> list:
-    """외곽선·골선을 끝점끼리 이어 닫힌 고리로. 끊긴 곳은 곧게 이어 붙인다 (synthetic)."""
-    pool = [(l, _poly(l)) for l in lines if len(_poly(l)) >= 2]
-    if not pool:
-        return []
-    l0, p0 = pool.pop(0)
-    edges = [Edge(l0.name, l0.role, p0, default_allowance(l0.name, l0.role))]
-    while True:
-        end = edges[-1].pts[-1]
-        if len(edges) > 1 and end.dist(edges[0].pts[0]) <= TOL:
-            break
+def _split_at_junctions(polys: list) -> list:
+    """T 자로 만나는 자리에서 꺾은선을 자른다 — 겹트임 덧단이 뒤중심선 가운데서 갈라지거나,
+    고어 절개선이 허리선 가운데서 시작하는 경우."""
+    polys = [(l, list(pts)) for l, pts in polys]
+    changed = True
+    rounds = 0
+    while changed and rounds < 20:
+        changed = False
+        rounds += 1
+        ends = [q for _, pts in polys for q in (pts[0], pts[-1])]
+        for i, (l, pts) in enumerate(polys):
+            for q in ends:
+                if q.dist(pts[0]) <= TOL or q.dist(pts[-1]) <= TOL:
+                    continue
+                for k in range(len(pts) - 1):
+                    a, b = pts[k], pts[k + 1]
+                    d = b - a
+                    L2 = d.dot(d)
+                    if L2 < 1e-12:
+                        continue
+                    t = (q - a).dot(d) / L2
+                    if t <= 1e-6 or t >= 1 - 1e-6:
+                        continue
+                    f = a + d * t
+                    if f.dist(q) <= TOL:
+                        polys[i] = (l, pts[:k + 1] + [f])
+                        polys.append((l, [f] + pts[k + 1:]))
+                        changed = True
+                        break
+                if changed:
+                    break
+            if changed:
+                break
+    return polys
+
+
+def _inside(p: Pt, loop: list) -> bool:
+    c = False
+    n = len(loop)
+    for i in range(n):
+        a, b = loop[i], loop[(i + 1) % n]
+        if (a.y > p.y) != (b.y > p.y):
+            x = a.x + (p.y - a.y) * (b.x - a.x) / (b.y - a.y)
+            if p.x < x:
+                c = not c
+    return c
+
+
+def _signed_angle(a: Pt, b: Pt) -> float:
+    d = math.atan2(b.y, b.x) - math.atan2(a.y, a.x)
+    while d <= -math.pi:
+        d += 2 * math.pi
+    while d > math.pi:
+        d -= 2 * math.pi
+    return d
+
+
+def chain(lines: list, warnings: list) -> tuple:
+    """외곽선·골선으로 평면 그래프를 만들고 **바깥 면**을 따라 닫힌 고리를 찾는다.
+    → (고리 목록 [[Edge…]…], 안쪽에 남은 선 [(이름, 꺾은선)…], 고리별 경고)
+
+    T 자로 만나는 자리는 잘라서 꼭짓점으로 두고, 끝이 하나뿐인 꼭짓점끼리는 가까우면(BRIDGE_MAX)
+    곧게 이어 붙인다 (다트로 벌어진 허리선·옆선). 그다음 가장 왼쪽 꼭짓점에서 출발해 늘 가장 바깥쪽으로
+    꺾으며 돌면 바깥 면이 나온다 — 겹트임 덧단은 바깥이고 뒤중심선 아래쪽은 안쪽 접는 선, 고어처럼
+    떨어진 덩어리는 각각 고리가 된다. 고리에 쓰이지 않은 선은 안쪽 선으로 돌려준다."""
+    polys = _split_at_junctions([(l, _poly(l)) for l in lines if len(_poly(l)) >= 2])
+    if not polys:
+        return [], [], []
+    verts: list = []
+
+    def vid(p):
+        for i, v in enumerate(verts):
+            if v.dist(p) <= TOL:
+                return i
+        verts.append(p)
+        return len(verts) - 1
+    edges = [{"a": vid(pts[0]), "b": vid(pts[-1]), "pts": pts, "name": l.name, "role": l.role, "syn": False}
+             for l, pts in polys]
+    deg: dict = {}
+    for e in edges:
+        deg[e["a"]] = deg.get(e["a"], 0) + 1
+        deg[e["b"]] = deg.get(e["b"], 0) + 1
+    ends = [v for v in range(len(verts)) if deg.get(v, 0) == 1]
+    paired: set = set()
+    for v in ends:
+        if v in paired:
+            continue
         best = None
-        for i, (l, pts) in enumerate(pool):
-            for rev in (False, True):
-                q = pts[-1] if rev else pts[0]
-                d = end.dist(q)
-                if best is None or d < best[0]:
-                    best = (d, i, rev)
-        if best is None:
-            # 남은 선이 없다 — 시작점으로 곧게 닫는다
-            if end.dist(edges[0].pts[0]) > TOL:
-                edges.append(Edge("닫음", "bridge", [end, edges[0].pts[0]], edges[-1].allowance, True))
-                if end.dist(edges[0].pts[0]) > 2.0:
-                    warnings.append(f"외곽선이 {end.dist(edges[0].pts[0]):.2f}\" 벌어져 곧게 닫았다")
-            break
-        d, i, rev = best
-        l, pts = pool.pop(i)
-        if rev:
-            pts = list(reversed(pts))
-        if d > TOL:
-            if d > BRIDGE_MAX:
-                warnings.append(f"{edges[-1].name} 끝과 {l.name} 시작이 {d:.2f}\" 떨어져 있다")
-            edges.append(Edge(f"{edges[-1].name}→{l.name}", "bridge", [end, pts[0]], edges[-1].allowance, True))
-        edges.append(Edge(l.name, l.role, pts, default_allowance(l.name, l.role)))
-    if pool:
-        warnings.append("외곽선에 끼지 못한 선: " + ", ".join(l.name for l, _ in pool))
-    return edges
+        for w in ends:
+            if w == v or w in paired:
+                continue
+            d = verts[v].dist(verts[w])
+            if d <= BRIDGE_MAX and (best is None or d < best[0]):
+                best = (d, w)
+        if best:
+            d, w = best
+            na = next(e["name"] for e in edges if v in (e["a"], e["b"]))
+            nb = next(e["name"] for e in edges if w in (e["a"], e["b"]))
+            edges.append({"a": v, "b": w, "pts": [verts[v], verts[w]], "name": f"{na}→{nb}", "role": "bridge", "syn": True})
+            paired.update((v, w))
+            if d > 2.0:
+                warnings.append(f"{na} 끝과 {nb} 끝이 {d:.2f}\" 떨어져 곧게 이었다")
+    adj: dict = {}
+    for i, e in enumerate(edges):
+        adj.setdefault(e["a"], []).append((i, 1))
+        adj.setdefault(e["b"], []).append((i, -1))
+    seen: set = set()
+    comps = []
+    for v in adj:
+        if v in seen:
+            continue
+        stack, comp = [v], set()
+        while stack:
+            x = stack.pop()
+            if x in comp:
+                continue
+            comp.add(x)
+            for i, sgn in adj[x]:
+                stack.append(edges[i]["b"] if sgn == 1 else edges[i]["a"])
+        seen |= comp
+        comps.append(comp)
+    used_edges: set = set()
+    loops = []
+    internals = []
+
+    def trace(avail: set):
+        """남은 선들만으로 가장 왼쪽 꼭짓점에서 출발해 늘 가장 바깥쪽으로 꺾어 돈다."""
+        verts_in = {edges[i]["a"] for i in avail} | {edges[i]["b"] for i in avail}
+        start = min(verts_in, key=lambda v: (verts[v].x, verts[v].y))
+        v, incoming, seq, used = start, Pt(0, 1), [], set()
+        while len(seq) < 500:
+            cands = []
+            for i, sgn in adj[v]:
+                if i not in avail or (i, sgn) in used:
+                    continue
+                pts = edges[i]["pts"] if sgn == 1 else list(reversed(edges[i]["pts"]))
+                out = (pts[1] - pts[0]).unit()
+                back = seq and seq[-1][0] == i           # 방금 온 선을 되돌아가는 것은 마지막 수단
+                cands.append((1 if back else 0, _signed_angle(incoming, out), i, sgn, pts))
+            if not cands:
+                break
+            cands.sort(key=lambda c: (c[0], c[1]))       # 가장 바깥쪽(시계 방향으로 가장 크게 꺾는) 선
+            _, _, i, sgn, pts = cands[0]
+            used.add((i, sgn))
+            seq.append((i, sgn, pts))
+            incoming = (pts[-1] - pts[-2]).unit()
+            v = edges[i]["b"] if sgn == 1 else edges[i]["a"]
+            if v == start:
+                break
+        # 갔다가 되돌아온 선(막다른 선)은 고리에서 뺀다
+        orig = list(seq)
+        changed = True
+        while changed and seq:
+            changed = False
+            for k in range(len(seq) - 1):
+                if seq[k][0] == seq[k + 1][0] and seq[k][1] == -seq[k + 1][1]:
+                    del seq[k:k + 2]
+                    changed = True
+                    break
+            if not changed and len(seq) >= 2 and seq[0][0] == seq[-1][0] and seq[0][1] == -seq[-1][1]:
+                seq = seq[1:-1]
+                changed = True
+        if len(seq) < 2 and len(orig) >= 2:      # 고리가 아니라 한 줄로 이어진 선들 — 간 길만 잡고 곧게 닫는다
+            k = next((k for k in range(len(orig) - 1) if orig[k][0] == orig[k + 1][0] and orig[k][1] == -orig[k + 1][1]), len(orig) - 1)
+            seq = orig[:k + 1]
+        if len(seq) == 1 and edges[seq[0][0]]["a"] != edges[seq[0][0]]["b"]:
+            return []
+        return seq
+
+    loop_warnings = []
+    for comp in comps:
+        avail = {i for i, e in enumerate(edges) if e["a"] in comp}
+        while avail:
+            seq = trace(avail)
+            if not seq:
+                break
+            n_before = len(warnings)
+            loop = []
+            for i, sgn, pts in seq:
+                e = edges[i]
+                loop.append(Edge(e["name"], e["role"], pts, default_allowance(e["name"], e["role"]), e["syn"]))
+                used_edges.add(i)
+                avail.discard(i)
+            if loop[-1].pts[-1].dist(loop[0].pts[0]) > TOL:
+                gap = loop[-1].pts[-1].dist(loop[0].pts[0])
+                loop.append(Edge("닫음", "bridge", [loop[-1].pts[-1], loop[0].pts[0]], loop[-1].allowance, True))
+                if gap > 2.0:
+                    warnings.append(f"외곽선이 {gap:.2f}\" 벌어져 곧게 닫았다")
+            loops.append(loop)
+            loop_warnings.append(warnings[n_before:])
+            # 남은 선 중 이 고리 안에 든 것(겹트임 접는 선 같은 안쪽 선)은 안쪽 선. 밖에 남은 것은 다른 조각(고어)
+            loop_pts = [p for e in loop for p in e.pts[:-1]]
+            inside = {i for i in avail
+                      if all(_inside(p, loop_pts) or any(p.dist(q) <= TOL for q in loop_pts) for p in edges[i]["pts"])}
+            for i in inside:
+                if not edges[i]["syn"]:
+                    internals.append((edges[i]["name"], edges[i]["pts"]))
+                used_edges.add(i)
+            avail -= inside
+    internals += [(e["name"], e["pts"]) for i, e in enumerate(edges) if i not in used_edges and not e["syn"]]
+    if not loops and edges:
+        warnings.append("외곽선이 닫히지 않는다")
+    return loops, internals, loop_warnings
 
 
 def signed_area(pts: list) -> float:
@@ -324,11 +490,25 @@ def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) ->
         boundary = outline + folds
         if not boundary:
             continue
-        st = settings.get(f"{block_key}.{pc}", {})
-        piece = Piece(pc or res.block.name, block_key)
-        piece.edges = chain(boundary, piece.warnings)
-        if not piece.edges:
-            continue
+        warnings: list = []
+        loops, inner, loop_warnings = chain(boundary, warnings)
+        shared = [w for w in warnings if not any(w in lw for lw in loop_warnings)]   # 이어 붙이기 경고는 첫 조각에
+        for li, loop_edges in enumerate(loops):
+            name = (pc or res.block.name) + (f"{li + 1}" if len(loops) > 1 else "")
+            ws = loop_warnings[li] + (shared if li == 0 else [])
+            out.append(_make_piece(name, pc, block_key, res, lines, loop_edges, inner, ws,
+                                   settings.get(f"{block_key}.{name}", settings.get(f"{block_key}.{pc}", {})), len(loops) > 1))
+    return out
+
+
+def _make_piece(name, pc, block_key, res, lines, edges, inner, warnings, st, multi) -> Piece:
+        piece = Piece(name, block_key)
+        piece.edges = edges
+        piece.warnings = list(warnings)
+        loop_pts = [p for e in edges for p in e.pts[:-1]]
+        if multi:   # 고리가 여럿이면 안쪽 선은 그 고리 안에 든 것만
+            lines = [l for l in lines if l.role in ("outline", "fold") or _inside(l.pts[0], loop_pts) or any(l.pts[0].dist(q) <= TOL for q in loop_pts)]
+            inner = [(n, pts) for n, pts in inner if _inside(pts[len(pts) // 2], loop_pts)]
         fold_edge = next((e for e in piece.edges if e.role == "fold"), None)
         piece.fold = fold_edge.name if fold_edge else None
         for e in piece.edges:
@@ -338,8 +518,10 @@ def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) ->
                 e.allowance = float(st["default_allowance"])
         piece.quantity = int(st.get("quantity", 1 if fold_edge else 2))
         piece.fabric = st.get("fabric", "겉감")
+        folds = {e.name for e in edges if e.role == "fold"}
         piece.internal = [(l.name, l.role, _poly(l)) for l in lines
-                          if l.role in ("dart", "mark", "notch", "grain", "construction") or (l.role == "fold" and l not in folds)]
+                          if l.role in ("dart", "mark", "notch", "grain", "construction") or (l.role == "fold" and l.name not in folds)]
+        piece.internal += [(n, "fold", pts) for n, pts in inner]   # 고리 안에 남은 완성선 — 겹트임 접는 선 등
         M = None
         if fold_edge and st.get("unfold"):
             piece.edges = unfold(piece.edges, fold_edge.name)
@@ -367,8 +549,7 @@ def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) ->
             piece.notches += [(M2(q), M2(q + n) - M2(q)) for q, n in list(piece.notches)
                               if q.dist(foot_of_perpendicular(q, a, b)) > 0.05]
         piece.grain = grain_for(piece, lines)
-        out.append(piece)
-    return out
+        return piece
 
 
 # ------------------------------------------------------------------ 마카용 변환
