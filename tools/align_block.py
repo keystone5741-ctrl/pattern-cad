@@ -416,6 +416,10 @@ def main(argv=None):
         ov[k] = parse_inch(v)
     block = Block.load(ROOT / a.block)
     res = block.evaluate(ov)
+    # 재단용으로만 둔 조각(펼친 작은소매 등)은 도면에 없다 — verify.skip_pieces 로 뺀다
+    skip_pc = set((block.data.get("verify") or {}).get("skip_pieces") or [])
+    if skip_pc:
+        res.lines = [l for l in res.lines if l.piece not in skip_pc]
     if a.piece:
         res.lines = [l for l in res.lines if l.piece == a.piece]
         used = {n for l in res.lines for n in l.point_names}

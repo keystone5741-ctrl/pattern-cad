@@ -10,13 +10,13 @@ blocks:
   waistband_front:
     block: ../blocks/waistband_curved.yaml
     measurements:
-      밑선: "len(skirt.앞허리선)"
+      밑선: "len(skirt.앞허리선*)"
       차이: 5/8
       높이: 1.1/2
   waistband_back:
     block: ../blocks/waistband_curved.yaml
     measurements:
-      밑선: "len(skirt.뒤허리선1) + len(skirt.뒤허리선2)"
+      밑선: "len(skirt.뒤허리선*)"
       차이: 3/4
       높이: 1.1/2
       연장: 1.1/4

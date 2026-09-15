@@ -65,29 +65,42 @@ points:
   GD_SSB_H: {ko: 뒤 옆선 밑단,   at: ["앞폭 - 엉덩이가산/2 - 고어플레어 * 2 - 옆벌림", 기장]}
 
 
+# 그림은 앞판·뒤판 한 장씩(도면처럼 고어를 붙여 그린다)이고, 재단은 cut_piece 로 고어 세 장씩 갈린다.
+# 허리선은 고어 경계에서 나누고, 절개선 윗부분(퍼짐 시작 위)은 이웃 고어 둘이 같이 쓴다.
 lines:
-  remove: [앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 뒤다트, 뒤허리선2,
+  remove: [앞옆선위, 앞옆선아래, 앞밑단, 뒤옆선위, 뒤옆선아래, 뒤밑단, 뒤다트, 뒤허리선2, 앞허리선, 뒤허리선1,
            겹트임덧단, 겹트임표시]
+  replace:
+    - {name: 앞중심선, piece: 앞판, cut_piece: 앞고어1, role: fold, pts: [HB_CF, CF_HEM]}
+    - {name: 뒤중심선, piece: 뒤판, cut_piece: 뒤고어1, role: outline, pts: [HB_CB, CB_HEM]}
   add:
     - {name: 퍼짐시작선, role: construction, pts: [GD_PF, GD_PB]}
     # 앞 — 고어 세 장. 절개선은 위끝에서 밑단으로 벌어지며 갈라진다
-    - {name: 앞고어절개1, piece: 앞판, role: outline, pts: [GF1_T, GF1_P, GF1_L]}
-    - {name: 앞고어절개1밖, piece: 앞판, role: outline, pts: [GF1_P, GF1_R]}
-    - {name: 앞고어절개2, piece: 앞판, role: outline, pts: [GF2_T, GF2_P, GF2_L]}
-    - {name: 앞고어절개2밖, piece: 앞판, role: outline, pts: [GF2_P, GF2_R]}
-    - {name: 앞옆선, piece: 앞판, role: outline, curve: [HB_SSF, SS_H, GD_SSF_P, GD_SSF_H],
+    - {name: 앞허리선1, piece: 앞판, cut_piece: 앞고어1, role: outline, curve: [HB_CF, HB_CF1, GF1_T],
+       tangents: {HB_CF: [1, 0], HB_CF1: [1, 0]}, handles: [[0.4, 0.4], [0.5, 0.3]]}
+    - {name: 앞허리선2, piece: 앞판, cut_piece: 앞고어2, role: outline, pts: [GF1_T, GF2_T]}
+    - {name: 앞허리선3, piece: 앞판, cut_piece: 앞고어3, role: outline, curve: [GF2_T, HB_SSF],
+       tangents: {HB_SSF: [1, -0.25]}, handles: [[0.4, 0.4]]}
+    - {name: 앞고어절개1, piece: 앞판, cut_piece: [앞고어1, 앞고어2], role: outline, pts: [GF1_T, GF1_P, GF1_L]}
+    - {name: 앞고어절개1밖, piece: 앞판, cut_piece: 앞고어2, role: outline, pts: [GF1_P, GF1_R]}
+    - {name: 앞고어절개2, piece: 앞판, cut_piece: [앞고어2, 앞고어3], role: outline, pts: [GF2_T, GF2_P, GF2_L]}
+    - {name: 앞고어절개2밖, piece: 앞판, cut_piece: 앞고어3, role: outline, pts: [GF2_P, GF2_R]}
+    - {name: 앞옆선, piece: 앞판, cut_piece: 앞고어3, role: outline, curve: [HB_SSF, SS_H, GD_SSF_P, GD_SSF_H],
        tangents: {HB_SSF: [0.3, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
-    - {name: 앞밑단, piece: 앞판, role: outline, pts: [CF_HEM, GF1_L]}
-    - {name: 앞밑단2, piece: 앞판, role: outline, pts: [GF1_R, GF2_L]}
-    - {name: 앞밑단3, piece: 앞판, role: outline, pts: [GF2_R, GD_SSF_H]}
-    # 뒤
-    - {name: 뒤허리선2, piece: 뒤판, role: outline, pts: [GB1_TL, HB_SSB]}
-    - {name: 뒤고어절개1, piece: 뒤판, role: outline, pts: [GB1_TR, GB1_P, GB1_R]}
-    - {name: 뒤고어절개1밖, piece: 뒤판, role: outline, pts: [GB1_TL, GB1_P, GB1_L]}
-    - {name: 뒤고어절개2, piece: 뒤판, role: outline, pts: [GB2_T, GB2_P, GB2_R]}
-    - {name: 뒤고어절개2밖, piece: 뒤판, role: outline, pts: [GB2_P, GB2_L]}
-    - {name: 뒤옆선, piece: 뒤판, role: outline, curve: [HB_SSB, SS_H, GD_SSB_P, GD_SSB_H],
+    - {name: 앞밑단, piece: 앞판, cut_piece: 앞고어1, role: outline, pts: [CF_HEM, GF1_L]}
+    - {name: 앞밑단2, piece: 앞판, cut_piece: 앞고어2, role: outline, pts: [GF1_R, GF2_L]}
+    - {name: 앞밑단3, piece: 앞판, cut_piece: 앞고어3, role: outline, pts: [GF2_R, GD_SSF_H]}
+    # 뒤 — 뒤 허리다트는 고어 1·2 절개선이 흡수한다 (GB1_TR ↔ GB1_TL 사이가 다트 폭)
+    - {name: 뒤허리선1, piece: 뒤판, cut_piece: 뒤고어1, role: outline, curve: [HB_CB, HB_CB1, GB1_TR],
+       tangents: {HB_CB: [-1, 0], HB_CB1: [-1, 0]}, handles: [[0.24, 0.61], [1.00, 0.20]]}
+    - {name: 뒤허리선2, piece: 뒤판, cut_piece: 뒤고어2, role: outline, pts: [GB1_TL, GB2_T]}
+    - {name: 뒤허리선3, piece: 뒤판, cut_piece: 뒤고어3, role: outline, pts: [GB2_T, HB_SSB]}
+    - {name: 뒤고어절개1, piece: 뒤판, cut_piece: 뒤고어1, role: outline, pts: [GB1_TR, GB1_P, GB1_R]}
+    - {name: 뒤고어절개1밖, piece: 뒤판, cut_piece: 뒤고어2, role: outline, pts: [GB1_TL, GB1_P, GB1_L]}
+    - {name: 뒤고어절개2, piece: 뒤판, cut_piece: [뒤고어2, 뒤고어3], role: outline, pts: [GB2_T, GB2_P, GB2_R]}
+    - {name: 뒤고어절개2밖, piece: 뒤판, cut_piece: 뒤고어3, role: outline, pts: [GB2_P, GB2_L]}
+    - {name: 뒤옆선, piece: 뒤판, cut_piece: 뒤고어3, role: outline, curve: [HB_SSB, SS_H, GD_SSB_P, GD_SSB_H],
        tangents: {HB_SSB: [-0.3, 1], SS_H: [0, 1]}, handles: [[0.4, 0.4], [0.4, 0.4], [0.4, 0.4]]}
-    - {name: 뒤밑단, piece: 뒤판, role: outline, pts: [CB_HEM, GB1_R]}
-    - {name: 뒤밑단2, piece: 뒤판, role: outline, pts: [GB1_L, GB2_R]}
-    - {name: 뒤밑단3, piece: 뒤판, role: outline, pts: [GB2_L, GD_SSB_H]}
+    - {name: 뒤밑단, piece: 뒤판, cut_piece: 뒤고어1, role: outline, pts: [CB_HEM, GB1_R]}
+    - {name: 뒤밑단2, piece: 뒤판, cut_piece: 뒤고어2, role: outline, pts: [GB1_L, GB2_R]}
+    - {name: 뒤밑단3, piece: 뒤판, cut_piece: 뒤고어3, role: outline, pts: [GB2_L, GD_SSB_H]}

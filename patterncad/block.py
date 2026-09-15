@@ -36,6 +36,8 @@
                        handles 로 구간별 핸들 길이(현 대비 비율, [나가는, 들어오는])를 준다
     role: outline | construction | dart | mark | notch | grain | fold | dimension
     piece: 앞판 | 뒤판 …  (조각 분류용)
+    cut_piece: 앞고어1 또는 [앞고어1, 앞고어2]   재단 조각 이름 — 그림은 한 조각(piece)인데 재단은 여러 조각으로 갈릴 때
+    cut: false                                   그림에만 쓰고 재단 조각에는 안 넣는 선
 
 원형 파일 맨 위(선과 나란히)에 handles 를 둘 수 있다. 상속받은 선의 **곡선 모양만**
 원본 도면에 맞춰 고칠 때 쓴다 — 선 정의를 통째로 다시 쓰지 않아도 된다:
@@ -147,6 +149,8 @@ class LineDef:
     ko: str = ""
     note: str = ""
     closed: bool = False
+    cut_piece: list | None = None   # 재단 조각 이름(들). 없으면 piece. 고어처럼 그림은 한 조각, 재단은 여럿일 때
+    cut: bool = True                # False 면 그림에만 (겹쳐 그린 작은소매처럼 재단 조각에는 안 쓰는 선)
 
 
 @dataclass
@@ -160,6 +164,8 @@ class ResolvedLine:
     piece: str | None
     ko: str = ""
     overrides: dict = field(default_factory=dict)  # 화면에서 끌어 고친 핸들 {구간: {"c1": [비율, 각], "c2": …}}
+    cut_piece: list | None = None
+    cut: bool = True
 
     def polyline(self, n: int = 24) -> list[Pt]:
         if self.kind != "curve":
@@ -250,10 +256,12 @@ class Block:
         role = d.get("role", "outline")
         if role not in ROLES:
             raise ValueError(f"선 {d.get('name')}: 모르는 역할 {role}")
+        cp = d.get("cut_piece")
         return LineDef(
             name=d["name"], role=role, points=pts, kind=kind,
             tangents=d.get("tangents", {}) or {}, handles=d.get("handles", []) or [],
             piece=d.get("piece"), ko=d.get("ko", ""), note=d.get("note", ""), closed=bool(d.get("closed")),
+            cut_piece=([cp] if isinstance(cp, str) else list(cp)) if cp else None, cut=d.get("cut", True) is not False,
         )
 
     # ------------------------------------------------------------ 계산
@@ -409,7 +417,8 @@ class Block:
                     b = apply_handle_override(b, ov)
                     applied[i] = ov
                 beziers.append(b)
-        return ResolvedLine(ld.name, ld.role, ld.kind, list(ld.points), pts, beziers, ld.piece, ld.ko, applied)
+        return ResolvedLine(ld.name, ld.role, ld.kind, list(ld.points), pts, beziers, ld.piece, ld.ko, applied,
+                            ld.cut_piece, ld.cut)
 
     def _tangent(self, ld: LineDef, i: int, pts: list[Pt], env: Env) -> Pt:
         """i 번째 점의 접선 방향. 사슬 진행 방향(이전 점 → 다음 점)과 같은 쪽을 향하게 부호를 맞춘다."""

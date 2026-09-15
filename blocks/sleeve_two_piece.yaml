@@ -30,6 +30,9 @@ measurements:
   상동선내림: {value: 3/8,   note: 1/4~1/2. 앞소매 절개점의 소매통선을 이만큼 내린다}
   언더깊이:   {value: 1,     note: 작은소매 위선이 소매통선보다 아래로 파이는 깊이}
   작은소매폭: {formula: "앞이동 + 뒤이동"}
+  # 작은소매 재단 조각: 앞 띠를 밑선(BIC_F→HEM_F)이 뒤 밑선(BIC_B→HEM_B)에 겹치도록 돌려 붙인다
+  접합각:     {formula: "atan2(HEM_B.y - BIC_B.y, HEM_B.x - BIC_B.x) - atan2(HEM_F.y - BIC_F.y, HEM_F.x - BIC_F.x)",
+               note: 앞 밑선을 뒤 밑선 방향으로 돌리는 각(도)}
 
 points:
   # --- 큰소매 절개선
@@ -41,13 +44,22 @@ points:
   FS_E: {ko: 큰소매 앞 팔꿈치, intersect: [[FS_T, FS_H], [EL_C, EL_C2]]}
   BS_E2: {ko: 뒤 팔꿈치 들임, from: BS_E, dx: 팔꿈치들임}
   U_MID_T: {ko: 작은소매 위선 바닥, at: ["(FS_T.x + BS_T.x) / 2", "소매산높이 + 언더깊이"]}
+  # --- 작은소매 펼침(재단 조각): 앞 띠(FS_T·FS_E·FS_H)를 BIC_F 중심으로 돌린 뒤 BIC_B 로 옮긴다
+  UJ_T0: {rotate: {of: FS_T, center: BIC_F, angle: 접합각}}
+  UJ_T:  {ko: 펼친 앞 절개점, from: UJ_T0, dx: "BIC_B.x - BIC_F.x", dy: "BIC_B.y - BIC_F.y"}
+  UJ_E0: {rotate: {of: FS_E, center: BIC_F, angle: 접합각}}
+  UJ_E:  {ko: 펼친 앞 팔꿈치, from: UJ_E0, dx: "BIC_B.x - BIC_F.x", dy: "BIC_B.y - BIC_F.y"}
+  UJ_H0: {rotate: {of: FS_H, center: BIC_F, angle: 접합각}}
+  UJ_H:  {ko: 펼친 앞 밑단, from: UJ_H0, dx: "BIC_B.x - BIC_F.x", dy: "BIC_B.y - BIC_F.y"}
+  UJ_M:  {ko: 펼친 작은소매 위선 바닥(밑선 자리), from: BIC_B, dy: 언더깊이}
 
 lines:
   replace:
     # 한 장 소매의 밑선과 부리는 그대로 두되 작은소매 조각으로 이름을 옮긴다
-    - {name: 뒤옆선,   piece: 작은소매, role: outline, pts: [BIC_B, HEM_B]}
-    - {name: 앞옆선,   piece: 작은소매, role: outline, pts: [BIC_F, HEM_F]}
-    - {name: 소매부리, piece: 작은소매, role: outline, curve: [HEM_B, HEM_C, HEM_F],
+    # (cut: false — 도면처럼 겹쳐 그린 것이라 재단 조각에는 안 쓴다. 재단용 작은소매는 아래 '작은소매(펼침)')
+    - {name: 뒤옆선,   piece: 작은소매, role: outline, cut: false, pts: [BIC_B, HEM_B]}
+    - {name: 앞옆선,   piece: 작은소매, role: outline, cut: false, pts: [BIC_F, HEM_F]}
+    - {name: 소매부리, piece: 작은소매, role: outline, cut: false, curve: [HEM_B, HEM_C, HEM_F],
        tangents: {HEM_C: [1, 0]}, handles: [[0.4, 0.4], [0.4, 0.4]]}
     # 소매산 곡선을 절개점까지만 쓴다 — 큰소매 조각으로 옮긴다
     - {name: 뒤소매산, piece: 큰소매, role: outline, curve: [BS_T, X_B, SCP],
@@ -60,9 +72,20 @@ lines:
     - {name: 큰소매뒤절개, piece: 큰소매, role: outline, curve: [BS_T, BS_E2, BS_H],
        tangents: {BS_E2: {along: [BS_T, BS_H]}}, handles: [[0.45, 0.45], [0.45, 0.45]]}
     - {name: 큰소매밑단, piece: 큰소매, role: outline, pts: [BS_H, FS_H]}
-    - {name: 작은소매산, piece: 작은소매, role: outline, curve: [FS_T, U_MID_T, BS_T],
+    - {name: 작은소매산, piece: 작은소매, role: outline, cut: false, curve: [FS_T, U_MID_T, BS_T],
        tangents: {U_MID_T: [-1, 0]}, handles: [[0.5, 0.5], [0.5, 0.5]],
        note: 겨드랑이 밑으로 파이는 작은소매 소매산}
+    # --- 작은소매(펼침): 뒤 띠 + 앞 띠를 밑선에서 이어 붙인 재단 조각 (도면에는 없다 — verify.skip_pieces)
+    - {name: 펼침뒤절개, piece: 작은소매(펼침), role: outline, curve: [BS_T, BS_E2, BS_H],
+       tangents: {BS_E2: {along: [BS_T, BS_H]}}, handles: [[0.45, 0.45], [0.45, 0.45]]}
+    - {name: 펼침밑단, piece: 작은소매(펼침), role: outline, pts: [BS_H, HEM_B, UJ_H]}
+    - {name: 펼침앞절개, piece: 작은소매(펼침), role: outline, curve: [UJ_H, UJ_E, UJ_T],
+       tangents: {UJ_E: {along: [UJ_H, UJ_T]}}, handles: [[0.45, 0.45], [0.45, 0.45]]}
+    - {name: 펼침소매산, piece: 작은소매(펼침), role: outline, curve: [UJ_T, UJ_M, BS_T],
+       tangents: {UJ_M: [1, 0]}, handles: [[0.5, 0.5], [0.5, 0.5]], note: 이어 붙인 밑선 자리에서 언더깊이만큼 파인다}
+    - {name: 펼침밑선, piece: 작은소매(펼침), role: mark, pts: [BIC_B, HEM_B], note: 앞·뒤 띠를 이어 붙인 밑선 (봉제선)}
+
+verify: {skip_pieces: [작은소매(펼침)]}   # 펼친 작은소매는 도면에 없다
 
 handles:   # 곡선 모양을 원본 도면에 맞춘 값 — tools/fit_all.py
   뒤소매산: [[0.221, 0.724], [0.220, 0.477]]

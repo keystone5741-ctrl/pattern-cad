@@ -66,13 +66,82 @@ class Piece:
 
 
 # ------------------------------------------------------------------ 외곽선 잇기
+def _simplify(pts: list, tol: float = 0.004) -> list:
+    """거의 일직선인 점을 뺀다 (Douglas-Peucker). 곡선을 촘촘히 찍으면 0.01" 짜리 물결이 생겨 시접 오프셋이 스스로 꼬인다."""
+    if len(pts) < 3:
+        return list(pts)
+    a, b = pts[0], pts[-1]
+    d = b - a
+    L2 = d.dot(d)
+    best, idx = 0.0, 0
+    for i in range(1, len(pts) - 1):
+        p = pts[i]
+        if L2 < 1e-12:
+            dist = p.dist(a)
+        else:
+            t = max(0.0, min(1.0, (p - a).dot(d) / L2))
+            dist = p.dist(a + d * t)
+        if dist > best:
+            best, idx = dist, i
+    if best <= tol:
+        return [a, b]
+    return _simplify(pts[:idx + 1], tol)[:-1] + _simplify(pts[idx:], tol)
+
+
 def _poly(l: ResolvedLine) -> list:
     pts = l.polyline(24)
     out = [pts[0]]
     for p in pts[1:]:
         if p.dist(out[-1]) > 1e-6:
             out.append(p)
-    return out
+    return _simplify(out) if l.kind == "curve" else out
+
+
+def _cross(a: Pt, b: Pt, c: Pt, d: Pt):
+    """선분 ab 와 cd 가 속에서 만나면 그 점."""
+    def cr(o, p, q):
+        return (p.x - o.x) * (q.y - o.y) - (p.y - o.y) * (q.x - o.x)
+    if cr(a, b, c) * cr(a, b, d) < 0 and cr(c, d, a) * cr(c, d, b) < 0:
+        try:
+            return intersect_lines(a, b, c, d)
+        except (ValueError, ZeroDivisionError):
+            return None
+    return None
+
+
+def remove_small_loops(pts: list, max_len: float = 8.0) -> list:
+    """재단선이 스스로 꼬인 작은 고리(오목한 곡선·모서리를 밖으로 밀 때 생긴다)를 교점으로 잘라 낸다.
+    교차점 양쪽 호 가운데 짧은 쪽이 max_len 이하면 그쪽을 버린다. 큰 고리는 그대로."""
+    pts = list(pts)
+
+    def arc_len(seq):
+        return sum(seq[k].dist(seq[k + 1]) for k in range(len(seq) - 1))
+    for _ in range(50):
+        n = len(pts)
+        found = None
+        for i in range(n):
+            a, b = pts[i], pts[(i + 1) % n]
+            for j in range(i + 2, n):
+                if i == 0 and j == n - 1:
+                    continue
+                c, d = pts[j], pts[(j + 1) % n]
+                x = _cross(a, b, c, d)
+                if x is None:
+                    continue
+                inner = pts[i + 1:j + 1]                       # 교점 → i+1 … j → 교점
+                outer = pts[j + 1:] + pts[:i + 1]              # 교점 → j+1 … n-1, 0 … i → 교점
+                li = arc_len(inner) + x.dist(inner[0]) + x.dist(inner[-1])
+                lo = arc_len(outer) + x.dist(outer[0]) + x.dist(outer[-1])
+                if min(li, lo) <= max_len:
+                    found = (i, j, x, li <= lo)
+                    break
+            if found:
+                break
+        if not found:
+            break
+        i, j, x, drop_inner = found
+        pts = (pts[:i + 1] + [x] + pts[j + 1:]) if drop_inner else (pts[i + 1:j + 1] + [x])
+    return pts
 
 
 def _split_at_junctions(polys: list) -> list:
@@ -89,6 +158,13 @@ def _split_at_junctions(polys: list) -> list:
             for q in ends:
                 if q.dist(pts[0]) <= TOL or q.dist(pts[-1]) <= TOL:
                     continue
+                # 꺾은선 가운데 꼭짓점에 다른 선 끝이 닿는 경우 (고어 절개선의 퍼짐 시작점)
+                kv = next((k for k in range(1, len(pts) - 1) if q.dist(pts[k]) <= TOL), None)
+                if kv is not None:
+                    polys[i] = (l, pts[:kv + 1])
+                    polys.append((l, pts[kv:]))
+                    changed = True
+                    break
                 for k in range(len(pts) - 1):
                     a, b = pts[k], pts[k + 1]
                     d = b - a
@@ -474,14 +550,14 @@ def unfold(edges: list, fold_name: str) -> list:
 def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) -> list:
     """조각 목록. settings 는 {"<block>.<piece>": {"quantity", "unfold", "fabric", "allowance": {변: 값}}}"""
     settings = settings or {}
-    names = []
+    groups: dict = {}   # 재단 조각 이름 → 선들. cut_piece 가 있으면 그것(여러 조각에 겹쳐 들어갈 수 있다), 없으면 piece
     for l in res.lines:
-        pc = l.piece or ""
-        if pc not in names:
-            names.append(pc)
+        if not getattr(l, "cut", True):
+            continue
+        for n in (getattr(l, "cut_piece", None) or [l.piece or ""]):
+            groups.setdefault(n, []).append(l)
     out = []
-    for pc in names:
-        lines = [l for l in res.lines if (l.piece or "") == pc]
+    for pc, lines in groups.items():
         outline = [l for l in lines if l.role == "outline"]
         ends = [p for l in outline for p in (l.pts[0], l.pts[-1])]
         # 골선은 양 끝이 완성선 끝점에 닿을 때만 외곽이다 — 바지 주름선처럼 조각 가운데를 지나는 접는 선은 안쪽 선
@@ -539,6 +615,7 @@ def _make_piece(name, pc, block_key, res, lines, edges, inner, warnings, st, mul
         if piece.unfolded:
             darts += [[M(p) for p in d] for d in darts]
         piece.cut = dart_caps(piece.edges, cut, corner_at, offs, darts, st.get("dart_fold", "down")) if st.get("dart_cap", True) else cut
+        piece.cut = remove_small_loops(piece.cut)
         piece.notches = notches_for(piece, lines)
         if piece.unfolded:      # 펼친 쪽에도 같은 노치
             a, b = fold_edge.pts[0], fold_edge.pts[-1]

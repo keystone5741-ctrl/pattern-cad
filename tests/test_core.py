@@ -1005,3 +1005,45 @@ class DartCapAndRules(unittest.TestCase):
         big = next(p for p in j["sizes"]["L"] if p["name"] == "앞판")["bbox"]
         base = next(p for p in j["pieces"] if p["name"] == "앞판")["bbox"]
         self.assertGreater(big[2] - big[0], base[2] - base[0])
+
+
+class CutPieces(unittest.TestCase):
+    """그림 조각과 재단 조각 분리 — 고어드 스커트 고어, 두 장 소매 작은소매(펼침)."""
+
+    def test_gored_skirt_cuts_into_three_gores_each(self):
+        from patterncad.pieces import build_pieces, signed_area
+        from patterncad.style import Style
+        res = Style.load(ROOT / "styles" / "gored_skirt.yaml").evaluate()["skirt"]
+        pcs = build_pieces(res, "skirt")
+        self.assertEqual(sorted(p.name for p in pcs), ["뒤고어1", "뒤고어2", "뒤고어3", "앞고어1", "앞고어2", "앞고어3"])
+        self.assertTrue(all(not p.warnings for p in pcs))
+        front = sum(abs(signed_area(p.loop)) for p in pcs if p.name.startswith("앞"))
+        self.assertGreater(front, 150)   # 세 고어를 합치면 앞판 하나 넓이
+        self.assertEqual(next(p for p in pcs if p.name == "앞고어1").fold, "앞중심선")
+
+    def test_two_piece_under_sleeve_is_one_joined_cut_piece(self):
+        from patterncad.pieces import build_pieces, signed_area
+        from patterncad.style import Style
+        res = Style.load(ROOT / "styles" / "tailored_jacket.yaml").evaluate()["sleeve"]
+        pcs = build_pieces(res, "sleeve")
+        names = [p.name for p in pcs]
+        self.assertIn("작은소매(펼침)", names)
+        self.assertNotIn("작은소매", names)                     # 겹쳐 그린 선은 cut: false
+        under = next(p for p in pcs if p.name == "작은소매(펼침)")
+        self.assertEqual(under.warnings, [])
+        w = res.measurements["앞이동"] + res.measurements["뒤이동"]
+        top = abs(res.points["UJ_T"].x - res.points["BS_T"].x)
+        self.assertAlmostEqual(top, w, delta=0.15)              # 위선 폭 = 앞이동 + 뒤이동 (돌린 만큼 조금 차이)
+        self.assertGreater(abs(signed_area(under.cut)), abs(signed_area(under.loop)))
+
+    def test_cut_lines_never_self_cross(self):
+        from patterncad.pieces import _cross, build_pieces
+        from patterncad.style import Style
+        for sid, key in (("gored_skirt", "skirt"), ("oversize_hoodie", "body"), ("rider_jacket", "body")):
+            for pc in build_pieces(Style.load(ROOT / "styles" / f"{sid}.yaml").evaluate()[key], key):
+                c, n = pc.cut, len(pc.cut)
+                for i in range(n):
+                    for j in range(i + 2, n):
+                        if i == 0 and j == n - 1:
+                            continue
+                        self.assertIsNone(_cross(c[i], c[(i + 1) % n], c[j], c[(j + 1) % n]), f"{sid} {pc.name} 재단선이 꼬인다")
