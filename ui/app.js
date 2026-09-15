@@ -12,6 +12,7 @@ const S = {
   overrides: {}, pointOverrides: {}, lineOverrides: {}, pieceSettings: {},
   mode: 'draft', piecesData: null,          // 'draft' | 'pieces'
   grading: {system: null, base: null, sizes: []}, gradeData: null, sizeSystems: null,
+  marker: {width: 58, gap: 0.25, items: []},   // items: [{key, size, rot, flip, x, y}] 원단 좌표(inch)
   unit: 'in', sel: null, measure: null,        // sel: {type:'point'|'line', block, name}
   layers: Object.fromEntries(ROLES.map(r => [r, r !== 'dimension'])), labels: false, helpers: false,
   overlays: {}, pageCache: {},                 // overlays: 'block|piece' → {on, fit, loading}
@@ -78,7 +79,7 @@ async function getJson(url) {
   return j;
 }
 const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides, piece_settings: S.pieceSettings,
-                        grading: S.grading.sizes.length ? S.grading : null});
+                        grading: S.grading.sizes.length ? S.grading : null, marker: S.marker});
 function showErr(e) { $('err').hidden = false; $('err').textContent = e.message || String(e); }
 
 let evalTimer = null;
@@ -91,7 +92,7 @@ async function evaluate() {
     if (my !== S.seq) return;                  // 더 새 요청이 나갔다
     S.data = d;
     $('err').hidden = true;
-    if (S.mode === 'pieces') S.piecesData = await post('/api/pieces', payload());
+    if (S.mode === 'pieces' || S.mode === 'marker') S.piecesData = await post('/api/pieces', payload());
     S.gradeData = S.grading.sizes.length ? await post('/api/grade', payload()) : null;
     if (my !== S.seq) return;
     draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList(); renderGrading();
@@ -122,7 +123,11 @@ function applyView() {
 function fitAll(pieceFilter) {
   if (!S.data) return;
   let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-  const boxes = S.mode === 'pieces' && S.piecesData ? S.piecesData.pieces : S.data.pieces;
+  if (S.mode === 'marker') {
+    const L = Math.max(markerLength(), 20);
+    x0 = 0; y0 = 0; x1 = L * K; y1 = S.marker.width * K;
+  }
+  const boxes = S.mode === 'pieces' && S.piecesData ? S.piecesData.pieces : S.mode === 'marker' ? [] : S.data.pieces;
   for (const p of boxes) {
     if (pieceFilter && !pieceFilter(p)) continue;
     const [ax, ay] = toScreen(p.bbox[0], p.bbox[1], p), [bx, by] = toScreen(p.bbox[2], p.bbox[3], p);
@@ -163,6 +168,7 @@ const isSel = (type, block, name) => S.sel && S.sel.type === type && S.sel.block
 function draw() {
   world.innerHTML = '';
   if (S.mode === 'pieces') return drawPieces();
+  if (S.mode === 'marker') return drawMarker();
   const d = S.data;
   drawOverlays();
   drawGrades();
@@ -269,6 +275,152 @@ async function renderGrading() {
 $('gSystem').addEventListener('change', e => { S.grading.system = e.target.value; S.grading.base = null; S.grading.sizes = []; renderGrading(); scheduleEval(0); });
 $('gBase').addEventListener('change', e => { S.grading.base = e.target.value.replace(/ 기준$/, ''); S.grading.sizes = S.grading.sizes.filter(x => x !== S.grading.base); renderGrading(); scheduleEval(0); });
 
+// ------------------------------------------------------------ 마카 (손으로 놓기 + 요척)
+const rotPt = ([x, y], rot, flip) => {           // 조각 좌표 → 원단 좌표 (patterncad.pieces.transform_piece 와 같은 순서)
+  let px = flip ? -x : x, py = y;
+  const a = rot * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
+  return [px * c - py * sn, px * sn + py * c];
+};
+function itemPoly(it) {
+  const pc = S.piecesData && S.piecesData.pieces.find(p => p.key === it.key);
+  if (!pc) return null;
+  return pc.cut.map(p => { const [x, y] = rotPt(p, it.rot, it.flip); return [x + it.x, y + it.y]; });
+}
+const polyBox = pts => pts.reduce((b, [x, y]) => [Math.min(b[0], x), Math.min(b[1], y), Math.max(b[2], x), Math.max(b[3], y)], [1e9, 1e9, -1e9, -1e9]);
+const polyArea = pts => Math.abs(pts.reduce((a, p, i) => { const q = pts[(i + 1) % pts.length]; return a + p[0] * q[1] - q[0] * p[1]; }, 0) / 2);
+function markerLength() {
+  let L = 0;
+  for (const it of S.marker.items) { const pl = itemPoly(it); if (pl) L = Math.max(L, polyBox(pl)[2]); }
+  return L;
+}
+function markerItemsFromPieces() {              // 매수만큼 (둘째 장은 뒤집어) — 놓인 게 없을 때 처음 만든다
+  const items = [];
+  for (const pc of S.piecesData.pieces) for (let i = 0; i < pc.quantity; i++) items.push({key: pc.key, rot: 0, flip: i % 2 === 1, x: 0, y: 0});
+  return items;
+}
+function autoLayout() {                         // 선반(shelf) 채우기 — 큰 것부터, 세로 폭 안에서 왼쪽부터
+  const W = S.marker.width, gap = S.marker.gap;
+  const items = S.marker.items.map(it => ({...it, x: 0, y: 0}));
+  const sized = items.map(it => { const pl = itemPoly(it); const b = pl ? polyBox(pl) : [0, 0, 1, 1]; return {it, w: b[2] - b[0], h: b[3] - b[1], b}; })
+    .sort((a, b) => b.h * b.w - a.h * a.w);
+  const shelves = [];                             // {x, y, h}
+  for (const s of sized) {
+    let placed = false;
+    for (const sh of shelves) {
+      if (sh.y + s.h <= W + 1e-9 && s.h <= sh.h + 1e-9 || (sh.y + s.h <= W + 1e-9 && sh.items === 0)) {
+        s.it.x = sh.x - s.b[0]; s.it.y = sh.y - s.b[1]; sh.x += s.w + gap; sh.h = Math.max(sh.h, s.h); sh.items++; placed = true; break;
+      }
+    }
+    if (!placed) {
+      // 새 선반: 세로로 쌓다가 폭이 넘치면 오른쪽에 새 열
+      const last = shelves[shelves.length - 1];
+      const y = last ? last.y + last.h + gap : 0;
+      const colX = shelves.length ? Math.max(...shelves.map(z => z.x0)) : 0;
+      if (y + s.h <= W + 1e-9) shelves.push({x0: colX, x: colX + s.w + gap, y, h: s.h, items: 1});
+      else { const nx = Math.max(...shelves.map(z => z.x), 0); shelves.push({x0: nx, x: nx + s.w + gap, y: 0, h: s.h, items: 1}); }
+      const sh = shelves[shelves.length - 1];
+      s.it.x = sh.x0 - s.b[0]; s.it.y = sh.y - s.b[1];
+    }
+  }
+  S.marker.items = items;
+}
+function drawMarker() {
+  const pd = S.piecesData; if (!pd) return;
+  if (!S.marker.items.length) { S.marker.items = markerItemsFromPieces(); autoLayout(); }
+  const W = S.marker.width, L = Math.max(markerLength() + 2, 20);
+  const g = el('g', {}, world);
+  el('rect', {x: 0, y: 0, width: L * K, height: W * K, class: 'fabric'}, g);
+  for (let x = 0; x <= L; x += 1) el('line', {x1: x * K, y1: 0, x2: x * K, y2: W * K, class: 'fabgrid'}, g);
+  for (let y = 0; y <= W; y += 1) el('line', {x1: 0, y1: y * K, x2: L * K, y2: y * K, class: 'fabgrid'}, g);
+  text(0, 0, `원단 폭 ${fmt(W)}${unitLabel()} · 결 →`, 'pcname', g, 0, -8);
+  const boxes = S.marker.items.map(it => { const pl = itemPoly(it); return pl ? polyBox(pl) : null; });
+  S.marker.items.forEach((it, i) => {
+    const pl = itemPoly(it); if (!pl) return;
+    const pc = pd.pieces.find(p => p.key === it.key);
+    const b = boxes[i];
+    const out = b[0] < -1e-6 || b[1] < -1e-6 || b[3] > W + 1e-6;
+    const bad = boxes.some((o, j) => j !== i && o && b[0] < o[2] && o[0] < b[2] && b[1] < o[3] && o[1] < b[3] && polyOverlap(pl, itemPoly(S.marker.items[j])));
+    const on = S.sel && S.sel.type === 'mk' && S.sel.i === i;
+    const path = el('path', {d: 'M' + pl.map(([x, y]) => `${(x * K).toFixed(2)} ${(y * K).toFixed(2)}`).join('L') + 'Z', class: 'mk' + (on ? ' on' : '') + (bad ? ' bad' : '') + (out ? ' out' : '')}, g);
+    path.addEventListener('pointerdown', ev => startMarkerDrag(ev, i));
+    if (pc.grain) {
+      const [a, c] = pc.grain.map(p => { const [x, y] = rotPt(p, it.rot, it.flip); return [(x + it.x) * K, (y + it.y) * K]; });
+      el('line', {x1: a[0], y1: a[1], x2: c[0], y2: c[1], class: 'mkg', 'marker-end': 'url(#arw)'}, g);
+    }
+    const cx = (b[0] + b[2]) / 2 * K, cy = (b[1] + b[3]) / 2 * K;
+    text(cx, cy, `${pc.name}${it.size ? ' ' + it.size : ''}${it.flip ? ' ↔' : ''}`, 'lbl mkl', g, -14, 4);
+  });
+  applyView();
+}
+function polyOverlap(a, b) {                     // 꼭짓점이 상대 안에 있는지로 (대략)
+  const inside = (p, poly) => { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > p[1]) !== (yj > p[1]) && p[0] < (xj - xi) * (p[1] - yi) / (yj - yi) + xi) c = !c; } return c; };
+  return a.some(p => inside(p, b)) || b.some(p => inside(p, a));
+}
+function startMarkerDrag(ev, i) {
+  ev.preventDefault(); ev.stopPropagation();
+  const it = S.marker.items[i], start = clientToWorld(ev), ox = it.x, oy = it.y;
+  let moved = false;
+  S.sel = {type: 'mk', i}; draw(); renderSel();
+  const move = e => {
+    const w = clientToWorld(e);
+    moved = true;
+    it.x = Math.round((ox + (w[0] - start[0]) / K) * 8) / 8;          // 1/8" 눈금
+    it.y = Math.round((oy + (w[1] - start[1]) / K) * 8) / 8;
+    draw(); renderSel();
+  };
+  const up = () => { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); if (moved) renderSel(); };
+  window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+}
+function markerStats() {
+  const W = S.marker.width, L = markerLength();
+  let area = 0;
+  for (const it of S.marker.items) { const pl = itemPoly(it); if (pl) area += polyArea(pl); }
+  return {L, W, area, eff: L > 0 ? area / (L * W) : 0};
+}
+function renderMarkerPanel() {
+  const box = $('sel'); box.className = '';
+  const st = markerStats();
+  const it = S.sel && S.sel.type === 'mk' ? S.marker.items[S.sel.i] : null;
+  const pc = it && S.piecesData.pieces.find(p => p.key === it.key);
+  box.innerHTML = `<div class="stat">
+    <span>원단 폭</span><span><input id="mkW" value="${fmt(S.marker.width)}" style="width:64px;text-align:right"> ${unitLabel()}</span>
+    <span>조각 사이</span><span><input id="mkGap" value="${fmt(S.marker.gap)}" style="width:64px;text-align:right"> ${unitLabel()}</span>
+    <span>요척 (길이)</span><b>${fmt(st.L)}${unitLabel()} = ${(st.L / 36).toFixed(2)} yd · ${(st.L * 2.54 / 100).toFixed(2)} m</b>
+    <span>효율</span><b>${(st.eff * 100).toFixed(1)}%</b>
+    <span>놓은 장</span><span>${S.marker.items.length}</span></div>
+    <div class="row" style="margin-top:8px;gap:6px"><button class="btn" id="mkAuto" type="button">자동 배치(선반)</button><button class="btn" id="mkReset" type="button">매수대로 다시</button><button class="btn pri" id="mkDxf" type="button">마카 DXF</button><button class="btn" id="mkSvg" type="button">마카 SVG</button></div>
+    ${it ? `<div class="kv" style="margin-top:10px"><b>조각</b><div><strong>${esc(pc.name)}</strong> ${it.size ? esc(it.size) : ''} <span class="muted">(${esc(pc.block)})</span></div>
+      <b>돌리기</b><div><button class="btn" type="button" data-rot="90">90°</button> <button class="btn" type="button" data-rot="180">180°</button> <button class="btn" type="button" data-rot="-90">−90°</button> <span class="muted">지금 ${it.rot}°</span></div>
+      <b>뒤집기</b><div><button class="btn" type="button" id="mkFlip">${it.flip ? '↔ 뒤집힘' : '↔ 뒤집기'}</button></div>
+      <b>자리</b><div>x ${fmt(it.x)} y ${fmt(it.y)} ${unitLabel()} · 1/8" 눈금 <button class="linkbtn" id="mkDel">빼기</button></div></div>` : '<div class="note" style="margin-top:8px">조각을 끌어 놓는다. 고른 조각은 R 로 90° 돌리고 M 으로 뒤집는다. 빨강은 겹침, 점선은 원단 밖</div>'}
+    <div class="note" style="margin-top:6px">골선 조각은 골 펼치기를 켜야 한 장으로 놓인다 (조각·시접에서). 자동 배치는 선반 채우기라 시작점일 뿐 — 자동 네스팅은 다음</div>`;
+  const rebind = () => { draw(); renderSel(); };
+  $('mkW').addEventListener('change', e => { const v = parseUnit(e.target.value); if (v) { S.marker.width = v; rebind(); } });
+  $('mkGap').addEventListener('change', e => { const v = parseUnit(e.target.value); if (v != null) { S.marker.gap = v; rebind(); } });
+  $('mkAuto').addEventListener('click', () => { autoLayout(); rebind(); fitAll(); });
+  $('mkReset').addEventListener('click', () => { S.marker.items = markerItemsFromPieces(); autoLayout(); S.sel = null; rebind(); fitAll(); });
+  $('mkDxf').addEventListener('click', () => download('/api/marker_dxf', {...payload(), placements: S.marker.items, width: S.marker.width}, `${S.projName || S.id}_marker.dxf`));
+  $('mkSvg').addEventListener('click', () => {
+    const W = S.marker.width, L = Math.max(markerLength(), 1), S_ = 25.4;
+    const paths = S.marker.items.map(it => { const pl = itemPoly(it); return pl ? `<path d="M${pl.map(([x, y]) => `${(x * S_).toFixed(2)} ${(y * S_).toFixed(2)}`).join('L')}Z"/>` : ''; }).join('');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${(L * S_).toFixed(1)}mm" height="${(W * S_).toFixed(1)}mm" viewBox="0 0 ${(L * S_).toFixed(1)} ${(W * S_).toFixed(1)}"><rect width="100%" height="100%" fill="white" stroke="#111" stroke-width="0.5"/><g fill="none" stroke="#111" stroke-width="0.35">${paths}</g></svg>`;
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([svg], {type: 'image/svg+xml'})); a.download = `${S.projName || S.id}_marker.svg`; a.click();
+  });
+  if (it) {
+    box.querySelectorAll('[data-rot]').forEach(b => b.addEventListener('click', () => { it.rot = ((it.rot + +b.dataset.rot) % 360 + 360) % 360; rebind(); }));
+    $('mkFlip').addEventListener('click', () => { it.flip = !it.flip; rebind(); });
+    $('mkDel').addEventListener('click', () => { S.marker.items.splice(S.sel.i, 1); S.sel = null; rebind(); });
+  }
+}
+async function download(url, body, filename) {
+  try {
+    const r = await post(url, body);
+    const blob = await r.blob(), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  } catch (e) { showErr(e); }
+}
+
 // ------------------------------------------------------------ 조각·시접 보기
 const pieceOff = pc => ({dx: pc.dx, dy: pc.dy});
 function drawPieces() {
@@ -349,7 +501,9 @@ function drawMeasure() {
 
 function renderSel() {
   const box = $('sel');
+  if (S.mode === 'marker' && S.data && S.piecesData) return renderMarkerPanel();
   if (!S.sel || !S.data) { box.className = 'small muted'; box.textContent = '점이나 선을 누르세요. 점은 끌어 옮기고, 점을 고른 뒤 다른 점을 Shift+클릭하면 거리를 잰다.'; return; }
+  if (S.mode === 'marker') return renderMarkerPanel();
   if (S.sel.type === 'piece') return renderPiecePanel();
   box.className = '';
   const b = S.data.blocks.find(x => x.key === S.sel.block);
@@ -479,7 +633,10 @@ window.addEventListener('keydown', ev => {
   if (ev.target.matches('input, select, textarea') || $('wiz').open) return;
   if (ev.key === 'Escape') { S.measure = null; select(null); }
   else if (ev.key === 'f' || ev.key === 'F') fitAll();
-  else if ((ev.key === 'Delete' || ev.key === 'Backspace') && S.sel) {
+  else if (S.mode === 'marker' && S.sel && S.sel.type === 'mk' && (ev.key === 'r' || ev.key === 'R')) { S.marker.items[S.sel.i].rot = (S.marker.items[S.sel.i].rot + 90) % 360; draw(); renderSel(); }
+  else if (S.mode === 'marker' && S.sel && S.sel.type === 'mk' && (ev.key === 'm' || ev.key === 'M')) { S.marker.items[S.sel.i].flip = !S.marker.items[S.sel.i].flip; draw(); renderSel(); }
+  else if ((ev.key === 'Delete' || ev.key === 'Backspace') && S.sel && S.sel.type === 'mk') { S.marker.items.splice(S.sel.i, 1); S.sel = null; draw(); renderSel(); }
+  else if ((ev.key === 'Delete' || ev.key === 'Backspace') && S.sel && S.sel.type !== 'piece') {
     const key = `${S.sel.block}.${S.sel.name}`;
     if (S.sel.type === 'point') delete S.pointOverrides[key]; else delete S.lineOverrides[key];
     scheduleEval(0);
@@ -489,6 +646,16 @@ window.addEventListener('keydown', ev => {
 // ------------------------------------------------------------ 왼쪽: 조각 나무 · 층 · 원형 이력 · 원본 도면
 function renderTree() {
   const t = $('tree'); t.innerHTML = '';
+  if (S.mode === 'marker' && S.piecesData) {
+    S.marker.items.forEach((it, i) => {
+      const pc = S.piecesData.pieces.find(p => p.key === it.key); if (!pc) return;
+      const e = document.createElement('div'); e.className = (S.sel && S.sel.type === 'mk' && S.sel.i === i ? 'on' : '');
+      e.textContent = `${pc.name}${it.size ? ' ' + it.size : ''} ${it.rot ? it.rot + '°' : ''}${it.flip ? ' ↔' : ''}`;
+      e.addEventListener('click', () => { S.sel = {type: 'mk', i}; draw(); renderSel(); });
+      t.appendChild(e);
+    });
+    return;
+  }
   if (S.mode === 'pieces' && S.piecesData) {
     for (const pc of S.piecesData.pieces) {
       const e = document.createElement('div'); e.className = (S.sel && S.sel.key === pc.key ? 'on' : '');
@@ -640,7 +807,7 @@ $('modes').querySelectorAll('button').forEach(btn => btn.addEventListener('click
   $('modes').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
   await evaluate(); fitAll();
 }));
-$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; S.grading.sizes = []; scheduleEval(0); });
+$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; S.grading.sizes = []; S.marker.items = []; scheduleEval(0); });
 $('saveDxf').addEventListener('click', async () => {
   try {
     const r = await post('/api/dxf', payload());
@@ -657,7 +824,8 @@ $('saveSvg').addEventListener('click', async () => {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   } catch (e) { showErr(e); }
 });
-function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, grading = null, projName = '', view = null} = {}) {
+function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, grading = null, marker = null, projName = '', view = null} = {}) {
+  S.marker = marker && marker.items ? marker : {width: S.marker.width, gap: S.marker.gap, items: []};
   S.kind = kind; S.id = id; S.overrides = overrides; S.pointOverrides = pointOverrides; S.lineOverrides = lineOverrides; S.pieceSettings = pieceSettings;
   S.grading = grading && grading.system ? grading : {system: S.grading.system, base: S.grading.base, sizes: []};
   S.sel = null; S.measure = null; S.overlays = {}; measTab = null; S.projName = projName;
@@ -680,7 +848,7 @@ $('projects').addEventListener('change', async () => {
   const name = $('projects').value; if (!name) return;
   try {
     const p = await getJson(`/api/project?name=${encodeURIComponent(name)}`);
-    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, grading: p.grading, projName: p.name, view: p.view});
+    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, grading: p.grading, marker: p.marker, projName: p.name, view: p.view});
   } catch (e) { showErr(e); }
 });
 $('saveProj').addEventListener('click', async () => {
@@ -773,7 +941,7 @@ async function init() {
     const b = S.data.blocks.find(x => x.key === blk);
     if (b) select({type: b.lines.some(l => l.name === name) ? 'line' : 'point', block: blk, name});
   }
-  if (hq.mode === 'pieces') $('modes').querySelector('[data-m=pieces]').click();
+  if (hq.mode === 'pieces' || hq.mode === 'marker') $('modes').querySelector(`[data-m=${hq.mode}]`).click();
   if (hq.sizes) { await renderGrading(); S.grading.sizes = hq.sizes.split(','); await evaluate(); }
   if (hq.wiz) $('newPat').click();
   for (const key of (hq.ovl || '').split(',').filter(Boolean)) {

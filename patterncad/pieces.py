@@ -316,3 +316,25 @@ def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) ->
         piece.grain = grain_for(piece, lines)
         out.append(piece)
     return out
+
+
+# ------------------------------------------------------------------ 마카용 변환
+def transform_piece(pc: Piece, rot: float = 0.0, flip: bool = False, dx: float = 0.0, dy: float = 0.0) -> Piece:
+    """조각을 뒤집고(x 대칭) 돌리고(도, 원점 기준) 옮긴 사본. 마카에 놓인 자리를 실제 좌표로 만들 때 쓴다."""
+    def T(p: Pt) -> Pt:
+        q = Pt(-p.x, p.y) if flip else p
+        q = q.rotate(rot) if rot else q
+        return Pt(q.x + dx, q.y + dy)
+
+    def TN(n: Pt) -> Pt:      # 방향 벡터: 옮기지 않는다
+        q = Pt(-n.x, n.y) if flip else n
+        return q.rotate(rot) if rot else q
+    out = Piece(pc.name, pc.block)
+    out.edges = [Edge(e.name, e.role, [T(p) for p in e.pts], e.allowance, e.synthetic) for e in pc.edges]
+    out.loop = [T(p) for p in pc.loop]
+    out.cut = [T(p) for p in pc.cut]
+    out.internal = [(n, r, [T(p) for p in pts]) for n, r, pts in pc.internal]
+    out.notches = [(T(q), TN(n)) for q, n in pc.notches]
+    out.grain = (T(pc.grain[0]), T(pc.grain[1])) if pc.grain else None
+    out.fold, out.unfolded, out.quantity, out.fabric, out.warnings = pc.fold, pc.unfolded, pc.quantity, pc.fabric, list(pc.warnings)
+    return out

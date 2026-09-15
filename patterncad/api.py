@@ -18,7 +18,7 @@ import threading
 from .block import Block, Resolved
 from .dxf import write_dxf
 from .grading import size_overrides, systems
-from .pieces import build_pieces
+from .pieces import build_pieces, transform_piece
 from .style import Style
 from .svg import render_pieces_svg, render_style_svg, render_svg
 from .units import parse_inch
@@ -335,7 +335,7 @@ def project_list() -> list[dict]:
 def project_save(name: str, data: dict) -> dict:
     import datetime  # noqa: PLC0415
     name = _safe_name(name)
-    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "grading", "view", "note")}
+    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "grading", "marker", "view", "note")}
     keep["name"] = name
     keep["saved"] = datetime.datetime.now().isoformat(timespec="seconds")
     PROJECTS.mkdir(exist_ok=True)
@@ -448,3 +448,31 @@ def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, 
             blocks.append({"key": key, "lines": lines, "changed": changed, "shift": shift})
         out.append({"size": size, "blocks": blocks})
     return {"system": system, "base": base, "sizes": out}
+
+
+# ------------------------------------------------------------------ 마카
+def marker_dxf(kind, ident, overrides, point_overrides, line_overrides, piece_settings, placements, width=58.0,
+               grading=None) -> str:
+    """placements: [{"key": "body.앞판", "size": "55"(선택), "rot": 90, "flip": false, "x": 3.2, "y": 0.5}] — 원단 좌표(인치).
+    놓인 조각을 실제 좌표로 바꿔 한 층에 쓴다 (조각 이름에 번호)."""
+    cache = {}
+
+    def pieces_for(size):
+        if size not in cache:
+            ov = overrides
+            if grading and size and size != grading.get("base"):
+                ov = grade_overrides(kind, ident, overrides, grading["system"], grading["base"], size)
+            _, pcs, _ = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings)
+            cache[size] = {f"{pc.block}.{pc.name}": pc for pc in pcs}
+        return cache[size]
+    placed = []
+    for i, pl in enumerate(placements or []):
+        pcs = pieces_for(pl.get("size") or (grading or {}).get("base"))
+        pc = pcs.get(pl["key"])
+        if not pc:
+            continue
+        t = transform_piece(pc, float(pl.get("rot", 0)), bool(pl.get("flip")), float(pl.get("x", 0)), float(pl.get("y", 0)))
+        t.name = f"{pc.name}{'_' + pl['size'] if pl.get('size') else ''}_{i + 1}"
+        placed.append(t)
+    title = f"marker {ident} width {width}in"
+    return write_dxf(placed, [(0.0, 0.0)] * len(placed), title=title)

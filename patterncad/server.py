@@ -12,6 +12,7 @@ POST /api/svg         → 같은 입력, 실물 크기 SVG 본문
 POST /api/pieces      → 같은 입력 + "piece_settings" → 조각(완성선·재단선·노치·식서)
 POST /api/dxf         → 같은 입력 (+ "grading": {"system", "base", "sizes"}), AAMA 층 DXF (인치)
 GET  /api/sizes · POST /api/grade  → 사이즈 체계 / 사이즈별 선 (치수 재대입 그레이딩)
+POST /api/marker_dxf  → 같은 입력 + "placements", "width" → 마카 DXF (놓인 자리대로, 한 층)
 GET  /api/projects · GET/POST /api/project?name=   → 프로젝트 파일 (projects/*.pcad)
 POST /api/overlay     → {"block": 원형id, "piece": 조각} → 원본 도면 맞춤 변환 (verify/fits.json 에 캐시)
 GET  /api/page?page=48&layers=pattern,developed    → 추출 도면의 층 그림 (SVG 조각)
@@ -105,6 +106,11 @@ class Handler(BaseHTTPRequestHandler):
             ps = req.get("piece_settings") or {}
             if path == "/api/pieces":
                 return self._json(200, api.pieces_json(kind, ident, ov, po, lo, ps))
+            if path == "/api/marker_dxf":
+                body = api.marker_dxf(kind, ident, ov, po, lo, ps, req.get("placements") or [],
+                                      float(req.get("width") or 58), req.get("grading")).encode("utf-8")
+                return self._send(200, body, "application/dxf; charset=utf-8",
+                                  {"Content-Disposition": f'attachment; filename="{ident}_marker.dxf"'})
             if path == "/api/grade":
                 g = req.get("grading") or {}
                 return self._json(200, api.grade_json(kind, ident, ov, po, lo, g["system"], g["base"], g.get("sizes") or []))

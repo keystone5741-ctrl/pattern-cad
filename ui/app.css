@@ -121,3 +121,15 @@ dialog::backdrop{background:rgba(31,29,26,.35)}
 #gSizes label{display:inline-flex;align-items:center;gap:3px;border:1.2px solid #c9c4ba;border-radius:10px;padding:0 7px;font-size:12px;cursor:pointer}
 #gSizes label.base{border-color:var(--ink);background:var(--ink);color:#fff}
 #gSizes label i{display:inline-block;width:9px;height:9px;border-radius:50%}
+
+/* 마카 */
+#world .fabric{fill:#fff;stroke:var(--ink);stroke-width:1.5px;vector-effect:non-scaling-stroke}
+#world .fabgrid{stroke:#ece9e2;stroke-width:1px;vector-effect:non-scaling-stroke}
+#world .mk{fill:rgba(61,120,179,.10);stroke:var(--accent);stroke-width:1.3px;vector-effect:non-scaling-stroke;cursor:move}
+#world .mk.on{fill:rgba(61,120,179,.22);stroke-width:2.4px}
+#world .mk.bad{fill:rgba(201,48,44,.15);stroke:#c9302c}
+#world .mk.out{stroke-dasharray:5 3}
+#world .mkg{stroke:var(--ink);stroke-width:1px;vector-effect:non-scaling-stroke;pointer-events:none}
+#world .mkl{pointer-events:none}
+.stat{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:12.5px}
+.stat b{font-weight:600}

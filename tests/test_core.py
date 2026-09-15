@@ -882,3 +882,25 @@ class Grading(unittest.TestCase):
         many = api.to_dxf("style", "basic_skirt", grading={"system": "S M L", "base": "M", "sizes": ["S", "L"]})
         self.assertEqual(many.count("\nBLOCK\n"), 3 * one.count("\nBLOCK\n"))
         self.assertIn("_L", many)
+
+
+class Marker(unittest.TestCase):
+    def test_transform_piece_keeps_shape(self):
+        from patterncad.pieces import build_pieces, signed_area, transform_piece
+        from patterncad.style import Style
+        r = Style.load(ROOT / "styles" / "basic_skirt.yaml").evaluate()
+        pc = build_pieces(r["skirt"], "skirt")[0]
+        t = transform_piece(pc, rot=90, flip=True, dx=5, dy=2)
+        self.assertAlmostEqual(abs(signed_area(t.cut)), abs(signed_area(pc.cut)), places=6)
+        x0, y0, x1, y1 = pc.bbox()
+        tx0, ty0, tx1, ty1 = t.bbox()
+        self.assertAlmostEqual(tx1 - tx0, y1 - y0, places=6)   # 90° 돌리면 가로세로가 바뀐다
+        self.assertEqual(len(t.notches), len(pc.notches))
+
+    def test_marker_dxf_places_every_item(self):
+        from patterncad import api
+        d = api.marker_dxf("style", "basic_skirt", {}, {}, {}, {},
+                           [{"key": "skirt.앞판", "rot": 0, "x": 0, "y": 0}, {"key": "skirt.앞판", "rot": 0, "flip": True, "x": 20, "y": 0},
+                            {"key": "없는조각", "x": 0, "y": 0}], 58)
+        self.assertEqual(d.count("\nBLOCK\n"), 2)
+        self.assertIn("앞판_2", d)
