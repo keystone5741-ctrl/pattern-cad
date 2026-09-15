@@ -374,8 +374,23 @@ def _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_s
     return name, pieces, positions
 
 
-def pieces_json(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None, compose_choices=None) -> dict:
+def pieces_json(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None,
+                compose_choices=None, grading=None) -> dict:
+    """조각 JSON. grading 을 주면 켠 사이즈의 조각도 "sizes": {호칭: [...]} 로 함께 (마카에 섞어 놓기)."""
     name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings, compose_choices)
+    out = {"name": name, "pieces": _pieces_rows(pieces, positions)}
+    if grading and grading.get("sizes"):
+        out["sizes"] = {}
+        for size in grading["sizes"]:
+            if size == grading.get("base"):
+                continue
+            ov, po = grade_point_overrides(kind, ident, overrides, point_overrides, line_overrides, grading, size, compose_choices)
+            _, pcs, pos = _all_pieces(kind, ident, ov, po, line_overrides, piece_settings, compose_choices)
+            out["sizes"][size] = _pieces_rows(pcs, pos)
+    return out
+
+
+def _pieces_rows(pieces, positions):
     from .dxf import _allow_at  # noqa: PLC0415
     out = []
     for pc, (dx, dy) in zip(pieces, positions):
@@ -388,7 +403,7 @@ def pieces_json(kind, ident, overrides=None, point_overrides=None, line_override
                     "internal": [{"name": n, "role": r, "pts": P(pts)} for n, r, pts in pc.internal],
                     "fold": pc.fold, "unfolded": pc.unfolded, "quantity": pc.quantity, "fabric": pc.fabric,
                     "warnings": pc.warnings, "dx": dx, "dy": dy, "bbox": list(pc.bbox())})
-    return {"name": name, "pieces": out}
+    return out
 
 
 def to_dxf(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None,
@@ -401,8 +416,8 @@ def to_dxf(kind, ident, overrides=None, point_overrides=None, line_overrides=Non
     all_pieces, all_pos = [], []
     row_h = max(pc.bbox()[3] - pc.bbox()[1] for pc in pieces) + 2.0
     for r, size in enumerate([base] + [s for s in grading["sizes"] if s != base]):
-        ov = overrides if size == base else grade_overrides(kind, ident, overrides, grading["system"], base, size, compose_choices)
-        _, pcs, pos = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings, compose_choices)
+        ov, po = grade_point_overrides(kind, ident, overrides, point_overrides, line_overrides, grading, size, compose_choices)
+        _, pcs, pos = _all_pieces(kind, ident, ov, po, line_overrides, piece_settings, compose_choices)
         for pc, (dx, dy) in zip(pcs, pos):
             pc.name = f"{pc.name}_{size}"
             all_pieces.append(pc)
@@ -424,8 +439,33 @@ def grade_overrides(kind, ident, overrides, system, base, target, compose_choice
     return size_overrides(kind, ident, overrides or {}, base_values, system, base, target, blocks)
 
 
-def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, base, sizes, compose_choices=None) -> dict:
-    """사이즈마다 선(완성선·골선·다트)만 — 겹쳐 보기용. 조각 자리는 기준 사이즈 배치를 그대로 쓴다."""
+def _apply_point_rules(kind, ident, ov, point_overrides, line_overrides, compose_choices, rules):
+    """점별 편차 {"body.SP_F": [dx, dy]} — 그 사이즈로 계산한 점에 편차를 더한 점 수정값을 만든다."""
+    if not rules:
+        return point_overrides or {}
+    results, _, _ = _evaluate(kind, ident, ov, point_overrides or {}, line_overrides or {}, compose_choices)
+    po = dict(point_overrides or {})
+    for key, (dx, dy) in rules.items():
+        blk, name = key.split(".", 1)
+        if blk in results and name in results[blk].points:
+            p = results[blk].points[name]
+            po[key] = [p.x + float(dx), p.y + float(dy)]
+    return po
+
+
+def grade_point_overrides(kind, ident, overrides, point_overrides, line_overrides, grading, size, compose_choices=None):
+    """사이즈 하나의 (치수 덮어쓰기, 점 수정값) — 치수 재대입 + 점별 편차."""
+    base = grading["base"]
+    ov = overrides if size == base else grade_overrides(kind, ident, overrides, grading["system"], base, size, compose_choices)
+    rules = (grading.get("rules") or {}).get(size) or {}
+    po = _apply_point_rules(kind, ident, ov, point_overrides, line_overrides, compose_choices, rules)
+    return ov, po
+
+
+def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, base, sizes, compose_choices=None,
+               rules=None) -> dict:
+    """사이즈마다 선(완성선·골선·다트)만 — 겹쳐 보기용. 조각 자리는 기준 사이즈 배치를 그대로 쓴다.
+    rules 는 점별 편차 {size: {"body.SP_F": [dx, dy]}} (치수 재대입 위에 얹는다)."""
     base_results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {}, compose_choices)
 
     def centers(results):
@@ -440,8 +480,9 @@ def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, 
     for size in sizes:
         if size == base:
             continue
-        ov = grade_overrides(kind, ident, overrides, system, base, size, compose_choices)
-        results, _, _ = _evaluate(kind, ident, ov, point_overrides or {}, line_overrides or {}, compose_choices)
+        ov, po = grade_point_overrides(kind, ident, overrides, point_overrides, line_overrides,
+                                       {"system": system, "base": base, "rules": rules or {}}, size, compose_choices)
+        results, _, _ = _evaluate(kind, ident, ov, po, line_overrides or {}, compose_choices)
         size_c = centers(results)
         blocks = []
         for key, res in results.items():
@@ -468,10 +509,10 @@ def marker_dxf(kind, ident, overrides, point_overrides, line_overrides, piece_se
 
     def pieces_for(size):
         if size not in cache:
-            ov = overrides
-            if grading and size and size != grading.get("base"):
-                ov = grade_overrides(kind, ident, overrides, grading["system"], grading["base"], size, compose_choices)
-            _, pcs, _ = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings, compose_choices)
+            ov, po = overrides, point_overrides
+            if grading and size:
+                ov, po = grade_point_overrides(kind, ident, overrides, point_overrides, line_overrides, grading, size, compose_choices)
+            _, pcs, _ = _all_pieces(kind, ident, ov, po, line_overrides, piece_settings, compose_choices)
             cache[size] = {f"{pc.block}.{pc.name}": pc for pc in pcs}
         return cache[size]
     placed = []

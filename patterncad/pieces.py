@@ -6,8 +6,8 @@
 변(edge)에 이름이 있으니(옆솔기·밑단·목선…) 시접이 자동으로 따라온다:
     밑단·부리 1", 목선·암홀·소매산 3/8", 골선 0, 그 밖에 1/2"  — 프로젝트에서 변마다 고칠 수 있다.
 
-외곽선이 끊긴 곳(옆솔기 가슴다트 자리처럼 다트 폭만큼 벌어진 곳)은 곧게 이어 붙이고 양 끝에 노치를 둔다.
-다트를 접어 자르는 다트 캡은 아직 없다.
+외곽선이 끊긴 곳(옆솔기 가슴다트 자리처럼 다트 폭만큼 벌어진 곳)은 곧게 이어 붙이고 양 끝에 노치를 두며,
+재단선에는 다트를 접어 자른 모양의 **다트 캡**을 붙인다 (접는 쪽 기본 아래, 조각 설정 dart_fold: up 으로 바꿀 수 있다).
 """
 
 from __future__ import annotations
@@ -151,20 +151,19 @@ def _offset_polyline(pts: list, a: float, out_sign: float) -> list:
     return out
 
 
-def offset_loop(edges: list) -> list:
-    """변마다 시접을 붙인 재단선. 변과 변 사이는 마이터로 잇고, 안 되면 두 끝을 그대로 둔다."""
+def offset_loop(edges: list, return_corners: bool = False):
+    """변마다 시접을 붙인 재단선. 변과 변 사이는 마이터로 잇고, 안 되면 두 끝을 그대로 둔다.
+    return_corners 면 (재단선, 변 i 끝 모서리의 재단선 인덱스 목록, 변별 오프셋 꺾은선) 도 함께."""
     loop = [p for e in edges for p in e.pts[:-1]]
     if not loop:
-        return []
+        return ([], [], []) if return_corners else []
     out_sign = 1.0 if signed_area(loop) > 0 else -1.0
     offs = [_offset_polyline(e.pts, e.allowance, out_sign) for e in edges]
     cut = []
+    corner_at = []
     n = len(offs)
     for i in range(n):
         cur, nxt = offs[i], offs[(i + 1) % n]
-        seg = cur[1:-1] if i > 0 else cur[:-1]     # 첫 변은 앞 변과의 모서리에서 정리된다
-        if i == 0:
-            seg = cur[:-1]
         # 모서리: 이 변의 마지막 조각과 다음 변의 첫 조각을 연장해 만나는 점
         a0, a1 = cur[-2], cur[-1]
         b0, b1 = nxt[0], nxt[1]
@@ -182,10 +181,54 @@ def offset_loop(edges: list) -> list:
         else:
             cut.extend(cur[1:-1])
         cut.extend(corner)
+        corner_at.append(len(cut) - 1)            # 변 i 의 끝 모서리 (다음 변의 시작 모서리)
     # 첫 변의 시작점은 마지막 모서리로 대체된다
     if cut and len(edges) > 1:
         cut = cut[1:]
-    return cut
+        corner_at = [c - 1 for c in corner_at]
+    return (cut, corner_at, offs) if return_corners else cut
+
+
+def dart_caps(edges: list, cut: list, corner_at: list, offs: list, darts: list, fold: str = "down") -> list:
+    """다트 자리(곧게 이어 붙인 변)에 **다트 캡**을 붙인다.
+
+    다트를 접어 자르고 펼치면 시접이 삼각형으로 튀어나온다. 접는 쪽(기본: 아래 = y 가 큰 쪽) 이웃 변의
+    재단선을 다트 중심선(꼭짓점 ↔ 벌어진 자리 가운데)까지 연장한 점이 캡의 꼭짓점이고,
+    반대쪽 재단선은 그 점의 거울상이라 결국 A' → 꼭짓점 → B' 가 된다."""
+    n = len(edges)
+    out = list(cut)
+    inserts = []
+    for i, e in enumerate(edges):
+        if not e.synthetic or len(e.pts) != 2:
+            continue
+        a, b = e.pts[0], e.pts[-1]
+        apex = None
+        for d in darts:
+            if (d[0].dist(a) < 0.05 and d[-1].dist(b) < 0.05) or (d[0].dist(b) < 0.05 and d[-1].dist(a) < 0.05):
+                apex = d[len(d) // 2]
+                break
+        if apex is None:
+            continue
+        mid = (a + b) * 0.5
+        if mid.dist(apex) < 1e-6:
+            continue
+        # 접는 쪽 이웃 변: down 이면 y 가 큰 끝의 이웃
+        prev_i, next_i = (i - 1) % n, (i + 1) % n
+        a_low = (a.y > b.y) if fold == "down" else (a.y < b.y)
+        nb = prev_i if a_low else next_i
+        seg = (offs[nb][-2], offs[nb][-1]) if nb == prev_i else (offs[nb][0], offs[nb][1])
+        try:
+            x = intersect_lines(seg[0], seg[1], apex, mid)
+        except (ValueError, ZeroDivisionError):
+            continue
+        if math.isnan(x.x) or (x - mid).dot(mid - apex) <= 0 or x.dist(mid) > 4 * max(e.allowance, 0.25):
+            continue
+        # 재단선에서 이 변의 시작 모서리와 끝 모서리 사이에 꼭짓점을 끼운다
+        end_idx = corner_at[i]
+        inserts.append((end_idx, x))
+    for end_idx, x in sorted(inserts, reverse=True):
+        out.insert(end_idx, x)
+    return out
 
 
 # ------------------------------------------------------------------ 노치 · 식서 · 펼치기
@@ -273,7 +316,12 @@ def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) ->
     out = []
     for pc in names:
         lines = [l for l in res.lines if (l.piece or "") == pc]
-        boundary = [l for l in lines if l.role in ("outline", "fold")]
+        outline = [l for l in lines if l.role == "outline"]
+        ends = [p for l in outline for p in (l.pts[0], l.pts[-1])]
+        # 골선은 양 끝이 완성선 끝점에 닿을 때만 외곽이다 — 바지 주름선처럼 조각 가운데를 지나는 접는 선은 안쪽 선
+        folds = [l for l in lines if l.role == "fold"
+                 and all(any(q.dist(p) <= TOL for p in ends) for q in (l.pts[0], l.pts[-1]))]
+        boundary = outline + folds
         if not boundary:
             continue
         st = settings.get(f"{block_key}.{pc}", {})
@@ -291,19 +339,24 @@ def build_pieces(res: Resolved, block_key: str, settings: dict | None = None) ->
         piece.quantity = int(st.get("quantity", 1 if fold_edge else 2))
         piece.fabric = st.get("fabric", "겉감")
         piece.internal = [(l.name, l.role, _poly(l)) for l in lines
-                          if l.role in ("dart", "mark", "notch", "grain", "construction")]
+                          if l.role in ("dart", "mark", "notch", "grain", "construction") or (l.role == "fold" and l not in folds)]
+        M = None
         if fold_edge and st.get("unfold"):
             piece.edges = unfold(piece.edges, fold_edge.name)
             piece.unfolded = True
             a, b = fold_edge.pts[0], fold_edge.pts[-1]
 
-            def M(p):
+            def M(p, a=a, b=b):
                 f = foot_of_perpendicular(p, a, b)
                 return f + (f - p)
             piece.internal += [(n + "'", r, [M(p) for p in pts]) for n, r, pts in piece.internal]
             piece.internal.append((fold_edge.name, "fold", list(fold_edge.pts)))
         piece.loop = [p for e in piece.edges for p in e.pts[:-1]]
-        piece.cut = offset_loop(piece.edges)
+        cut, corner_at, offs = offset_loop(piece.edges, return_corners=True)
+        darts = [_poly(l) for l in lines if l.role == "dart"]
+        if piece.unfolded:
+            darts += [[M(p) for p in d] for d in darts]
+        piece.cut = dart_caps(piece.edges, cut, corner_at, offs, darts, st.get("dart_fold", "down")) if st.get("dart_cap", True) else cut
         piece.notches = notches_for(piece, lines)
         if piece.unfolded:      # 펼친 쪽에도 같은 노치
             a, b = fold_edge.pts[0], fold_edge.pts[-1]

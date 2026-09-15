@@ -318,8 +318,9 @@ const rotPt = ([x, y], rot, flip) => {           // 조각 좌표 → 원단 좌
   const a = rot * Math.PI / 180, c = Math.cos(a), sn = Math.sin(a);
   return [px * c - py * sn, px * sn + py * c];
 };
+const piecesFor = size => (size && S.piecesData && S.piecesData.sizes && S.piecesData.sizes[size]) || (S.piecesData ? S.piecesData.pieces : []);
 function itemPoly(it) {
-  const pc = S.piecesData && S.piecesData.pieces.find(p => p.key === it.key);
+  const pc = piecesFor(it.size).find(p => p.key === it.key);
   if (!pc) return null;
   return pc.cut.map(p => { const [x, y] = rotPt(p, it.rot, it.flip); return [x + it.x, y + it.y]; });
 }
@@ -330,9 +331,11 @@ function markerLength() {
   for (const it of S.marker.items) { const pl = itemPoly(it); if (pl) L = Math.max(L, polyBox(pl)[2]); }
   return L;
 }
-function markerItemsFromPieces() {              // 매수만큼 (둘째 장은 뒤집어) — 놓인 게 없을 때 처음 만든다
+function markerItemsFromPieces() {              // 매수만큼 (둘째 장은 뒤집어) — 놓인 게 없을 때 처음 만든다. 켠 사이즈도 함께
   const items = [];
-  for (const pc of S.piecesData.pieces) for (let i = 0; i < pc.quantity; i++) items.push({key: pc.key, rot: 0, flip: i % 2 === 1, x: 0, y: 0});
+  const sizes = [null, ...Object.keys(S.piecesData.sizes || {})];
+  for (const size of sizes) for (const pc of piecesFor(size)) for (let i = 0; i < pc.quantity; i++)
+    items.push({key: pc.key, size: size || undefined, rot: 0, flip: i % 2 === 1, x: 0, y: 0});
   return items;
 }
 function autoLayout() {                         // 선반(shelf) 채우기 — 큰 것부터, 세로 폭 안에서 왼쪽부터
@@ -439,7 +442,7 @@ function drawMarker() {
   const boxes = S.marker.items.map(it => { const pl = itemPoly(it); return pl ? polyBox(pl) : null; });
   S.marker.items.forEach((it, i) => {
     const pl = itemPoly(it); if (!pl) return;
-    const pc = pd.pieces.find(p => p.key === it.key);
+    const pc = piecesFor(it.size).find(p => p.key === it.key);
     const b = boxes[i];
     const out = b[0] < -1e-6 || b[1] < -1e-6 || b[3] > W + 1e-6;
     const bad = boxes.some((o, j) => j !== i && o && b[0] < o[2] && o[0] < b[2] && b[1] < o[3] && o[1] < b[3] && polyOverlap(pl, itemPoly(S.marker.items[j])));
@@ -451,7 +454,7 @@ function drawMarker() {
       el('line', {x1: a[0], y1: a[1], x2: c[0], y2: c[1], class: 'mkg', 'marker-end': 'url(#arw)'}, g);
     }
     const cx = (b[0] + b[2]) / 2 * K, cy = (b[1] + b[3]) / 2 * K;
-    text(cx, cy, `${pc.name}${it.size ? ' ' + it.size : ''}${it.flip ? ' ↔' : ''}`, 'lbl mkl', g, -14, 4);
+    text(cx, cy, `${pc.name}${it.size ? ' ' + it.size : ' ' + (S.grading.base && Object.keys(S.piecesData.sizes || {}).length ? S.grading.base : '')}${it.flip ? ' ↔' : ''}`, 'lbl mkl', g, -14, 4);
   });
   applyView();
 }
@@ -484,13 +487,13 @@ function renderMarkerPanel() {
   const box = $('sel'); box.className = '';
   const st = markerStats();
   const it = S.sel && S.sel.type === 'mk' ? S.marker.items[S.sel.i] : null;
-  const pc = it && S.piecesData.pieces.find(p => p.key === it.key);
+  const pc = it && piecesFor(it.size).find(p => p.key === it.key);
   box.innerHTML = `<div class="stat">
     <span>원단 폭</span><span><input id="mkW" value="${fmt(S.marker.width)}" style="width:64px;text-align:right"> ${unitLabel()}</span>
     <span>조각 사이</span><span><input id="mkGap" value="${fmt(S.marker.gap)}" style="width:64px;text-align:right"> ${unitLabel()}</span>
     <span>요척 (길이)</span><b>${fmt(st.L)}${unitLabel()} = ${(st.L / 36).toFixed(2)} yd · ${(st.L * 2.54 / 100).toFixed(2)} m</b>
     <span>효율</span><b>${(st.eff * 100).toFixed(1)}%</b>
-    <span>놓은 장</span><span>${S.marker.items.length}</span></div>
+    <span>놓은 장</span><span>${S.marker.items.length}${Object.keys(S.piecesData.sizes || {}).length ? ' (사이즈 ' + [S.grading.base, ...Object.keys(S.piecesData.sizes)].join('·') + ')' : ''}</span></div>
     <div class="row" style="margin-top:8px;gap:6px"><button class="btn pri" id="mkNest" type="button">자동 네스팅</button><label class="chk" style="display:inline-flex"><input id="mk90" type="checkbox" ${S.marker.allow90 ? 'checked' : ''}> 90° 허용</label><button class="btn" id="mkAuto" type="button">선반</button><button class="btn" id="mkReset" type="button">매수대로 다시</button></div>
     <div class="row" style="margin-top:6px;gap:6px"><button class="btn" id="mkDxf" type="button">마카 DXF</button><button class="btn" id="mkSvg" type="button">마카 SVG</button></div>
     ${it ? `<div class="kv" style="margin-top:10px"><b>조각</b><div><strong>${esc(pc.name)}</strong> ${it.size ? esc(it.size) : ''} <span class="muted">(${esc(pc.block)})</span></div>
@@ -571,14 +574,17 @@ function renderPiecePanel() {
     <b>조각</b><div><strong>${esc(pc.name)}</strong> <span class="muted">(${esc(pc.block)})</span></div>
     <b>매수</b><div><input id="pcQty" type="number" min="1" value="${pc.quantity}" style="width:56px"> <select id="pcFab"><option ${pc.fabric === '겉감' ? 'selected' : ''}>겉감</option><option ${pc.fabric === '안감' ? 'selected' : ''}>안감</option><option ${pc.fabric === '심지' ? 'selected' : ''}>심지</option></select></div>
     ${pc.fold ? `<b>골선</b><div>${esc(pc.fold)} <label class="chk" style="display:inline-flex;margin-left:8px"><input id="pcUnfold" type="checkbox" ${pc.unfolded ? 'checked' : ''}> 펼쳐서 한 장으로</label></div>` : ''}
-    <b>시접</b><div>기본 <input id="pcDef" value="${st.default_allowance != null ? fmt(st.default_allowance) : ''}" placeholder="변마다" style="width:56px"> ${unitLabel()}</div></div>
+    <b>시접</b><div>기본 <input id="pcDef" value="${st.default_allowance != null ? fmt(st.default_allowance) : ''}" placeholder="변마다" style="width:56px"> ${unitLabel()}</div>
+    ${pc.edges.some(e => e.synthetic) ? `<b>다트 캡</b><div><label class="chk" style="display:inline-flex"><input id="pcCap" type="checkbox" ${st.dart_cap === false ? '' : 'checked'}> 접어 자른 모양</label> <select id="pcFold" style="margin-left:6px"><option value="down" ${st.dart_fold !== 'up' ? 'selected' : ''}>아래로 접음</option><option value="up" ${st.dart_fold === 'up' ? 'selected' : ''}>위로 접음</option></select></div>` : ''}</div>
     <table style="margin-top:6px"><tr><th>변</th><th>시접 (${unitLabel()})</th></tr>${rows}</table>
     ${pc.warnings.length ? `<div class="warnbox">${pc.warnings.map(esc).join('<br>')}</div>` : ''}
-    <div class="note" style="margin-top:6px">노치: 다트 다리 · 노치 표시 · 끊긴 자리 양 끝. 식서: 식서선이 없으면 세로. 다트를 접어 자르는 다트 캡은 아직 없다</div>`;
+    <div class="note" style="margin-top:6px">노치: 다트 다리 · 노치 표시 · 끊긴 자리 양 끝. 식서: 식서선이 없으면 세로. 다트 캡은 접는 쪽 이웃 재단선을 다트 중심선까지 연장한 꼭짓점</div>`;
   const setSt = (patch) => { S.pieceSettings[pc.key] = {...(S.pieceSettings[pc.key] || {}), ...patch}; scheduleEval(0); };
   $('pcQty').addEventListener('change', e => setSt({quantity: +e.target.value || 1}));
   $('pcFab').addEventListener('change', e => setSt({fabric: e.target.value}));
   $('pcUnfold')?.addEventListener('change', e => setSt({unfold: e.target.checked}));
+  $('pcCap')?.addEventListener('change', e => setSt({dart_cap: e.target.checked}));
+  $('pcFold')?.addEventListener('change', e => setSt({dart_fold: e.target.value}));
   $('pcDef').addEventListener('change', e => { const v = parseUnit(e.target.value); if (v != null) setSt({default_allowance: v}); else { const st2 = {...(S.pieceSettings[pc.key] || {})}; delete st2.default_allowance; S.pieceSettings[pc.key] = st2; scheduleEval(0); } });
   box.querySelectorAll('input[data-edge]').forEach(inp => inp.addEventListener('change', () => {
     const v = parseUnit(inp.value); if (v == null) { inp.style.borderColor = '#c33'; return; }
@@ -624,8 +630,16 @@ function renderSel() {
       ${p.note ? `<b>메모</b><div class="note">${esc(p.note)}</div>` : ''}
       <b>좌표</b><div>x ${fmt(p.x)}  y ${fmt(p.y)} ${unitLabel()} <span class="muted small">(원형 기준)</span></div>
       <b>수정값</b><div>${p.override ? `<span class="tag ov">끌어 옮김</span> 규칙대로면 x ${fmt(p.computed[0])} y ${fmt(p.computed[1])} <button class="linkbtn" id="resetPt">되돌리기</button>` : '없음'}</div>
-      <b>지나는 선</b><div>${users}</div></div>`;
+      <b>지나는 선</b><div>${users}</div></div>` + (S.grading.sizes.length ? `<div style="margin-top:8px"><b class="muted small">사이즈별 편차 (${unitLabel()}) — 치수 재대입 위에 더한다</b>
+      <table style="margin-top:3px"><tr><th>사이즈</th><th>가로 +</th><th>세로 +</th></tr>${S.grading.sizes.map(sz => { const r = ((S.grading.rules || {})[sz] || {})[key] || [0, 0]; return `<tr><td><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${sizeColor(sz)};margin-right:4px"></i>${esc(sz)}</td><td><input data-rule="${esc(sz)}" data-i="0" value="${fmt(r[0])}" style="width:60px"></td><td><input data-rule="${esc(sz)}" data-i="1" value="${fmt(r[1])}" style="width:60px"></td></tr>`; }).join('')}</table></div>` : '');
     $('resetPt')?.addEventListener('click', () => { delete S.pointOverrides[key]; scheduleEval(0); });
+    box.querySelectorAll('input[data-rule]').forEach(inp => inp.addEventListener('change', () => {
+      const v = parseUnit(inp.value); if (v == null) { inp.style.borderColor = '#c33'; return; }
+      const sz = inp.dataset.rule, rules = (S.grading.rules ||= {}), r = ((rules[sz] ||= {})[key] ||= [0, 0]);
+      r[+inp.dataset.i] = v;
+      if (!r[0] && !r[1]) delete rules[sz][key];
+      scheduleEval(0);
+    }));
     box.querySelectorAll('[data-ln]').forEach(btn => btn.addEventListener('click', () => select({type: 'line', block: b.key, name: btn.dataset.ln})));
   } else {
     const l = b.lines.find(x => x.name === S.sel.name);
@@ -754,7 +768,7 @@ function renderTree() {
   const t = $('tree'); t.innerHTML = '';
   if (S.mode === 'marker' && S.piecesData) {
     S.marker.items.forEach((it, i) => {
-      const pc = S.piecesData.pieces.find(p => p.key === it.key); if (!pc) return;
+      const pc = piecesFor(it.size).find(p => p.key === it.key); if (!pc) return;
       const e = document.createElement('div'); e.className = (S.sel && S.sel.type === 'mk' && S.sel.i === i ? 'on' : '');
       e.textContent = `${pc.name}${it.size ? ' ' + it.size : ''} ${it.rot ? it.rot + '°' : ''}${it.flip ? ' ↔' : ''}`;
       e.addEventListener('click', () => { S.sel = {type: 'mk', i}; draw(); renderSel(); });

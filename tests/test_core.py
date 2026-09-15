@@ -963,3 +963,45 @@ class Compose(unittest.TestCase):
         self.assertIn("넥립", keys)
         o2 = api.options_json("shirt_collar_blouse", {"cuff": "rib"})
         self.assertEqual(next(s for s in o2["slots"] if s["id"] == "hem")["current"], "none")
+
+
+class DartCapAndRules(unittest.TestCase):
+    def test_crease_fold_line_is_internal_not_boundary(self):
+        from patterncad.pieces import build_pieces
+        from patterncad.style import Style
+        r = Style.load(ROOT / "styles" / "basic_pants.yaml").evaluate()
+        front = next(p for p in build_pieces(r["pants"], "pants") if p.name == "앞판")
+        self.assertEqual([e.name for e in front.edges if e.synthetic], ["앞허리선안→앞허리선밖"])
+        self.assertIn("앞주름선", [n for n, role, _ in front.internal if role == "fold"])
+        self.assertEqual(front.warnings, [])
+
+    def test_dart_cap_adds_a_peak_beyond_the_seam(self):
+        from patterncad.pieces import build_pieces
+        from patterncad.style import Style
+        r = Style.load(ROOT / "styles" / "basic_skirt.yaml").evaluate()
+        back = next(p for p in build_pieces(r["skirt"], "skirt") if p.name == "뒤판")
+        back0 = next(p for p in build_pieces(r["skirt"], "skirt", {"skirt.뒤판": {"dart_cap": False}}) if p.name == "뒤판")
+        self.assertEqual(len(back.cut), len(back0.cut) + 2)      # 다트 둘 → 꼭짓점 둘
+        peaks = [p for p in back.cut if all(p.dist(q) > 1e-9 for q in back0.cut)]
+        for pk in peaks:
+            self.assertLess(pk.y, min(p.y for p in back.loop) + 1e-9)   # 허리선(위)보다 바깥
+        up = next(p for p in build_pieces(r["skirt"], "skirt", {"skirt.뒤판": {"dart_fold": "up"}}) if p.name == "뒤판")
+        self.assertEqual(len(up.cut), len(back.cut))
+
+    def test_point_rules_move_only_that_size(self):
+        from patterncad import api
+        rules = {"66": {"body.SP_F": [0.5, 0]}}
+        g = api.grade_json("style", "shirt_collar_blouse", {}, {}, {}, "KS 여성복", "55", ["66", "77"], None, rules)
+        sp = lambda z: next(l for l in z["blocks"][0]["lines"] if l["name"] == "앞어깨선")["pts"][-1][0]  # noqa: E731
+        g0 = api.grade_json("style", "shirt_collar_blouse", {}, {}, {}, "KS 여성복", "55", ["66", "77"])
+        self.assertAlmostEqual(sp(g["sizes"][0]) - sp(g0["sizes"][0]), 0.5)
+        self.assertAlmostEqual(sp(g["sizes"][1]), sp(g0["sizes"][1]))
+
+    def test_pieces_json_carries_sizes_for_the_marker(self):
+        from patterncad import api
+        j = api.pieces_json("style", "basic_skirt", grading={"system": "S M L", "base": "M", "sizes": ["L"]})
+        self.assertEqual(list(j["sizes"]), ["L"])
+        self.assertEqual(len(j["sizes"]["L"]), len(j["pieces"]))
+        big = next(p for p in j["sizes"]["L"] if p["name"] == "앞판")["bbox"]
+        base = next(p for p in j["pieces"] if p["name"] == "앞판")["bbox"]
+        self.assertGreater(big[2] - big[0], base[2] - base[0])

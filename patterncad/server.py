@@ -114,7 +114,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self._send(200, body, "application/vnd.hp-hpgl; charset=utf-8",
                                   {"Content-Disposition": f'attachment; filename="{ident}.plt"'})
             if path == "/api/pieces":
-                return self._json(200, api.pieces_json(kind, ident, ov, po, lo, ps, cc))
+                return self._json(200, api.pieces_json(kind, ident, ov, po, lo, ps, cc, req.get("grading")))
             if path == "/api/marker_dxf":
                 fm = req.get("format") or "dxf"
                 body = api.marker_dxf(kind, ident, ov, po, lo, ps, req.get("placements") or [],
@@ -124,7 +124,7 @@ class Handler(BaseHTTPRequestHandler):
                                   {"Content-Disposition": f'attachment; filename="{ident}_marker.{"plt" if fm == "hpgl" else "dxf"}"'})
             if path == "/api/grade":
                 g = req.get("grading") or {}
-                return self._json(200, api.grade_json(kind, ident, ov, po, lo, g["system"], g["base"], g.get("sizes") or [], cc))
+                return self._json(200, api.grade_json(kind, ident, ov, po, lo, g["system"], g["base"], g.get("sizes") or [], cc, g.get("rules")))
             if path == "/api/dxf":
                 body = api.to_dxf(kind, ident, ov, po, lo, ps, req.get("grading"), cc).encode("utf-8")
                 return self._send(200, body, "application/dxf; charset=utf-8",
