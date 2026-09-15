@@ -17,6 +17,7 @@ import threading
 
 from .block import Block, Resolved
 from .dxf import write_dxf
+from .grading import size_overrides, systems
 from .pieces import build_pieces
 from .style import Style
 from .svg import render_pieces_svg, render_style_svg, render_svg
@@ -334,7 +335,7 @@ def project_list() -> list[dict]:
 def project_save(name: str, data: dict) -> dict:
     import datetime  # noqa: PLC0415
     name = _safe_name(name)
-    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "view", "note")}
+    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "piece_settings", "grading", "view", "note")}
     keep["name"] = name
     keep["saved"] = datetime.datetime.now().isoformat(timespec="seconds")
     PROJECTS.mkdir(exist_ok=True)
@@ -382,6 +383,68 @@ def pieces_json(kind, ident, overrides=None, point_overrides=None, line_override
     return {"name": name, "pieces": out}
 
 
-def to_dxf(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None) -> str:
+def to_dxf(kind, ident, overrides=None, point_overrides=None, line_overrides=None, piece_settings=None,
+           grading=None) -> str:
+    """grading = {"system", "base", "sizes": [...]} 이면 사이즈마다 조각을 만들어 줄줄이 놓는다 (조각 이름에 호칭을 붙인다)."""
     name, pieces, positions = _all_pieces(kind, ident, overrides, point_overrides, line_overrides, piece_settings)
-    return write_dxf(pieces, positions, title=name)
+    if not grading or not grading.get("sizes"):
+        return write_dxf(pieces, positions, title=name)
+    base = grading["base"]
+    all_pieces, all_pos = [], []
+    row_h = max(pc.bbox()[3] - pc.bbox()[1] for pc in pieces) + 2.0
+    for r, size in enumerate([base] + [s for s in grading["sizes"] if s != base]):
+        ov = overrides if size == base else grade_overrides(kind, ident, overrides, grading["system"], base, size)
+        _, pcs, pos = _all_pieces(kind, ident, ov, point_overrides, line_overrides, piece_settings)
+        for pc, (dx, dy) in zip(pcs, pos):
+            pc.name = f"{pc.name}_{size}"
+            all_pieces.append(pc)
+            all_pos.append((dx, dy + r * row_h))
+    return write_dxf(all_pieces, all_pos, title=f"{name} ({grading['system']} {base} 기준)")
+
+
+# ------------------------------------------------------------------ 그레이딩
+def size_systems() -> dict:
+    return systems()
+
+
+def grade_overrides(kind, ident, overrides, system, base, target) -> dict:
+    """기준 사이즈에서 계산한 치수를 알아야 차이를 더할 수 있다."""
+    results, _, _ = _evaluate(kind, ident, overrides or {}, {}, {})
+    base_values = {f"{key}.{n}": v for key, res in results.items() for n, v in res.measurements.items()
+                   if isinstance(v, (int, float))}
+    return size_overrides(kind, ident, overrides or {}, base_values, system, base, target)
+
+
+def grade_json(kind, ident, overrides, point_overrides, line_overrides, system, base, sizes) -> dict:
+    """사이즈마다 선(완성선·골선·다트)만 — 겹쳐 보기용. 조각 자리는 기준 사이즈 배치를 그대로 쓴다."""
+    base_results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {})
+
+    def centers(results):
+        out = {}
+        for key, res in results.items():
+            for pc in _piece_names(res):
+                x0, y0, x1, y1 = _bbox([l for l in res.lines if (l.piece or "") == pc])
+                out[(key, pc)] = ((x0 + x1) / 2, (y0 + y1) / 2)
+        return out
+    base_c = centers(base_results)
+    out = []
+    for size in sizes:
+        if size == base:
+            continue
+        ov = grade_overrides(kind, ident, overrides, system, base, size)
+        results, _, _ = _evaluate(kind, ident, ov, point_overrides or {}, line_overrides or {})
+        size_c = centers(results)
+        blocks = []
+        for key, res in results.items():
+            # 조각마다 기준 사이즈 조각의 가운데에 포개 놓는다 — 원형 좌표에서는 큰 사이즈의 뒤판이 오른쪽으로 밀리므로
+            shift = {pc: [base_c[(key, pc)][0] - size_c[(key, pc)][0], base_c[(key, pc)][1] - size_c[(key, pc)][1]]
+                     for (k, pc) in size_c if k == key and (key, pc) in base_c}
+            lines = [{"name": l.name, "role": l.role, "kind": l.kind, "piece": l.piece or "",
+                      "pts": [[p.x, p.y] for p in l.pts],
+                      "beziers": [[[b.p0.x, b.p0.y], [b.c1.x, b.c1.y], [b.c2.x, b.c2.y], [b.p3.x, b.p3.y]] for b in l.beziers]}
+                     for l in res.lines if l.role in ("outline", "fold", "dart")]
+            changed = {n: round(v, 4) for n, v in res.measurements.items()
+                       if isinstance(v, (int, float)) and f"{key}.{n}" in ov and ov[f"{key}.{n}"] != (overrides or {}).get(f"{key}.{n}")}
+            blocks.append({"key": key, "lines": lines, "changed": changed, "shift": shift})
+        out.append({"size": size, "blocks": blocks})
+    return {"system": system, "base": base, "sizes": out}

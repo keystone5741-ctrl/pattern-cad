@@ -115,3 +115,9 @@ dialog::backdrop{background:rgba(31,29,26,.35)}
 #world .grainl{stroke:var(--ink);stroke-width:1.2px;vector-effect:non-scaling-stroke}
 #world .warn{stroke:#c33}
 .warnbox{color:#7a1c1c;background:#fff1f0;border:1px solid #e3b5b1;padding:4px 6px;border-radius:3px;font-size:11.5px;margin-top:6px}
+
+/* 그레이딩 */
+#world .gr{fill:none;stroke-width:1.1px;vector-effect:non-scaling-stroke;pointer-events:none;opacity:.9}
+#gSizes label{display:inline-flex;align-items:center;gap:3px;border:1.2px solid #c9c4ba;border-radius:10px;padding:0 7px;font-size:12px;cursor:pointer}
+#gSizes label.base{border-color:var(--ink);background:var(--ink);color:#fff}
+#gSizes label i{display:inline-block;width:9px;height:9px;border-radius:50%}

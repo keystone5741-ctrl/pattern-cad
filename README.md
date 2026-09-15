@@ -140,12 +140,16 @@ python -m patterncad.server          # http://127.0.0.1:8765 를 브라우저로
   식서(식서선이 없으면 세로)를 그린다. 조각을 누르면 매수·원단·골 펼치기·변별 시접을 고칠 수 있다.
   시접 기본값: 밑단·부리 1", 목선·암홀·소매산 3/8", 골선 0, 그 밖에 1/2" (`patterncad/pieces.py`).
   옆솔기 가슴다트처럼 외곽선이 벌어진 자리는 곧게 이어 붙이고 양 끝에 노치를 둔다 — 다트를 접어 자르는 다트 캡은 아직 없다
+- **그레이딩**(왼쪽 패널): 사이즈 체계(`data/sizes.yaml` — KS 여성복 44~88, S/M/L, 초안)와 기준 호칭을 고르고 사이즈를 켜면
+  **치수 재대입**으로 다시 그린 원형이 색색으로 겹쳐 보인다. 기준 사이즈에서 손본 치수·점·핸들은 그대로 두고 표의 **차이만** 더한다.
+  켠 사이즈는 DXF 에 함께 나간다 (조각 이름에 호칭, 사이즈마다 한 줄). 점별 편차 방식은 아직
 - **DXF 내보내기**: AAMA/ASTM 층 관습(1 재단선 · 14 완성선 · 8 안쪽 선 · 4 노치 · 7 식서 · 15 글자), 조각마다 BLOCK, 인치, R12 ASCII (`patterncad/dxf.py`)
 
 ```
 patterncad/api.py       계산 결과 → 점·선·치수 JSON, 조각 자리 잡기, 점 규칙을 글로, 도면 겹침 변환·프로젝트 파일
 patterncad/wizard.py    마법사 재료 — 포트폴리오 아이템·사이즈표 ↔ 스타일, 핏 가감
 patterncad/pieces.py    조각 — 외곽선 잇기 · 시접(변별) · 노치 · 식서 · 골 펼치기
+patterncad/grading.py   사이즈 체계 · 치수 재대입 그레이딩
 patterncad/dxf.py       AAMA 층 DXF 쓰기
 patterncad/server.py    /api/catalog · eval · svg · pieces · dxf · overlay · page · projects · wizard, ui/ 정적 파일
 ui/index.html · app.css · app.js   화면 (바닐라 JS, SVG)

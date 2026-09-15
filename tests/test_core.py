@@ -844,3 +844,41 @@ class Pieces(unittest.TestCase):
         xs = sorted((p["bbox"][0] + p["dx"], p["bbox"][2] + p["dx"]) for p in j["pieces"])
         for (a0, a1), (b0, b1) in zip(xs, xs[1:]):
             self.assertLessEqual(a1, b0 + 1e-9)
+
+
+class Grading(unittest.TestCase):
+    """치수 재대입 그레이딩 — 기준 사이즈에서의 차이만 더한다."""
+
+    def test_size_table_is_consistent(self):
+        from patterncad.grading import systems
+        s = systems()
+        ks = s["KS 여성복"]
+        i55, i66 = ks["sizes"].index("55"), ks["sizes"].index("66")
+        self.assertAlmostEqual(ks["measurements"]["가슴둘레"][i55], 33.5)       # 포트폴리오 신체 사이즈
+        self.assertGreater(ks["measurements"]["가슴둘레"][i66], ks["measurements"]["가슴둘레"][i55])
+        self.assertEqual(ks["aliases"]["M"], "66")
+
+    def test_delta_keeps_user_edits(self):
+        from patterncad import api
+        ov = api.grade_overrides("style", "shirt_collar_blouse", {"body.B": 34, "body.여유": 3}, "KS 여성복", "55", "66")
+        self.assertAlmostEqual(ov["body.B"], 34 + (34.6875 - 33.5))   # 손본 34 에 55→66 차이만
+        self.assertEqual(ov["body.여유"], 3)                              # 표에 없는 치수는 그대로
+        self.assertAlmostEqual(ov["body.등길이"], 15 + 3 / 16)
+
+    def test_bigger_size_has_a_longer_hem(self):
+        from patterncad import api
+        base = api.to_json("style", "shirt_collar_blouse")
+        g = api.grade_json("style", "shirt_collar_blouse", {}, {}, {}, "KS 여성복", "55", ["44", "77"])
+        self.assertEqual([z["size"] for z in g["sizes"]], ["44", "77"])
+        hem = lambda blocks: next(l for l in next(b for b in blocks if b["key"] == "body")["lines"] if l["name"] == "앞밑단")["pts"]  # noqa: E731
+        width = lambda pts: abs(pts[-1][0] - pts[0][0])  # noqa: E731
+        w44, w55, w77 = width(hem(g["sizes"][0]["blocks"])), width(hem(base["blocks"])), width(hem(g["sizes"][1]["blocks"]))
+        self.assertLess(w44, w55)
+        self.assertLess(w55, w77)
+
+    def test_graded_dxf_has_every_size(self):
+        from patterncad import api
+        one = api.to_dxf("style", "basic_skirt")
+        many = api.to_dxf("style", "basic_skirt", grading={"system": "S M L", "base": "M", "sizes": ["S", "L"]})
+        self.assertEqual(many.count("\nBLOCK\n"), 3 * one.count("\nBLOCK\n"))
+        self.assertIn("_L", many)

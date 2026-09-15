@@ -11,6 +11,7 @@ const S = {
   kind: 'style', id: null, data: null, projName: '',
   overrides: {}, pointOverrides: {}, lineOverrides: {}, pieceSettings: {},
   mode: 'draft', piecesData: null,          // 'draft' | 'pieces'
+  grading: {system: null, base: null, sizes: []}, gradeData: null, sizeSystems: null,
   unit: 'in', sel: null, measure: null,        // sel: {type:'point'|'line', block, name}
   layers: Object.fromEntries(ROLES.map(r => [r, r !== 'dimension'])), labels: false, helpers: false,
   overlays: {}, pageCache: {},                 // overlays: 'block|piece' → {on, fit, loading}
@@ -76,7 +77,8 @@ async function getJson(url) {
   if (!r.ok) throw new Error(j.error || r.statusText);
   return j;
 }
-const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides, piece_settings: S.pieceSettings});
+const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides, piece_settings: S.pieceSettings,
+                        grading: S.grading.sizes.length ? S.grading : null});
 function showErr(e) { $('err').hidden = false; $('err').textContent = e.message || String(e); }
 
 let evalTimer = null;
@@ -90,8 +92,9 @@ async function evaluate() {
     S.data = d;
     $('err').hidden = true;
     if (S.mode === 'pieces') S.piecesData = await post('/api/pieces', payload());
+    S.gradeData = S.grading.sizes.length ? await post('/api/grade', payload()) : null;
     if (my !== S.seq) return;
-    draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList();
+    draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList(); renderGrading();
     $('title').textContent = d.name;
     $('counts').textContent = `조각 ${d.pieces.length} · 점 ${d.blocks.reduce((n, b) => n + b.points.length, 0)} · 선 ${d.blocks.reduce((n, b) => n + b.lines.length, 0)}`;
   } catch (e) {
@@ -162,6 +165,7 @@ function draw() {
   if (S.mode === 'pieces') return drawPieces();
   const d = S.data;
   drawOverlays();
+  drawGrades();
   for (const b of d.blocks) {                   // 원형 이름은 한 번, 조각 이름은 조각마다
     const pcs = d.pieces.filter(p => p.block === b.key);
     if (!pcs.length) continue;
@@ -223,6 +227,47 @@ function draw() {
   applyView();
 }
 function hint(s) { $('hint').textContent = s; }
+
+// ------------------------------------------------------------ 그레이딩 겹쳐 보기
+const GCOLORS = ['#c9302c', '#2a8a4a', '#8a4fbf', '#d98b00', '#0f8a9a', '#b5306f'];
+const sizeColor = size => GCOLORS[(S.sizeSystems?.[S.grading.system]?.sizes.indexOf(size) ?? 0) % GCOLORS.length];
+function drawGrades() {
+  if (!S.gradeData) return;
+  const bpath = (l, off) => pathD(l, off);
+  for (const sz of S.gradeData.sizes) {
+    const g = el('g', {class: 'grade', 'data-size': sz.size}, world);
+    for (const b of sz.blocks) for (const l of b.lines) {
+      if (!S.layers[l.role]) continue;
+      const off = pieceOf(b.key, l.piece), sh = (b.shift || {})[l.piece] || [0, 0];
+      el('path', {d: bpath(l, {dx: off.dx + sh[0], dy: off.dy + sh[1]}), class: 'gr', stroke: sizeColor(sz.size)}, g);
+    }
+  }
+}
+async function renderGrading() {
+  if (!S.sizeSystems) { try { S.sizeSystems = await getJson('/api/sizes'); } catch (e) { showErr(e); return; } }
+  const names = Object.keys(S.sizeSystems);
+  if (!S.grading.system || !S.sizeSystems[S.grading.system]) S.grading.system = names[0];
+  const sy = S.sizeSystems[S.grading.system];
+  if (!sy.sizes.includes(S.grading.base)) S.grading.base = sy.sizes.includes('55') ? '55' : sy.sizes[Math.floor(sy.sizes.length / 2)];
+  const sysSel = $('gSystem'); sysSel.innerHTML = names.map(n => `<option ${n === S.grading.system ? 'selected' : ''}>${esc(n)}</option>`).join('');
+  const baseSel = $('gBase'); baseSel.innerHTML = sy.sizes.map(n => `<option ${n === S.grading.base ? 'selected' : ''}>${esc(n)} 기준</option>`).join('');
+  const box = $('gSizes'); box.innerHTML = '';
+  for (const sz of sy.sizes) {
+    const l = document.createElement('label');
+    if (sz === S.grading.base) { l.className = 'base'; l.textContent = sz; box.appendChild(l); continue; }
+    l.innerHTML = `<input type="checkbox" ${S.grading.sizes.includes(sz) ? 'checked' : ''}><i style="background:${sizeColor(sz)}"></i>${esc(sz)}`;
+    l.querySelector('input').addEventListener('change', e => {
+      S.grading.sizes = e.target.checked ? [...S.grading.sizes, sz] : S.grading.sizes.filter(x => x !== sz);
+      scheduleEval(0);
+    });
+    box.appendChild(l);
+  }
+  const al = Object.entries(sy.aliases || {}).map(([a, b]) => `${a}=${b}`).join(' ');
+  $('gInfo').textContent = (S.gradeData ? S.gradeData.sizes.map(z => `${z.size}: ` + Object.entries(z.blocks[0].changed).slice(0, 4).map(([k, v]) => `${k} ${fmt(v)}`).join(' · ')).join('  |  ') + '  ' : '')
+    + `표: data/sizes.yaml (초안)${al ? ' · ' + al : ''}. 켠 사이즈는 DXF 에 함께 나간다`;
+}
+$('gSystem').addEventListener('change', e => { S.grading.system = e.target.value; S.grading.base = null; S.grading.sizes = []; renderGrading(); scheduleEval(0); });
+$('gBase').addEventListener('change', e => { S.grading.base = e.target.value.replace(/ 기준$/, ''); S.grading.sizes = S.grading.sizes.filter(x => x !== S.grading.base); renderGrading(); scheduleEval(0); });
 
 // ------------------------------------------------------------ 조각·시접 보기
 const pieceOff = pc => ({dx: pc.dx, dy: pc.dy});
@@ -595,7 +640,7 @@ $('modes').querySelectorAll('button').forEach(btn => btn.addEventListener('click
   $('modes').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
   await evaluate(); fitAll();
 }));
-$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; scheduleEval(0); });
+$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; S.pieceSettings = {}; S.grading.sizes = []; scheduleEval(0); });
 $('saveDxf').addEventListener('click', async () => {
   try {
     const r = await post('/api/dxf', payload());
@@ -612,8 +657,9 @@ $('saveSvg').addEventListener('click', async () => {
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   } catch (e) { showErr(e); }
 });
-function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, projName = '', view = null} = {}) {
+function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, pieceSettings = {}, grading = null, projName = '', view = null} = {}) {
   S.kind = kind; S.id = id; S.overrides = overrides; S.pointOverrides = pointOverrides; S.lineOverrides = lineOverrides; S.pieceSettings = pieceSettings;
+  S.grading = grading && grading.system ? grading : {system: S.grading.system, base: S.grading.base, sizes: []};
   S.sel = null; S.measure = null; S.overlays = {}; measTab = null; S.projName = projName;
   $('picker').value = `${kind}:${id}`;
   $('proj').textContent = projName ? `프로젝트 ${projName}` : '';
@@ -634,7 +680,7 @@ $('projects').addEventListener('change', async () => {
   const name = $('projects').value; if (!name) return;
   try {
     const p = await getJson(`/api/project?name=${encodeURIComponent(name)}`);
-    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, projName: p.name, view: p.view});
+    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, pieceSettings: p.piece_settings || {}, grading: p.grading, projName: p.name, view: p.view});
   } catch (e) { showErr(e); }
 });
 $('saveProj').addEventListener('click', async () => {
@@ -728,6 +774,7 @@ async function init() {
     if (b) select({type: b.lines.some(l => l.name === name) ? 'line' : 'point', block: blk, name});
   }
   if (hq.mode === 'pieces') $('modes').querySelector('[data-m=pieces]').click();
+  if (hq.sizes) { await renderGrading(); S.grading.sizes = hq.sizes.split(','); await evaluate(); }
   if (hq.wiz) $('newPat').click();
   for (const key of (hq.ovl || '').split(',').filter(Boolean)) {
     const [bid, pc] = key.split('|'), b = S.data.blocks.find(x => x.id === bid);
