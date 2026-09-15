@@ -361,9 +361,75 @@ function autoLayout() {                         // 선반(shelf) 채우기 — �
   }
   S.marker.items = items;
 }
+// 자동 네스팅 — 1/4" 격자 비트맵에 큰 조각부터 왼쪽 아래(bottom-left) 빈자리를 찾아 놓는다.
+// 결 방향을 지키려고 0°·180°(+뒤집기)만 쓰고, 90° 허용을 켜면 네 방향 다 본다.
+const CELL = 0.25;
+function rasterize(poly, gapCells) {           // 폴리곤(inch) → {cells:[dy,dx…], w, h, ox, oy} 격자 마스크 (gap 만큼 부풀림)
+  const b = polyBox(poly);
+  const ox = b[0] - gapCells * CELL, oy = b[1] - gapCells * CELL;
+  const w = Math.ceil((b[2] - ox) / CELL) + gapCells, h = Math.ceil((b[3] - oy) / CELL) + gapCells;
+  const grid = new Uint8Array(w * h);
+  for (let r = 0; r < h; r++) {                // 주사선: 셀 가운데 y 에서 다각형과 만나는 x 구간을 채운다
+    const y = oy + (r + 0.5) * CELL, xs = [];
+    for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+      const [x1, y1] = poly[i], [x2, y2] = poly[j];
+      if ((y1 > y) !== (y2 > y)) xs.push(x1 + (y - y1) * (x2 - x1) / (y2 - y1));
+    }
+    xs.sort((a, c) => a - c);
+    for (let k = 0; k + 1 < xs.length; k += 2) {
+      const c0 = Math.max(0, Math.floor((xs[k] - ox) / CELL)), c1 = Math.min(w - 1, Math.floor((xs[k + 1] - ox) / CELL));
+      for (let c = c0; c <= c1; c++) grid[r * w + c] = 1;
+    }
+  }
+  if (gapCells) {                                // 부풀리기: 이웃 셀까지
+    const g2 = new Uint8Array(grid);
+    for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) if (grid[r * w + c]) {
+      for (let dr = -gapCells; dr <= gapCells; dr++) for (let dc = -gapCells; dc <= gapCells; dc++) {
+        const rr = r + dr, cc = c + dc; if (rr >= 0 && rr < h && cc >= 0 && cc < w) g2[rr * w + cc] = 1;
+      }
+    }
+    grid.set(g2);
+  }
+  const cells = [];
+  for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) if (grid[r * w + c]) cells.push(r, c);
+  return {cells, w, h, ox, oy};
+}
+function autoNest(allow90) {
+  const W = S.marker.width, rows = Math.floor(W / CELL);
+  const gapCells = Math.max(0, Math.round(S.marker.gap / CELL / 2));
+  let cols = 200;                                // 50" 부터, 모자라면 늘린다
+  let occ = new Uint8Array(rows * cols);
+  const grow = () => { const n = new Uint8Array(rows * cols * 2); for (let r = 0; r < rows; r++) n.set(occ.subarray(r * cols, (r + 1) * cols), r * cols * 2); cols *= 2; occ = n; };
+  const items = S.marker.items.map(it => ({...it}));
+  const order = items.map((it, i) => { const pl = itemPoly({...it, x: 0, y: 0}); return {i, area: pl ? polyArea(pl) : 0}; }).sort((a, b) => b.area - a.area);
+  const rots = allow90 ? [0, 90, 180, 270] : [0, 180];
+  for (const {i} of order) {
+    const it = items[i]; let best = null;
+    for (const rot of rots) for (const flip of [it.flip, !it.flip]) {
+      const pl = itemPoly({...it, rot, flip, x: 0, y: 0}); if (!pl) continue;
+      const m = rasterize(pl, gapCells);
+      if (m.h > rows) continue;
+      let found = null;
+      for (let c = 0; c + m.w <= cols + 1 && !found; c++) {
+        if (c + m.w > cols) grow();
+        for (let r = 0; r + m.h <= rows; r++) {
+          let ok = true;
+          for (let k = 0; k < m.cells.length; k += 2) { if (occ[(r + m.cells[k]) * cols + c + m.cells[k + 1]]) { ok = false; break; } }
+          if (ok) { found = {r, c}; break; }
+        }
+      }
+      if (found && (!best || found.c < best.c || (found.c === best.c && found.r < best.r))) best = {...found, rot, flip, m};
+    }
+    if (!best) continue;
+    for (let k = 0; k < best.m.cells.length; k += 2) occ[(best.r + best.m.cells[k]) * cols + best.c + best.m.cells[k + 1]] = 1;
+    it.rot = best.rot; it.flip = best.flip;
+    it.x = best.c * CELL - best.m.ox + gapCells * CELL; it.y = best.r * CELL - best.m.oy + gapCells * CELL;
+  }
+  S.marker.items = items;
+}
 function drawMarker() {
   const pd = S.piecesData; if (!pd) return;
-  if (!S.marker.items.length) { S.marker.items = markerItemsFromPieces(); autoLayout(); }
+  if (!S.marker.items.length) { S.marker.items = markerItemsFromPieces(); autoNest(false); }
   const W = S.marker.width, L = Math.max(markerLength() + 2, 20);
   const g = el('g', {}, world);
   el('rect', {x: 0, y: 0, width: L * K, height: W * K, class: 'fabric'}, g);
@@ -425,16 +491,19 @@ function renderMarkerPanel() {
     <span>요척 (길이)</span><b>${fmt(st.L)}${unitLabel()} = ${(st.L / 36).toFixed(2)} yd · ${(st.L * 2.54 / 100).toFixed(2)} m</b>
     <span>효율</span><b>${(st.eff * 100).toFixed(1)}%</b>
     <span>놓은 장</span><span>${S.marker.items.length}</span></div>
-    <div class="row" style="margin-top:8px;gap:6px"><button class="btn" id="mkAuto" type="button">자동 배치(선반)</button><button class="btn" id="mkReset" type="button">매수대로 다시</button><button class="btn pri" id="mkDxf" type="button">마카 DXF</button><button class="btn" id="mkSvg" type="button">마카 SVG</button></div>
+    <div class="row" style="margin-top:8px;gap:6px"><button class="btn pri" id="mkNest" type="button">자동 네스팅</button><label class="chk" style="display:inline-flex"><input id="mk90" type="checkbox" ${S.marker.allow90 ? 'checked' : ''}> 90° 허용</label><button class="btn" id="mkAuto" type="button">선반</button><button class="btn" id="mkReset" type="button">매수대로 다시</button></div>
+    <div class="row" style="margin-top:6px;gap:6px"><button class="btn" id="mkDxf" type="button">마카 DXF</button><button class="btn" id="mkSvg" type="button">마카 SVG</button></div>
     ${it ? `<div class="kv" style="margin-top:10px"><b>조각</b><div><strong>${esc(pc.name)}</strong> ${it.size ? esc(it.size) : ''} <span class="muted">(${esc(pc.block)})</span></div>
       <b>돌리기</b><div><button class="btn" type="button" data-rot="90">90°</button> <button class="btn" type="button" data-rot="180">180°</button> <button class="btn" type="button" data-rot="-90">−90°</button> <span class="muted">지금 ${it.rot}°</span></div>
       <b>뒤집기</b><div><button class="btn" type="button" id="mkFlip">${it.flip ? '↔ 뒤집힘' : '↔ 뒤집기'}</button></div>
       <b>자리</b><div>x ${fmt(it.x)} y ${fmt(it.y)} ${unitLabel()} · 1/8" 눈금 <button class="linkbtn" id="mkDel">빼기</button></div></div>` : '<div class="note" style="margin-top:8px">조각을 끌어 놓는다. 고른 조각은 R 로 90° 돌리고 M 으로 뒤집는다. 빨강은 겹침, 점선은 원단 밖</div>'}
-    <div class="note" style="margin-top:6px">골선 조각은 골 펼치기를 켜야 한 장으로 놓인다 (조각·시접에서). 자동 배치는 선반 채우기라 시작점일 뿐 — 자동 네스팅은 다음</div>`;
+    <div class="note" style="margin-top:6px">골선 조각은 골 펼치기를 켜야 한 장으로 놓인다 (조각·시접에서). 네스팅은 1/4" 격자에 큰 조각부터 왼쪽 아래 빈자리를 찾는 방식 — 결(0°·180°)을 지키고, 90° 허용을 켜면 더 촘촘해질 수 있다</div>`;
   const rebind = () => { draw(); renderSel(); };
   $('mkW').addEventListener('change', e => { const v = parseUnit(e.target.value); if (v) { S.marker.width = v; rebind(); } });
   $('mkGap').addEventListener('change', e => { const v = parseUnit(e.target.value); if (v != null) { S.marker.gap = v; rebind(); } });
   $('mkAuto').addEventListener('click', () => { autoLayout(); rebind(); fitAll(); });
+  $('mk90').addEventListener('change', e => { S.marker.allow90 = e.target.checked; });
+  $('mkNest').addEventListener('click', () => { $('busy').textContent = '네스팅 중…'; setTimeout(() => { autoNest(S.marker.allow90); $('busy').textContent = ''; rebind(); fitAll(); }, 10); });
   $('mkReset').addEventListener('click', () => { S.marker.items = markerItemsFromPieces(); autoLayout(); S.sel = null; rebind(); fitAll(); });
   $('mkDxf').addEventListener('click', () => download('/api/marker_dxf', {...payload(), placements: S.marker.items, width: S.marker.width}, `${S.projName || S.id}_marker.dxf`));
   $('mkSvg').addEventListener('click', () => {
