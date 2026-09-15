@@ -112,6 +112,32 @@ python tools/verify_block.py blocks/sichuni_basic.yaml --page 44          # 편�
 python tools/verify_block.py blocks/sichuni_basic.yaml --page 44 --fit    # 곡선 핸들을 원본에 맞춤
 ```
 
+## 화면 (1단계 — 캔버스 + 치수 패널)
+
+엔진은 화면 없이 완결돼 있고, 화면은 브라우저다. 파이썬이 로컬에서 작은 서버로 돌고
+브라우저가 SVG 캔버스에 그린다 (A안). 표준 라이브러리만 쓰므로 따로 설치할 게 없다.
+
+```
+python -m patterncad.server          # http://127.0.0.1:8765 를 브라우저로 연다
+```
+
+- 위: 스타일·원형 고르기, 단위(inch 분수 / cm / mm), 수정 초기화, 맞춤, SVG 저장
+- 왼쪽: 조각 나무(누르면 그 조각으로 확대), 층(역할별 켜고 끄기), 원형 이력
+- 가운데: 캔버스. 끌어 이동, 휠 확대. 점·선을 누르면 오른쪽에 **그 점의 규칙**(식 그대로)과 지나는 선,
+  곡선을 누르면 베지어 핸들이 보인다. **점을 끌면 수정값**으로 남는다 — 치수를 바꿔도 손으로 옮긴 점은 그 자리에 있고,
+  그 점을 참조하는 뒷 점들은 따라온다 (`Block.evaluate(point_overrides=…)`)
+- 오른쪽: 원형별 치수표. 노란 칸이 고친 값. `value`·`choice` 는 고칠 수 있고, `formula`·`table` 은 식과 결과만,
+  스타일이 다른 원형에서 받아 오는 값(예: 소매 앞AH ← len(body.앞암홀))은 잠겨 있다
+
+```
+patterncad/api.py       계산 결과 → 점·선·치수 JSON, 조각 자리 잡기, 점 규칙을 글로
+patterncad/server.py    /api/catalog · /api/eval · /api/svg, ui/ 정적 파일
+ui/index.html · app.css · app.js   화면 (바닐라 JS, SVG)
+```
+
+서버는 상태가 없다 — 치수 수정값과 점 수정값은 브라우저가 들고 있다가 계산할 때마다 보낸다.
+프로젝트 파일(.pcad)로 저장하는 건 다음 단계.
+
 ## 진행 상황
 
 포트폴리오 **42 아이템(스커트 11 · 팬츠 8 · 상의 12 + 원형 2 · 자켓 9)을 모두 규칙으로 옮겼다.**

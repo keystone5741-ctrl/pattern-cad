@@ -1,0 +1,242 @@
+"""화면(ui/)과 엔진 사이의 JSON.
+
+서버(server.py)가 부른다. 계산 결과(Resolved)를 점·선·치수 표로 풀고, 조각(piece)별로
+겹치지 않게 나란히 놓을 자리(dx, dy)를 정한다. 좌표는 전부 인치. 화면이 단위를 바꿔 보여 준다.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import yaml
+
+from .block import Block, Resolved
+from .style import Style
+from .svg import render_pieces_svg, render_style_svg, render_svg
+from .units import parse_inch
+
+ROOT = Path(__file__).resolve().parent.parent
+GAP_IN = 2.0
+
+
+def catalog() -> dict:
+    """스타일·원형 목록. 파일 머리말만 읽는다."""
+    def head(path):
+        with open(path, encoding="utf-8") as f:
+            d = yaml.safe_load(f) or {}
+        return {"id": d.get("id", path.stem), "name": d.get("name", path.stem), "file": path.name,
+                "category": d.get("category", ""), "source": d.get("source", "")}
+    styles = [head(p) for p in sorted((ROOT / "styles").glob("*.yaml"))]
+    blocks = [head(p) for p in sorted((ROOT / "blocks").glob("*.yaml"))]
+    return {"styles": styles, "blocks": blocks}
+
+
+# ------------------------------------------------------------------ 규칙을 글로
+def _v(x):
+    return str(x)
+
+
+def describe_rule(rule: dict) -> str:
+    """점 규칙(dict)을 사람이 읽는 한 줄로. 식은 그대로 보여 준다 — 그게 규칙의 핵심이다."""
+    if "at" in rule:
+        x, y = rule["at"]
+        return f"좌표 ({_v(x)}, {_v(y)})"
+    if "midpoint" in rule:
+        a, b = rule["midpoint"]
+        return f"{a} · {b} 의 중점"
+    if "along" in rule:
+        a, b = rule["along"]
+        if "ratio" in rule:
+            return f"{a} → {b} 의 {_v(rule['ratio'])} 지점"
+        return f"{a} → {b} 선 위, {a} 에서 {_v(rule['dist'])}"
+    if "intersect" in rule:
+        (a, b), (c, d) = rule["intersect"]
+        return f"{a}–{b} 와 {c}–{d} 의 교점"
+    if "foot" in rule:
+        a, b = rule["foot"]["line"]
+        return f"{rule['foot']['of']} 에서 {a}–{b} 에 내린 수선의 발"
+    if "perp" in rule:
+        r = rule["perp"]
+        a, b = r["line"]
+        return f"{r['from']} 에서 {a}–{b} 에 수직으로 {_v(r['dist'])}"
+    if "rotate" in rule:
+        r = rule["rotate"]
+        return f"{r['of']} 를 {r['center']} 중심으로 {_v(r['angle'])}° 회전"
+    if "mirror" in rule:
+        r = rule["mirror"]
+        a, b = r["line"]
+        return f"{r['of']} 를 {a}–{b} 에 대칭"
+    if "polar" in rule:
+        r = rule["polar"]
+        return f"{r['center']} 에서 반지름 {_v(r['radius'])}, 각도 {_v(r['angle'])}°"
+    if "circle" in rule:
+        c = rule["circle"]
+        if "x" in rule:
+            return f"{c['center']} 중심 반지름 {_v(c['radius'])} 원 위, x = {_v(rule['x'])} ({rule.get('side', 'down')})"
+        return f"{c['center']} 중심 반지름 {_v(c['radius'])} 원 위, y = {_v(rule['y'])} ({rule.get('side', 'right')})"
+    if "from" in rule:
+        if "dir" in rule:
+            dx, dy = rule["dir"]
+            return f"{rule['from']} 에서 [{_v(dx)}, {_v(dy)}] 방향으로 {_v(rule['dist'])}"
+        parts = []
+        if rule.get("dx", 0) not in (0, "0"):
+            parts.append(f"가로 {_v(rule['dx'])}")
+        if rule.get("dy", 0) not in (0, "0"):
+            parts.append(f"세로 {_v(rule['dy'])}")
+        return f"{rule['from']} 에서 " + (", ".join(parts) if parts else "그대로")
+    return str(rule)
+
+
+# ------------------------------------------------------------------ 치수 표
+def _is_linked(v) -> bool:
+    """스타일 파일이 다른 원형의 값으로 묶어 둔 치수인가 (예: 앞AH: "len(body.앞암홀)")."""
+    return isinstance(v, str) and parse_inch(v) is None and any(c in v for c in "(.+-*/")
+
+
+def measurement_rows(block: Block, res: Resolved, style_meas: dict, user_ov: dict) -> list[dict]:
+    rows = []
+    for name, spec in block.measurements.items():
+        spec = spec if isinstance(spec, dict) else {"value": spec}
+        kind = next((k for k in ("choice", "table", "formula", "value") if k in spec), "value")
+        row = {"name": name, "ko": spec.get("ko", ""), "note": spec.get("note", ""), "kind": kind,
+               "value": res.measurements.get(name), "modified": name in user_ov}
+        if kind == "choice":
+            row["options"] = list(spec.get("options") or [])
+        elif kind == "table":
+            row["formula"] = f"{spec.get('key')} 에 따라 " + ", ".join(f"{k}: {v}" for k, v in spec["table"].items())
+        elif kind == "formula":
+            row["formula"] = str(spec["formula"])
+        sv = style_meas.get(name)
+        if _is_linked(sv):
+            row["linked"] = sv
+            row["editable"] = False
+        else:
+            row["editable"] = kind in ("value", "choice")
+            if sv is not None and not row["modified"]:
+                row["style_value"] = sv
+        rows.append(row)
+    return rows
+
+
+# ------------------------------------------------------------------ 조각 배치
+def _piece_names(res: Resolved) -> list[str]:
+    names = []
+    for l in res.lines:
+        pc = l.piece or ""
+        if pc not in names:
+            names.append(pc)
+    return names or [""]
+
+
+def _bbox(lines) -> tuple:
+    xs, ys = [], []
+    for l in lines:
+        for p in l.polyline(8):
+            xs.append(p.x)
+            ys.append(p.y)
+    if not xs:
+        return (0, 0, 0, 0)
+    return (min(xs), min(ys), max(xs), max(ys))
+
+
+def _overlap(a, b, tol=0.25) -> bool:
+    return a[0] < b[2] - tol and b[0] < a[2] - tol and a[1] < b[3] - tol and b[1] < a[3] - tol
+
+
+def layout(results: dict[str, Resolved]) -> list[dict]:
+    """모든 원형을 왼쪽부터 한 줄로.
+
+    원형 안의 조각(앞판·뒤판…)은 원형 좌표 그대로 둔다 — 시추니처럼 앞·뒤판이 이미 나란히 그려진
+    원형이 대부분이고, 안내선(조각 없는 선)도 그 자리에 있어야 뜻이 통한다.
+    전개해서 조각끼리 겹치는 원형만 조각별로 떼어 놓는다."""
+    out = []
+    x = 0.0
+    for key, res in results.items():
+        names = _piece_names(res)
+        named = [n for n in names if n]
+        boxes = {n: _bbox([l for l in res.lines if (l.piece or "") == n]) for n in names}
+        spread = any(_overlap(boxes[a], boxes[b]) for i, a in enumerate(named) for b in named[i + 1:])
+        if not spread:
+            x0, y0, x1, y1 = _bbox(res.lines)
+            for n in names:
+                bx = boxes[n]
+                out.append({"block": key, "piece": n, "dx": x - x0, "dy": -y0,
+                            "bbox": list(bx), "w": bx[2] - bx[0], "h": bx[3] - bx[1]})
+            x += (x1 - x0) + GAP_IN
+            continue
+        first_dx = None
+        for n in named:
+            x0, y0, x1, y1 = boxes[n]
+            out.append({"block": key, "piece": n, "dx": x - x0, "dy": -y0,
+                        "bbox": [x0, y0, x1, y1], "w": x1 - x0, "h": y1 - y0})
+            if first_dx is None:
+                first_dx = (x - x0, -y0)
+            x += (x1 - x0) + GAP_IN * 0.75
+        if "" in names:  # 조각 없는 안내선은 첫 조각 자리에
+            bx = boxes[""]
+            out.append({"block": key, "piece": "", "dx": first_dx[0], "dy": first_dx[1],
+                        "bbox": list(bx), "w": bx[2] - bx[0], "h": bx[3] - bx[1]})
+        x += GAP_IN * 0.5
+    return out
+
+
+# ------------------------------------------------------------------ 전체
+def _split(prefix_map: dict, key: str) -> dict:
+    return {k[len(key) + 1:]: v for k, v in prefix_map.items() if k.startswith(key + ".")}
+
+
+def _evaluate(kind: str, ident: str, overrides: dict, point_overrides: dict):
+    """(결과 dict, 스타일별 치수 지정, 이름). block 은 'block' 키 하나로 감싼다."""
+    if kind == "style":
+        st = Style.load(ROOT / "styles" / f"{ident}.yaml")
+        results = st.evaluate(overrides, point_overrides)
+        style_meas = {name: meas for name, _, meas in st.blocks}
+        return results, style_meas, st.name
+    blk = Block.load(ROOT / "blocks" / f"{ident}.yaml")
+    res = blk.evaluate(_split(overrides, "block"), _split(point_overrides, "block"))
+    return {"block": res}, {"block": {}}, blk.name
+
+
+def to_json(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None) -> dict:
+    overrides = overrides or {}
+    point_overrides = point_overrides or {}
+    results, style_meas, name = _evaluate(kind, ident, overrides, point_overrides)
+    pieces = layout(results)
+    blocks = []
+    for key, res in results.items():
+        pcs = [p for p in pieces if p["block"] == key]
+        # 점이 어느 조각에 속하는지: 그 점을 쓰는 첫 선의 조각. 어디에도 안 쓰이면 첫 조각
+        owner = {}
+        for l in res.lines:
+            for n in l.point_names:
+                owner.setdefault(n, l.piece or "")
+        first_pc = pcs[0]["piece"] if pcs else ""
+        points = []
+        for n, p in res.points.items():
+            meta = res.point_meta.get(n, {})
+            row = {"name": n, "x": p.x, "y": p.y, "ko": meta.get("ko", ""), "note": meta.get("note", ""),
+                   "piece": owner.get(n, first_pc), "rule": describe_rule(meta.get("rule", {})),
+                   "override": bool(meta.get("override"))}
+            if "computed" in meta:
+                row["computed"] = list(meta["computed"])
+            points.append(row)
+        lines = []
+        for l in res.lines:
+            lines.append({"name": l.name, "role": l.role, "kind": l.kind, "piece": l.piece or "",
+                          "points": list(l.point_names), "pts": [[p.x, p.y] for p in l.pts],
+                          "beziers": [[[b.p0.x, b.p0.y], [b.c1.x, b.c1.y], [b.c2.x, b.c2.y], [b.p3.x, b.p3.y]] for b in l.beziers],
+                          "ko": l.ko, "length": l.length()})
+        blocks.append({"key": key, "id": res.block.id, "name": res.block.name, "category": res.block.category,
+                       "source": res.block.data.get("source", ""), "extends": res.block.data.get("extends_from"),
+                       "pieces": [p["piece"] for p in pcs],
+                       "measurements": measurement_rows(res.block, res, style_meas.get(key, {}), _split(overrides, key)),
+                       "points": points, "lines": lines})
+    return {"kind": kind, "id": ident, "name": name, "blocks": blocks, "pieces": pieces}
+
+
+def to_svg(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None) -> str:
+    results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {})
+    if kind == "style":
+        return render_style_svg(results, labels=False)
+    res = results["block"]
+    return render_pieces_svg(res) if len(_piece_names(res)) > 1 else render_svg(res)

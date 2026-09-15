@@ -232,8 +232,12 @@ class Block:
         )
 
     # ------------------------------------------------------------ 계산
-    def evaluate(self, overrides: dict | None = None) -> Resolved:
+    def evaluate(self, overrides: dict | None = None, point_overrides: dict | None = None) -> Resolved:
+        """overrides 는 치수 덮어쓰기 {이름: 값}. point_overrides 는 점 수정값 {이름: (x, y)} —
+        화면에서 점을 끌어 놓은 자리다. 규칙으로 구한 자리를 그 좌표로 바꾸고, 그 점을 참조하는
+        뒷 점들은 바뀐 자리에서 다시 계산된다. 치수가 바뀌어도 수정값은 남는다."""
         overrides = overrides or {}
+        point_overrides = point_overrides or {}
         meas: dict[str, float] = {}
         points: dict[str, Pt] = {}
         env = Env(meas, points)
@@ -283,8 +287,16 @@ class Block:
         point_meta = {}
         for name, rule in self.points.items():
             resolve_pending()
-            points[name] = self._point(name, rule, env)
-            point_meta[name] = {k: v for k, v in rule.items() if k in ("ko", "en", "note")}
+            p = self._point(name, rule, env)
+            meta = {k: v for k, v in rule.items() if k in ("ko", "en", "note")}
+            meta["rule"] = {k: v for k, v in rule.items() if k not in ("ko", "en", "note")}
+            if name in point_overrides:
+                ox, oy = point_overrides[name]
+                meta["computed"] = (p.x, p.y)
+                meta["override"] = True
+                p = Pt(float(ox), float(oy))
+            points[name] = p
+            point_meta[name] = meta
         resolve_pending()
         if pending:
             raise ValueError(f"계산 못 한 치수: {list(pending)}")

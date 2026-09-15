@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pattern-cad</title>
+<link rel="stylesheet" href="/ui/app.css">
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <span class="brand">pattern-cad</span>
+    <select id="picker" title="스타일 / 원형"></select>
+    <span id="title" class="muted"></span>
+    <span class="spacer"></span>
+    <span class="seg" id="units">
+      <button data-u="in" class="on">inch</button><button data-u="cm">cm</button><button data-u="mm">mm</button>
+    </span>
+    <button id="resetAll" class="btn" title="치수·점 수정값 전부 초기화">수정 초기화</button>
+    <button id="fit" class="btn">맞춤</button>
+    <button id="saveSvg" class="btn pri">SVG 저장</button>
+  </header>
+
+  <aside id="left">
+    <section>
+      <h3>조각</h3>
+      <div id="tree" class="tree"></div>
+    </section>
+    <section>
+      <h3>층</h3>
+      <div id="layers" class="col"></div>
+    </section>
+    <section class="grow">
+      <h3>원형</h3>
+      <div id="lineage" class="col small muted"></div>
+    </section>
+  </aside>
+
+  <main id="center">
+    <svg id="cv" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+          <path d="M24 0H0V24" fill="none" stroke="#ece9e2" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect id="bg" width="100%" height="100%" fill="url(#grid)"/>
+      <g id="world"></g>
+    </svg>
+    <div id="hint" class="hint"></div>
+    <div id="err" class="err" hidden></div>
+  </main>
+
+  <aside id="right">
+    <section id="selBox">
+      <h3>선택</h3>
+      <div id="sel" class="small muted">점이나 선을 누르세요. 점은 끌어 옮길 수 있습니다.</div>
+    </section>
+    <section class="grow">
+      <h3>치수</h3>
+      <div id="blockTabs" class="tabs"></div>
+      <div id="meas"></div>
+    </section>
+  </aside>
+
+  <footer id="status">
+    <span id="cursor">x —  y —</span>
+    <span id="zoom">100%</span>
+    <span id="counts"></span>
+    <span class="spacer"></span>
+    <span id="busy" class="muted"></span>
+  </footer>
+</div>
+<script src="/ui/app.js"></script>
+</body>
+</html>

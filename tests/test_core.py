@@ -657,3 +657,62 @@ class StyleLink(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Overrides(unittest.TestCase):
+    """화면에서 점을 끌어 놓은 수정값과, 화면용 JSON."""
+
+    def test_point_override_moves_the_lines_through_it(self):
+        blk = Block.load(ROOT / "blocks" / "sichuni_basic.yaml")
+        base = blk.evaluate()
+        line = next(l for l in base.lines if l.kind == "straight")
+        name = line.point_names[0]
+        p = base.points[name]
+        res = blk.evaluate(point_overrides={name: (p.x + 1, p.y)})
+        self.assertAlmostEqual(res.points[name].x, p.x + 1)
+        self.assertTrue(res.point_meta[name]["override"])
+        self.assertAlmostEqual(res.point_meta[name]["computed"][0], p.x)
+        self.assertAlmostEqual(res.line(line.name).pts[0].x, p.x + 1)
+        # 규칙(rule)은 그대로 남아 있어야 화면이 보여 줄 수 있다
+        self.assertIn("rule", res.point_meta[name])
+
+    def test_style_json_has_pieces_rules_and_linked_measurements(self):
+        from patterncad.api import to_json
+        d = to_json("style", "shirt_collar_blouse")
+        keys = [b["key"] for b in d["blocks"]]
+        self.assertIn("body", keys)
+        self.assertIn("sleeve", keys)
+        self.assertTrue(len(d["pieces"]) >= 6)  # 앞판·뒤판·소매·밴드·칼라·커프스·견보루
+        body = next(b for b in d["blocks"] if b["key"] == "body")
+        self.assertTrue(all(p["rule"] for p in body["points"]))
+        sleeve = next(b for b in d["blocks"] if b["key"] == "sleeve")
+        ah = next(m for m in sleeve["measurements"] if m["name"] == "앞AH")
+        self.assertFalse(ah["editable"])
+        self.assertIn("body", ah["linked"])
+        # 놓인 조각은 겹치지 않는다 (같은 원형의 조각 없는 안내선 무리는 제외)
+        placed = [(p["block"], p["piece"], p["bbox"][0] + p["dx"], p["bbox"][2] + p["dx"],
+                   p["bbox"][1] + p["dy"], p["bbox"][3] + p["dy"]) for p in d["pieces"]]
+        tol = 0.3
+        for i, a in enumerate(placed):
+            for b in placed[i + 1:]:
+                if a[0] == b[0] and (not a[1] or not b[1]):
+                    continue
+                overlap = a[2] < b[3] - tol and b[2] < a[3] - tol and a[4] < b[5] - tol and b[4] < a[5] - tol
+                self.assertFalse(overlap, f"{a[:2]} 와 {b[:2]} 가 겹친다")
+
+    def test_measurement_override_is_marked_and_flows_to_the_sleeve(self):
+        from patterncad.api import to_json
+        base = to_json("style", "shirt_collar_blouse")
+        d = to_json("style", "shirt_collar_blouse", {"body.여유": "6"})
+        body = next(b for b in d["blocks"] if b["key"] == "body")
+        row = next(m for m in body["measurements"] if m["name"] == "여유")
+        self.assertTrue(row["modified"])
+        self.assertAlmostEqual(row["value"], 6)
+        ah = lambda j: next(m for m in next(b for b in j["blocks"] if b["key"] == "sleeve")["measurements"] if m["name"] == "앞AH")["value"]
+        self.assertGreater(ah(d), ah(base))  # 몸판 여유 → 암홀 → 소매 앞AH
+
+    def test_rule_text(self):
+        from patterncad.api import describe_rule
+        self.assertEqual(describe_rule({"from": "O", "dx": "B/4", "dy": "진동깊이"}), "O 에서 가로 B/4, 세로 진동깊이")
+        self.assertEqual(describe_rule({"intersect": [["A", "B"], ["C", "D"]]}), "A–B 와 C–D 의 교점")
+        self.assertIn("회전", describe_rule({"rotate": {"of": "P", "center": "C", "angle": 5}}))
