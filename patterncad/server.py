@@ -6,8 +6,13 @@
 GET  /                → ui/index.html
 GET  /ui/<file>       → ui/ 정적 파일
 GET  /api/catalog     → 스타일·원형 목록
-POST /api/eval        → {"kind": "style"|"block", "id", "overrides": {"body.가슴둘레": "34"}, "point_overrides": {"body.SP_F": [x, y]}}
+POST /api/eval        → {"kind": "style"|"block", "id", "overrides": {"body.가슴둘레": "34"},
+                          "point_overrides": {"body.SP_F": [x, y]}, "line_overrides": {"body.앞암홀": {"0": {"c1": [비율, 각]}}}}
 POST /api/svg         → 같은 입력, 실물 크기 SVG 본문
+GET  /api/projects · GET/POST /api/project?name=   → 프로젝트 파일 (projects/*.pcad)
+POST /api/overlay     → {"block": 원형id, "piece": 조각} → 원본 도면 맞춤 변환 (verify/fits.json 에 캐시)
+GET  /api/page?page=48&layers=pattern,developed    → 추출 도면의 층 그림 (SVG 조각)
+GET  /api/wizard · POST /api/wizard                → 마법사 재료 / 선택 → 치수 덮어쓰기
 """
 
 from __future__ import annotations
@@ -20,7 +25,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 
-from . import api
+from . import api, wizard
 
 ROOT = Path(__file__).resolve().parent.parent
 UI = ROOT / "ui"
@@ -50,8 +55,24 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
-        if path == "/api/catalog":
-            return self._json(200, api.catalog())
+        q = dict(p.split("=", 1) for p in urlparse(self.path).query.split("&") if "=" in p)
+        from urllib.parse import unquote  # noqa: PLC0415
+        q = {k: unquote(v) for k, v in q.items()}
+        try:
+            if path == "/api/catalog":
+                return self._json(200, api.catalog())
+            if path == "/api/wizard":
+                return self._json(200, wizard.catalog())
+            if path == "/api/projects":
+                return self._json(200, api.project_list())
+            if path == "/api/project":
+                return self._json(200, api.project_load(q.get("name", "")))
+            if path == "/api/page":
+                layers = tuple((q.get("layers") or "pattern,developed").split(","))
+                body = api.page_svg_layers(int(q["page"]), layers).encode("utf-8")
+                return self._send(200, body, "image/svg+xml; charset=utf-8")
+        except Exception as e:  # noqa: BLE001
+            return self._json(400, {"error": str(e)})
         if path == "/":
             path = "/ui/index.html"
         if path.startswith("/ui/"):
@@ -67,12 +88,19 @@ class Handler(BaseHTTPRequestHandler):
         path = urlparse(self.path).path
         try:
             req = self._body()
+            if path == "/api/project":
+                return self._json(200, api.project_save(req.get("name", ""), req))
+            if path == "/api/overlay":
+                return self._json(200, api.overlay_fit(req["block"], req.get("piece") or None, bool(req.get("refresh"))))
+            if path == "/api/wizard":
+                ov = wizard.overrides_for(req["style"], req.get("body") or {}, req.get("fit"))
+                return self._json(200, {"kind": "style", "id": req["style"], "overrides": ov})
             kind, ident = req.get("kind", "style"), req["id"]
-            ov, po = req.get("overrides") or {}, req.get("point_overrides") or {}
+            ov, po, lo = req.get("overrides") or {}, req.get("point_overrides") or {}, req.get("line_overrides") or {}
             if path == "/api/eval":
-                return self._json(200, api.to_json(kind, ident, ov, po))
+                return self._json(200, api.to_json(kind, ident, ov, po, lo))
             if path == "/api/svg":
-                svg = api.to_svg(kind, ident, ov, po).encode("utf-8")
+                svg = api.to_svg(kind, ident, ov, po, lo).encode("utf-8")
                 return self._send(200, svg, "image/svg+xml; charset=utf-8",
                                   {"Content-Disposition": f'attachment; filename="{ident}.svg"'})
             self._json(404, {"error": f"없는 주소: {path}"})

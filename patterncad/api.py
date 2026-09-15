@@ -10,6 +10,11 @@ from pathlib import Path
 
 import yaml
 
+import json
+import re
+import sys
+import threading
+
 from .block import Block, Resolved
 from .style import Style
 from .svg import render_pieces_svg, render_style_svg, render_svg
@@ -185,22 +190,24 @@ def _split(prefix_map: dict, key: str) -> dict:
     return {k[len(key) + 1:]: v for k, v in prefix_map.items() if k.startswith(key + ".")}
 
 
-def _evaluate(kind: str, ident: str, overrides: dict, point_overrides: dict):
+def _evaluate(kind: str, ident: str, overrides: dict, point_overrides: dict, line_overrides: dict | None = None):
     """(결과 dict, 스타일별 치수 지정, 이름). block 은 'block' 키 하나로 감싼다."""
+    line_overrides = line_overrides or {}
     if kind == "style":
         st = Style.load(ROOT / "styles" / f"{ident}.yaml")
-        results = st.evaluate(overrides, point_overrides)
+        results = st.evaluate(overrides, point_overrides, line_overrides)
         style_meas = {name: meas for name, _, meas in st.blocks}
         return results, style_meas, st.name
     blk = Block.load(ROOT / "blocks" / f"{ident}.yaml")
-    res = blk.evaluate(_split(overrides, "block"), _split(point_overrides, "block"))
+    res = blk.evaluate(_split(overrides, "block"), _split(point_overrides, "block"), _split(line_overrides, "block"))
     return {"block": res}, {"block": {}}, blk.name
 
 
-def to_json(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None) -> dict:
+def to_json(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None,
+            line_overrides: dict | None = None) -> dict:
     overrides = overrides or {}
     point_overrides = point_overrides or {}
-    results, style_meas, name = _evaluate(kind, ident, overrides, point_overrides)
+    results, style_meas, name = _evaluate(kind, ident, overrides, point_overrides, line_overrides)
     pieces = layout(results)
     blocks = []
     for key, res in results.items():
@@ -225,7 +232,8 @@ def to_json(kind: str, ident: str, overrides: dict | None = None, point_override
             lines.append({"name": l.name, "role": l.role, "kind": l.kind, "piece": l.piece or "",
                           "points": list(l.point_names), "pts": [[p.x, p.y] for p in l.pts],
                           "beziers": [[[b.p0.x, b.p0.y], [b.c1.x, b.c1.y], [b.c2.x, b.c2.y], [b.p3.x, b.p3.y]] for b in l.beziers],
-                          "ko": l.ko, "length": l.length()})
+                          "ko": l.ko, "length": l.length(),
+                          "overridden": sorted(int(k) for k in l.overrides)})
         blocks.append({"key": key, "id": res.block.id, "name": res.block.name, "category": res.block.category,
                        "source": res.block.data.get("source", ""), "extends": res.block.data.get("extends_from"),
                        "pieces": [p["piece"] for p in pcs],
@@ -234,9 +242,106 @@ def to_json(kind: str, ident: str, overrides: dict | None = None, point_override
     return {"kind": kind, "id": ident, "name": name, "blocks": blocks, "pieces": pieces}
 
 
-def to_svg(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None) -> str:
-    results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {})
+def to_svg(kind: str, ident: str, overrides: dict | None = None, point_overrides: dict | None = None,
+           line_overrides: dict | None = None) -> str:
+    results, _, _ = _evaluate(kind, ident, overrides or {}, point_overrides or {}, line_overrides or {})
     if kind == "style":
         return render_style_svg(results, labels=False)
     res = results["block"]
     return render_pieces_svg(res) if len(_piece_names(res)) > 1 else render_svg(res)
+
+
+# ------------------------------------------------------------------ 원본 도면 겹쳐 보기
+FITS = ROOT / "verify" / "fits.json"
+_fit_lock = threading.Lock()
+
+
+def _block_page(blk: Block) -> int | None:
+    m = re.search(r"p\.(\d+)", str(blk.data.get("source", "")))
+    return int(m.group(1)) if m else None
+
+
+def page_svg_layers(page: int, layers=("pattern", "developed")) -> str:
+    """추출한 도면(extracted/**/pNNN.svg)에서 층 그룹의 속만 꺼내 <g> 로 잇는다. 좌표는 PDF pt."""
+    files = list(ROOT.glob(f"extracted/*/*/p{page:03d}.svg"))
+    if not files:
+        raise FileNotFoundError(f"p.{page} 추출 그림이 없다")
+    text = files[0].read_text(encoding="utf-8")
+    out = []
+    for layer in layers:
+        m = re.search(rf'<g id="{layer}"[^>]*>(.*?)</g>', text, re.S)
+        if m:
+            out.append(f'<g class="layer-{layer}">{m.group(1)}</g>')
+    return "".join(out)
+
+
+def overlay_fit(block_id: str, piece: str | None, refresh: bool = False) -> dict:
+    """원형(조각)을 원본 도면에 맞춘 변환. 시간이 걸려서 verify/fits.json 에 남긴다."""
+    key = f"{block_id}|{piece or ''}"
+    with _fit_lock:
+        cache = json.loads(FITS.read_text(encoding="utf-8")) if FITS.exists() else {}
+    if key in cache and not refresh:
+        return cache[key]
+    blk = Block.load(ROOT / "blocks" / f"{block_id}.yaml")
+    page = _block_page(blk)
+    if not page:
+        raise ValueError(f"{block_id}: 도면 쪽수(source)가 없다")
+    hint = blk.data.get("verify") or {}
+    if hint.get("skip"):
+        raise ValueError(f"{block_id}: 도면이 없는 원형이다 (verify.skip)")
+    sys.path.insert(0, str(ROOT / "tools"))
+    import align_block  # noqa: PLC0415
+    import contextlib, io  # noqa: PLC0415
+    argv = [f"blocks/{block_id}.yaml", "--page", str(page), "--quiet"] + (["--piece", piece] if piece else [])
+    with contextlib.redirect_stdout(io.StringIO()):
+        sx, sy, ox, oy, err, rot, cx, cy = align_block.main(argv)
+    mir = hint.get("mirror")
+    fit = {"page": page, "sx": sx, "sy": sy, "ox": ox, "oy": oy, "err": err / sx, "rot": rot, "cx": cx, "cy": cy,
+           "mirror": bool(mir is True or (isinstance(mir, list) and piece in mir)),
+           "layers": (hint.get("layer") or "pattern,developed")}
+    with _fit_lock:
+        cache = json.loads(FITS.read_text(encoding="utf-8")) if FITS.exists() else {}
+        cache[key] = fit
+        FITS.parent.mkdir(exist_ok=True)
+        FITS.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
+    return fit
+
+
+# ------------------------------------------------------------------ 프로젝트 파일 (.pcad)
+PROJECTS = ROOT / "projects"
+
+
+def _safe_name(name: str) -> str:
+    name = re.sub(r'[\\/:*?"<>|]+', "_", (name or "").strip())
+    if not name or name.startswith("."):
+        raise ValueError("프로젝트 이름이 필요하다")
+    return name
+
+
+def project_list() -> list[dict]:
+    out = []
+    for f in sorted(PROJECTS.glob("*.pcad")):
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        out.append({"name": f.stem, "kind": d.get("kind"), "id": d.get("id"), "saved": d.get("saved", "")})
+    return out
+
+
+def project_save(name: str, data: dict) -> dict:
+    import datetime  # noqa: PLC0415
+    name = _safe_name(name)
+    keep = {k: data.get(k) for k in ("kind", "id", "overrides", "point_overrides", "line_overrides", "view", "note")}
+    keep["name"] = name
+    keep["saved"] = datetime.datetime.now().isoformat(timespec="seconds")
+    PROJECTS.mkdir(exist_ok=True)
+    (PROJECTS / f"{name}.pcad").write_text(json.dumps(keep, ensure_ascii=False, indent=1), encoding="utf-8")
+    return keep
+
+
+def project_load(name: str) -> dict:
+    f = PROJECTS / f"{_safe_name(name)}.pcad"
+    if not f.exists():
+        raise FileNotFoundError(f"프로젝트가 없다: {name}")
+    return json.loads(f.read_text(encoding="utf-8"))

@@ -566,7 +566,7 @@ def main(argv=None):
         fitted = fit_curve_handles(res, original_polylines(page, (sx, sy), (ox, oy), curves_only=True))
         print(yaml.safe_dump({"handles": fitted}, allow_unicode=True, sort_keys=False))
         doc.close()
-        return sx, sy, ox, oy, err
+        return sx, sy, ox, oy, err, rot, ctr.x, ctr.y  # 뒤의 셋은 화면 겹쳐 보기용 (verify_all 은 앞 다섯만 쓴다)
 
     if a.points:
         # 도면의 꼭짓점(선의 끝점·꺾이는 점)을 원형 좌표(인치)로 바꿔 보여 준다 — 치수를 읽으려고
@@ -599,7 +599,7 @@ def main(argv=None):
             tag = f"  ~ {near[0]} ({d:.2f})" if d < 0.9 else ""
             print(f"    ({c.x:7.3f}, {c.y:7.3f}){tag}")
         doc.close()
-        return sx, sy, ox, oy, err
+        return sx, sy, ox, oy, err, rot, ctr.x, ctr.y  # 뒤의 셋은 화면 겹쳐 보기용 (verify_all 은 앞 다섯만 쓴다)
 
     # 선별 편차
     if not a.quiet:
@@ -632,7 +632,7 @@ def main(argv=None):
     doc.close()
     if not a.quiet:
         print(f"  → {out.with_suffix('.png')}")
-    return sx, sy, ox, oy, err
+    return sx, sy, ox, oy, err, rot, ctr.x, ctr.y  # 뒤의 셋은 화면 겹쳐 보기용 (verify_all 은 앞 다섯만 쓴다)
 
 
 if __name__ == "__main__":

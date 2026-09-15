@@ -1,6 +1,6 @@
-/* pattern-cad 화면 — 1단계: 캔버스 + 치수 패널.
+/* pattern-cad 화면 — 캔버스 + 치수 패널 + 곡선 핸들 + 프로젝트 파일 + 원본 도면 겹쳐 보기 + 새 패턴 마법사.
    엔진(patterncad/)이 계산한 점·선을 그대로 그린다. 좌표는 인치, 화면 배율 K px/inch.
-   치수를 고치거나 점을 끌면 서버에 다시 계산을 시켜 그린다 (서버는 상태가 없다 — 수정값은 여기 있다). */
+   치수를 고치거나 점·핸들을 끌면 서버에 다시 계산을 시켜 그린다 (서버는 상태가 없다 — 수정값은 여기 있다). */
 'use strict';
 
 const K = 24;                       // 배율 1 = 1 inch 당 24px
@@ -8,16 +8,18 @@ const ROLES = ['outline', 'dart', 'construction', 'mark', 'notch', 'grain', 'fol
 const ROLE_KO = {outline: '완성선', dart: '다트·턱', construction: '안내선', mark: '표시', notch: '노치', grain: '식서', fold: '골선', dimension: '치수선'};
 
 const S = {
-  kind: 'style', id: null, data: null,
-  overrides: {}, pointOverrides: {},
-  unit: 'in', sel: null,                // sel: {type:'point'|'line', block, name}
+  kind: 'style', id: null, data: null, projName: '',
+  overrides: {}, pointOverrides: {}, lineOverrides: {},
+  unit: 'in', sel: null, measure: null,        // sel: {type:'point'|'line', block, name}
   layers: Object.fromEntries(ROLES.map(r => [r, r !== 'dimension'])), labels: false, helpers: false,
-  k: 1, px: 40, py: 40,                 // 확대 배율, 이동
-  seq: 0, busy: false,
+  overlays: {}, pageCache: {},                 // overlays: 'block|piece' → {on, fit, loading}
+  k: 1, px: 40, py: 40,                        // 확대 배율, 이동
+  seq: 0,
 };
 
 const $ = id => document.getElementById(id);
 const cv = $('cv'), world = $('world');
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
 // ------------------------------------------------------------ 단위
 function parseInch(t) {
@@ -33,6 +35,7 @@ function parseInch(t) {
   if ((m = s.match(/^\d+(?:\.\d+)?$/))) return sign * +s;
   return null;
 }
+function gcd(a, b) { return b ? gcd(b, a % b) : a; }
 function toFraction(v, den = 16) {
   const sign = v < 0 ? '-' : '';
   let total = Math.round(Math.abs(v) * den);
@@ -41,14 +44,14 @@ function toFraction(v, den = 16) {
   let g = gcd(num, den); num /= g; const d = den / g;
   return sign + (whole ? whole + '.' : '') + num + '/' + d;      // 포트폴리오식 3.1/2
 }
-function gcd(a, b) { return b ? gcd(b, a % b) : a; }
 function fmt(v) {                              // 인치 실수 → 현재 단위 글자
-  if (v == null || typeof v !== 'number') return v == null ? '' : String(v);
+  if (v == null) return '';
+  if (typeof v !== 'number') return String(v);
   if (S.unit === 'in') return toFraction(v);
   if (S.unit === 'cm') return (v * 2.54).toFixed(1);
   return Math.round(v * 25.4) + '';
 }
-function unitLabel() { return S.unit === 'in' ? '"' : S.unit; }
+const unitLabel = () => S.unit === 'in' ? '"' : S.unit;
 function parseUnit(t) {                        // 현재 단위 글자 → 인치 실수 (못 읽으면 null)
   if (S.unit === 'in') return parseInch(t);
   const n = parseFloat(String(t).replace(',', ''));
@@ -67,41 +70,47 @@ async function post(url, body) {
   if (!r.ok) throw new Error(await r.text());
   return r;
 }
-function payload() { return {kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides}; }
+async function getJson(url) {
+  const r = await fetch(url), j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
+const payload = () => ({kind: S.kind, id: S.id, overrides: S.overrides, point_overrides: S.pointOverrides, line_overrides: S.lineOverrides});
+function showErr(e) { $('err').hidden = false; $('err').textContent = e.message || String(e); }
 
 let evalTimer = null;
 function scheduleEval(delay = 60) { clearTimeout(evalTimer); evalTimer = setTimeout(evaluate, delay); }
 async function evaluate() {
   const my = ++S.seq;
-  S.busy = true; $('busy').textContent = '계산 중…';
+  $('busy').textContent = '계산 중…';
   try {
     const d = await post('/api/eval', payload());
     if (my !== S.seq) return;                  // 더 새 요청이 나갔다
     S.data = d;
     $('err').hidden = true;
-    draw(); renderTree(); renderMeas(); renderSel(); renderLineage();
+    draw(); renderTree(); renderMeas(); renderSel(); renderLineage(); renderOverlayList();
     $('title').textContent = d.name;
     $('counts').textContent = `조각 ${d.pieces.length} · 점 ${d.blocks.reduce((n, b) => n + b.points.length, 0)} · 선 ${d.blocks.reduce((n, b) => n + b.lines.length, 0)}`;
   } catch (e) {
-    $('err').hidden = false; $('err').textContent = e.message;
+    showErr(e);
   } finally {
-    if (my === S.seq) { S.busy = false; $('busy').textContent = ''; }
+    if (my === S.seq) $('busy').textContent = '';
   }
 }
 
 // ------------------------------------------------------------ 좌표
 const pieceOf = (block, piece) => S.data.pieces.find(p => p.block === block && p.piece === piece) || {dx: 0, dy: 0};
-function toScreen(x, y, off) { return [(x + off.dx) * K, (y + off.dy) * K]; }          // world px (확대 전)
+const toScreen = (x, y, off) => [(x + off.dx) * K, (y + off.dy) * K];          // world px (확대 전)
 function clientToWorld(ev) {
   const r = cv.getBoundingClientRect();
   return [(ev.clientX - r.left - S.px) / S.k, (ev.clientY - r.top - S.py) / S.k];
 }
+const worldToBlock = (wx, wy, off) => [wx / K - off.dx, wy / K - off.dy];
 function applyView() {
   world.setAttribute('transform', `translate(${S.px} ${S.py}) scale(${S.k})`);
   $('zoom').textContent = Math.round(S.k * 100) + '%';
-  const rr = 4 / S.k;
-  world.querySelectorAll('.pt').forEach(c => c.setAttribute('r', rr));
-  world.querySelectorAll('.hdot').forEach(c => c.setAttribute('r', 3 / S.k));
+  world.querySelectorAll('.pt').forEach(c => c.setAttribute('r', 4 / S.k));
+  world.querySelectorAll('.hdot').forEach(c => c.setAttribute('r', 3.5 / S.k));
   world.querySelectorAll('text').forEach(t => t.setAttribute('transform', `translate(${t.dataset.x} ${t.dataset.y}) scale(${1 / S.k})`));
 }
 function fitAll(pieceFilter) {
@@ -113,8 +122,7 @@ function fitAll(pieceFilter) {
     x0 = Math.min(x0, ax); y0 = Math.min(y0, ay); x1 = Math.max(x1, bx); y1 = Math.max(y1, by);
   }
   const r = cv.getBoundingClientRect(), m = 40;
-  S.k = Math.min((r.width - 2 * m) / (x1 - x0 || 1), (r.height - 2 * m) / (y1 - y0 || 1));
-  S.k = Math.max(0.05, Math.min(20, S.k));
+  S.k = Math.max(0.05, Math.min(20, Math.min((r.width - 2 * m) / (x1 - x0 || 1), (r.height - 2 * m) / (y1 - y0 || 1))));
   S.px = (r.width - (x1 - x0) * S.k) / 2 - x0 * S.k;
   S.py = (r.height - (y1 - y0) * S.k) / 2 - y0 * S.k;
   applyView();
@@ -143,9 +151,12 @@ function text(x, y, s, cls, parent, dx = 0, dy = 0) {
   t.textContent = s;
   return t;
 }
+const isSel = (type, block, name) => S.sel && S.sel.type === type && S.sel.block === block && S.sel.name === name;
+
 function draw() {
   world.innerHTML = '';
   const d = S.data;
+  drawOverlays();
   for (const b of d.blocks) {                   // 원형 이름은 한 번, 조각 이름은 조각마다
     const pcs = d.pieces.filter(p => p.block === b.key);
     if (!pcs.length) continue;
@@ -163,35 +174,37 @@ function draw() {
     for (const l of b.lines) {
       if (!S.layers[l.role]) continue;
       const off = pieceOf(b.key, l.piece), dd = pathD(l, off);
-      const lit = S.sel && ((S.sel.type === 'line' && S.sel.block === b.key && S.sel.name === l.name) ||
-                            (S.sel.type === 'point' && S.sel.block === b.key && l.points.includes(S.sel.name)));
+      const lit = isSel('line', b.key, l.name) || (S.sel && S.sel.type === 'point' && S.sel.block === b.key && l.points.includes(S.sel.name));
       el('path', {d: dd, class: `r-${l.role}${lit ? ' lit' : ''}`, 'data-name': l.name}, g);
       const hit = el('path', {d: dd, class: 'hit'}, g);
       hit.addEventListener('click', ev => { ev.stopPropagation(); select({type: 'line', block: b.key, name: l.name}); });
       hit.addEventListener('mouseenter', () => hint(`${l.name}${l.ko ? ' · ' + l.ko : ''} — ${ROLE_KO[l.role]} · 길이 ${fmt(l.length)}${unitLabel()}`));
       hit.addEventListener('mouseleave', () => hint(''));
     }
-    // 곡선 핸들 (선택한 곡선만)
+    // 곡선 핸들 (선택한 곡선만) — 끌 수 있다
     if (S.sel && S.sel.type === 'line' && S.sel.block === b.key) {
       const l = b.lines.find(x => x.name === S.sel.name);
       if (l && l.kind === 'curve') {
         const off = pieceOf(b.key, l.piece);
-        for (const bz of l.beziers) {
+        l.beziers.forEach((bz, i) => {
           const [p0, c1, c2, p3] = bz.map(([x, y]) => toScreen(x, y, off));
+          const ov = l.overridden.includes(i) ? ' ov' : '';
           el('line', {x1: p0[0], y1: p0[1], x2: c1[0], y2: c1[1], class: 'handle'}, g);
           el('line', {x1: p3[0], y1: p3[1], x2: c2[0], y2: c2[1], class: 'handle'}, g);
-          el('circle', {cx: c1[0], cy: c1[1], r: 3, class: 'hdot'}, g);
-          el('circle', {cx: c2[0], cy: c2[1], r: 3, class: 'hdot'}, g);
-        }
+          const h1 = el('circle', {cx: c1[0], cy: c1[1], r: 3.5, class: 'hdot' + ov}, g);
+          const h2 = el('circle', {cx: c2[0], cy: c2[1], r: 3.5, class: 'hdot' + ov}, g);
+          h1.addEventListener('pointerdown', ev => startHandleDrag(ev, b.key, l, i, 'c1', off));
+          h2.addEventListener('pointerdown', ev => startHandleDrag(ev, b.key, l, i, 'c2', off));
+        });
       }
     }
-    // 점: 그 점을 지나는 선이 하나라도 보일 때만. 어느 선에도 안 쓰이는 보조점은 안내선 층을 따른다
+    // 점: 그 점을 지나는 선이 하나라도 보일 때만. 어느 선에도 안 쓰이는 보조점은 따로 켠다
     const usedRoles = {};
     for (const l of b.lines) for (const n of l.points) (usedRoles[n] ||= new Set()).add(l.role);
     for (const p of b.points) {
       const roles = usedRoles[p.name];
-      const visible = roles ? [...roles].some(r => S.layers[r]) : S.helpers;   // 어느 선에도 안 쓰이는 보조점은 따로 켠다
-      const on = S.sel && S.sel.type === 'point' && S.sel.block === b.key && S.sel.name === p.name;
+      const visible = roles ? [...roles].some(r => S.layers[r]) : S.helpers;
+      const on = isSel('point', b.key, p.name);
       if (!visible && !on) continue;
       const off = pieceOf(b.key, p.piece), [x, y] = toScreen(p.x, p.y, off);
       const c = el('circle', {cx: x, cy: y, r: 4, class: `pt${on ? ' on' : ''}${p.override ? ' ov' : ''}`}, g);
@@ -201,58 +214,81 @@ function draw() {
       if (S.labels || on) text(x, y, p.name, 'lbl' + (on ? ' acc' : ''), g, 7, -7);
     }
   }
+  drawMeasure();
   applyView();
 }
 function hint(s) { $('hint').textContent = s; }
 
-// ------------------------------------------------------------ 선택
+// ------------------------------------------------------------ 선택 · 자
 function select(sel) { S.sel = sel; draw(); renderSel(); }
-cv.addEventListener('click', ev => { if (ev.target === $('bg')) select(null); });
+cv.addEventListener('click', ev => { if (ev.target === $('bg')) { S.measure = null; select(null); } });
+
+function pointOf(block, name) {
+  const b = S.data.blocks.find(x => x.key === block);
+  return b && b.points.find(p => p.name === name);
+}
+function drawMeasure() {
+  $('measure').textContent = '';
+  if (!S.measure) return;
+  const {a, b} = S.measure, pa = pointOf(a.block, a.name), pb = pointOf(b.block, b.name);
+  if (!pa || !pb) { S.measure = null; return; }
+  const A = toScreen(pa.x, pa.y, pieceOf(a.block, pa.piece)), B = toScreen(pb.x, pb.y, pieceOf(b.block, pb.piece));
+  el('line', {x1: A[0], y1: A[1], x2: B[0], y2: B[1], class: 'tape'}, world);
+  const dist = Math.hypot(pa.x - pb.x, pa.y - pb.y), dx = Math.abs(pa.x - pb.x), dy = Math.abs(pa.y - pb.y);
+  $('measure').textContent = `자  ${a.name} ↔ ${b.name} = ${fmt(dist)}${unitLabel()} (가로 ${fmt(dx)} · 세로 ${fmt(dy)})`;
+}
 
 function renderSel() {
   const box = $('sel');
-  if (!S.sel || !S.data) { box.className = 'small muted'; box.textContent = '점이나 선을 누르세요. 점은 끌어 옮길 수 있습니다.'; return; }
+  if (!S.sel || !S.data) { box.className = 'small muted'; box.textContent = '점이나 선을 누르세요. 점은 끌어 옮기고, 점을 고른 뒤 다른 점을 Shift+클릭하면 거리를 잰다.'; return; }
   box.className = '';
   const b = S.data.blocks.find(x => x.key === S.sel.block);
   if (S.sel.type === 'point') {
     const p = b.points.find(x => x.name === S.sel.name);
     if (!p) { S.sel = null; return renderSel(); }
     const key = `${b.key}.${p.name}`;
-    const users = b.lines.filter(l => l.points.includes(p.name)).map(l => l.name).join(' · ') || '—';
+    const users = b.lines.filter(l => l.points.includes(p.name)).map(l => `<button class="linkbtn" data-ln="${esc(l.name)}">${esc(l.name)}</button>`).join(' · ') || '—';
     box.innerHTML = `<div class="kv">
-      <b>점</b><div><strong>${p.name}</strong> ${p.ko ? '· ' + p.ko : ''} <span class="muted">(${b.key}${p.piece ? ' · ' + p.piece : ''})</span></div>
+      <b>점</b><div><strong>${esc(p.name)}</strong> ${p.ko ? '· ' + esc(p.ko) : ''} <span class="muted">(${esc(b.key)}${p.piece ? ' · ' + esc(p.piece) : ''})</span></div>
       <b>규칙</b><div>${esc(p.rule)}</div>
       ${p.note ? `<b>메모</b><div class="note">${esc(p.note)}</div>` : ''}
       <b>좌표</b><div>x ${fmt(p.x)}  y ${fmt(p.y)} ${unitLabel()} <span class="muted small">(원형 기준)</span></div>
       <b>수정값</b><div>${p.override ? `<span class="tag ov">끌어 옮김</span> 규칙대로면 x ${fmt(p.computed[0])} y ${fmt(p.computed[1])} <button class="linkbtn" id="resetPt">되돌리기</button>` : '없음'}</div>
-      <b>지나는 선</b><div>${esc(users)}</div></div>`;
+      <b>지나는 선</b><div>${users}</div></div>`;
     $('resetPt')?.addEventListener('click', () => { delete S.pointOverrides[key]; scheduleEval(0); });
+    box.querySelectorAll('[data-ln]').forEach(btn => btn.addEventListener('click', () => select({type: 'line', block: b.key, name: btn.dataset.ln})));
   } else {
     const l = b.lines.find(x => x.name === S.sel.name);
     if (!l) { S.sel = null; return renderSel(); }
+    const key = `${b.key}.${l.name}`;
+    const ovn = l.overridden ? l.overridden.length : 0;
     box.innerHTML = `<div class="kv">
-      <b>선</b><div><strong>${l.name}</strong> ${l.ko ? '· ' + l.ko : ''} <span class="muted">(${b.key}${l.piece ? ' · ' + l.piece : ''})</span></div>
+      <b>선</b><div><strong>${esc(l.name)}</strong> ${l.ko ? '· ' + esc(l.ko) : ''} <span class="muted">(${esc(b.key)}${l.piece ? ' · ' + esc(l.piece) : ''})</span></div>
       <b>역할</b><div>${ROLE_KO[l.role]} · ${l.kind === 'curve' ? '곡선 (베지어 ' + l.beziers.length + '구간)' : '직선'}</div>
       <b>길이</b><div>${fmt(l.length)} ${unitLabel()}</div>
-      <b>점</b><div>${l.points.map(n => `<button class="linkbtn" data-pt="${n}">${n}</button>`).join(' → ')}</div>
-      ${l.kind === 'curve' ? '<b></b><div class="note">핸들은 보기만 — 끌어 고치는 건 다음 단계</div>' : ''}</div>`;
+      <b>점</b><div>${l.points.map(n => `<button class="linkbtn" data-pt="${esc(n)}">${esc(n)}</button>`).join(' → ')}</div>
+      ${l.kind === 'curve' ? `<b>핸들</b><div>${ovn ? `<span class="tag ov">${ovn}구간 손으로 고침</span> <button class="linkbtn" id="resetLn">되돌리기</button>` : '규칙대로 (파란 점을 끌어 고친다)'}</div>` : ''}</div>`;
     box.querySelectorAll('[data-pt]').forEach(btn => btn.addEventListener('click', () => select({type: 'point', block: b.key, name: btn.dataset.pt})));
+    $('resetLn')?.addEventListener('click', () => { delete S.lineOverrides[key]; scheduleEval(0); });
   }
 }
-const esc = s => String(s).replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c]));
 
 // ------------------------------------------------------------ 점 끌기 → 수정값
 function startDrag(ev, block, p, off, circle) {
   ev.preventDefault(); ev.stopPropagation();
+  if (ev.shiftKey && S.sel && S.sel.type === 'point' && !(S.sel.block === block && S.sel.name === p.name)) {
+    S.measure = {a: {block: S.sel.block, name: S.sel.name}, b: {block, name: p.name}};
+    draw(); return;
+  }
   const key = `${block}.${p.name}`;
   const start = clientToWorld(ev), orig = [p.x, p.y];
   let moved = false;
   cv.classList.add('dragging');
   const move = e => {
     const w = clientToWorld(e);
-    const nx = orig[0] + (w[0] - start[0]) / K, ny = orig[1] + (w[1] - start[1]) / K;
     if (!moved && Math.hypot(w[0] - start[0], w[1] - start[1]) < 2) return;
     moved = true;
+    const nx = orig[0] + (w[0] - start[0]) / K, ny = orig[1] + (w[1] - start[1]) / K;
     const [sx, sy] = toScreen(nx, ny, off);
     circle.setAttribute('cx', sx); circle.setAttribute('cy', sy);
     S.pointOverrides[key] = [nx, ny];
@@ -267,10 +303,51 @@ function startDrag(ev, block, p, off, circle) {
   window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
 }
 
-// ------------------------------------------------------------ 이동·확대
+// ------------------------------------------------------------ 곡선 핸들 끌기 → 현 기준 [비율, 각]
+function handleRel(p0, p3, c, end) {             // patterncad.block.handle_to_relative 와 같다
+  const chord = [p3[0] - p0[0], p3[1] - p0[1]], L = Math.hypot(chord[0], chord[1]) || 1e-9;
+  const base = end === 'c1' ? p0 : p3, s = end === 'c1' ? 1 : -1;
+  const u = [chord[0] / L * s, chord[1] / L * s], v = [c[0] - base[0], c[1] - base[1]];
+  const ang = Math.atan2(u[0] * v[1] - u[1] * v[0], u[0] * v[0] + u[1] * v[1]) * 180 / Math.PI;
+  return [Math.hypot(v[0], v[1]) / L, ang];
+}
+function startHandleDrag(ev, block, line, seg, end, off) {
+  ev.preventDefault(); ev.stopPropagation();
+  const key = `${block}.${line.name}`;
+  cv.classList.add('dragging');
+  let moved = false;
+  const move = e => {
+    moved = true;
+    const w = clientToWorld(e), c = worldToBlock(w[0], w[1], off);
+    const bz = line.beziers[seg], p0 = bz[0], p3 = bz[3];
+    const lo = (S.lineOverrides[key] ||= {});
+    (lo[seg] ||= {})[end] = handleRel(p0, p3, c, end);
+    // 이어진 구간의 반대쪽 핸들은 같은 방향을 보게 (접점이 꺾이지 않도록) — 길이는 그대로
+    if (end === 'c1' && seg > 0) {
+      const prev = line.beziers[seg - 1], joint = p0, oc2 = prev[2];
+      const len = Math.hypot(oc2[0] - joint[0], oc2[1] - joint[1]), dv = [c[0] - joint[0], c[1] - joint[1]], dl = Math.hypot(dv[0], dv[1]) || 1e-9;
+      const nc2 = [joint[0] - dv[0] / dl * len, joint[1] - dv[1] / dl * len];
+      (lo[seg - 1] ||= {}).c2 = handleRel(prev[0], prev[3], nc2, 'c2');
+    } else if (end === 'c2' && seg < line.beziers.length - 1) {
+      const next = line.beziers[seg + 1], joint = p3, oc1 = next[1];
+      const len = Math.hypot(oc1[0] - joint[0], oc1[1] - joint[1]), dv = [c[0] - joint[0], c[1] - joint[1]], dl = Math.hypot(dv[0], dv[1]) || 1e-9;
+      const nc1 = [joint[0] - dv[0] / dl * len, joint[1] - dv[1] / dl * len];
+      (lo[seg + 1] ||= {}).c1 = handleRel(next[0], next[3], nc1, 'c1');
+    }
+    scheduleEval(80);
+  };
+  const up = () => {
+    window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up);
+    cv.classList.remove('dragging');
+    if (moved) scheduleEval(0);
+  };
+  window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+}
+
+// ------------------------------------------------------------ 이동·확대·키
 let pan = null;
 cv.addEventListener('pointerdown', ev => {
-  if (ev.target.classList.contains('pt')) return;
+  if (ev.target.classList.contains('pt') || ev.target.classList.contains('hdot')) return;
   pan = {x: ev.clientX, y: ev.clientY, px: S.px, py: S.py};
   cv.classList.add('panning'); cv.setPointerCapture(ev.pointerId);
 });
@@ -288,8 +365,18 @@ cv.addEventListener('wheel', ev => {
   applyView();
 }, {passive: false});
 $('fit').addEventListener('click', () => fitAll());
+window.addEventListener('keydown', ev => {
+  if (ev.target.matches('input, select, textarea') || $('wiz').open) return;
+  if (ev.key === 'Escape') { S.measure = null; select(null); }
+  else if (ev.key === 'f' || ev.key === 'F') fitAll();
+  else if ((ev.key === 'Delete' || ev.key === 'Backspace') && S.sel) {
+    const key = `${S.sel.block}.${S.sel.name}`;
+    if (S.sel.type === 'point') delete S.pointOverrides[key]; else delete S.lineOverrides[key];
+    scheduleEval(0);
+  }
+});
 
-// ------------------------------------------------------------ 왼쪽: 조각 나무 · 층 · 원형 이력
+// ------------------------------------------------------------ 왼쪽: 조각 나무 · 층 · 원형 이력 · 원본 도면
 function renderTree() {
   const t = $('tree'); t.innerHTML = '';
   for (const b of S.data.blocks) {
@@ -321,8 +408,63 @@ function renderLineage() {
   const box = $('lineage'); box.innerHTML = '';
   for (const b of S.data.blocks) {
     const e = document.createElement('div');
-    e.innerHTML = `<b>${b.key}</b> ${b.name}${b.extends ? ` <span class="muted">← ${b.extends}</span>` : ''}<br><span class="muted">${b.source || ''}</span>`;
+    e.innerHTML = `<b>${esc(b.key)}</b> ${esc(b.name)}${b.extends ? ` <span class="muted">← ${esc(b.extends)}</span>` : ''}<br><span class="muted">${esc(b.source || '')}</span>`;
     box.appendChild(e);
+  }
+}
+
+// 원본 도면 겹쳐 보기: 조각마다 켜고 끈다. 켜면 서버가 원형을 도면에 맞춘 변환을 주고, 도면 층 그림을 그 변환으로 놓는다
+function renderOverlayList() {
+  const box = $('overlays'); box.innerHTML = '';
+  for (const b of S.data.blocks) {
+    if (!/p\.\d+/.test(b.source || '')) continue;
+    for (const pc of b.pieces) {
+      const key = `${b.id}|${pc}`, st = S.overlays[key] || {};
+      const l = document.createElement('label'); l.className = 'chk';
+      const fitInfo = st.fit ? ` <span class="muted">p.${st.fit.page} · 편차 ${fmt(st.fit.err)}${unitLabel()}</span>` : st.loading ? ' <span class="muted">맞추는 중…</span>' : '';
+      l.innerHTML = `<input type="checkbox" ${st.on ? 'checked' : ''}> ${esc(b.key)}${pc ? ' · ' + esc(pc) : ''}${fitInfo}`;
+      l.querySelector('input').addEventListener('change', e => toggleOverlay(b, pc, e.target.checked));
+      box.appendChild(l);
+    }
+  }
+}
+async function toggleOverlay(b, pc, on) {
+  const key = `${b.id}|${pc}`;
+  const st = (S.overlays[key] ||= {});
+  st.on = on; st.block = b.key;
+  if (on && !st.fit) {
+    st.loading = true; renderOverlayList();
+    try {
+      st.fit = await post('/api/overlay', {block: b.id, piece: pc});
+      if (!S.pageCache[st.fit.page + '|' + st.fit.layers])
+        S.pageCache[st.fit.page + '|' + st.fit.layers] = await (await fetch(`/api/page?page=${st.fit.page}&layers=${encodeURIComponent(st.fit.layers)}`)).text();
+    } catch (e) { showErr(e); st.on = false; }
+    st.loading = false;
+  }
+  renderOverlayList(); draw();
+}
+function drawOverlays() {
+  for (const [key, st] of Object.entries(S.overlays)) {
+    if (!st.on || !st.fit) continue;
+    const [bid, pc] = key.split('|');
+    const b = S.data.blocks.find(x => x.id === bid && x.key === st.block) || S.data.blocks.find(x => x.id === bid);
+    if (!b) continue;
+    const off = pieceOf(b.key, pc), f = st.fit;
+    const piece = S.data.pieces.find(p => p.block === b.key && p.piece === pc);
+    const g = el('g', {class: 'ovl'}, world);
+    if (piece) {                                   // 조각 둘레 1.5" 만 보이게 잘라 낸다 — 한 장에 다른 조각도 같이 그려져 있다
+      const cid = 'clip-' + Object.keys(S.overlays).indexOf(key);   // 이름에 한글이 있어 글자로는 id 를 못 만든다
+      const cp = el('clipPath', {id: cid}, g);
+      const [x0, y0] = toScreen(piece.bbox[0] - 1.5, piece.bbox[1] - 1.5, off), [x1, y1] = toScreen(piece.bbox[2] + 1.5, piece.bbox[3] + 1.5, off);
+      el('rect', {x: x0, y: y0, width: x1 - x0, height: y1 - y0}, cp);
+      g.setAttribute('clip-path', `url(#${cid})`);
+    }
+    // 도면 pt → 원형 inch: 원점 빼고 배율 나누고, 회전 되돌리고, 뒤집었으면 다시 뒤집는다. 그다음 조각 자리로
+    const t = [`scale(${K})`, `translate(${off.dx} ${off.dy})`, f.mirror ? 'scale(-1 1)' : '',
+               `translate(${f.cx} ${f.cy}) rotate(${-f.rot}) translate(${-f.cx} ${-f.cy})`,
+               `scale(${1 / f.sx} ${1 / f.sy})`, `translate(${-f.ox} ${-f.oy})`].join(' ');
+    const inner = el('g', {transform: t}, g);
+    inner.innerHTML = S.pageCache[f.page + '|' + f.layers] || '';
   }
 }
 
@@ -332,25 +474,26 @@ function renderMeas() {
   const tabs = $('blockTabs'); tabs.innerHTML = '';
   if (!S.data.blocks.some(b => b.key === measTab)) measTab = S.data.blocks[0].key;
   if (S.data.blocks.length > 1) for (const b of S.data.blocks) {
-    const btn = document.createElement('button'); btn.textContent = b.key; if (b.key === measTab) btn.className = 'on';
+    const btn = document.createElement('button'); btn.type = 'button'; btn.textContent = b.key; if (b.key === measTab) btn.className = 'on';
     btn.addEventListener('click', () => { measTab = b.key; renderMeas(); }); tabs.appendChild(btn);
   }
   const b = S.data.blocks.find(x => x.key === measTab);
   const box = $('meas');
   const rows = b.measurements.map(m => {
     const key = `${b.key}.${m.name}`;
+    const val = typeof m.value === 'number' ? fmt(m.value) : esc(m.value);
     let cell;
     if (m.kind === 'choice' && m.editable) {
-      cell = `<select data-key="${key}" class="${m.modified ? 'mod' : ''}">${m.options.map(o => `<option ${o === m.value ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
+      cell = `<select data-key="${esc(key)}" class="${m.modified ? 'mod' : ''}">${m.options.map(o => `<option ${o === m.value ? 'selected' : ''}>${esc(o)}</option>`).join('')}</select>`;
     } else if (m.editable) {
-      cell = `<input data-key="${key}" value="${typeof m.value === 'number' ? fmt(m.value) : esc(m.value)}" class="${m.modified ? 'mod' : ''}">`;
+      cell = `<input data-key="${esc(key)}" value="${val}" class="${m.modified ? 'mod' : ''}">`;
     } else if (m.linked) {
-      cell = `<input value="${typeof m.value === 'number' ? fmt(m.value) : esc(m.value)}" class="linked" readonly title="${esc(m.linked)}">`;
+      cell = `<input value="${val}" class="linked" readonly title="${esc(m.linked)}">`;
     } else {
-      cell = `<span class="num">${typeof m.value === 'number' ? fmt(m.value) : esc(m.value)}</span>`;
+      cell = `<span class="num">${val}</span>`;
     }
     const sub = m.linked ? `<div class="formula">← ${esc(m.linked)}</div>` : m.formula ? `<div class="formula">= ${esc(m.formula)}</div>` : '';
-    const reset = m.modified ? ` <button class="linkbtn" data-reset="${key}" title="스타일 값으로">↺</button>` : '';
+    const reset = m.modified ? ` <button class="linkbtn" data-reset="${esc(key)}" title="원래 값으로">↺</button>` : '';
     return `<tr><td><div>${esc(m.name)}${m.ko ? ` <span class="muted">${esc(m.ko)}</span>` : ''}</div>${sub}${m.note ? `<div class="note">${esc(m.note)}</div>` : ''}</td><td class="num">${cell}${reset}</td></tr>`;
   });
   box.innerHTML = `<table><tr><th>치수</th><th>값 (${unitLabel()})</th></tr>${rows.join('')}</table>`;
@@ -367,30 +510,112 @@ function renderMeas() {
   box.querySelectorAll('[data-reset]').forEach(btn => btn.addEventListener('click', () => { delete S.overrides[btn.dataset.reset]; scheduleEval(0); }));
 }
 
-// ------------------------------------------------------------ 위쪽
+// ------------------------------------------------------------ 위쪽: 단위 · 초기화 · SVG · 프로젝트 · 고르기
 $('units').querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
   S.unit = btn.dataset.u;
   $('units').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
-  renderMeas(); renderSel();
+  renderMeas(); renderSel(); renderOverlayList(); drawMeasure();
 }));
-$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; scheduleEval(0); });
+$('resetAll').addEventListener('click', () => { S.overrides = {}; S.pointOverrides = {}; S.lineOverrides = {}; scheduleEval(0); });
 $('saveSvg').addEventListener('click', async () => {
   try {
     const r = await post('/api/svg', payload());
     const blob = await r.blob(), a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = `${S.id}.svg`; a.click();
+    a.href = URL.createObjectURL(blob); a.download = `${S.projName || S.id}.svg`; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-  } catch (e) { $('err').hidden = false; $('err').textContent = e.message; }
+  } catch (e) { showErr(e); }
 });
-$('picker').addEventListener('change', () => {
-  const [kind, id] = $('picker').value.split(':');
-  S.kind = kind; S.id = id; S.overrides = {}; S.pointOverrides = {}; S.sel = null; measTab = null;
+function open_(kind, id, {overrides = {}, pointOverrides = {}, lineOverrides = {}, projName = '', view = null} = {}) {
+  S.kind = kind; S.id = id; S.overrides = overrides; S.pointOverrides = pointOverrides; S.lineOverrides = lineOverrides;
+  S.sel = null; S.measure = null; S.overlays = {}; measTab = null; S.projName = projName;
+  $('picker').value = `${kind}:${id}`;
+  $('proj').textContent = projName ? `프로젝트 ${projName}` : '';
   location.hash = `${kind}/${id}`;
-  evaluate().then(() => fitAll());
+  return evaluate().then(() => { if (view && view.k) { S.k = view.k; S.px = view.px; S.py = view.py; applyView(); } else fitAll(); });
+}
+$('picker').addEventListener('change', () => { const [kind, id] = $('picker').value.split(':'); open_(kind, id); });
+
+async function loadProjects() {
+  const sel = $('projects'); const cur = sel.value;
+  sel.innerHTML = '<option value="">열기…</option>';
+  for (const p of await getJson('/api/projects')) {
+    const o = document.createElement('option'); o.value = p.name; o.textContent = `${p.name}  (${p.id}, ${p.saved.slice(0, 16).replace('T', ' ')})`; sel.appendChild(o);
+  }
+  sel.value = cur;
+}
+$('projects').addEventListener('change', async () => {
+  const name = $('projects').value; if (!name) return;
+  try {
+    const p = await getJson(`/api/project?name=${encodeURIComponent(name)}`);
+    await open_(p.kind, p.id, {overrides: p.overrides || {}, pointOverrides: p.point_overrides || {}, lineOverrides: p.line_overrides || {}, projName: p.name, view: p.view});
+  } catch (e) { showErr(e); }
+});
+$('saveProj').addEventListener('click', async () => {
+  const name = prompt('프로젝트 이름', S.projName || S.id);
+  if (!name) return;
+  try {
+    const p = await post('/api/project', {name, ...payload(), view: {k: S.k, px: S.px, py: S.py}});
+    S.projName = p.name; $('proj').textContent = `프로젝트 ${p.name} · 저장 ${p.saved.slice(11, 16)}`;
+    await loadProjects(); $('projects').value = p.name;
+  } catch (e) { showErr(e); }
 });
 
+// ------------------------------------------------------------ 새 패턴 마법사
+const W = {cat: null, item: null, fit: '레귤러', data: null};
+$('newPat').addEventListener('click', async () => {
+  try {
+    if (!W.data) W.data = await getJson('/api/wizard');
+    W.cat = W.cat || W.data.categories[0].id; W.item = null;
+    renderWizard(); $('wiz').showModal();
+  } catch (e) { showErr(e); }
+});
+function renderWizard() {
+  const cats = $('wizCats'); cats.innerHTML = '';
+  for (const c of W.data.categories) {
+    const d = document.createElement('div'); d.className = 'opt' + (c.id === W.cat ? ' on' : ''); d.textContent = `${c.ko} (${c.items.length})`;
+    d.addEventListener('click', () => { W.cat = c.id; W.item = null; renderWizard(); }); cats.appendChild(d);
+  }
+  const cat = W.data.categories.find(c => c.id === W.cat);
+  const items = $('wizItems'); items.innerHTML = '';
+  for (const it of cat.items) {
+    const d = document.createElement('div'); d.className = 'opt' + (W.item === it.style ? ' on' : '');
+    d.innerHTML = `${esc(it.name)}<br><span class="muted">${it.item !== it.name ? esc(it.item) + ' · ' : ''}p.${it.pages.join(', ')}</span>`;
+    d.addEventListener('click', () => { W.item = it.style; renderWizard(); }); items.appendChild(d);
+  }
+  const it = cat.items.find(x => x.style === W.item);
+  const sz = $('wizSize');
+  if (!it) { sz.innerHTML = '<div class="muted small">아이템을 고르면 그 아이템의 포트폴리오 사이즈표가 나온다</div>'; }
+  else {
+    sz.innerHTML = `<table><tr><th>치수</th><th>신체 (${unitLabel()})</th><th>포트폴리오 패턴</th></tr>` +
+      it.size.map(m => `<tr><td>${esc(m.name)}</td><td class="num"><input data-name="${esc(m.name)}" value="${m.body == null ? '' : fmt(m.body)}" placeholder="—"></td><td class="num muted">${m.pattern == null ? '' : fmt(m.pattern)}</td></tr>`).join('') + '</table>';
+  }
+  const fit = $('wizFit'); fit.innerHTML = '';
+  for (const lv of Object.keys(W.data.fit_levels)) {
+    const l = document.createElement('label');
+    l.innerHTML = `<input type="radio" name="fit" value="${esc(lv)}" ${lv === W.fit ? 'checked' : ''}> ${esc(lv)}`;
+    l.querySelector('input').addEventListener('change', () => { W.fit = lv; });
+    fit.appendChild(l);
+  }
+  $('wizMsg').textContent = it ? `${it.name} — 신체 치수는 원형의 같은 이름 치수(가슴둘레·허리둘레·엉덩이둘레…)에 들어간다` : '';
+}
+$('wiz').addEventListener('close', async () => {
+  const v = $('wiz').returnValue;
+  if (v !== 'draw' && v !== 'blank') return;
+  if (!W.item) return;
+  try {
+    let overrides = {};
+    if (v === 'draw') {
+      const body = {};
+      $('wizSize').querySelectorAll('input[data-name]').forEach(inp => { const n = parseUnit(inp.value); if (n != null) body[inp.dataset.name] = n; });
+      overrides = (await post('/api/wizard', {style: W.item, body, fit: W.fit})).overrides;
+    }
+    await open_('style', W.item, {overrides});
+  } catch (e) { showErr(e); }
+});
+
+// ------------------------------------------------------------ 시작
 async function init() {
-  const cat = await (await fetch('/api/catalog')).json();
+  const cat = await getJson('/api/catalog');
   const pk = $('picker');
   const grp = (label, kind, items) => {
     const g = document.createElement('optgroup'); g.label = label;
@@ -398,15 +623,28 @@ async function init() {
     pk.appendChild(g);
   };
   grp('스타일', 'style', cat.styles); grp('원형', 'block', cat.blocks);
-  const [hpath, hsel] = location.hash.slice(1).split('@');
+  // 주소: #style/아이디@블록.점이름  뒤에 ?ovl=블록id|조각,… 를 붙이면 그 도면을 겹쳐 놓고 연다 (공유·확인용)
+  const [hmain, hquery] = decodeURIComponent(location.hash.slice(1)).split('?');   // 크롬은 한글을 %EC… 로 적는다
+  const [hpath, hsel] = hmain.split('@');
   const h = hpath.split('/');
+  const hq = Object.fromEntries((hquery || '').split('&').filter(Boolean).map(kv => kv.split('=').map(decodeURIComponent)));
   if (h.length === 2 && [...pk.options].some(o => o.value === `${h[0]}:${h[1]}`)) { S.kind = h[0]; S.id = h[1]; }
   else { S.kind = 'style'; S.id = cat.styles.find(s => s.id === 'shirt_collar_blouse') ? 'shirt_collar_blouse' : cat.styles[0].id; }
   pk.value = `${S.kind}:${S.id}`;
   renderLayers();
+  loadProjects().catch(showErr);
   await evaluate();
   fitAll();
-  if (hsel && hsel.includes('.')) { const i = hsel.indexOf('.'); select({type: 'point', block: hsel.slice(0, i), name: hsel.slice(i + 1)}); }
+  if (hsel && hsel.includes('.')) {
+    const i = hsel.indexOf('.'), blk = hsel.slice(0, i), name = hsel.slice(i + 1);
+    const b = S.data.blocks.find(x => x.key === blk);
+    if (b) select({type: b.lines.some(l => l.name === name) ? 'line' : 'point', block: blk, name});
+  }
+  if (hq.wiz) $('newPat').click();
+  for (const key of (hq.ovl || '').split(',').filter(Boolean)) {
+    const [bid, pc] = key.split('|'), b = S.data.blocks.find(x => x.id === bid);
+    if (b) await toggleOverlay(b, pc || '', true);
+  }
 }
 window.addEventListener('resize', () => applyView());
 init();

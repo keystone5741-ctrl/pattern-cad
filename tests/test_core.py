@@ -716,3 +716,80 @@ class Overrides(unittest.TestCase):
         self.assertEqual(describe_rule({"from": "O", "dx": "B/4", "dy": "진동깊이"}), "O 에서 가로 B/4, 세로 진동깊이")
         self.assertEqual(describe_rule({"intersect": [["A", "B"], ["C", "D"]]}), "A–B 와 C–D 의 교점")
         self.assertIn("회전", describe_rule({"rotate": {"of": "P", "center": "C", "angle": 5}}))
+
+
+class Handles(unittest.TestCase):
+    """곡선 핸들 수정값 — 현 기준 비율·각이라 점이 움직여도 모양이 따라온다."""
+
+    def test_relative_roundtrip(self):
+        from patterncad.block import apply_handle_override, handle_to_relative
+        b = Bezier(Pt(0, 0), Pt(1, 1), Pt(3, 1), Pt(4, 0))
+        r1 = handle_to_relative(b.p0, b.p3, b.c1, "c1")
+        r2 = handle_to_relative(b.p0, b.p3, b.c2, "c2")
+        b2 = apply_handle_override(Bezier(b.p0, Pt(0, 0), Pt(0, 0), b.p3), {"c1": r1, "c2": r2})
+        for a, c in ((b.c1, b2.c1), (b.c2, b2.c2)):
+            self.assertAlmostEqual(a.x, c.x)
+            self.assertAlmostEqual(a.y, c.y)
+        # 현을 두 배로 늘리면 핸들도 두 배
+        b3 = apply_handle_override(Bezier(Pt(0, 0), Pt(0, 0), Pt(0, 0), Pt(8, 0)), {"c1": r1})
+        self.assertAlmostEqual(b3.c1.x, 2)
+        self.assertAlmostEqual(b3.c1.y, 2)
+
+    def test_line_override_changes_only_that_segment(self):
+        blk = Block.load(ROOT / "blocks" / "sichuni_basic.yaml")
+        base = blk.evaluate().line("앞암홀")
+        res = blk.evaluate(line_overrides={"앞암홀": {"0": {"c1": [0.6, 30]}}})
+        l = res.line("앞암홀")
+        self.assertEqual(l.overrides, {0: {"c1": [0.6, 30]}})
+        self.assertNotAlmostEqual(l.beziers[0].c1.x, base.beziers[0].c1.x)
+        for a, c in zip(base.beziers[1:], l.beziers[1:]):
+            self.assertAlmostEqual(a.c1.x, c.c1.x)
+            self.assertAlmostEqual(a.c2.y, c.c2.y)
+
+    def test_style_json_reports_overridden_segments(self):
+        from patterncad.api import to_json
+        d = to_json("style", "shirt_collar_blouse", line_overrides={"body.앞암홀": {"1": {"c2": [0.3, -10]}}})
+        body = next(b for b in d["blocks"] if b["key"] == "body")
+        self.assertEqual(next(l for l in body["lines"] if l["name"] == "앞암홀")["overridden"], [1])
+
+
+class Projects(unittest.TestCase):
+    def test_save_load_list(self):
+        from patterncad import api
+        name = "_단위시험"
+        try:
+            saved = api.project_save(name, {"kind": "style", "id": "basic_pants", "overrides": {"pants.기장": 40},
+                                            "point_overrides": {}, "line_overrides": {}, "view": {"k": 1}})
+            self.assertEqual(saved["name"], name)
+            got = api.project_load(name)
+            self.assertEqual(got["overrides"], {"pants.기장": 40})
+            self.assertIn(name, [p["name"] for p in api.project_list()])
+        finally:
+            (ROOT / "projects" / f"{name}.pcad").unlink(missing_ok=True)
+        with self.assertRaises(ValueError):
+            api.project_save("../밖으로", {})
+
+
+class Wizard(unittest.TestCase):
+    def test_catalog_groups_styles_by_portfolio_category(self):
+        from patterncad.wizard import catalog
+        c = catalog()
+        ids = [k["id"] for k in c["categories"]]
+        self.assertEqual(ids, ["top", "skirt", "pants", "jacket"])
+        blouse = next(i for k in c["categories"] for i in k["items"] if i["style"] == "shirt_collar_blouse")
+        self.assertIn("가슴둘레", [m["name"] for m in blouse["size"]])
+        self.assertIn("레귤러", c["fit_levels"])
+
+    def test_body_and_fit_become_overrides(self):
+        from patterncad.wizard import overrides_for
+        ov = overrides_for("shirt_collar_blouse", {"가슴둘레": 35}, "루즈")
+        self.assertEqual(ov["body.B"], 35)
+        self.assertGreater(ov["body.여유"], 2.5)          # 레귤러 2.1/2 + 루즈 가감
+        self.assertNotIn("cuff.여유", ov)                 # 부속 여유는 건드리지 않는다
+        self.assertEqual(overrides_for("shirt_collar_blouse", {}, "레귤러").get("body.여유", 2.5), 2.5)
+
+    def test_page_layers_and_fit_cache_shape(self):
+        from patterncad import api
+        svg = api.page_svg_layers(48)
+        self.assertIn('class="layer-pattern"', svg)
+        self.assertIn("<path", svg)

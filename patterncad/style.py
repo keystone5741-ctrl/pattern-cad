@@ -48,11 +48,14 @@ class Style:
             blocks.append((name, blk, dict(spec.get("measurements") or {})))
         return cls(data.get("name", ""), data.get("id", path.stem), blocks, path, data)
 
-    def evaluate(self, overrides: dict | None = None, point_overrides: dict | None = None) -> dict[str, Resolved]:
+    def evaluate(self, overrides: dict | None = None, point_overrides: dict | None = None,
+                 line_overrides: dict | None = None) -> dict[str, Resolved]:
         """{블록이름: Resolved}. overrides 는 {"sleeve.소매산단계": "낮음"} 꼴로 블록별 치수를 덮어쓴다.
-        point_overrides 는 {"body.SP_F": (x, y)} 꼴 점 수정값 (Block.evaluate 참고)."""
+        point_overrides 는 {"body.SP_F": (x, y)} 꼴 점 수정값, line_overrides 는 {"body.앞암홀": {…}}
+        꼴 곡선 핸들 수정값 (Block.evaluate 참고)."""
         overrides = overrides or {}
         point_overrides = point_overrides or {}
+        line_overrides = line_overrides or {}
         done: dict[str, Resolved] = {}
         for name, blk, meas in self.blocks:
             ov = {}
@@ -62,7 +65,8 @@ class Style:
                 if k.startswith(name + "."):
                     ov[k[len(name) + 1:]] = self._resolve(v, done)
             po = {k[len(name) + 1:]: v for k, v in point_overrides.items() if k.startswith(name + ".")}
-            done[name] = blk.evaluate(ov, po)
+            lo = {k[len(name) + 1:]: v for k, v in line_overrides.items() if k.startswith(name + ".")}
+            done[name] = blk.evaluate(ov, po, lo)
         return done
 
     @staticmethod

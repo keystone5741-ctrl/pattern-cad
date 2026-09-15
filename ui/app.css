@@ -78,3 +78,29 @@ td select{border:1px solid #c9c4ba;border-radius:3px;padding:1px 3px;background:
 .tag.ov{border-color:#c77c00;color:#c77c00}
 .linkbtn{border:0;background:none;color:var(--accent);cursor:pointer;padding:0;font-size:12px;text-decoration:underline}
 #status{grid-area:status;display:flex;align-items:center;gap:22px;padding:0 14px;border-top:1.5px solid var(--ink);background:var(--panel);font-size:11.5px;font-variant-numeric:tabular-nums}
+
+/* 원본 도면 겹쳐 보기 */
+#world .ovl path{stroke:#c9302c !important;fill:none !important;opacity:.7;vector-effect:non-scaling-stroke;stroke-width:1px !important;pointer-events:none}
+#world .ovl *{pointer-events:none}
+#world .hdot{cursor:move}
+#world .hdot.ov{stroke:#c77c00;stroke-width:2px}
+#world .tape{stroke:var(--accent);stroke-width:1.2px;stroke-dasharray:6 4;vector-effect:non-scaling-stroke;pointer-events:none}
+.acc{color:var(--accent)}
+/* 마법사 */
+dialog{border:1.5px solid var(--ink);border-radius:4px;padding:0;background:var(--panel);color:var(--ink);width:1020px;max-width:96vw;box-shadow:0 12px 40px rgba(0,0,0,.18)}
+dialog::backdrop{background:rgba(31,29,26,.35)}
+.wizbox{display:flex;flex-direction:column;max-height:86vh}
+.wizhead,.wizfoot{display:flex;align-items:center;gap:12px;padding:10px 16px}
+.wizhead{border-bottom:1.5px solid var(--ink)} .wizfoot{border-top:1px solid var(--line)}
+.wizhead .h{font-weight:700;font-size:17px}
+.wizcols{display:grid;grid-template-columns:170px 260px 1fr;gap:0;min-height:0;overflow:hidden}
+.wizcol{padding:12px 14px;border-right:1px solid var(--line);overflow:auto;max-height:64vh}
+.wizcol.wide{border-right:0}
+.wizcol h4{margin:0 0 8px;font-size:13px}
+.wizcol .opt{padding:5px 8px;border:1.2px solid transparent;border-radius:3px;cursor:pointer}
+.wizcol .opt:hover{background:var(--accent-bg)}
+.wizcol .opt.on{border-color:var(--accent);background:var(--accent-bg)}
+.wizcol .opt .muted{font-size:11px}
+#wizSize table td input{width:80px}
+#wizFit label{display:flex;align-items:center;gap:5px;margin-right:14px;cursor:pointer}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}

@@ -12,6 +12,9 @@
     <span class="brand">pattern-cad</span>
     <select id="picker" title="스타일 / 원형"></select>
     <span id="title" class="muted"></span>
+    <button id="newPat" class="btn">새 패턴</button>
+    <select id="projects" title="저장한 프로젝트"><option value="">열기…</option></select>
+    <button id="saveProj" class="btn">저장</button>
     <span class="spacer"></span>
     <span class="seg" id="units">
       <button data-u="in" class="on">inch</button><button data-u="cm">cm</button><button data-u="mm">mm</button>
@@ -29,6 +32,11 @@
     <section>
       <h3>층</h3>
       <div id="layers" class="col"></div>
+    </section>
+    <section>
+      <h3>원본 도면 겹쳐 보기</h3>
+      <div id="overlays" class="col small"></div>
+      <div class="note">처음 켤 때 도면에 맞추느라 몇십 초 걸린다. 맞춘 값은 verify/fits.json 에 남는다</div>
     </section>
     <section class="grow">
       <h3>원형</h3>
@@ -66,10 +74,28 @@
     <span id="cursor">x —  y —</span>
     <span id="zoom">100%</span>
     <span id="counts"></span>
+    <span id="measure" class="acc"></span>
     <span class="spacer"></span>
+    <span id="proj" class="muted"></span>
     <span id="busy" class="muted"></span>
   </footer>
 </div>
+
+<dialog id="wiz">
+  <form method="dialog" class="wizbox">
+    <div class="wizhead"><span class="h">새 패턴</span><span class="muted">카테고리 · 아이템 · 신체 치수 · 핏을 고르면 원형이 그려진 상태에서 시작</span><span class="spacer"></span><button value="cancel" class="btn">닫기</button></div>
+    <div class="wizcols">
+      <div class="wizcol"><h4>1 · 카테고리</h4><div id="wizCats" class="col"></div></div>
+      <div class="wizcol"><h4>2 · 아이템</h4><div id="wizItems" class="col"></div></div>
+      <div class="wizcol wide"><h4>3 · 신체 치수 <span class="muted small">포트폴리오 기준 사이즈에서 시작. 다른 사이즈 체계(55/66, S/M/L)는 그레이딩 단계</span></h4>
+        <div id="wizSize"></div>
+        <h4>4 · 핏</h4><div id="wizFit" class="row"></div>
+        <div class="note">핏 가감표는 data/fit_levels.yaml (초안 — 현장 값으로 고쳐 주세요)</div>
+      </div>
+    </div>
+    <div class="wizfoot"><span id="wizMsg" class="muted small"></span><span class="spacer"></span><button value="blank" class="btn">빈 원형만</button><button value="draw" class="btn pri">이대로 그리기</button></div>
+  </form>
+</dialog>
 <script src="/ui/app.js"></script>
 </body>
 </html>

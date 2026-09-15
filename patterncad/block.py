@@ -159,6 +159,7 @@ class ResolvedLine:
     beziers: list[Bezier]
     piece: str | None
     ko: str = ""
+    overrides: dict = field(default_factory=dict)  # 화면에서 끌어 고친 핸들 {구간: {"c1": [비율, 각], "c2": …}}
 
     def polyline(self, n: int = 24) -> list[Pt]:
         if self.kind != "curve":
@@ -186,6 +187,30 @@ class Resolved:
             if l.name == name:
                 return l
         raise KeyError(name)
+
+
+def handle_to_relative(p0: Pt, p3: Pt, c: Pt, end: str) -> list[float]:
+    """절대 핸들 좌표 → 현 기준 [비율, 각(도)]. end 는 'c1'(p0 쪽) 또는 'c2'(p3 쪽)."""
+    chord = p3 - p0
+    L = chord.length() or 1e-9
+    base, u = (p0, chord * (1 / L)) if end == "c1" else (p3, chord * (-1 / L))
+    v = c - base
+    ang = math.degrees(math.atan2(u.x * v.y - u.y * v.x, u.x * v.x + u.y * v.y))
+    return [v.length() / L, ang]
+
+
+def apply_handle_override(b: Bezier, ov: dict) -> Bezier:
+    """[비율, 각] 로 적힌 핸들 수정값을 실제 좌표로. 현이 바뀌어도 비율·각이 유지된다."""
+    chord = b.p3 - b.p0
+    L = chord.length() or 1e-9
+    c1, c2 = b.c1, b.c2
+    if ov.get("c1"):
+        r, a = ov["c1"]
+        c1 = b.p0 + (chord * (1 / L)).rotate(float(a)) * (float(r) * L)
+    if ov.get("c2"):
+        r, a = ov["c2"]
+        c2 = b.p3 + (chord * (-1 / L)).rotate(float(a)) * (float(r) * L)
+    return Bezier(b.p0, c1, c2, b.p3)
 
 
 class Block:
@@ -232,12 +257,16 @@ class Block:
         )
 
     # ------------------------------------------------------------ 계산
-    def evaluate(self, overrides: dict | None = None, point_overrides: dict | None = None) -> Resolved:
+    def evaluate(self, overrides: dict | None = None, point_overrides: dict | None = None,
+                 line_overrides: dict | None = None) -> Resolved:
         """overrides 는 치수 덮어쓰기 {이름: 값}. point_overrides 는 점 수정값 {이름: (x, y)} —
         화면에서 점을 끌어 놓은 자리다. 규칙으로 구한 자리를 그 좌표로 바꾸고, 그 점을 참조하는
-        뒷 점들은 바뀐 자리에서 다시 계산된다. 치수가 바뀌어도 수정값은 남는다."""
+        뒷 점들은 바뀐 자리에서 다시 계산된다. 치수가 바뀌어도 수정값은 남는다.
+        line_overrides 는 곡선 핸들 수정값 {선이름: {구간번호: {"c1": [비율, 각], "c2": [비율, 각]}}} —
+        현(구간 양 끝점) 길이에 대한 비율과 현 방향에서 잰 각(도)이라, 점이 움직여도 모양이 따라온다."""
         overrides = overrides or {}
         point_overrides = point_overrides or {}
+        line_overrides = line_overrides or {}
         meas: dict[str, float] = {}
         points: dict[str, Pt] = {}
         env = Env(meas, points)
@@ -301,7 +330,7 @@ class Block:
         if pending:
             raise ValueError(f"계산 못 한 치수: {list(pending)}")
 
-        lines = [self._resolve_line(ld, env) for ld in self.lines]
+        lines = [self._resolve_line(ld, env, line_overrides.get(ld.name)) for ld in self.lines]
         return Resolved(self, meas, points, point_meta, lines)
 
     def _point(self, name: str, rule: dict, env: Env) -> Pt:
@@ -364,17 +393,23 @@ class Block:
             raise ValueError(f"점 {name}: 참조 오류 {e} (점은 정의된 순서대로 계산된다)") from e
         raise ValueError(f"점 {name}: 규칙을 못 알아봄 {rule}")
 
-    def _resolve_line(self, ld: LineDef, env: Env) -> ResolvedLine:
+    def _resolve_line(self, ld: LineDef, env: Env, overrides: dict | None = None) -> ResolvedLine:
         pts = [env.p[n] for n in ld.points]
         if ld.closed and pts[0] != pts[-1]:
             pts = pts + [pts[0]]
         beziers: list[Bezier] = []
+        applied: dict = {}
         if ld.kind == "curve":
             dirs = [self._tangent(ld, i, pts, env) for i in range(len(pts))]
             for i in range(len(pts) - 1):
                 h = ld.handles[i] if i < len(ld.handles) and ld.handles[i] else [1 / 3, 1 / 3]
-                beziers.append(bezier_from_tangents(pts[i], dirs[i], pts[i + 1], dirs[i + 1], float(h[0]), float(h[1])))
-        return ResolvedLine(ld.name, ld.role, ld.kind, list(ld.points), pts, beziers, ld.piece, ld.ko)
+                b = bezier_from_tangents(pts[i], dirs[i], pts[i + 1], dirs[i + 1], float(h[0]), float(h[1]))
+                ov = (overrides or {}).get(i, (overrides or {}).get(str(i)))
+                if ov:
+                    b = apply_handle_override(b, ov)
+                    applied[i] = ov
+                beziers.append(b)
+        return ResolvedLine(ld.name, ld.role, ld.kind, list(ld.points), pts, beziers, ld.piece, ld.ko, applied)
 
     def _tangent(self, ld: LineDef, i: int, pts: list[Pt], env: Env) -> Pt:
         """i 번째 점의 접선 방향. 사슬 진행 방향(이전 점 → 다음 점)과 같은 쪽을 향하게 부호를 맞춘다."""

@@ -74,7 +74,7 @@ def one_block(args):
         if got is None:
             rows.append((Path(path).stem, page, pc or "", None, bad, None))
             continue
-        sx, sy, ox, oy, err = got
+        sx, sy, ox, oy, err = got[:5]
         # 눈금에서 얻은 배율과 실제로 맞은 배율의 비 — 1 에서 멀면 원형 크기(기장 등)가 도면과 다르다
         rows.append((Path(path).stem, page, pc or "", err / sx, ",".join(bad[:6]),
                      sx / rf[0] if rf else None))
